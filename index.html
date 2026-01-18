@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <title>Legacy Map Pro</title>
     <link rel="stylesheet" href="style.css">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11.10.1/dist/style.css">
 
     <script type="importmap">
     {
         "imports": {
-            "react": "https://esm.sh/react@18.2.0?dev",
-            "react-dom": "https://esm.sh/react-dom@18.2.0?dev",
-            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?dev",
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
             "reactflow": "https://esm.sh/reactflow@11.10.1?external=react,react-dom"
         }
     }
@@ -23,16 +21,16 @@
 <body>
     <header class="main-header">
         <div class="logo">🗺️ LEGACY<span style="color: #3b82f6;">MAP</span></div>
-        <div class="version-tag">v2.1 (Fix-ESM)</div>
+        <div class="version-tag">v2.2</div>
     </header>
 
     <div id="app"></div>
 
     <footer class="main-footer">
-        Dica: Clique nos nós para abrir o código no GitHub.
+        Dica: Use URLs públicas do GitHub.
     </footer>
 
-    <script type="text/babel" data-type="module" data-presets="env,react">
+    <script type="text/babel" data-type="module">
         import React, { useState, useCallback } from 'react';
         import { createRoot } from 'react-dom/client';
         import ReactFlow, { Background, Controls } from 'reactflow';
@@ -48,7 +46,6 @@
                 if (path.endsWith('.ts')) return '#1e40af';
                 if (path.endsWith('.tsx')) return '#1d4ed8';
                 if (path.endsWith('.jsx')) return '#06b6d4';
-                if (path.endsWith('.css')) return '#ea580c';
                 return '#3b82f6';
             };
 
@@ -57,7 +54,7 @@
             }, [repoBase]);
 
             const analyzeGithub = async () => {
-                setStatus('🔍 Buscando dados...');
+                setStatus('🔍 Conectando...');
                 try {
                     const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
                     if (!match) return alert("URL inválida.");
@@ -77,16 +74,16 @@
                         position: { x: (i % 6) * 180, y: Math.floor(i / 6) * 120 },
                         style: { 
                             background: getFileColor(f.path), color: '#fff', 
-                            borderRadius: '6px', padding: '10px', width: 150, 
+                            borderRadius: '6px', padding: '10px', width: 140, 
                             fontSize: '11px', textAlign: 'center', cursor: 'pointer',
                             border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
                         }
                     }));
 
                     setNodes(newNodes);
-                    setStatus(`✅ ${newNodes.length} arquivos mapeados.`);
+                    setStatus(`✅ Mapeado!`);
                 } catch (err) {
-                    setStatus('❌ Erro: Repositório não encontrado.');
+                    setStatus('❌ Erro no Repositório.');
                 }
             };
 
