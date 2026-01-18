@@ -5,28 +5,28 @@
     <title>Legacy Map Pro</title>
     <link rel="stylesheet" href="style.css">
     
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/reactflow@11.10.1/dist/react-flow.standalone.am.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/reactflow@11.10.1/dist/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/reactflow@11.10.1/dist/react-flow.standalone.am.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11.10.1/dist/style.css">
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.23.5/babel.min.js"></script>
 </head>
 <body>
     <header class="main-header">
         <div class="logo">🗺️ LEGACY<span style="color: #3b82f6;">MAP</span></div>
-        <div class="version-tag">v1.0.1</div>
+        <div class="version-tag">v1.2.0</div>
     </header>
 
     <div id="app"></div>
 
     <footer class="main-footer">
-        © 2026 Legacy Map Tool - Visualizador de Arquitetura de Código
+        Dica: Azul = JavaScript | Azul Escuro = TypeScript | Ciano = React
     </footer>
 
     <script type="text/babel" data-presets="env,react">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useCallback } = React;
 
         function App() {
             const [ready, setReady] = useState(false);
@@ -34,45 +34,90 @@
             const [nodes, setNodes] = useState([]);
             const [edges, setEdges] = useState([]);
             const [status, setStatus] = useState('Pronto');
+            const [repoBase, setRepoBase] = useState('');
 
+            // 1. Detecção Robusta do React Flow
             useEffect(() => {
                 const check = setInterval(() => {
-                    if (window.ReactFlow) {
+                    // Verifica se o objeto global existe e tem as propriedades necessárias
+                    const rf = window.ReactFlow;
+                    if (rf && (rf.default || rf.ReactFlow)) {
                         setReady(true);
                         clearInterval(check);
                     }
-                }, 500);
+                }, 200);
+                
+                // Timeout de segurança (se demorar mais de 5s, força o erro aparecer)
+                setTimeout(() => clearInterval(check), 10000);
+                
                 return () => clearInterval(check);
             }, []);
 
-            if (!ready) return <div className="loading-screen">CARREGANDO MOTOR...</div>;
+            // 2. Cores Inteligentes
+            const getFileColor = (path) => {
+                if (path.endsWith('.ts')) return '#1e40af';   // Azul Escuro (TS)
+                if (path.endsWith('.tsx')) return '#1d4ed8';  // Azul Forte (TSX)
+                if (path.endsWith('.jsx')) return '#06b6d4';  // Ciano (React)
+                if (path.endsWith('.css')) return '#ea580c';  // Laranja (CSS)
+                return '#3b82f6';                             // Azul Padrão (JS)
+            };
 
-            const RF = window.ReactFlow.default || window.ReactFlow;
-            const { Background, Controls, MarkerType } = window.ReactFlow;
+            // 3. Clique para abrir no GitHub
+            const onNodeClick = useCallback((event, node) => {
+                if (repoBase && node.id) {
+                    window.open(`${repoBase}/blob/main/${node.id}`, '_blank');
+                }
+            }, [repoBase]);
+
+            if (!ready) return <div className="loading-screen">CARREGANDO MOTOR GRÁFICO...</div>;
+
+            // Extração segura dos componentes
+            const RF = window.ReactFlow;
+            const ReactFlowComponent = RF.default || RF.ReactFlow || RF;
+            const { Background, Controls } = RF;
 
             const analyzeGithub = async () => {
-                setStatus('🔍 Escaneando...');
+                setStatus('🔍 Acessando GitHub...');
                 try {
                     const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-                    if (!match) return alert("URL inválida");
+                    if (!match) return alert("URL inválida. Use: https://github.com/usuario/repo");
                     const [_, owner, repo] = match;
                     
+                    setRepoBase(`https://github.com/${owner}/${repo}`);
+
+                    // Busca a árvore de arquivos
                     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`).then(r => r.json());
+                    
+                    if (!res.tree) throw new Error("Branch main não encontrada");
+
                     const files = res.tree
-                        .filter(f => (f.path.endsWith('.js') || f.path.endsWith('.ts')) && !f.path.includes('node_modules'))
-                        .slice(0, 20);
+                        .filter(f => (f.path.match(/\.(js|ts|jsx|tsx|css)$/)) && !f.path.includes('node_modules'))
+                        .slice(0, 35); // Limite de segurança
                     
                     const newNodes = files.map((f, i) => ({
                         id: f.path,
                         data: { label: f.path.split('/').pop() },
-                        position: { x: (i % 4) * 200, y: Math.floor(i / 4) * 120 },
-                        style: { background: '#3b82f6', color: '#fff', borderRadius: '8px', padding: '10px', width: 150, textAlign: 'center' }
+                        position: { x: (i % 6) * 180, y: Math.floor(i / 6) * 120 },
+                        style: { 
+                            background: getFileColor(f.path), 
+                            color: '#fff', 
+                            borderRadius: '6px', 
+                            padding: '10px', 
+                            width: 140, 
+                            fontSize: '11px',
+                            fontWeight: '500',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+                        }
                     }));
 
                     setNodes(newNodes);
-                    setStatus('✅ Sucesso!');
+                    setStatus(`✅ ${newNodes.length} arquivos mapeados.`);
                 } catch (err) {
-                    setStatus('❌ Erro na API');
+                    console.error(err);
+                    setStatus('❌ Erro: Verifique se o repo é público.');
                 }
             };
 
@@ -80,21 +125,25 @@
                 <div style={{ width: '100vw', height: 'calc(100vh - 95px)' }}>
                     <div id="ui-layer">
                         <div className="input-group">
-                            <label>LINK DO REPOSITÓRIO</label>
                             <input 
-                                placeholder="https://github.com/..." 
+                                placeholder="Link do Repositório GitHub" 
                                 value={url} 
                                 onChange={e => setUrl(e.target.value)} 
                             />
-                            <button onClick={analyzeGithub}>GERAR MAPA</button>
+                            <button onClick={analyzeGithub}>MAPEAR CÓDIGO</button>
                         </div>
-                        <div className="status-box">Status: {status}</div>
+                        <div className="status-box">{status}</div>
                     </div>
 
-                    <RF nodes={nodes} edges={edges} fitView>
-                        <Background color="#334155" gap={20} />
+                    <ReactFlowComponent 
+                        nodes={nodes} 
+                        edges={edges} 
+                        onNodeClick={onNodeClick} 
+                        fitView
+                    >
+                        <Background color="#1e293b" gap={25} />
                         <Controls />
-                    </RF>
+                    </ReactFlowComponent>
                 </div>
             );
         }
