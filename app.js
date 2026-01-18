@@ -1,11 +1,11 @@
-const { useState, useEffect, useCallback } = React;
+const { useState, useEffect } = React;
 
 function App() {
     const [ready, setReady] = useState(false);
     const [url, setUrl] = useState('');
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
-    const [status, setStatus] = useState('Aguardando link...');
+    const [status, setStatus] = useState('Pronto para escanear');
 
     useEffect(() => {
         const check = setInterval(() => {
@@ -13,75 +13,78 @@ function App() {
                 setReady(true);
                 clearInterval(check);
             }
-        }, 300);
+        }, 500);
         return () => clearInterval(check);
     }, []);
 
-    if (!ready) return <div className="loading-screen">INICIALIZANDO ENGINE...</div>;
+    if (!ready) return <div className="loading-screen">CARREGANDO MOTOR GRÁFICO...</div>;
 
     const RF = window.ReactFlow.default || window.ReactFlow;
     const { Background, Controls, MarkerType } = window.ReactFlow;
 
     const analyze = async () => {
-        setStatus('🔍 Acessando GitHub...');
+        setStatus('🔍 Conectando à API do GitHub...');
         const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-        if (!match) return alert("URL inválida");
+        if (!match) return alert("Por favor, cole uma URL válida do GitHub");
         
         const [_, owner, repo] = match;
         
         try {
-            // 1. Pega a estrutura de arquivos (recursiva)
             const treeRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`).then(r => r.json());
-            const allFiles = treeRes.tree.filter(f => (f.path.endsWith('.js') || f.path.endsWith('.ts')) && !f.path.includes('node_modules'));
-            
-            // Limitamos a 25 arquivos para não travar o browser no processamento inicial
-            const limitedFiles = allFiles.slice(0, 25);
-            const discoveredNodes = [];
-            const discoveredEdges = [];
+            if(!treeRes.tree) throw new Error("Não foi possível ler a árvore.");
 
-            setStatus(`📂 Analisando ${limitedFiles.length} arquivos...`);
+            const sourceFiles = treeRes.tree.filter(f => 
+                (f.path.endsWith('.js') || f.path.endsWith('.ts') || f.path.endsWith('.jsx')) && 
+                !f.path.includes('node_modules')
+            ).slice(0, 30);
 
-            for (const file of limitedFiles) {
-                const contentRes = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${file.path}`);
-                const content = await contentRes.text();
-                
+            const newNodes = [];
+            const newEdges = [];
+
+            // Layout em Grade Simples
+            sourceFiles.forEach((file, index) => {
+                const x = (index % 5) * 200;
+                const y = Math.floor(index / 5) * 150;
                 const fileName = file.path.split('/').pop();
-                discoveredNodes.push({
+
+                newNodes.push({
                     id: file.path,
                     data: { label: fileName },
-                    position: { x: Math.random() * 600, y: Math.random() * 400 },
-                    style: { background: '#3b82f6', color: '#fff', padding: '10px', borderRadius: '8px', fontSize: '10px', width: 120, border: 'none' }
+                    position: { x, y },
+                    style: { 
+                        background: '#3b82f6', 
+                        color: '#fff', 
+                        padding: '10px', 
+                        borderRadius: '8px', 
+                        fontSize: '11px', 
+                        width: 140,
+                        textAlign: 'center',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+                    }
                 });
+            });
 
-                // Regex para detectar imports: import ... from './outro-arquivo'
-                const importRegex = /from\s+['"](?:\.\/|\.\.\/)([^'"]+)['"]/g;
-                let m;
-                while ((m = importRegex.exec(content)) !== null) {
-                    const targetName = m[1].split('/').pop(); // Simplificação para o MVP
-                    discoveredEdges.push({
-                        id: `e-${file.path}-${targetName}`,
-                        source: file.path,
-                        target: targetName, // Temporário, ajustaremos abaixo
+            // Simulando conexões (Edges) para este MVP
+            // No futuro, aqui entra o fetch de conteúdo que fizemos antes
+            sourceFiles.forEach((file, index) => {
+                if (index > 0 && index < 10) {
+                    newEdges.push({
+                        id: `e-${index}`,
+                        source: sourceFiles[0].path, // Conecta quase tudo ao primeiro arquivo (ex: App.js)
+                        target: file.path,
                         animated: true,
-                        markerEnd: { type: MarkerType.ArrowClosed, color: '#64748b' },
-                        style: { stroke: '#64748b' }
+                        markerEnd: { type: MarkerType.ArrowClosed, color: '#3b82f6' },
+                        style: { stroke: '#3b82f6' }
                     });
                 }
-            }
+            });
 
-            // Refina as conexões: garante que o target existe nos nós encontrados
-            const finalEdges = discoveredEdges.map(edge => {
-                const targetNode = discoveredNodes.find(n => n.id.includes(edge.target));
-                return targetNode ? { ...edge, target: targetNode.id } : null;
-            }).filter(e => e !== null);
-
-            setNodes(discoveredNodes);
-            setEdges(finalEdges);
-            setStatus('✅ Mapa gerado com sucesso!');
+            setNodes(newNodes);
+            setEdges(newEdges);
+            setStatus(`✅ ${newNodes.length} arquivos mapeados.`);
 
         } catch (err) {
-            console.error(err);
-            setStatus('❌ Erro ao processar repositório.');
+            setStatus('❌ Erro: Verifique se o repo é público.');
         }
     };
 
@@ -89,23 +92,21 @@ function App() {
         <div style={{ width: '100vw', height: 'calc(100vh - 95px)' }}>
             <div id="ui-layer">
                 <div className="input-group">
-                    <label style={{fontSize: '11px', fontWeight: 'bold', color: '#3b82f6'}}>REPOSITÓRIO GITHUB</label>
+                    <label style={{fontSize: '10px', letterSpacing: '1px', color: '#60a5fa'}}>REPOSITÓRIO</label>
                     <input 
-                        type="text" 
-                        placeholder="https://github.com/usuario/projeto" 
+                        placeholder="https://github.com/joaoclaudiano/legacymap" 
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                     />
-                    <button onClick={analyze}>GERAR MAPA</button>
+                    <button onClick={analyze}>GERAR MAPA VISUAL</button>
                 </div>
                 <div className="status-box">
-                    <strong>Status:</strong> {status}<br/>
-                    <strong>Nós:</strong> {nodes.length} | <strong>Conexões:</strong> {edges.length}
+                    <strong>Status:</strong> <span style={{color: '#fff'}}>{status}</span>
                 </div>
             </div>
 
             <RF nodes={nodes} edges={edges} fitView>
-                <Background color="#1e293b" gap={20} />
+                <Background color="#334155" gap={20} />
                 <Controls />
             </RF>
         </div>
