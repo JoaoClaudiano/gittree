@@ -219,3 +219,198 @@ body {
 .controls button:hover {
     background: #334155;
 }
+
+/* Adicione estas regras ao final do seu style.css existente */
+
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #3b82f6;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: #f8fafc;
+    font-size: 13px;
+}
+
+.repo-info {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.file-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.file-size {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.legend {
+    position: absolute;
+    bottom: 60px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.9);
+    padding: 12px;
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    max-width: 300px;
+}
+
+.legend h4 {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    color: #f8fafc;
+}
+
+.legend-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    font-size: 11px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #94a3b8;
+    text-align: center;
+    padding: 40px;
+}
+
+.empty-state h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #cbd5e1;
+}
+
+.empty-state p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.examples {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.example-btn {
+    padding: 8px 12px;
+    background: rgba(30, 41, 59, 0.8);
+    color: #cbd5e1;
+    border: 1px solid #475569;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.example-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .ui-layer {
+        min-width: 300px;
+        left: 10px;
+        right: 10px;
+        top: 10px;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .files-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .controls {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+
+
