@@ -5,81 +5,53 @@
     <title>Legacy Map Pro</title>
     <link rel="stylesheet" href="style.css">
     
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    
-    <script src="https://unpkg.com/reactflow@11.7.4/dist/react-flow.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/reactflow@11.7.4/dist/style.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11.10.1/dist/style.css">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+            "reactflow": "https://esm.sh/reactflow@11.10.1?external=react,react-dom"
+        }
+    }
+    </script>
+
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
     <header class="main-header">
         <div class="logo">🗺️ LEGACY<span style="color: #3b82f6;">MAP</span></div>
-        <div class="version-tag">v1.3.0 (UMD)</div>
+        <div class="version-tag">v2.0 (ESM)</div>
     </header>
 
     <div id="app"></div>
 
     <footer class="main-footer">
-        Dica: Abra o console (F12) se o mapa não carregar.
+        Dica: Azul = JavaScript | Escuro = TypeScript | Ciano = React
     </footer>
 
-    <script type="text/babel" data-presets="env,react">
-        const { useState, useEffect, useCallback } = React;
+    <script type="text/babel" data-type="module">
+        // Agora importamos diretamente. Se a URL funcionar, a variável EXISTE.
+        import React, { useState, useCallback } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import ReactFlow, { Background, Controls } from 'reactflow';
 
         function App() {
-            const [ready, setReady] = useState(false);
-            const [debugMsg, setDebugMsg] = useState('Iniciando diagnósticos...');
             const [url, setUrl] = useState('');
             const [nodes, setNodes] = useState([]);
             const [edges, setEdges] = useState([]);
-            const [status, setStatus] = useState('Pronto');
+            const [status, setStatus] = useState('Pronto para mapear');
             const [repoBase, setRepoBase] = useState('');
 
-            // DIAGNÓSTICO DE CARREGAMENTO
-            useEffect(() => {
-                let attempts = 0;
-                const check = setInterval(() => {
-                    attempts++;
-                    console.log(`[Tentativa ${attempts}] Procurando ReactFlow no window...`, window.ReactFlow);
-                    
-                    // O React Flow UMD geralmente injeta o objeto 'ReactFlow' no window
-                    // Às vezes ele injeta como window.ReactFlow.default
-                    const rf = window.ReactFlow;
-                    
-                    if (rf) {
-                        console.log("✅ ReactFlow Encontrado!", rf);
-                        setReady(true);
-                        clearInterval(check);
-                    } else {
-                        setDebugMsg(`Tentativa ${attempts}: Biblioteca ainda não carregou...`);
-                    }
-
-                    if (attempts > 50) { // Desiste após 25 segundos
-                        setDebugMsg("ERRO CRÍTICO: ReactFlow falhou ao carregar via CDN. Verifique sua conexão.");
-                        clearInterval(check);
-                    }
-                }, 500);
-                return () => clearInterval(check);
-            }, []);
-
-            // Se não estiver pronto, mostra o que está acontecendo
-            if (!ready) {
-                return (
-                    <div className="loading-screen" style={{flexDirection: 'column', gap: '20px'}}>
-                        <div>CARREGANDO MOTOR GRÁFICO...</div>
-                        <div style={{fontSize: '12px', color: '#64748b'}}>{debugMsg}</div>
-                    </div>
-                );
-            }
-
-            // Mapeamento seguro das propriedades
-            // Na versão UMD, geralmente ReactFlow é o objeto principal
-            const RF = window.ReactFlow; 
-            // Se RF for uma função/componente, usamos ele direto. Se for objeto com .default, usamos .default
-            const ReactFlowComponent = RF.default || RF; 
-            const { Background, Controls } = RF;
+            // Cores por extensão
+            const getFileColor = (path) => {
+                if (path.endsWith('.ts')) return '#1e40af';
+                if (path.endsWith('.tsx')) return '#1d4ed8';
+                if (path.endsWith('.jsx')) return '#06b6d4';
+                if (path.endsWith('.css')) return '#ea580c';
+                return '#3b82f6';
+            };
 
             const onNodeClick = useCallback((event, node) => {
                 if (repoBase && node.id) {
@@ -88,37 +60,53 @@
             }, [repoBase]);
 
             const analyzeGithub = async () => {
-                setStatus('🔍 Acessando GitHub...');
+                setStatus('🔍 Conectando ao GitHub...');
                 try {
                     const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-                    if (!match) return alert("URL inválida.");
+                    if (!match) return alert("URL inválida. Ex: https://github.com/facebook/react");
                     const [_, owner, repo] = match;
                     
                     setRepoBase(`https://github.com/${owner}/${repo}`);
 
+                    // 1. Busca a árvore de arquivos
                     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`).then(r => r.json());
-                    if (!res.tree) throw new Error("Repositório não encontrado ou privado");
+                    
+                    if (!res.tree) throw new Error("Branch 'main' não encontrada ou repo privado.");
 
+                    // 2. Filtra arquivos relevantes
                     const files = res.tree
                         .filter(f => (f.path.match(/\.(js|ts|jsx|tsx|css)$/)) && !f.path.includes('node_modules'))
-                        .slice(0, 30);
+                        .slice(0, 40); // Limite aumentado
                     
+                    if (files.length === 0) {
+                        setStatus('⚠️ Nenhum arquivo .js/.ts encontrado na raiz.');
+                        return;
+                    }
+
+                    // 3. Cria os Nós (Nodes)
                     const newNodes = files.map((f, i) => ({
                         id: f.path,
                         data: { label: f.path.split('/').pop() },
-                        position: { x: (i % 5) * 200, y: Math.floor(i / 5) * 150 },
+                        position: { x: (i % 6) * 180, y: Math.floor(i / 6) * 120 },
                         style: { 
-                            background: f.path.endsWith('ts') ? '#1e40af' : '#3b82f6', 
+                            background: getFileColor(f.path), 
                             color: '#fff', 
-                            borderRadius: '8px', padding: '10px', width: 140, textAlign: 'center', cursor: 'pointer' 
+                            borderRadius: '6px', 
+                            padding: '10px', 
+                            width: 150, 
+                            fontSize: '11px',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
                         }
                     }));
 
                     setNodes(newNodes);
-                    setStatus(`✅ ${newNodes.length} arquivos.`);
+                    setStatus(`✅ Mapa gerado com ${newNodes.length} arquivos.`);
                 } catch (err) {
                     console.error(err);
-                    setStatus('❌ Erro: Repo privado ou limite de API.');
+                    setStatus('❌ Erro: Verifique se o repositório é público.');
                 }
             };
 
@@ -127,24 +115,29 @@
                     <div id="ui-layer">
                         <div className="input-group">
                             <input 
-                                placeholder="Link do Repositório" 
+                                placeholder="Cole o link do GitHub aqui..." 
                                 value={url} 
                                 onChange={e => setUrl(e.target.value)} 
                             />
-                            <button onClick={analyzeGithub}>MAPEAR</button>
+                            <button onClick={analyzeGithub}>GERAR MAPA VISUAL</button>
                         </div>
                         <div className="status-box">{status}</div>
                     </div>
 
-                    <ReactFlowComponent nodes={nodes} edges={edges} onNodeClick={onNodeClick} fitView>
+                    <ReactFlow 
+                        nodes={nodes} 
+                        edges={edges} 
+                        onNodeClick={onNodeClick} 
+                        fitView
+                    >
                         <Background color="#1e293b" gap={25} />
                         <Controls />
-                    </ReactFlowComponent>
+                    </ReactFlow>
                 </div>
             );
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('app'));
+        const root = createRoot(document.getElementById('app'));
         root.render(<App />);
     </script>
 </body>
