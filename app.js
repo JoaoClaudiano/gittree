@@ -1,6 +1,570 @@
 const { useState, useEffect, useRef } = React;
 const { createRoot } = ReactDOM;
 
+// ==================== SISTEMA DE CACHE ====================
+const CACHE_PREFIX = 'codemap_';
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 horas
+
+const cache = {
+    set: (key, data, ttl = CACHE_TTL) => {
+        try {
+            const item = {
+                data,
+                expiry: Date.now() + ttl,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(item));
+            return true;
+        } catch (err) {
+            console.error('Erro ao salvar cache:', err);
+            return false;
+        }
+    },
+    
+    get: (key) => {
+        try {
+            const itemStr = localStorage.getItem(CACHE_PREFIX + key);
+            if (!itemStr) return null;
+            
+            const item = JSON.parse(itemStr);
+            if (Date.now() > item.expiry) {
+                localStorage.removeItem(CACHE_PREFIX + key);
+                return null;
+            }
+            
+            return item.data;
+        } catch (err) {
+            console.error('Erro ao ler cache:', err);
+            return null;
+        }
+    },
+    
+    remove: (key) => {
+        localStorage.removeItem(CACHE_PREFIX + key);
+    },
+    
+    clear: () => {
+        const keys = Object.keys(localStorage);
+        keys.forEach(key => {
+            if (key.startsWith(CACHE_PREFIX)) {
+                localStorage.removeItem(key);
+            }
+        });
+    },
+    
+    getStats: () => {
+        const keys = Object.keys(localStorage);
+        const cacheKeys = keys.filter(key => key.startsWith(CACHE_PREFIX));
+        const stats = {
+            total: cacheKeys.length,
+            size: 0,
+            repos: []
+        };
+        
+        cacheKeys.forEach(key => {
+            try {
+                const item = JSON.parse(localStorage.getItem(key));
+                stats.size += JSON.stringify(item).length;
+                if (item.data && item.data.repoInfo) {
+                    stats.repos.push({
+                        name: item.data.repoInfo.name,
+                        owner: item.data.repoInfo.owner,
+                        files: item.data.files ? item.data.files.length : 0,
+                        timestamp: item.timestamp
+                    });
+                }
+            } catch (e) {}
+        });
+        
+        stats.sizeKB = Math.round(stats.size / 1024 * 100) / 100;
+        return stats;
+    }
+};
+
+// ==================== FUNÇÕES DE EXPORTAÇÃO ====================
+const exportUtils = {
+    exportAsImage: async (elementId, filename) => {
+        try {
+            const element = document.getElementById(elementId);
+            if (!element || !window.html2canvas) {
+                throw new Error('Elemento ou biblioteca não disponível');
+            }
+            
+            const canvas = await html2canvas(element, {
+                backgroundColor: getComputedStyle(document.body).backgroundColor,
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            });
+            
+            const link = document.createElement('a');
+            link.download = filename || 'codecartographer-export.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            return true;
+        } catch (err) {
+            console.error('Erro ao exportar imagem:', err);
+            throw err;
+        }
+    },
+    
+    exportAsJSON: (data, filename) => {
+        try {
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename || 'codecartographer-data.json';
+            link.click();
+            
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+            return true;
+        } catch (err) {
+            console.error('Erro ao exportar JSON:', err);
+            throw err;
+        }
+    },
+    
+    exportMetricsAsCSV: (metrics) => {
+        try {
+            const headers = ['Métrica', 'Valor', 'Unidade'];
+            const rows = [
+                ['Total de Arquivos', metrics.totalFiles, 'arquivos'],
+                ['Tamanho Total', metrics.totalSizeKB, 'KB'],
+                ['Arquivos JavaScript', metrics.byExtension.js || 0, 'arquivos'],
+                ['Arquivos TypeScript', metrics.byExtension.ts || 0, 'arquivos'],
+                ['Arquivos CSS', metrics.byExtension.css || 0, 'arquivos'],
+                ['Arquivos JSON', metrics.byExtension.json || 0, 'arquivos'],
+                ['Arquivos Markdown', metrics.byExtension.md || 0, 'arquivos'],
+                ['Arquivos HTML', metrics.byExtension.html || 0, 'arquivos'],
+                ['Linguagem Principal', metrics.mainLanguage, ''],
+                ['Data da Análise', new Date().toISOString(), '']
+            ];
+            
+            const csvContent = [
+                headers.join(','),
+                ...rows.map(row => row.join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'metrics-export.csv';
+            link.click();
+            
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+            return true;
+        } catch (err) {
+            console.error('Erro ao exportar CSV:', err);
+            throw err;
+        }
+    }
+};
+
+// ==================== CÁLCULO DE MÉTRICAS ====================
+const metricsCalculator = {
+    calculateBasicMetrics: (files) => {
+        if (!files || files.length === 0) return null;
+        
+        const metrics = {
+            totalFiles: files.length,
+            totalSizeKB: files.reduce((sum, f) => sum + (f.sizeKB || 0), 0),
+            byExtension: {},
+            mainLanguage: 'N/A'
+        };
+        
+        // Contar por extensão
+        files.forEach(f => {
+            const ext = f.extension;
+            metrics.byExtension[ext] = (metrics.byExtension[ext] || 0) + 1;
+        });
+        
+        // Determinar linguagem principal
+        const extensionPriority = {
+            'js': 10, 'jsx': 10, 'ts': 9, 'tsx': 9,
+            'py': 8, 'java': 7, 'cpp': 6, 'c': 6,
+            'cs': 5, 'php': 4, 'rb': 3, 'go': 2,
+            'rs': 1
+        };
+        
+        let mainExt = '';
+        let maxCount = 0;
+        
+        Object.entries(metrics.byExtension).forEach(([ext, count]) => {
+            if (count > maxCount || (count === maxCount && (extensionPriority[ext] || 0) > (extensionPriority[mainExt] || 0))) {
+                maxCount = count;
+                mainExt = ext;
+            }
+        });
+        
+        const languageMap = {
+            'js': 'JavaScript', 'jsx': 'JavaScript (React)',
+            'ts': 'TypeScript', 'tsx': 'TypeScript (React)',
+            'py': 'Python', 'java': 'Java',
+            'cpp': 'C++', 'c': 'C', 'cs': 'C#',
+            'php': 'PHP', 'rb': 'Ruby',
+            'go': 'Go', 'rs': 'Rust',
+            'css': 'CSS', 'scss': 'SCSS',
+            'html': 'HTML', 'json': 'JSON',
+            'md': 'Markdown'
+        };
+        
+        metrics.mainLanguage = languageMap[mainExt] || mainExt.toUpperCase() || 'Várias';
+        
+        return metrics;
+    },
+    
+    calculateDependencyMetrics: (dependencies) => {
+        if (!dependencies) return null;
+        
+        const { nodes, edges, stats } = dependencies;
+        
+        return {
+            totalNodes: nodes.length,
+            totalEdges: edges.length,
+            analyzedFiles: stats.analyzedFiles,
+            totalDependencies: stats.totalDependencies,
+            internalDeps: stats.internalDeps,
+            externalDeps: stats.externalDeps,
+            avgDepsPerFile: stats.totalDependencies / Math.max(stats.analyzedFiles, 1),
+            mostConnectedNode: nodes.reduce((max, node) => 
+                (node.importedBy?.length || 0) > (max.importedBy?.length || 0) ? node : max
+            , nodes[0] || {})
+        };
+    },
+    
+    calculateComplexityMetrics: (files) => {
+        // Métricas simplificadas de complexidade
+        const metrics = {
+            avgFileSizeKB: 0,
+            largestFile: null,
+            fileSizeDistribution: {
+                small: 0,   // < 10KB
+                medium: 0,  // 10-100KB
+                large: 0,   // 100-500KB
+                xlarge: 0   // > 500KB
+            },
+            extensionDiversity: 0
+        };
+        
+        if (!files || files.length === 0) return metrics;
+        
+        // Tamanho médio
+        metrics.avgFileSizeKB = files.reduce((sum, f) => sum + (f.sizeKB || 0), 0) / files.length;
+        
+        // Maior arquivo
+        metrics.largestFile = files.reduce((max, f) => 
+            (f.sizeKB || 0) > (max.sizeKB || 0) ? f : max
+        , files[0]);
+        
+        // Distribuição de tamanhos
+        files.forEach(f => {
+            const size = f.sizeKB || 0;
+            if (size < 10) metrics.fileSizeDistribution.small++;
+            else if (size < 100) metrics.fileSizeDistribution.medium++;
+            else if (size < 500) metrics.fileSizeDistribution.large++;
+            else metrics.fileSizeDistribution.xlarge++;
+        });
+        
+        // Diversidade de extensões (índice de Shannon)
+        const total = files.length;
+        const extensionCounts = {};
+        files.forEach(f => {
+            const ext = f.extension;
+            extensionCounts[ext] = (extensionCounts[ext] || 0) + 1;
+        });
+        
+        let diversity = 0;
+        Object.values(extensionCounts).forEach(count => {
+            const p = count / total;
+            diversity -= p * Math.log(p);
+        });
+        
+        metrics.extensionDiversity = isNaN(diversity) ? 0 : Math.round(diversity * 100) / 100;
+        
+        return metrics;
+    }
+};
+
+// ==================== COMPONENTES DE CONTROLE ====================
+const CacheControls = ({ onClearCache, onLoadFromCache, cacheStats, hasCache }) => {
+    return React.createElement('div', { className: 'cache-controls' }, [
+        React.createElement('button', {
+            key: 'load-cache',
+            onClick: onLoadFromCache,
+            disabled: !hasCache,
+            title: hasCache ? 'Carregar análise do cache' : 'Nenhum cache disponível'
+        }, [
+            React.createElement('i', { key: 'icon', className: 'fas fa-database' }),
+            ' Carregar do Cache'
+        ]),
+        
+        React.createElement('button', {
+            key: 'clear-cache',
+            onClick: onClearCache,
+            disabled: !hasCache,
+            title: 'Limpar todo o cache'
+        }, [
+            React.createElement('i', { key: 'icon', className: 'fas fa-trash-alt' }),
+            ' Limpar Cache'
+        ])
+    ]);
+};
+
+const ExportControls = ({ onExportImage, onExportJSON, onExportCSV, hasData, repoInfo }) => {
+    return React.createElement('div', { className: 'export-controls' }, [
+        React.createElement('button', {
+            key: 'export-image',
+            onClick: onExportImage,
+            disabled: !hasData,
+            title: 'Exportar visualização como imagem PNG'
+        }, [
+            React.createElement('i', { key: 'icon', className: 'fas fa-camera' }),
+            ' Exportar Imagem'
+        ]),
+        
+        React.createElement('button', {
+            key: 'export-json',
+            onClick: onExportJSON,
+            disabled: !hasData,
+            title: 'Exportar dados completos como JSON'
+        }, [
+            React.createElement('i', { key: 'icon', className: 'fas fa-file-code' }),
+            ' Exportar JSON'
+        ]),
+        
+        React.createElement('button', {
+            key: 'export-csv',
+            onClick: onExportCSV,
+            disabled: !hasData,
+            title: 'Exportar métricas como CSV'
+        }, [
+            React.createElement('i', { key: 'icon', className: 'fas fa-file-csv' }),
+            ' Exportar CSV'
+        ])
+    ]);
+};
+
+const MetricsDashboard = ({ basicMetrics, dependencyMetrics, complexityMetrics }) => {
+    const [activeTab, setActiveTab] = useState('basic');
+    
+    const renderBasicMetrics = () => {
+        if (!basicMetrics) return null;
+        
+        return React.createElement('div', { className: 'metrics-grid' }, [
+            React.createElement('div', { 
+                key: 'total-files',
+                className: 'metric-card'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, basicMetrics.totalFiles),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos Totais')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'total-size',
+                className: 'metric-card secondary'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    Math.round(basicMetrics.totalSizeKB) + ' KB'),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Tamanho Total')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'main-lang',
+                className: 'metric-card warning'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, basicMetrics.mainLanguage),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Linguagem Principal')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'js-files',
+                className: 'metric-card'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, basicMetrics.byExtension.js || 0),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos JS')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'ts-files',
+                className: 'metric-card secondary'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, basicMetrics.byExtension.ts || 0),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos TS')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'css-files',
+                className: 'metric-card warning'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    (basicMetrics.byExtension.css || 0) + (basicMetrics.byExtension.scss || 0)),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos CSS')
+            ])
+        ]);
+    };
+    
+    const renderDependencyMetrics = () => {
+        if (!dependencyMetrics) return null;
+        
+        return React.createElement('div', { className: 'metrics-grid' }, [
+            React.createElement('div', { 
+                key: 'analyzed-files',
+                className: 'metric-card'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, dependencyMetrics.analyzedFiles),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos Analisados')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'total-deps',
+                className: 'metric-card secondary'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, dependencyMetrics.totalDependencies),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Dependências Totais')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'avg-deps',
+                className: 'metric-card warning'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    Math.round(dependencyMetrics.avgDepsPerFile * 10) / 10),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Deps por Arquivo')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'internal-deps',
+                className: 'metric-card success'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, dependencyMetrics.internalDeps),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Deps Internas')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'external-deps',
+                className: 'metric-card danger'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, dependencyMetrics.externalDeps),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Deps Externas')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'most-connected',
+                className: 'metric-card'
+            }, [
+                React.createElement('div', { 
+                    key: 'value', 
+                    className: 'metric-value',
+                    title: dependencyMetrics.mostConnectedNode.path
+                }, dependencyMetrics.mostConnectedNode.label?.substring(0, 12) + '...'),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivo Mais Conectado')
+            ])
+        ]);
+    };
+    
+    const renderComplexityMetrics = () => {
+        if (!complexityMetrics) return null;
+        
+        return React.createElement('div', { className: 'metrics-grid' }, [
+            React.createElement('div', { 
+                key: 'avg-size',
+                className: 'metric-card'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    Math.round(complexityMetrics.avgFileSizeKB) + ' KB'),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Tamanho Médio')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'largest-file',
+                className: 'metric-card secondary'
+            }, [
+                React.createElement('div', { 
+                    key: 'value', 
+                    className: 'metric-value',
+                    title: complexityMetrics.largestFile?.path
+                }, complexityMetrics.largestFile ? 
+                    Math.round(complexityMetrics.largestFile.sizeKB) + ' KB' : 'N/A'),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Maior Arquivo')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'diversity',
+                className: 'metric-card warning'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    complexityMetrics.extensionDiversity),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Diversidade de Tipos')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'small-files',
+                className: 'metric-card success'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    complexityMetrics.fileSizeDistribution.small),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos < 10KB')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'medium-files',
+                className: 'metric-card'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    complexityMetrics.fileSizeDistribution.medium),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos 10-100KB')
+            ]),
+            
+            React.createElement('div', { 
+                key: 'large-files',
+                className: 'metric-card danger'
+            }, [
+                React.createElement('div', { key: 'value', className: 'metric-value' }, 
+                    complexityMetrics.fileSizeDistribution.large + complexityMetrics.fileSizeDistribution.xlarge),
+                React.createElement('div', { key: 'label', className: 'metric-label' }, 'Arquivos > 100KB')
+            ])
+        ]);
+    };
+    
+    return React.createElement('div', { className: 'metrics-dashboard' }, [
+        React.createElement('div', { key: 'header', className: 'metrics-header' }, [
+            React.createElement('h4', { key: 'title' }, [
+                React.createElement('i', { key: 'icon', className: 'fas fa-chart-bar' }),
+                ' Dashboard de Métricas'
+            ]),
+            
+            React.createElement('div', { key: 'tabs', className: 'view-toggle', style: { margin: 0 } }, [
+                React.createElement('button', {
+                    key: 'basic-tab',
+                    className: activeTab === 'basic' ? 'active' : '',
+                    onClick: () => setActiveTab('basic')
+                }, 'Básicas'),
+                React.createElement('button', {
+                    key: 'deps-tab',
+                    className: activeTab === 'deps' ? 'active' : '',
+                    onClick: () => setActiveTab('deps')
+                }, 'Dependências'),
+                React.createElement('button', {
+                    key: 'complexity-tab',
+                    className: activeTab === 'complexity' ? 'active' : '',
+                    onClick: () => setActiveTab('complexity')
+                }, 'Complexidade')
+            ])
+        ]),
+        
+        activeTab === 'basic' && renderBasicMetrics(),
+        activeTab === 'deps' && renderDependencyMetrics(),
+        activeTab === 'complexity' && renderComplexityMetrics()
+    ]);
+};
+
 // ==================== COMPONENTE TREE NODE ====================
 const TreeNode = ({ node, repoBase, level = 0, searchTerm = '', onNodeClick, highlightNodes = [] }) => {
     const [isOpen, setIsOpen] = useState(level < 2);
@@ -262,10 +826,8 @@ const analyzeDependencies = async (files, owner, repo, branch) => {
 };
 
 const resolveImportPath = (importPath, sourcePath, allNodes) => {
-    // Simplificado: tentar encontrar correspondência exata ou parcial
     const sourceDir = sourcePath.substring(0, sourcePath.lastIndexOf('/'));
     
-    // Casos comuns
     const possiblePaths = [
         importPath,
         `${importPath}.js`,
@@ -314,12 +876,10 @@ const DependencyGraph = ({ dependencies, onNodeClick, highlightedNode }) => {
     useEffect(() => {
         if (!graphRef.current || !dependencies || dependencies.nodes.length === 0) return;
         
-        // Destruir rede anterior se existir
         if (networkRef.current) {
             networkRef.current.destroy();
         }
         
-        // Preparar dados para vis-network
         const nodes = new vis.DataSet(
             dependencies.nodes.map(node => ({
                 id: node.id,
@@ -343,7 +903,6 @@ const DependencyGraph = ({ dependencies, onNodeClick, highlightedNode }) => {
         
         const edges = new vis.DataSet(dependencies.edges);
         
-        // Criar rede
         const container = graphRef.current;
         const data = { nodes, edges };
         
@@ -413,7 +972,6 @@ const DependencyGraph = ({ dependencies, onNodeClick, highlightedNode }) => {
         
         networkRef.current = new vis.Network(container, data, options);
         
-        // Event listeners
         networkRef.current.on('click', (params) => {
             if (params.nodes.length > 0 && onNodeClick) {
                 const nodeId = params.nodes[0];
@@ -431,7 +989,6 @@ const DependencyGraph = ({ dependencies, onNodeClick, highlightedNode }) => {
             }
         });
         
-        // Layout inicial
         setTimeout(() => {
             networkRef.current.fit({ animation: { duration: 1000 } });
         }, 500);
@@ -480,14 +1037,46 @@ function App() {
     const [lastUrl, setLastUrl] = useState('');
     const [expandedAll, setExpandedAll] = useState(true);
     
-    // Novos estados para dependências
     const [dependencies, setDependencies] = useState(null);
     const [analyzingDeps, setAnalyzingDeps] = useState(false);
-    const [activeView, setActiveView] = useState('tree'); // 'tree' ou 'deps'
+    const [activeView, setActiveView] = useState('tree');
     const [highlightedNode, setHighlightedNode] = useState(null);
     const [depsStats, setDepsStats] = useState(null);
     
-    const analyzeGithub = async (githubUrl = null) => {
+    // Novos estados para cache e métricas
+    const [cacheStats, setCacheStats] = useState(() => cache.getStats());
+    const [basicMetrics, setBasicMetrics] = useState(null);
+    const [dependencyMetrics, setDependencyMetrics] = useState(null);
+    const [complexityMetrics, setComplexityMetrics] = useState(null);
+    const [showNotification, setShowNotification] = useState(null);
+    
+    const showNotificationMessage = (message, type = 'info', duration = 3000) => {
+        setShowNotification({ message, type });
+        setTimeout(() => setShowNotification(null), duration);
+    };
+    
+    const getFileLanguage = (path) => {
+        const ext = path.split('.').pop().toLowerCase();
+        const languages = {
+            'js': 'JavaScript', 'jsx': 'JavaScript React',
+            'ts': 'TypeScript', 'tsx': 'TypeScript React',
+            'css': 'CSS', 'scss': 'SCSS', 'less': 'LESS',
+            'json': 'JSON',
+            'md': 'Markdown',
+            'html': 'HTML',
+            'py': 'Python',
+            'java': 'Java',
+            'cpp': 'C++', 'c': 'C',
+            'cs': 'C#',
+            'php': 'PHP',
+            'rb': 'Ruby',
+            'go': 'Go',
+            'rs': 'Rust'
+        };
+        return languages[ext] || ext.toUpperCase();
+    };
+    
+    const analyzeGithub = async (githubUrl = null, forceRefresh = false) => {
         const urlToAnalyze = githubUrl || url;
         if (!urlToAnalyze) {
             setError('Por favor, insira uma URL do GitHub');
@@ -503,8 +1092,27 @@ function App() {
         const [_, owner, repo] = match;
         const currentRepo = `${owner}/${repo}`;
         
-        if (lastUrl === currentRepo && files.length > 0) {
+        // Verificar cache se não for refresh forçado
+        if (!forceRefresh && lastUrl === currentRepo && files.length > 0) {
             setStatus('Repositório já carregado');
+            return;
+        }
+        
+        const cacheKey = `repo_${currentRepo.replace(/[^a-zA-Z0-9]/g, '_')}`;
+        const cachedData = cache.get(cacheKey);
+        
+        if (!forceRefresh && cachedData) {
+            setStatus('📦 Carregando do cache...');
+            setTimeout(() => {
+                setFiles(cachedData.files);
+                setFileTree(buildFileTree(cachedData.files));
+                setRepoInfo(cachedData.repoInfo);
+                setRepoBase(cachedData.repoBase);
+                setLastUrl(currentRepo);
+                updateMetrics(cachedData.files, null);
+                setStatus(`✅ ${cachedData.files.length} arquivos (do cache)`);
+                showNotificationMessage('Dados carregados do cache!', 'success');
+            }, 100);
             return;
         }
         
@@ -529,7 +1137,7 @@ function App() {
             }
             
             const repoData = await repoRes.json();
-            setRepoInfo({
+            const repoInfoData = {
                 name: repoData.name,
                 description: repoData.description,
                 stars: repoData.stargazers_count,
@@ -537,7 +1145,9 @@ function App() {
                 language: repoData.language,
                 owner: repoData.owner.login,
                 default_branch: repoData.default_branch
-            });
+            };
+            
+            setRepoInfo(repoInfoData);
             
             const branch = repoData.default_branch || 'main';
             const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
@@ -590,11 +1200,27 @@ function App() {
                 return;
             }
             
-            setRepoBase(`https://github.com/${owner}/${repo}`);
+            const repoBaseUrl = `https://github.com/${owner}/${repo}`;
+            setRepoBase(repoBaseUrl);
             setFiles(fileList);
             
             const tree = buildFileTree(fileList);
             setFileTree(tree);
+            
+            // Salvar no cache
+            const cacheData = {
+                files: fileList,
+                repoInfo: repoInfoData,
+                repoBase: repoBaseUrl,
+                timestamp: Date.now()
+            };
+            
+            if (cache.set(cacheKey, cacheData)) {
+                setCacheStats(cache.getStats());
+                showNotificationMessage('Análise salva no cache!', 'success');
+            }
+            
+            updateMetrics(fileList, null);
             
             setStatus(`✅ ${fileList.length} arquivos carregados! Clique em "Analisar Dependências"`);
             setLoading(false);
@@ -606,6 +1232,21 @@ function App() {
             setFiles([]);
             setFileTree(null);
             setLoading(false);
+        }
+    };
+    
+    const updateMetrics = (filesData, depsData) => {
+        if (filesData) {
+            const basic = metricsCalculator.calculateBasicMetrics(filesData);
+            const complexity = metricsCalculator.calculateComplexityMetrics(filesData);
+            setBasicMetrics(basic);
+            setComplexityMetrics(complexity);
+        }
+        
+        if (depsData) {
+            const depsMetrics = metricsCalculator.calculateDependencyMetrics(depsData);
+            setDependencyMetrics(depsMetrics);
+            setDepsStats(depsData.stats);
         }
     };
     
@@ -621,7 +1262,7 @@ function App() {
             
             const deps = await analyzeDependencies(files, owner, repo, branch);
             setDependencies(deps);
-            setDepsStats(deps.stats);
+            updateMetrics(null, deps);
             setActiveView('deps');
             setStatus(`✅ ${deps.stats.analyzedFiles} arquivos analisados, ${deps.stats.totalDependencies} dependências encontradas`);
         } catch (err) {
@@ -631,27 +1272,6 @@ function App() {
         } finally {
             setAnalyzingDeps(false);
         }
-    };
-    
-    const getFileLanguage = (path) => {
-        const ext = path.split('.').pop().toLowerCase();
-        const languages = {
-            'js': 'JavaScript', 'jsx': 'JavaScript React',
-            'ts': 'TypeScript', 'tsx': 'TypeScript React',
-            'css': 'CSS', 'scss': 'SCSS', 'less': 'LESS',
-            'json': 'JSON',
-            'md': 'Markdown',
-            'html': 'HTML',
-            'py': 'Python',
-            'java': 'Java',
-            'cpp': 'C++', 'c': 'C',
-            'cs': 'C#',
-            'php': 'PHP',
-            'rb': 'Ruby',
-            'go': 'Go',
-            'rs': 'Rust'
-        };
-        return languages[ext] || ext.toUpperCase();
     };
     
     const handleKeyPress = (e) => {
@@ -668,7 +1288,6 @@ function App() {
     
     const handleGraphNodeClick = (node) => {
         setHighlightedNode(node.id);
-        // Scroll para o nó na árvore se estiver visível
         setTimeout(() => {
             const element = document.querySelector(`[data-node-id="${node.id}"]`);
             if (element) {
@@ -677,24 +1296,87 @@ function App() {
         }, 100);
     };
     
-    const calculateStats = () => {
-        if (!files.length) return null;
-        
-        const stats = {
-            totalFiles: files.length,
-            totalSizeKB: files.reduce((sum, f) => sum + (f.sizeKB || 0), 0),
-            byExtension: {}
-        };
-        
-        files.forEach(f => {
-            const ext = f.extension;
-            stats.byExtension[ext] = (stats.byExtension[ext] || 0) + 1;
-        });
-        
-        return stats;
+    const handleClearCache = () => {
+        if (confirm('Tem certeza que deseja limpar todo o cache? Isso removerá todas as análises salvas.')) {
+            cache.clear();
+            setCacheStats(cache.getStats());
+            showNotificationMessage('Cache limpo com sucesso!', 'success');
+        }
     };
     
-    const stats = calculateStats();
+    const handleLoadFromCache = () => {
+        if (!lastUrl) {
+            showNotificationMessage('Digite uma URL primeiro', 'warning');
+            return;
+        }
+        
+        const cacheKey = `repo_${lastUrl.replace(/[^a-zA-Z0-9]/g, '_')}`;
+        const cachedData = cache.get(cacheKey);
+        
+        if (cachedData) {
+            setFiles(cachedData.files);
+            setFileTree(buildFileTree(cachedData.files));
+            setRepoInfo(cachedData.repoInfo);
+            setRepoBase(cachedData.repoBase);
+            updateMetrics(cachedData.files, null);
+            setStatus(`✅ ${cachedData.files.length} arquivos (do cache)`);
+            showNotificationMessage('Dados carregados do cache!', 'success');
+        } else {
+            showNotificationMessage('Nenhum cache encontrado para este repositório', 'warning');
+        }
+    };
+    
+    const handleExportImage = async () => {
+        try {
+            const elementId = activeView === 'tree' ? 'tree-view' : 'dependencyGraph';
+            const filename = repoInfo ? 
+                `codemap-${repoInfo.owner}-${repoInfo.name}-${activeView}.png` : 
+                'codemap-export.png';
+            
+            await exportUtils.exportAsImage(elementId, filename);
+            showNotificationMessage('Imagem exportada com sucesso!', 'success');
+        } catch (err) {
+            showNotificationMessage('Erro ao exportar imagem: ' + err.message, 'error');
+        }
+    };
+    
+    const handleExportJSON = () => {
+        try {
+            const exportData = {
+                repoInfo,
+                files,
+                fileTree,
+                dependencies,
+                basicMetrics,
+                dependencyMetrics,
+                complexityMetrics,
+                exportDate: new Date().toISOString(),
+                version: 'CodeCartographer v4.0'
+            };
+            
+            const filename = repoInfo ? 
+                `${repoInfo.owner}-${repoInfo.name}-analysis.json` : 
+                'codecartographer-analysis.json';
+            
+            exportUtils.exportAsJSON(exportData, filename);
+            showNotificationMessage('JSON exportado com sucesso!', 'success');
+        } catch (err) {
+            showNotificationMessage('Erro ao exportar JSON: ' + err.message, 'error');
+        }
+    };
+    
+    const handleExportCSV = () => {
+        try {
+            if (!basicMetrics) {
+                throw new Error('Nenhuma métrica disponível para exportar');
+            }
+            
+            exportUtils.exportMetricsAsCSV(basicMetrics);
+            showNotificationMessage('CSV exportado com sucesso!', 'success');
+        } catch (err) {
+            showNotificationMessage('Erro ao exportar CSV: ' + err.message, 'error');
+        }
+    };
     
     const examples = [
         { name: 'React', url: 'https://github.com/facebook/react' },
@@ -703,7 +1385,6 @@ function App() {
         { name: 'Next.js', url: 'https://github.com/vercel/next.js' }
     ];
     
-    // Renderizar legenda do gráfico
     const renderGraphLegend = () => {
         const languageGroups = [
             { name: 'JavaScript', color: '#3b82f6', group: 1 },
@@ -732,29 +1413,49 @@ function App() {
         ]);
     };
     
-    // Renderizar estatísticas de dependências
-    const renderDepsStats = () => {
-        if (!depsStats) return null;
+    const renderCacheIndicator = () => {
+        const hasCache = cacheStats && cacheStats.total > 0;
         
-        return React.createElement('div', { className: 'deps-stats' }, [
-            React.createElement('div', { key: 'analyzed', className: 'deps-stat' }, [
-                React.createElement('div', { key: 'value', className: 'deps-stat-value' }, depsStats.analyzedFiles),
-                React.createElement('div', { key: 'label', className: 'deps-stat-label' }, 'Arquivos Analisados')
-            ]),
-            React.createElement('div', { key: 'deps', className: 'deps-stat' }, [
-                React.createElement('div', { key: 'value', className: 'deps-stat-value' }, depsStats.totalDependencies),
-                React.createElement('div', { key: 'label', className: 'deps-stat-label' }, 'Dependências Totais')
-            ]),
-            React.createElement('div', { key: 'internal', className: 'deps-stat' }, [
-                React.createElement('div', { key: 'value', className: 'deps-stat-value' }, depsStats.internalDeps),
-                React.createElement('div', { key: 'label', className: 'deps-stat-label' }, 'Dependências Internas')
-            ])
+        return React.createElement('div', { className: 'cache-indicator' }, [
+            React.createElement('div', {
+                key: 'dot',
+                className: `cache-dot ${hasCache ? '' : 'inactive'}`,
+                title: hasCache ? 'Cache disponível' : 'Cache vazio'
+            }),
+            React.createElement('span', { key: 'text' }, 
+                hasCache ? `${cacheStats.total} repositórios em cache` : 'Cache vazio'
+            )
         ]);
     };
     
     return React.createElement('div', { 
         style: { width: '100%', height: '100%', position: 'relative' } 
     }, [
+        // Notificação
+        showNotification && React.createElement('div', {
+            key: 'notification',
+            className: `notification ${showNotification.type}`,
+            style: { 
+                position: 'fixed', 
+                top: '80px', 
+                right: '20px', 
+                zIndex: 10000 
+            }
+        }, [
+            React.createElement('i', {
+                key: 'icon',
+                className: `fas fa-${showNotification.type === 'success' ? 'check-circle' : 
+                             showNotification.type === 'error' ? 'exclamation-circle' : 
+                             'info-circle'}`
+            }),
+            React.createElement('span', { key: 'message' }, showNotification.message),
+            React.createElement('span', {
+                key: 'close',
+                className: 'notification-close',
+                onClick: () => setShowNotification(null)
+            }, '×')
+        ]),
+        
         // UI Layer
         React.createElement('div', { 
             key: 'ui-layer',
@@ -767,11 +1468,11 @@ function App() {
                 React.createElement('h3', { 
                     key: 'title',
                     style: { margin: '0 0 10px 0', color: '#f8fafc' }
-                }, 'GitHub Repository Analyzer'),
+                }, 'CodeCartographer Pro'),
                 React.createElement('p', { 
                     key: 'subtitle',
                     style: { fontSize: '12px', color: '#94a3b8', margin: '0' }
-                }, 'Visualize a estrutura e dependências do código')
+                }, 'Análise visual completa de repositórios GitHub')
             ]),
             
             // View Toggle
@@ -795,7 +1496,13 @@ function App() {
                         }
                     },
                     disabled: analyzingDeps
-                }, analyzingDeps ? '🔍 Analisando...' : '🔗 Mapa de Dependências')
+                }, analyzingDeps ? '🔍 Analisando...' : '🔗 Mapa de Dependências'),
+                React.createElement('button', {
+                    key: 'metrics-view',
+                    className: activeView === 'metrics' ? 'active' : '',
+                    onClick: () => setActiveView('metrics'),
+                    disabled: !basicMetrics
+                }, '📊 Dashboard')
             ]),
             
             React.createElement('div', { 
@@ -813,11 +1520,24 @@ function App() {
                 React.createElement('button', { 
                     key: 'button',
                     onClick: () => analyzeGithub(),
-                    disabled: loading || analyzingDeps
+                    disabled: loading || analyzingDeps,
+                    title: 'Analisar repositório'
                 }, loading ? [
                     React.createElement('span', { key: 'spinner', className: 'loading-spinner' }),
                     'ANALISANDO...'
-                ] : '🚀 ANALISAR REPOSITÓRIO')
+                ] : [
+                    React.createElement('i', { key: 'icon', className: 'fas fa-rocket' }),
+                    ' ANALISAR'
+                ]),
+                React.createElement('button', {
+                    key: 'refresh',
+                    onClick: () => analyzeGithub(null, true),
+                    disabled: loading || analyzingDeps || !lastUrl,
+                    title: 'Forçar atualização (ignorar cache)',
+                    style: { padding: '12px', minWidth: 'auto' }
+                }, [
+                    React.createElement('i', { key: 'icon', className: 'fas fa-sync-alt' })
+                ])
             ]),
             
             React.createElement('div', { 
@@ -832,7 +1552,38 @@ function App() {
                 }, error)
             ]),
             
-            repoInfo && React.createElement('div', {
+            // Controles de Cache
+            React.createElement(CacheControls, {
+                key: 'cache-controls',
+                onClearCache: handleClearCache,
+                onLoadFromCache: handleLoadFromCache,
+                cacheStats: cacheStats,
+                hasCache: cacheStats && cacheStats.total > 0
+            }),
+            
+            // Controles de Exportação
+            files.length > 0 && React.createElement(ExportControls, {
+                key: 'export-controls',
+                onExportImage: handleExportImage,
+                onExportJSON: handleExportJSON,
+                onExportCSV: handleExportCSV,
+                hasData: files.length > 0,
+                repoInfo: repoInfo
+            }),
+            
+            // Indicador de Cache
+            React.createElement(renderCacheIndicator, { key: 'cache-indicator' }),
+            
+            // Dashboard de Métricas (se disponível)
+            basicMetrics && activeView === 'metrics' && React.createElement(MetricsDashboard, {
+                key: 'metrics-dashboard',
+                basicMetrics: basicMetrics,
+                dependencyMetrics: dependencyMetrics,
+                complexityMetrics: complexityMetrics
+            }),
+            
+            // Informações do Repositório
+            repoInfo && activeView !== 'metrics' && React.createElement('div', {
                 key: 'repo-info',
                 className: 'file-stats'
             }, [
@@ -867,8 +1618,7 @@ function App() {
                 ])
             ]),
             
-            dependencies && renderDepsStats(),
-            
+            // Exemplos (apenas se não houver dados)
             files.length === 0 && React.createElement('div', {
                 key: 'examples',
                 style: { marginTop: '15px' }
@@ -911,13 +1661,13 @@ function App() {
         ]),
         
         // Visualização em Árvore
-        fileTree && React.createElement('div', {
+        fileTree && activeView === 'tree' && React.createElement('div', {
             key: 'tree-container',
-            className: 'tree-container',
-            style: { display: activeView === 'tree' ? 'block' : 'none' }
+            className: 'tree-container'
         }, [
             React.createElement('div', {
                 key: 'tree-view',
+                id: 'tree-view',
                 className: 'tree-view'
             }, [
                 React.createElement('div', {
@@ -940,7 +1690,7 @@ function App() {
                         key: 'deps-btn',
                         onClick: analyzeDependenciesForRepo,
                         disabled: analyzingDeps
-                    }, analyzingDeps ? '🔍 Analisando...' : '🔗 Ver Dependências')
+                    }, analyzingDeps ? '🔍 Analisando...' : '🔗 Analisar Dependências')
                 ]),
                 
                 React.createElement('div', {
@@ -960,9 +1710,9 @@ function App() {
         ]),
         
         // Visualização de Dependências
-        React.createElement('div', {
+        activeView === 'deps' && React.createElement('div', {
             key: 'deps-container',
-            className: `dependencies-container ${activeView === 'deps' ? 'active' : ''}`
+            className: 'dependencies-container active'
         }, [
             analyzingDeps ? React.createElement('div', {
                 key: 'loading',
@@ -1033,6 +1783,64 @@ function App() {
                     }
                 }, analyzingDeps ? 'Analisando...' : '🔍 Analisar Dependências')
             ])
+        ]),
+        
+        // Dashboard de Métricas (view separada)
+        activeView === 'metrics' && basicMetrics && React.createElement('div', {
+            key: 'metrics-container',
+            className: 'tree-container'
+        }, [
+            React.createElement('div', {
+                key: 'metrics-view',
+                className: 'tree-view',
+                style: { maxHeight: 'calc(100vh - 120px)', overflow: 'auto' }
+            }, [
+                React.createElement('div', {
+                    key: 'controls',
+                    className: 'tree-controls'
+                }, [
+                    React.createElement('button', {
+                        key: 'back',
+                        onClick: () => setActiveView('tree'),
+                        style: { background: '#475569' }
+                    }, '← Voltar para Árvore'),
+                    React.createElement('button', {
+                        key: 'export-all',
+                        onClick: handleExportCSV,
+                        style: { background: '#10b981' }
+                    }, '📊 Exportar Todas as Métricas')
+                ]),
+                
+                React.createElement(MetricsDashboard, {
+                    key: 'dashboard',
+                    basicMetrics: basicMetrics,
+                    dependencyMetrics: dependencyMetrics,
+                    complexityMetrics: complexityMetrics
+                }),
+                
+                // Gráficos adicionais podem ser adicionados aqui
+                React.createElement('div', {
+                    key: 'charts-container',
+                    className: 'chart-container',
+                    style: { marginTop: '20px' }
+                }, [
+                    React.createElement('h4', {
+                        key: 'title',
+                        style: { marginBottom: '15px' }
+                    }, 'Distribuição por Tipo de Arquivo'),
+                    React.createElement('div', {
+                        key: 'chart',
+                        id: 'fileTypeChart',
+                        style: { height: '200px', position: 'relative' }
+                    }, [
+                        React.createElement('canvas', {
+                            key: 'canvas',
+                            id: 'fileTypeCanvas',
+                            style: { width: '100%', height: '100%' }
+                        })
+                    ])
+                ])
+            ])
         ])
     ]);
 }
@@ -1044,6 +1852,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const root = createRoot(container);
             root.render(React.createElement(App));
+            
+            // Atualizar cache stats periodicamente
+            setInterval(() => {
+                const cacheStats = cache.getStats();
+                const cacheStatus = document.getElementById('cacheStatus');
+                if (cacheStatus && cacheStats.total > 0) {
+                    cacheStatus.innerHTML = 
+                        `<i class="fas fa-database"></i> ${cacheStats.total} repos em cache (${cacheStats.sizeKB} KB)`;
+                }
+            }, 30000);
+            
         } catch (error) {
             console.error('Erro ao renderizar aplicação:', error);
             container.innerHTML = `
