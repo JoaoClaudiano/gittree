@@ -38,6 +38,10 @@
         .nav-prev, .nav-next { color: #94a3b8; text-decoration: none; max-width: 45%; }
         .nav-prev:hover, .nav-next:hover { color: #3b82f6; }
         .nav-label { display: block; font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem; }
+        html, body {
+        height: 100%;
+        overflow-y: auto; /* Garante que a rolagem vertical funcione */
+        }
         @media (max-width: 768px) { .article-title { font-size: 2rem; } .article-meta { flex-direction: column; gap: 0.75rem; } .article-navigation { flex-direction: column; gap: 1.5rem; } .nav-prev, .nav-next { max-width: 100%; } }
         .comparison-table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
         .comparison-table th, .comparison-table td { padding: 1rem; border: 1px solid #334155; text-align: left; }
