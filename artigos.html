@@ -402,6 +402,80 @@
             }
             return false;
         }
+
+        // Função para carregar artigos dinamicamente
+async function loadArticles() {
+    const articlesGrid = document.getElementById('articlesGrid');
+    const articles = [
+        {
+            file: 'comparativo-ferramentas-mercado.html',
+            title: 'CodeCartographer vs. Ferramentas Empresariais',
+            excerpt: 'SonarQube, NDepend, Structure101... Veja quando uma solução focada como a nossa é a escolha certa.',
+            category: 'Comparativos & Análise',
+            date: '5 Fev, 2026',
+            readTime: '8 min'
+        },
+        {
+            file: 'workshop-time-1h.html',
+            title: 'Workshop de 1 Hora: Avalie Qualquer Repositório GitHub',
+            excerpt: 'Siga este workshop passo a passo para, em 60 minutos, gerar um relatório completo sobre saúde arquitetural.',
+            category: 'Tutorial Prático',
+            date: '8 Fev, 2026',
+            readTime: '6 min'
+        },
+        {
+            file: 'opiniao-metricas-exageradas.html',
+            title: '"Code Smells" Arquiteturais: Quando as Métricas Mentem',
+            excerpt: 'Nem todo módulo altamente acoplado é um problema. Descubra quando violar "boas práticas" é a decisão correta.',
+            category: 'Opinião & Análise',
+            date: '12 Fev, 2026',
+            readTime: '10 min'
+        },
+        {
+            file: 'gestao-divida-tecnica.html',
+            title: 'Gestão de Dívida Técnica para Líderes',
+            excerpt: 'Como traduzir complexidade ciclomática, acoplamento e coesão em argumentos que stakeholders não-técnicos entendem.',
+            category: 'Gestão & Liderança',
+            date: '15 Fev, 2026',
+            readTime: '12 min'
+        },
+        {
+            file: 'futuro-analise-codigo.html',
+            title: 'O Futuro da Análise de Código com IA',
+            excerpt: 'De visualizações estáticas para assistentes de IA que preveem pontos de falha e sugerem refatorações.',
+            category: 'Tendências & Futuro',
+            date: '18 Fev, 2026',
+            readTime: '11 min'
+        }
+    ];
+    
+    // Limpar conteúdo existente (remova os artigos fictícios)
+    articlesGrid.innerHTML = '';
+    
+    // Adicionar cada artigo real
+    articles.forEach(article => {
+        const articleHTML = `
+            <article class="article-card-listing">
+                <span class="article-category">${article.category}</span>
+                <h2 class="article-title-listing">
+                    <a href="artigos/${article.file}">${article.title}</a>
+                </h2>
+                <p class="article-excerpt-listing">${article.excerpt}</p>
+                <div class="article-meta-listing">
+                    <span><i class="far fa-calendar"></i> ${article.date}</span>
+                    <span class="read-time"><i class="far fa-clock"></i> ${article.readTime}</span>
+                </div>
+            </article>
+        `;
+        articlesGrid.innerHTML += articleHTML;
+    });
+    
+    // Ajustar paginação (apenas 1 página agora)
+    document.querySelector('.pagination').innerHTML = '<a href="#" class="current">1</a>';
+}
+
+// Chamar a função quando a página carregar
+document.addEventListener('DOMContentLoaded', loadArticles);
     </script>
 </body>
 </html>
