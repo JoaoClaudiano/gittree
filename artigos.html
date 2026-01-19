@@ -38,11 +38,60 @@
             </article>
 
             <article class="article-card">
-                <h2><a href="#">O Que é um Mapa de Dependências e Por Que Todo Desenvolvedor Deveria se Importar?</a></h2>
-                <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 15 de Janeiro, 2026 | <i class="far fa-folder"></i> Conceitos</p>
-                <p>Entenda como esta técnica de visualização pode revelar a saúde arquitetural do seu projeto e prevenir dívida técnica.</p>
-                <a href="#" class="read-more">Ler artigo completo →</a>
-            </article>
+    <h2><a href="#">Como Identificar e Corrigir Dependências Circulares em 4 Passos</a></h2>
+    <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 20 de Janeiro, 2026 | <i class="far fa-folder"></i> Tutorial Prático</p>
+    <p>Dependências circulares são um dos problemas mais silenciosos em código legado. Elas criam acoplamento invisível, dificultam testes e podem causar falhas inesperadas na inicialização. Neste guia prático, você vai aprender a usar o <strong>CodeCartographer</strong> para detectar esses ciclos em seu projeto e, mais importante, estratégias para desembaraçá-los.</p>
+    <h3>Passo a Passo com a Ferramenta</h3>
+    <p>1. Cole a URL do seu repositório no GitHub.<br>2. No grafo gerado, busque por <em>clusters</em> de nós fortemente conectados formando um "anel".<br>3. Use a função de busca para isolar módulos suspeitos.<br>4. Analise a lista de imports gerada pela ferramenta para confirmar o ciclo.</p>
+    <p>Com o problema mapeado, discutimos 3 estratégias de correção: introdução de interfaces, inversão de dependência (DIP) e a criação de um módulo comum.</p>
+    <a href="#" class="read-more">Ler guia completo com exemplos de código →</a>
+</article>
+
+<article class="article-card">
+    <h2><a href="#">Mapa de Dependências: O Radar do Desenvolvedor para Navegar em Código Legado</a></h2>
+    <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 18 de Janeiro, 2026 | <i class="far fa-folder"></i> Arquitetura & Conceitos</p>
+    <p>Entrar em um projeto legado pode ser como explorar uma cidade desconhecida sem mapa. Você sabe que há edifícios (módulos) e ruas (dependências), mas não compreende a lógica da cidade. Um <strong>mapa de dependências</strong> é exatamente o radar que falta. Este artigo explica como essa visualização transcende a simples listagem de arquivos, revelando a <em>topologia</em> e a <em>saúde estrutural</em> do software.</p>
+    <p>Abordamos como padrões no grafo — como nós extremamente conectados ("hubs") ou módulos isolados ("ilhas") — correspondem a conceitos de arquitetura como "God Class" ou "código órfão". Aprenda a linguagem visual do seu código para tomar decisões de refatoração com confiança, baseadas em evidências e não em intuição.</p>
+    <a href="#" class="read-more">Ler artigo completo e entender a linguagem do seu código →</a>
+</article>
+
+<article class="article-card">
+    <h2><a href="#">5 Problemas de Arquitetura que um Mapa de Dependências Revela Imediatamente</a></h2>
+    <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 15 de Janeiro, 2026 | <i class="far fa-folder"></i> Análise & Diagnóstico</p>
+    <p>Muitos problemas de arquitetura são invisíveis durante a leitura linha-a-linha do código, mas saltam aos olhos quando vistos de cima. Listamos os 5 padrões mais comuns que a visualização do CodeCartographer expõe:</p>
+    <ol>
+        <li><strong>O "Grande Hub" (God Object):</strong> Um único módulo com dezenas de dependências entrando e saindo, indicando uma classe que faz coisas demais.</li>
+        <li><strong>Ciclos de Dependência:</strong> Módulos que dependem indiretamente de si mesmos, criando um sistema frágil e difícil de testar.</li>
+        <li><strong>Módulos Órfãos:</strong> Código que não é importado por ninguém, um forte candidato a "dead code" ou funcionalidade abandonada.</li>
+        <li><strong>Acoplamento em Cascata:</strong> Uma longa cadeia linear de dependências onde uma mudança no início impacta todos os outros.</li>
+        <li><strong>Fronteiras de Contexto Desrespeitadas:</strong> Importações cruzadas entre camadas (ex: UI importando lógica de acesso a dados), violando princípios de arquitetura limpa.</li>
+    </ol>
+    <p>Aprenda a identificar cada um desses padrões no grafo gerado pela ferramenta.</p>
+    <a href="#" class="read-more">Ver exemplos visuais de cada problema →</a>
+</article>
+
+<article class="article-card">
+    <h2><a href="#">Planejando uma Grande Refatoração: Como o Mapa Define a Ordem das Tarefas</a></h2>
+    <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 12 de Janeiro, 2026 | <i class="far fa-folder"></i> Gestão & Estratégia</p>
+    <p>Refatorar um sistema grande é assustador. Por onde começar? Qual mudança é segura? Um mapa de dependências transforma esse processo de um salto no escuro para uma jornada com mapa. Este artigo é um guia estratégico para <strong>priorizar e sequenciar</strong> tarefas de refatoração com base na análise do grafo.</p>
+    <p>A estratégia principal é atacar as <em>folhas da árvore</em> primeiro: módulos que não são dependidos por ninguém, mas que dependem de outros. Refatorá-los tem risco quase zero de quebrar o sistema. Em seguida, suba gradualmente para os nós mais centrais. Mostramos como usar a métrica de "dependências de entrada/saída" gerada pela ferramenta para calcular o <strong>risco e o impacto</strong> de cada mudança, permitindo criar um backlog de refatoração realista e eficaz para sua equipe.</p>
+    <a href="#" class="read-more">Ler o guia estratégico completo e baixar um template de planejamento →</a>
+</article>
+
+<article class="article-card">
+    <h2><a href="#">Ferramenta Visual vs. Análise Estática: Quando o Mapa Ganha da Lista?</a></h2>
+    <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 10 de Janeiro, 2026 | <i class="far fa-folder"></i> Ferramentas & Comparativos</p>
+    <p>Ferramentas de análise estática (como ESLint, SonarQube) são excelentes para detectar problemas em nível de código (complexidade, padrões). No entanto, para problemas em nível de <em>arquitetura</em> e <em>estrutura</em>, uma visualização gráfica oferece vantagens únicas. Este artigo compara as abordagens.</p>
+    <p><strong>Vantagem do Mapa Visual (CodeCartographer):</strong>
+    <ul>
+        <li><strong>Compreensão Imediata:</strong> Padrões complexos são identificados em segundos pelo cérebro visual, contra minutos lendo listas.</li>
+        <li><strong>Contexto Espacial:</strong> Você vê a "distância" e os caminhos entre módulos, essencial para planejar migrações.</li>
+        <li><strong>Foco em Relações:</strong> A ferramenta filtra o ruído e mostra apenas o que importa: como as partes se conectam.</li>
+    </ul>
+    Concluímos que as abordagens são <strong>complementares</strong>: use análise estática para qualidade do código interno, e o mapa visual para qualidade das conexões entre os códigos. Aprenda a integrar os dois fluxos no seu workflow.</p>
+    <a href="#" class="read-more">Ver a comparação detalhada com exemplos →</a>
+</article>
+
 
             <!-- Adicione mais elementos <article> aqui no futuro -->
         </main>
