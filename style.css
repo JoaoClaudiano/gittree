@@ -1120,3 +1120,144 @@ body.light-theme {
 .notification-close:hover {
     opacity: 1;
 }
+
+/* ===== Estilos para a Navegação no Header (Passo 2) ===== */
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+.main-nav {
+    display: flex;
+    margin-left: 2rem;
+}
+.nav-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.nav-link:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+/* ===== Estilos para a Página de Artigos (Passo 1) ===== */
+.content-with-sidebar {
+    display: flex;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    gap: 3rem;
+}
+.articles-main {
+    flex: 1;
+    min-width: 0; /* Importante para responsividade */
+}
+.articles-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+}
+.page-subtitle {
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+.article-card {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #3b82f6;
+}
+.article-card h2 a {
+    color: #f1f5f9;
+    text-decoration: none;
+}
+.article-card h2 a:hover {
+    color: #3b82f6;
+}
+.article-meta {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+.read-more {
+    display: inline-block;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+.sidebar-widget {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.sidebar-widget h3 {
+    color: #f1f5f9;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.search-box, .email-input {
+    width: 100%;
+    padding: 0.75rem;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+.subscribe-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.sidebar-widget ul {
+    list-style: none;
+    padding-left: 0;
+}
+.sidebar-widget ul li {
+    margin-bottom: 0.75rem;
+}
+.sidebar-widget ul li a {
+    color: #cbd5e1;
+    text-decoration: none;
+}
+.sidebar-widget ul li a:hover {
+    color: #3b82f6;
+}
+
+/* ===== Responsividade para Mobile ===== */
+@media (max-width: 768px) {
+    .content-with-sidebar {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+    .articles-sidebar {
+        width: 100%;
+        order: -1; /* Coloca a sidebar acima no mobile, se preferir */
+    }
+    .main-nav {
+        margin-left: 1rem;
+    }
+    .nav-link span {
+        display: none; /* Esconde o texto "Artigos", mostra só o ícone no mobile */
+    }
+}
+
+
+
