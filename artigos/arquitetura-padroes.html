@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Identificando Violações de Clean Architecture no Mapa de Dependências | CodeCartographer</title>
+    <meta name="description" content="Como o mapa visual expõe violações das regras de direção de dependências na Clean Architecture e outros padrões arquiteturais.">
+    
+    <meta property="og:title" content="Identificando Violações de Clean Architecture no Mapa de Dependências">
+    <meta property="og:description" content="Como o mapa visual expõe violações das regras de direção de dependências na Clean Architecture.">
+    <meta property="og:image" content="https://joaoclaudiano.github.io/legacymap/images/artigos/clean-architecture.jpg">
+    <meta property="og:url" content="https://joaoclaudiano.github.io/legacymap/artigos/violacoes-clean-architecture-mapa.html">
+    <meta property="og:type" content="article">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Estilos base do artigo */
+        body {
+            overflow-y: scroll; /* Garante que a página sempre tenha scroll vertical */
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .article-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            min-height: 100vh; /* Garante que o container ocupe altura mínima */
+        }
+        
+        .article-header {
+            margin-bottom: 3rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #f8fafc;
+        }
+        
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .article-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            padding-bottom: 3rem; /* Espaço extra no final para scroll */
+        }
+        
+        .article-content h2 {
+            font-size: 1.75rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #f1f5f9;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #f1f5f9;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .article-content code {
+            background: #1e293b;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .article-content pre {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        /* Botão de copiar código */
+        .copy-code-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        
+        .copy-code-btn:hover {
+            background: #2563eb;
+        }
+        
+        .copy-code-btn.copied {
+            background: #22c55e;
+        }
+        
+        .article-cta {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        
+        .cta-button:hover {
+            background: #2563eb;
+        }
+        
+        .article-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+        }
+        
+        .nav-prev, .nav-next {
+            color: #94a3b8;
+            text-decoration: none;
+            max-width: 45%;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .nav-prev:hover, .nav-next:hover {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .nav-label {
+            display: block;
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .architecture-layer {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+        
+        .layer-entities { border-left-color: #22c55e; }
+        .layer-use-cases { border-left-color: #3b82f6; }
+        .layer-interface { border-left-color: #8b5cf6; }
+        .layer-frameworks { border-left-color: #f59e0b; }
+        
+        .violation-card {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .violation-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .violation-icon {
+            color: #ef4444;
+            font-size: 1.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .article-navigation {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .nav-prev, .nav-next {
+                max-width: 100%;
+            }
+            
+            .article-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-map"></i> 
+            <span style="color: #3b82f6;">CODE</span>CARTOGRAPHER
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Início</a>
+            <a href="../artigos.html" class="nav-link"><i class="fas fa-newspaper"></i> Artigos</a>
+        </nav>
+        <div class="header-controls">
+            <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <article>
+            <header class="article-header">
+                <h1 class="article-title">Identificando Violações de Clean Architecture no Mapa de Dependências</h1>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> Publicado em: 28 de Janeiro, 2026</span>
+                    <span><i class="far fa-folder"></i> Categoria: Arquitetura & Padrões</span>
+                    <span><i class="far fa-clock"></i> Tempo de leitura: 8 minutos</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>Clean Architecture estabelece regras claras sobre a <strong>direção das dependências</strong>: elas devem fluir das políticas centrais (regras de negócio) para os detalhes periféricos (frameworks, UI, banco de dados). No entanto, na prática, essas regras são frequentemente violadas de formas sutis que passam despercebidas em revisões de código tradicionais. Um mapa de dependências expõe essas violações visualmente, tornando-as impossíveis de ignorar.</p>
+                
+                <h2>As Camadas da Clean Architecture e Suas Direções</h2>
+                
+                <div class="architecture-layer layer-entities">
+                    <h3>1. Entidades (Camada Central)</h3>
+                    <p><strong>O que são:</strong> Regras de negócio mais puras e fundamentais. Exemplos: <code>User</code>, <code>Order</code>, <code>Product</code>.</p>
+                    <p><strong>Direção de dependência:</strong> Nenhuma dependência externa. São as folhas da árvore que só podem ser dependidas.</p>
+                </div>
+                
+                <div class="architecture-layer layer-use-cases">
+                    <h3>2. Casos de Uso</h3>
+                    <p><strong>O que são:</strong> Regras de negócio específicas da aplicação. Exemplos: <code>CreateOrderUseCase</code>, <code>ProcessPaymentUseCase</code>.</p>
+                    <p><strong>Direção de dependência:</strong> Podem depender apenas de Entidades. Nunca de frameworks ou UI.</p>
+                </div>
+                
+                <div class="architecture-layer layer-interface">
+                    <h3>3. Adaptadores de Interface</h3>
+                    <p><strong>O que são:</strong> Convertem dados entre Casos de Uso e o mundo externo. Exemplos: <code>OrderController</code>, <code>UserRepositoryImpl</code>.</p>
+                    <p><strong>Direção de dependência:</strong> Podem depender de Casos de Uso, mas nunca o contrário.</p>
+                </div>
+                
+                <div class="architecture-layer layer-frameworks">
+                    <h3>4. Frameworks & Drivers</h3>
+                    <p><strong>O que são:</strong> Detalhes de implementação. Exemplos: <code>ExpressController</code>, <code>MongoDBRepository</code>, <code>ReactComponent</code>.</p>
+                    <p><strong>Direção de dependência:</strong> Última camada, pode depender de Adaptadores, mas nunca ser dependida por camadas internas.</p>
+                </div>
+                
+                <h2>Padrões de Violação Comuns Revelados pelo Mapa</h2>
+                
+                <div class="violation-card">
+                    <div class="violation-header">
+                        <i class="fas fa-exclamation-triangle violation-icon"></i>
+                        <h3>Violação 1: Dependência Inversa</h3>
+                    </div>
+                    <p><strong>Como identificar:</strong> Setas apontando das camadas internas para as externas. Exemplo: Uma Entidade importando um componente React.</p>
+                    
+                    <pre><code>// ❌ VIOLAÇÃO: Entidade dependendo de framework
+// arquivo User.ts (Entidade)
+import { ReactComponent } from '../ui/UserProfile'; // ERRO!
+
+// arquivo UserProfile.tsx (Framework)
+// Este arquivo deveria importar User, não o contrário</code></pre>
+                    <button class="copy-code-btn" onclick="copyCode(this)">Copiar</button>
+                    
+                    <p><strong>No mapa:</strong> Setas vermelhas saindo do núcleo verde (Entidades) em direção à periferia laranja (Frameworks).</p>
+                </div>
+                
+                <div class="violation-card">
+                    <div class="violation-header">
+                        <i class="fas fa-exclamation-triangle violation-icon"></i>
+                        <h3>Violação 2: Acoplamento a Frameworks</h3>
+                    </div>
+                    <p><strong>Como identificar:</strong> Casos de Uso importando diretamente Express, TypeORM, React, etc.</p>
+                    
+                    <pre><code>// ❌ VIOLAÇÃO: Caso de uso acoplado a framework
+// arquivo CreateOrderUseCase.ts
+import { Request, Response } from 'express'; // ERRO!
+import { OrderRepository } from './OrderRepository';
+
+export class CreateOrderUseCase {
+  // Deveria receber dados simples, não objetos do Express
+  async execute(req: Request, res: Response) {
+    // ...
+  }
+}</code></pre>
+                    <button class="copy-code-btn" onclick="copyCode(this)">Copiar</button>
+                    
+                    <p><strong>Solução:</strong> O caso de uso deve receber DTOs simples e retornar DTOs simples. O controlador do Express converte entre Request/Response e os DTOs.</p>
+                </div>
+                
+                <div class="violation-card">
+                    <div class="violation-header">
+                        <i class="fas fa-exclamation-triangle violation-icon"></i>
+                        <h3>Violacao 3: Ignorando Boundaries</h3>
+                    </div>
+                    <p><strong>Como identificar:</strong> Importacoes cruzadas entre camadas que deveriam ser unidirecionais.</p>
+                    
+                    <pre><code>// ❌ VIOLAÇÃO: Importação cruzada
+// Camada A (mais interna) → Camada B (mais externa) ✓
+// Camada B (mais externa) → Camada A (mais interna) ❌
+
+// arquivo UserService.ts (Caso de Uso)
+import { User } from '../entities/User'; // ✓ OK
+
+// arquivo UserController.ts (Adaptador)  
+import { UserService } from '../usecases/UserService'; // ✓ OK
+
+// arquivo User.ts (Entidade)
+import { UserController } from '../controllers/UserController'; // ❌ VIOLAÇÃO!</code></pre>
+                    <button class="copy-code-btn" onclick="copyCode(this)">Copiar</button>
+                </div>
+                
+                <h2>Como o CodeCartographer Ajuda</h2>
+                
+                <p>Use a funcionalidade de <strong>colorir por camada</strong> para visualizar imediatamente violações:</p>
+                
+                <ol>
+                    <li><strong>Atribuir cores às camadas:</strong> Verde para Entidades, Azul para Casos de Uso, Roxo para Adaptadores, Laranja para Frameworks.</li>
+                    <li><strong>Gerar o mapa:</strong> Violações aparecem como setas "erradas" - saindo do verde em direção ao laranja, por exemplo.</li>
+                    <li><strong>Filtrar violações:</strong> Use o filtro "Mostrar apenas violações" para focar nos problemas.</li>
+                </ol>
+                
+                <h3>Exemplo de Configuração de Camadas</h3>
+                
+                <pre><code>// config/cartographer-layers.json
+{
+  "layers": [
+    {
+      "name": "Entities",
+      "color": "#22c55e",
+      "patterns": ["**/entities/**", "**/domain/**"]
+    },
+    {
+      "name": "UseCases", 
+      "color": "#3b82f6",
+      "patterns": ["**/usecases/**", "**/application/**"]
+    },
+    {
+      "name": "InterfaceAdapters",
+      "color": "#8b5cf6",
+      "patterns": ["**/controllers/**", "**/presenters/**", "**/gateways/**"]
+    },
+    {
+      "name": "Frameworks",
+      "color": "#f59e0b",
+      "patterns": ["**/frameworks/**", "**/infrastructure/**", "**/ui/**", "**/api/**"]
+    }
+  ],
+  "rules": [
+    {
+      "name": "DependencyDirection",
+      "description": "Dependências devem fluir para dentro",
+      "allowed": [
+        "Frameworks → InterfaceAdapters",
+        "InterfaceAdapters → UseCases", 
+        "UseCases → Entities"
+      ],
+      "forbidden": [
+        "Entities → *",
+        "UseCases → Frameworks",
+        "InterfaceAdapters → Entities"
+      ]
+    }
+  ]
+}</code></pre>
+                <button class="copy-code-btn" onclick="copyCode(this)">Copiar</button>
+                
+                <h2>Exercício Prático: Analise um Projeto Open-Source</h2>
+                
+                <p>Escolha um repositório popular no GitHub e:</p>
+                
+                <ol>
+                    <li>Gere o mapa completo com CodeCartographer</li>
+                    <li>Tente identificar as camadas arquiteturais</li>
+                    <li>Conte o número de violações de direção de dependência</li>
+                    <li>Compare com a "pureza" arquitetural declarada no README</li>
+                </ol>
+                
+                <p><strong>Resultado típico:</strong> Mesmo projetos que afirmam seguir Clean Architecture rigorosamente têm 10-30% de violações. A questão não é eliminá-las completamente, mas conhecê-las e controlá-las.</p>
+                
+                <h2>Quando Violar é Aceitável (ou Necessário)</h2>
+                
+                <p>Nem toda violação é um problema:</p>
+                
+                <ul>
+                    <li><strong>Utilities compartilhados:</strong> Funções puras como <code>formatDate</code> podem ser usadas por qualquer camada</li>
+                    <li><strong>Types/Interfaces:</strong> Definições de tipo podem circular entre camadas</li>
+                    <li><strong>Protótipos e MVPs:</strong> Velocidade pode justificar violações temporárias</li>
+                    <li><strong>Legacy integration:</strong> Integrar com sistemas legados pode exigir compromissos</li>
+                </ul>
+                
+                <p>A chave é <strong>saber que você está violando</strong> e documentar o porquê. O mapa torna essas decisões explícitas.</p>
+                
+                <div class="article-cta">
+                    <h3>🏗️ Analise a Arquitetura do Seu Projeto</h3>
+                    <p>Descubra se sua Clean Architecture é realmente limpa ou está cheia de violações escondidas. A análise visual não mente.</p>
+                    <a href="../index.html" class="cta-button">
+                        <i class="fas fa-layer-group"></i> Verificar Minha Arquitetura
+                    </a>
+                </div>
+            </div>
+
+            <footer class="article-navigation">
+                <a href="automatizando-analise-arquitetural-ci-cd.html" class="nav-prev">
+                    <span class="nav-label">← Artigo anterior</span>
+                    <span>Automatizando Análise no CI/CD</span>
+                </a>
+                <a href="3-metricas-codigo-desenvolvedor-junior.html" class="nav-next">
+                    <span class="nav-label">Próximo artigo →</span>
+                    <span>3 Métricas para Desenvolvedores Júnior</span>
+                </a>
+            </footer>
+        </article>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <span>Conectado à API do GitHub</span><span>•</span>
+                <a href="../guia.html"><i class="fas fa-book"></i> Como Usar</a><span>•</span>
+                <a href="../politica-de-privacidade.html"><i class="fas fa-shield-alt"></i> Privacidade</a><span>•</span>
+                <a href="../contato.html"><i class="fas fa-envelope"></i> Contato</a><span>•</span>
+                <a href="../artigos.html"><i class="fas fa-newspaper"></i> Artigos</a><span>•</span>
+                <span id="currentYear">2026</span><span>•</span>
+                <a href="#" onclick="clearCache()"><i class="fas fa-trash-alt"></i> Limpar Cache</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tema claro/escuro
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            const icon = this.querySelector('i');
+            icon.className = document.body.classList.contains('light-theme') ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        });
+        
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        }
+        
+        // Ano atual
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Função para copiar código
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const textToCopy = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                button.textContent = 'Copiado!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = 'Copiar';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+                button.textContent = 'Erro!';
+                
+                setTimeout(() => {
+                    button.textContent = 'Copiar';
+                }, 2000);
+            });
+        }
+        
+        // Função para limpar cache
+        function clearCache() {
+            if (confirm('Tem certeza que deseja limpar todo o cache? Isso removerá todas as análises salvas.')) {
+                const keys = Object.keys(localStorage);
+                keys.forEach(key => {
+                    if (key.startsWith('codemap_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                alert('Cache limpo com sucesso!');
+            }
+            return false;
+        }
+        
+        // Garantir que a página sempre tenha scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se o conteúdo é maior que a viewport
+            const checkScroll = () => {
+                const body = document.body;
+                const html = document.documentElement;
+                const height = Math.max(
+                    body.scrollHeight, 
+                    body.offsetHeight, 
+                    html.clientHeight, 
+                    html.scrollHeight, 
+                    html.offsetHeight
+                );
+                
+                // Se o conteúdo for menor que a viewport, força um padding
+                if (height <= window.innerHeight) {
+                    document.querySelector('.article-container').style.paddingBottom = '100vh';
+                }
+            };
+            
+            checkScroll();
+            window.addEventListener('resize', checkScroll);
+        });
+    </script>
+</body>
+</html>
