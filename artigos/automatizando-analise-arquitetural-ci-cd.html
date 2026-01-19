@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Automatizando Análise Arquitetural no CI/CD: Guia Passo a Passo | CodeCartographer</title>
+    <meta name="description" content="Guia completo para integrar análise de dependências no seu pipeline de CI/CD e prevenir degradação arquitetural automaticamente.">
+    
+    <meta property="og:title" content="Automatizando Análise Arquitetural no CI/CD: Guia Passo a Passo">
+    <meta property="og:description" content="Integre análise de dependências no CI/CD para prevenir degradação arquitetural.">
+    <meta property="og:image" content="https://joaoclaudiano.github.io/legacymap/images/artigos/ci-cd.jpg">
+    <meta property="og:url" content="https://joaoclaudiano.github.io/legacymap/artigos/automatizando-analise-arquitetural-ci-cd.html">
+    <meta property="og:type" content="article">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .article-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-title { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; color: #f8fafc; }
+        .article-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; color: #94a3b8; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #334155; }
+        .article-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .article-content { font-size: 1.125rem; line-height: 1.8; color: #e2e8f0; }
+        .article-content h2 { font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1.5rem; color: #f1f5f9; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .article-content h3 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #f1f5f9; }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content ul, .article-content ol { margin-bottom: 1.5rem; padding-left: 2rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content code { background: #1e293b; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        .article-content pre { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 1.5rem 0; }
+        .article-cta { background: #1e293b; border-radius: 10px; padding: 2rem; margin: 3rem 0; text-align: center; border-left: 4px solid #3b82f6; }
+        .cta-button { display: inline-block; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1rem; transition: background 0.2s; }
+        .cta-button:hover { background: #2563eb; }
+        .article-navigation { display: flex; justify-content: space-between; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #334155; }
+        .nav-prev, .nav-next { color: #94a3b8; text-decoration: none; max-width: 45%; }
+        .nav-label { display: block; font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem; }
+        .code-block { position: relative; }
+        .code-header { background: #1e293b; padding: 0.5rem 1rem; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        .code-filename { font-family: 'Courier New', monospace; color: #94a3b8; }
+        .copy-button { background: #3b82f6; color: white; border: none; padding: 0.25rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.875rem; }
+        .step-card { background: #1e293b; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; border-left: 4px solid #3b82f6; }
+        .step-number { display: inline-block; background: #3b82f6; color: white; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; margin-right: 1rem; font-weight: bold; }
+        .step-title { display: inline; font-size: 1.25rem; }
+        @media (max-width: 768px) { .article-title { font-size: 2rem; } .article-meta { flex-direction: column; gap: 0.75rem; } .article-navigation { flex-direction: column; gap: 1.5rem; } .nav-prev, .nav-next { max-width: 100%; } }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-map"></i> 
+            <span style="color: #3b82f6;">CODE</span>CARTOGRAPHER
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Início</a>
+            <a href="../artigos.html" class="nav-link"><i class="fas fa-newspaper"></i> Artigos</a>
+        </nav>
+        <div class="header-controls">
+            <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <article>
+            <header class="article-header">
+                <h1 class="article-title">Automatizando a Análise Arquitetural no seu CI/CD: Um Guia Passo a Passo</h1>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> Publicado em: 23 de Janeiro, 2026</span>
+                    <span><i class="far fa-folder"></i> Categoria: DevOps & Automação</span>
+                    <span><i class="far fa-clock"></i> Tempo de leitura: 12 minutos</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>A degradação arquitetural é insidiosa: acontece um pequeno compromisso de cada vez. Um import circular aqui, um acoplamento desnecessário ali. Antes que você perceba, seu sistema está tão acoplado que qualquer mudança quebra algo inesperado. A solução? <strong>Automatizar a detecção de problemas arquiteturais no seu pipeline de CI/CD</strong>.</p>
+                
+                <p>Este guia mostra como integrar a análise de dependências no seu fluxo de desenvolvimento, prevenindo que novos problemas sejam introduzidos e garantindo que a arquitetura evolua de forma controlada.</p>
+                
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Configuração para GitHub Actions</h3>
+                    <p>Crie um arquivo <code>.github/workflows/architecture-check.yml</code> no seu repositório:</p>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-filename">.github/workflows/architecture-check.yml</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre><code>name: Architecture Quality Gate
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main ]
+
+jobs:
+  analyze-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+          
+      - name: Analyze architecture with CodeCartographer
+        id: analyze
+        run: |
+          # Instala a CLI do CodeCartographer
+          npm install -g codecartographer-cli
+          
+          # Analisa o projeto
+          ccart analyze ./ --format=json > metrics.json
+          
+          # Extrai métricas críticas
+          CYCLES=$(jq '.metrics.circularDependencies' metrics.json)
+          COUPLING=$(jq '.metrics.averageCoupling' metrics.json)
+          GOD_OBJECTS=$(jq '.metrics.godObjects' metrics.json)
+          
+          echo "cycles=$CYCLES" >> $GITHUB_OUTPUT
+          echo "coupling=$COUPLING" >> $GITHUB_OUTPUT
+          echo "god_objects=$GOD_OBJECTS" >> $GITHUB_OUTPUT
+          
+      - name: Check thresholds
+        run: |
+          # Define seus thresholds aqui
+          MAX_CYCLES=2
+          MAX_COUPLING=8
+          MAX_GOD_OBJECTS=1
+          
+          if [ ${{ steps.analyze.outputs.cycles }} -gt $MAX_CYCLES ]; then
+            echo "❌ MUITOS CICLOS: ${{ steps.analyze.outputs.cycles }} (limite: $MAX_CYCLES)"
+            exit 1
+          fi
+          
+          if [ ${{ steps.analyze.outputs.coupling }} -gt $MAX_COUPLING ]; then
+            echo "❌ ACOPLAMENTO ALTO: ${{ steps.analyze.outputs.coupling }} (limite: $MAX_COUPLING)"
+            exit 1
+          fi
+          
+          if [ ${{ steps.analyze.outputs.god_objects }} -gt $MAX_GOD_OBJECTS ]; then
+            echo "❌ GOD OBJECTS DETECTADOS: ${{ steps.analyze.outputs.god_objects }} (limite: $MAX_GOD_OBJECTS)"
+            exit 1
+          fi
+          
+          echo "✅ Arquitetura dentro dos limites aceitáveis"
+          
+      - name: Upload architecture report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: architecture-report
+          path: metrics.json</code></pre>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Configuração para GitLab CI</h3>
+                    <p>Adicione ao seu <code>.gitlab-ci.yml</code>:</p>
+                    
+                    <pre><code>architecture_analysis:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm install -g codecartographer-cli
+    - ccart analyze . --format=json > metrics.json
+    
+    # Verifica métricas
+    - |
+      MAX_CYCLES=2
+      CYCLES=$(jq '.metrics.circularDependencies' metrics.json)
+      
+      if [ $CYCLES -gt $MAX_CYCLES ]; then
+        echo "Pipeline falhou: Muitas dependências circulares ($CYCLES)"
+        exit 1
+      fi
+      
+  artifacts:
+    paths:
+      - metrics.json
+    reports:
+      codequality: metrics.json</code></pre>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Métricas Essenciais para Monitorar</h3>
+                    
+                    <h4>1. Complexidade Ciclomática Arquitetural</h4>
+                    <p><strong>O que mede:</strong> Número de ciclos no grafo de dependências.<br>
+                    <strong>Threshold recomendado:</strong> Máximo 2-3 ciclos em projetos médios.<br>
+                    <strong>Como calcular:</strong> Contar todos os ciclos diretos e indiretos.</p>
+                    
+                    <h4>2. Índice de Estabilidade (S)</h4>
+                    <p><strong>Fórmula:</strong> S = Ce / (Ca + Ce)<br>
+                    Onde Ce = dependências de saída, Ca = dependências de entrada.<br>
+                    <strong>Interpretação:</strong> 0 = máximo instável, 1 = máximo estável.<br>
+                    <strong>Threshold:</strong> Módulos core devem ter S > 0.7.</p>
+                    
+                    <h4>3. Acoplamento Absoluto por Módulo</h4>
+                    <p><strong>O que mede:</strong> Número total de conexões (entrada + saída).<br>
+                    <strong>Threshold:</strong> Alertar acima de 15, bloquear acima de 25.<br>
+                    <strong>Exceções:</strong> Módulos de infraestrutura central podem ter mais.</p>
+                    
+                    <h4>4. Nível na Hierarquia</h4>
+                    <p><strong>O que mede:</strong> Profundidade do módulo na árvore de dependências.<br>
+                    <strong>Uso:</strong> Identificar módulos muito profundos (dificuldade de teste).</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Gatilhos Inteligentes para seu Pipeline</h3>
+                    
+                    <p><strong>Gatilho 1: Novos Ciclos de Dependência</strong><br>
+                    <code>FALHA DO PIPELINE</code> se PR introduzir novos ciclos.<br>
+                    <em>"Ciclos são como dívidas técnicas com juros compostos - só pioram."</em></p>
+                    
+                    <p><strong>Gatilho 2: Aumento de Acoplamento em Módulos Críticos</strong><br>
+                    <code>WARNING</code> se módulos core aumentarem acoplamento em >20%.<br>
+                    <em>Permite revisão manual - talvez o aumento seja justificado.</em></p>
+                    
+                    <p><strong>Gatilho 3: Criação de "God Objects"</strong><br>
+                    <code>FALHA DO PIPELINE</code> se novo módulo tiver >15 dependências.<br>
+                    <em>Força o desenvolvedor a dividir responsabilidades desde o início.</em></p>
+                    
+                    <p><strong>Gatilho 4: Violação de Boundaries Arquiteturais</strong><br>
+                    <code>FALHA DO PIPELINE</code> se import cruzar boundaries (ex: UI → Database).<br>
+                    <em>Mantém a arquitetura limpa e as camadas respeitadas.</em></p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Dashboard e Relatórios</h3>
+                    
+                    <p>Configure um dashboard para monitoramento contínuo:</p>
+                    
+                    <pre><code># Script para gerar relatório semanal
+#!/bin/bash
+ccart analyze . --format=html > architecture-report.html
+ccart analyze . --format=json > metrics-$(date +%Y-%m-%d).json
+
+# Compara com semana anterior
+if [ -f metrics-last-week.json ]; then
+  ccart compare metrics-last-week.json metrics-$(date +%Y-%m-%d).json > diff-report.md
+fi
+
+# Envia para Slack/Teams
+curl -X POST -H 'Content-type: application/json' \
+  --data "{\"text\":\"Relatório de Arquitetura Semanal: $(ccart stats . --brief)\"}" \
+  $SLACK_WEBHOOK_URL</code></pre>
+                    
+                    <p><strong>Métricas para o Dashboard:</strong></p>
+                    <ul>
+                        <li>Acoplamento médio (tendência semanal)</li>
+                        <li>Número de ciclos (deve diminuir ou manter)</li>
+                        <li>Módulos mais instáveis (top 5)</li>
+                        <li>Módulos mais estáveis (top 5)</li>
+                        <li>Violations por desenvolvedor (para feedback)</li>
+                    </ul>
+                </div>
+                
+                <h2>Benefícios da Automação</h2>
+                
+                <p><strong>1. Prevenção Proativa:</strong> Problemas são detectados no PR, não em produção.</p>
+                <p><strong>2. Educação da Equipe:</strong> Desenvolvedores aprendem boas práticas através do feedback automático.</p>
+                <p><strong>3. Decisões Baseadas em Dados:</strong> Refatorações priorizadas por impacto real, não por "sensação".</p>
+                <p><strong>4. Evolução Controlada:</strong> Arquitetura evolui de forma mensurável e intencional.</p>
+                
+                <h2>Cenário Real: O PR que Salvou 40 Horas</h2>
+                
+                <p>Time A estava adicionando uma nova feature que criaria um ciclo entre <code>OrderService</code> e <code>PaymentService</code>. O pipeline falhou com:</p>
+                
+                <pre><code>❌ NOVO CICLO DETECTADO: OrderService ↔ PaymentService
+Impacto estimado: 2 novos ciclos, acoplamento aumentaria em 35%
+Sugestão: Criar PaymentProcessor como módulo intermediário</code></pre>
+                
+                <p>O desenvolvedor refatorou seguindo a sugestão. <strong>Resultado:</strong> Evitou um problema que teria levado 40+ horas para corrigir 6 meses depois, quando o acoplamento fosse crítico.</p>
+                
+                <div class="article-cta">
+                    <h3>⚙️ Automatize sua Arquitetura</h3>
+                    <p>Não espere que problemas arquiteturais se acumulem. Configure seu pipeline de CI/CD hoje e garanta que seu código evolua de forma saudável.</p>
+                    <a href="../index.html" class="cta-button">
+                        <i class="fas fa-robot"></i> Começar a Automatizar
+                    </a>
+                </div>
+            </div>
+
+            <footer class="article-navigation">
+                <a href="caso-refatoracao-40porcento-divida.html" class="nav-prev">
+                    <span class="nav-label">← Artigo anterior</span>
+                    <span>Caso Real: 40% Menos Dívida Técnica</span>
+                </a>
+                <a href="violacoes-clean-architecture-mapa.html" class="nav-next">
+                    <span class="nav-label">Próximo artigo →</span>
+                    <span>Violando Clean Architecture</span>
+                </a>
+            </footer>
+        </article>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <span>Conectado à API do GitHub</span><span>•</span>
+                <a href="../guia.html"><i class="fas fa-book"></i> Como Usar</a><span>•</span>
+                <a href="../politica-de-privacidade.html"><i class="fas fa-shield-alt"></i> Privacidade</a><span>•</span>
+                <a href="../contato.html"><i class="fas fa-envelope"></i> Contato</a><span>•</span>
+                <a href="../artigos.html"><i class="fas fa-newspaper"></i> Artigos</a><span>•</span>
+                <span id="currentYear">2026</span><span>•</span>
+                <a href="#" onclick="clearCache()"><i class="fas fa-trash-alt"></i> Limpar Cache</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            this.querySelector('i').className = document.body.classList.contains('light-theme') ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        });
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        }
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block').querySelector('pre code');
+            navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                button.textContent = 'Copiado!';
+                setTimeout(() => button.textContent = 'Copiar', 2000);
+            });
+        }
+        
+        function clearCache() { if (confirm('Limpar cache?')) { Object.keys(localStorage).forEach(key => { if (key.startsWith('codemap_')) localStorage.removeItem(key); }); alert('Cache limpo!'); } return false; }
+    </script>
+</body>
+</html>
