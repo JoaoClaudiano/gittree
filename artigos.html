@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artigos & Guias - CodeCartographer</title>
+    <title>Artigos & Guias - LegacyMap</title>
     <meta name="description" content="Biblioteca completa de artigos sobre análise de código, arquitetura de software, refatoração e boas práticas de desenvolvimento.">
     <meta name="keywords" content="artigos programação, análise código, arquitetura software, tutoriais desenvolvimento, refatoração código">
     
@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-
         html, body {
-        height: 100%;
-        overflow-y: auto; /* Garante que a rolagem vertical funcione */
+            height: 100%;
+            overflow-y: auto;
         }
+        
         /* Estilos específicos para página de listagem */
         .articles-listing {
             max-width: 1200px;
@@ -25,19 +25,51 @@
         
         .page-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         
         .page-title {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: #3b82f6;
         }
         
         .page-subtitle {
-            color: #94a3b8;
+            color: #64748b;
             font-size: 1.125rem;
             max-width: 600px;
             margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
         }
         
         .articles-grid {
@@ -47,98 +79,108 @@
             margin-bottom: 3rem;
         }
         
-        .article-card-listing {
-            background: #1e293b;
-            border-radius: 10px;
+        .article-card {
+            background: white;
+            border-radius: 12px;
             padding: 1.75rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
             border-left: 4px solid #3b82f6;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
         
-        .article-card-listing:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            border-left-color: #1d4ed8;
         }
         
         .article-category {
             display: inline-block;
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-            padding: 0.25rem 0.75rem;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .article-title {
+            font-size: 1.4rem;
             margin-bottom: 1rem;
+            line-height: 1.4;
+            color: #1e293b;
         }
         
-        .article-title-listing {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-        
-        .article-title-listing a {
-            color: #f1f5f9;
-            text-decoration: none;
-        }
-        
-        .article-title-listing a:hover {
-            color: #3b82f6;
-        }
-        
-        .article-excerpt-listing {
-            color: #cbd5e1;
+        .article-excerpt {
+            color: #475569;
             line-height: 1.6;
             margin-bottom: 1.5rem;
+            font-size: 0.95rem;
             flex-grow: 1;
         }
         
-        .article-meta-listing {
+        .article-meta {
             display: flex;
             justify-content: space-between;
-            color: #94a3b8;
-            font-size: 0.875rem;
+            align-items: center;
+            color: #64748b;
+            font-size: 0.85rem;
             margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
         }
         
         .read-time {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.4rem;
+            font-weight: 500;
         }
         
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 3rem 0;
-        }
-        
-        .pagination a {
-            padding: 0.5rem 1rem;
-            background: #1e293b;
-            color: #cbd5e1;
+        .read-more-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
             text-decoration: none;
-            border-radius: 6px;
-            transition: background 0.2s;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: color 0.2s;
         }
         
-        .pagination a:hover {
-            background: #334155;
+        .read-more-link:hover {
+            color: #1d4ed8;
         }
         
-        .pagination .current {
-            background: #3b82f6;
-            color: white;
+        .read-more-link i {
+            font-size: 0.9rem;
+            transition: transform 0.2s;
         }
         
-        .no-articles {
+        .read-more-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        .no-results {
             text-align: center;
             padding: 3rem;
-            color: #94a3b8;
+            color: #64748b;
+            grid-column: 1 / -1;
+        }
+        
+        .articles-count {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
         }
         
         @media (max-width: 768px) {
@@ -149,15 +191,51 @@
             .page-title {
                 font-size: 2rem;
             }
+            
+            .search-container {
+                margin-bottom: 2rem;
+            }
+        }
+        
+        .light-theme .article-card {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-theme .article-title {
+            color: #1e293b;
+        }
+        
+        .dark-theme .article-card {
+            background: #1e293b;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dark-theme .article-title {
+            color: #f1f5f9;
+        }
+        
+        .dark-theme .article-excerpt {
+            color: #cbd5e1;
+        }
+        
+        .dark-theme .search-input {
+            background: #334155;
+            border-color: #475569;
+            color: white;
+        }
+        
+        .dark-theme .search-input::placeholder {
+            color: #94a3b8;
         }
     </style>
 </head>
-<body>
+<body class="dark-theme">
     <!-- Cabeçalho -->
     <header class="main-header">
         <div class="logo">
             <i class="fas fa-map"></i> 
-            <span style="color: #3b82f6;">CODE</span>CARTOGRAPHER
+            <span style="color: #3b82f6;">LEGACY</span>MAP
         </div>
         <nav class="main-nav">
             <a href="index.html" class="nav-link">
@@ -177,148 +255,31 @@
     <!-- Listagem de artigos -->
     <div class="articles-listing">
         <header class="page-header">
-            <h1 class="page-title">Artigos & Guias</h1>
-            <p class="page-subtitle">Aprenda sobre análise de código, arquitetura de software, refatoração e boas práticas de desenvolvimento.</p>
+            <h1 class="page-title">Biblioteca de Artigos Técnicos</h1>
+            <p class="page-subtitle">Explore nossa coleção de artigos sobre análise de código, arquitetura de software, refatoração e melhores práticas de desenvolvimento.</p>
         </header>
-
+        
+        <!-- Barra de busca -->
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="search" class="search-input" id="searchInput" placeholder="Buscar artigos por título, categoria ou conteúdo...">
+        </div>
+        
+        <!-- Contador de artigos -->
+        <div class="articles-count" id="articlesCount">
+            Carregando artigos...
+        </div>
+        
         <!-- Grid de artigos -->
         <div class="articles-grid" id="articlesGrid">
-            <!-- Artigo 1 -->
-            <article class="article-card-listing">
-                <span class="article-category">Tutorial Prático</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/como-identificar-dependencias-circulares.html">Como Identificar e Corrigir Dependências Circulares em 4 Passos</a>
-                </h2>
-                <p class="article-excerpt-listing">Aprenda a detectar e resolver um dos problemas mais comuns em código legado usando análise visual. Guia passo a passo com estratégias práticas.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 20 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 8 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 2 -->
-            <article class="article-card-listing">
-                <span class="article-category">Arquitetura & Conceitos</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/mapa-dependencias-radar-desenvolvedor.html">Mapa de Dependências: O Radar do Desenvolvedor para Código Legado</a>
-                </h2>
-                <p class="article-excerpt-listing">Entenda como a visualização de dependências transcende listas de arquivos, revelando a topologia e saúde estrutural do software.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 18 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 6 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 3 -->
-            <article class="article-card-listing">
-                <span class="article-category">Análise & Diagnóstico</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/5-problemas-arquitetura-revela.html">5 Problemas de Arquitetura que um Mapa de Dependências Revela Imediatamente</a>
-                </h2>
-                <p class="article-excerpt-listing">Descubra padrões comuns como "God Objects", ciclos de dependência e módulos órfãos que saltam aos olhos na visualização gráfica.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 15 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 7 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 4 -->
-            <article class="article-card-listing">
-                <span class="article-category">Gestão & Estratégia</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/planejando-refatoracao-mapa-ordem.html">Planejando uma Grande Refatoração: Como o Mapa Define a Ordem das Tarefas</a>
-                </h2>
-                <p class="article-excerpt-listing">Estratégia para priorizar e sequenciar refatorações baseada em análise de risco e impacto usando métricas de dependência.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 12 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 9 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 5 -->
-            <article class="article-card-listing">
-                <span class="article-category">Ferramentas & Comparativos</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/ferramenta-visual-vs-analise-estatica.html">Ferramenta Visual vs. Análise Estática: Quando o Mapa Ganha da Lista?</a>
-                </h2>
-                <p class="article-excerpt-listing">Comparativo das abordagens para análise de código e quando cada uma é mais eficaz para problemas de arquitetura versus code smells.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 10 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 5 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 6 -->
-            <article class="article-card-listing">
-                <span class="article-category">Caso de Estudo</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/caso-refatoracao-40porcento-divida.html">Caso Real: Como Reduzimos 40% da Dívida Técnica em 3 Meses</a>
-                </h2>
-                <p class="article-excerpt-listing">Análise detalhada de um projeto open-source onde a equipe identificou pontos críticos de acoplamento e estabeleceu um plano de refatoração baseado em evidências visuais.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 25 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 10 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 7 -->
-            <article class="article-card-listing">
-                <span class="article-category">DevOps & Automação</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/automatizando-analise-arquitetural-ci-cd.html">Automatizando a Análise Arquitetural no seu CI/CD</a>
-                </h2>
-                <p class="article-excerpt-listing">Guia passo a passo para integrar análise de dependências no pipeline de integração contínua e prevenir degradação arquitetural automaticamente.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 23 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 12 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 8 -->
-            <article class="article-card-listing">
-                <span class="article-category">Arquitetura & Padrões</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/violacoes-clean-architecture-mapa.html">Identificando Violações de Clean Architecture no Mapa de Dependências</a>
-                </h2>
-                <p class="article-excerpt-listing">Como o mapa visual expõe quando as regras de direção das dependências são violadas na Clean Architecture e outros padrões arquiteturais.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 28 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 8 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 9 -->
-            <article class="article-card-listing">
-                <span class="article-category">Para Iniciantes</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/3-metricas-codigo-desenvolvedor-junior.html">3 Métricas de Código que Todo Desenvolvedor Júnior Deveria Monitorar</a>
-                </h2>
-                <p class="article-excerpt-listing">Métricas simples para iniciantes começarem a monitorar a saúde do código antes de mergulhar em padrões complexos de arquitetura.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 30 Jan, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 6 min</span>
-                </div>
-            </article>
-
-            <!-- Artigo 10 -->
-            <article class="article-card-listing">
-                <span class="article-category">Análise Avançada</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/analise-temporal-evolucao-arquitetura.html">Análise Temporal: Como a Arquitetura Evolui (e Degrada) ao Longo do Tempo</a>
-                </h2>
-                <p class="article-excerpt-listing">Métodos para analisar a evolução arquitetural através de commits e identificar pontos de inflexão onde a degradação acelerou.</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> 2 Fev, 2026</span>
-                    <span class="read-time"><i class="far fa-clock"></i> 11 min</span>
-                </div>
-            </article>
+            <!-- Os artigos serão carregados dinamicamente aqui -->
         </div>
-
-        <!-- Paginação (exemplo) -->
-        <div class="pagination">
-            <a href="#" class="current">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
+        
+        <!-- Mensagem quando não houver resultados -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h3>Nenhum artigo encontrado</h3>
+            <p>Tente usar termos diferentes ou verifique a ortografia.</p>
         </div>
     </div>
 
@@ -326,7 +287,7 @@
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-links">
-                <span>Conectado à API do GitHub</span>
+                <span>LegacyMap - Ferramenta de Análise de Código</span>
                 <span>•</span>
                 <a href="guia.html"><i class="fas fa-book"></i> Como Usar</a>
                 <span>•</span>
@@ -337,145 +298,263 @@
                 <a href="artigos.html"><i class="fas fa-newspaper"></i> Artigos</a>
                 <span>•</span>
                 <span id="currentYear">2026</span>
-                <span>•</span>
-                <a href="#" onclick="clearCache()"><i class="fas fa-trash-alt"></i> Limpar Cache</a>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script>
-        // Tema claro/escuro
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            document.body.classList.toggle('light-theme');
-            const icon = this.querySelector('i');
-            icon.className = document.body.classList.contains('light-theme') ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-        });
-        
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-theme');
-            document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
-        }
-        
-        // Ano atual
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        
-        // Busca de artigos (simplificada)
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchBox = document.createElement('input');
-            searchBox.type = 'search';
-            searchBox.placeholder = 'Buscar artigos...';
-            searchBox.style.cssText = 'padding: 0.75rem; width: 100%; max-width: 400px; margin: 1rem auto 2rem; display: block;';
-            
-            const pageHeader = document.querySelector('.page-header');
-            pageHeader.parentNode.insertBefore(searchBox, pageHeader.nextSibling);
-            
-            searchBox.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const articles = document.querySelectorAll('.article-card-listing');
-                
-                articles.forEach(article => {
-                    const title = article.querySelector('.article-title-listing').textContent.toLowerCase();
-                    const excerpt = article.querySelector('.article-excerpt-listing').textContent.toLowerCase();
-                    const category = article.querySelector('.article-category').textContent.toLowerCase();
-                    
-                    if (title.includes(searchTerm) || excerpt.includes(searchTerm) || category.includes(searchTerm)) {
-                        article.style.display = 'block';
-                    } else {
-                        article.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        // Função para limpar cache
-        function clearCache() {
-            if (confirm('Tem certeza que deseja limpar todo o cache? Isso removerá todas as análises salvas.')) {
-                const keys = Object.keys(localStorage);
-                keys.forEach(key => {
-                    if (key.startsWith('codemap_')) {
-                        localStorage.removeItem(key);
-                    }
-                });
-                alert('Cache limpo com sucesso!');
+        // Banco de dados de artigos
+        const ARTICLES_DATABASE = [
+            {
+                file: "3-metricas-codigo-desenvolvedor-junior.html",
+                title: "3 Métricas de Código que Todo Desenvolvedor Júnior Deveria Monitorar",
+                excerpt: "Métricas simples para iniciantes começarem a monitorar a saúde do código antes de mergulhar em padrões complexos de arquitetura.",
+                category: "Para Iniciantes",
+                date: "30 Jan, 2026",
+                readTime: "6 min"
+            },
+            {
+                file: "5-problemas-arquitetura-revela.html",
+                title: "5 Problemas de Arquitetura que um Mapa de Dependências Revela Imediatamente",
+                excerpt: "Descubra padrões comuns como 'God Objects', ciclos de dependência e módulos órfãos que saltam aos olhos na visualização gráfica.",
+                category: "Análise & Diagnóstico",
+                date: "15 Jan, 2026",
+                readTime: "7 min"
+            },
+            {
+                file: "analise-temporal-evolucao-arquitetura.html",
+                title: "Análise Temporal: Como a Arquitetura Evolui (e Degrada) ao Longo do Tempo",
+                excerpt: "Métodos para analisar a evolução arquitetural através de commits e identificar pontos de inflexão onde a degradação acelerou.",
+                category: "Análise Avançada",
+                date: "2 Fev, 2026",
+                readTime: "11 min"
+            },
+            {
+                file: "arquitetura-padroes.html",
+                title: "Padrões de Arquitetura Moderna: Microservices vs Monólitos vs Microkernels",
+                excerpt: "Análise comparativa dos principais padrões arquiteturais e quando cada um é mais adequado para diferentes tipos de projetos.",
+                category: "Arquitetura & Padrões",
+                date: "25 Fev, 2026",
+                readTime: "10 min"
+            },
+            {
+                file: "automatizando-analise-arquitetural-ci-cd.html",
+                title: "Automatizando a Análise Arquitetural no seu CI/CD",
+                excerpt: "Guia passo a passo para integrar análise de dependências no pipeline de integração contínua e prevenir degradação arquitetural automaticamente.",
+                category: "DevOps & Automação",
+                date: "23 Jan, 2026",
+                readTime: "12 min"
+            },
+            {
+                file: "avaliar-repositorio.html",
+                title: "Workshop: Avalie a Saúde de Qualquer Repositório GitHub em 1 Hora",
+                excerpt: "Siga este workshop passo a passo para, em 60 minutos, gerar um relatório completo sobre a saúde arquitetural de qualquer projeto open source.",
+                category: "Tutorial Prático",
+                date: "8 Fev, 2026",
+                readTime: "9 min"
+            },
+            {
+                file: "caso-refatoracao-40porcento-divida.html",
+                title: "Caso Real: Como Reduzimos 40% da Dívida Técnica em 3 Meses",
+                excerpt: "Análise detalhada de um projeto onde a equipe identificou pontos críticos de acoplamento e estabeleceu um plano de refatoração baseado em evidências visuais.",
+                category: "Caso de Estudo",
+                date: "25 Jan, 2026",
+                readTime: "10 min"
+            },
+            {
+                file: "code-smells-arquiteturais.html",
+                title: "Code Smells Arquiteturais: Quando as Métricas Mentem Para Você",
+                excerpt: "Nem todo módulo altamente acoplado é um problema. Este artigo desafia dogmas e mostra quando violar 'boas práticas' é a decisão correta.",
+                category: "Opinião & Análise",
+                date: "12 Fev, 2026",
+                readTime: "10 min"
+            },
+            {
+                file: "codecartographer-vs-ferramentas-empresariais.html",
+                title: "CodeCartographer vs. Ferramentas Empresariais: O que Você Realmente Precisa?",
+                excerpt: "SonarQube, NDepend, Structure101... As ferramentas empresariais custam milhares. Veja quando uma solução focada como a nossa é a escolha certa.",
+                category: "Comparativos & Análise",
+                date: "5 Fev, 2026",
+                readTime: "8 min"
+            },
+            {
+                file: "como-identificar-dependencias-circulares.html",
+                title: "Como Identificar e Corrigir Dependências Circulares em 4 Passos",
+                excerpt: "Aprenda a detectar e resolver um dos problemas mais comuns em código legado usando análise visual. Guia passo a passo com estratégias práticas.",
+                category: "Tutorial Prático",
+                date: "20 Jan, 2026",
+                readTime: "8 min"
+            },
+            {
+                file: "ferramenta-visual-vs-analise-estatica.html",
+                title: "Ferramenta Visual vs. Análise Estática: Quando o Mapa Ganha da Lista?",
+                excerpt: "Comparativo das abordagens para análise de código e quando cada uma é mais eficaz para problemas de arquitetura versus code smells.",
+                category: "Ferramentas & Comparativos",
+                date: "10 Jan, 2026",
+                readTime: "5 min"
+            },
+            {
+                file: "futuro-analise-codigo.html",
+                title: "O Futuro da Análise de Código: Como IA Vai Transformar Como Entendemos Arquitetura",
+                excerpt: "De visualizações estáticas para assistentes de IA que preveem pontos de falha e sugerem refatorações. Para onde estamos indo nos próximos 5 anos?",
+                category: "Tendências & Futuro",
+                date: "18 Fev, 2026",
+                readTime: "11 min"
+            },
+            {
+                file: "gestao-divida-tecnica-metricas.html",
+                title: "Gestão de Dívida Técnica para Líderes: Das Métricas às Decisões de Negócio",
+                excerpt: "Como traduzir complexidade ciclomática, acoplamento e coesão em argumentos que stakeholders não-técnicos entendem e aprovam.",
+                category: "Gestão & Liderança",
+                date: "15 Fev, 2026",
+                readTime: "12 min"
+            },
+            {
+                file: "mapa-dependencias-radar-desenvolvedor.html",
+                title: "Mapa de Dependências: O Radar do Desenvolvedor para Código Legado",
+                excerpt: "Entenda como a visualização de dependências transcende listas de arquivos, revelando a topologia e saúde estrutural do software.",
+                category: "Arquitetura & Conceitos",
+                date: "18 Jan, 2026",
+                readTime: "6 min"
+            },
+            {
+                file: "planejando-refatoracao-mapa-ordem.html",
+                title: "Planejando uma Grande Refatoração: Como o Mapa Define a Ordem das Tarefas",
+                excerpt: "Estratégia para priorizar e sequenciar refatorações baseada em análise de risco e impacto usando métricas de dependência.",
+                category: "Gestão & Estratégia",
+                date: "12 Jan, 2026",
+                readTime: "9 min"
             }
-            return false;
+        ];
+
+        // Função para gerar cards de artigo
+        function generateArticleCard(article) {
+            return `
+                <article class="article-card">
+                    <span class="article-category">${article.category}</span>
+                    <h2 class="article-title">${article.title}</h2>
+                    <p class="article-excerpt">${article.excerpt}</p>
+                    <div class="article-meta">
+                        <div>
+                            <span><i class="far fa-calendar"></i> ${article.date}</span>
+                            <span style="margin-left: 1rem;" class="read-time">
+                                <i class="far fa-clock"></i> ${article.readTime}
+                            </span>
+                        </div>
+                        <a href="artigos/${article.file}" class="read-more-link">
+                            Ler artigo <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            `;
         }
 
-        // Função para carregar artigos dinamicamente
-async function loadArticles() {
-    const articlesGrid = document.getElementById('articlesGrid');
-    const articles = [
-        {
-            file: 'comparativo-ferramentas-mercado.html',
-            title: 'CodeCartographer vs. Ferramentas Empresariais',
-            excerpt: 'SonarQube, NDepend, Structure101... Veja quando uma solução focada como a nossa é a escolha certa.',
-            category: 'Comparativos & Análise',
-            date: '5 Fev, 2026',
-            readTime: '8 min'
-        },
-        {
-            file: 'workshop-time-1h.html',
-            title: 'Workshop de 1 Hora: Avalie Qualquer Repositório GitHub',
-            excerpt: 'Siga este workshop passo a passo para, em 60 minutos, gerar um relatório completo sobre saúde arquitetural.',
-            category: 'Tutorial Prático',
-            date: '8 Fev, 2026',
-            readTime: '6 min'
-        },
-        {
-            file: 'opiniao-metricas-exageradas.html',
-            title: '"Code Smells" Arquiteturais: Quando as Métricas Mentem',
-            excerpt: 'Nem todo módulo altamente acoplado é um problema. Descubra quando violar "boas práticas" é a decisão correta.',
-            category: 'Opinião & Análise',
-            date: '12 Fev, 2026',
-            readTime: '10 min'
-        },
-        {
-            file: 'gestao-divida-tecnica.html',
-            title: 'Gestão de Dívida Técnica para Líderes',
-            excerpt: 'Como traduzir complexidade ciclomática, acoplamento e coesão em argumentos que stakeholders não-técnicos entendem.',
-            category: 'Gestão & Liderança',
-            date: '15 Fev, 2026',
-            readTime: '12 min'
-        },
-        {
-            file: 'futuro-analise-codigo.html',
-            title: 'O Futuro da Análise de Código com IA',
-            excerpt: 'De visualizações estáticas para assistentes de IA que preveem pontos de falha e sugerem refatorações.',
-            category: 'Tendências & Futuro',
-            date: '18 Fev, 2026',
-            readTime: '11 min'
+        // Função para carregar e exibir artigos
+        function loadArticles() {
+            const articlesGrid = document.getElementById('articlesGrid');
+            const articlesCount = document.getElementById('articlesCount');
+            const noResults = document.getElementById('noResults');
+            
+            // Limpar grid
+            articlesGrid.innerHTML = '';
+            
+            // Gerar cards para todos os artigos
+            ARTICLES_DATABASE.forEach(article => {
+                articlesGrid.innerHTML += generateArticleCard(article);
+            });
+            
+            // Atualizar contador
+            articlesCount.innerHTML = `<strong>${ARTICLES_DATABASE.length}</strong> artigos disponíveis para leitura`;
+            
+            // Esconder mensagem de "sem resultados"
+            noResults.style.display = 'none';
+            
+            // Configurar busca
+            setupSearch();
         }
-    ];
-    
-    // Limpar conteúdo existente (remova os artigos fictícios)
-    articlesGrid.innerHTML = '';
-    
-    // Adicionar cada artigo real
-    articles.forEach(article => {
-        const articleHTML = `
-            <article class="article-card-listing">
-                <span class="article-category">${article.category}</span>
-                <h2 class="article-title-listing">
-                    <a href="artigos/${article.file}">${article.title}</a>
-                </h2>
-                <p class="article-excerpt-listing">${article.excerpt}</p>
-                <div class="article-meta-listing">
-                    <span><i class="far fa-calendar"></i> ${article.date}</span>
-                    <span class="read-time"><i class="far fa-clock"></i> ${article.readTime}</span>
-                </div>
-            </article>
-        `;
-        articlesGrid.innerHTML += articleHTML;
-    });
-    
-    // Ajustar paginação (apenas 1 página agora)
-    document.querySelector('.pagination').innerHTML = '<a href="#" class="current">1</a>';
-}
 
-// Chamar a função quando a página carregar
-document.addEventListener('DOMContentLoaded', loadArticles);
+        // Função para configurar sistema de busca
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const articlesGrid = document.getElementById('articlesGrid');
+            const articlesCount = document.getElementById('articlesCount');
+            const noResults = document.getElementById('noResults');
+            
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const articleCards = document.querySelectorAll('.article-card');
+                let visibleCount = 0;
+                
+                // Filtrar artigos
+                ARTICLES_DATABASE.forEach((article, index) => {
+                    const card = articleCards[index];
+                    const matches = 
+                        article.title.toLowerCase().includes(searchTerm) ||
+                        article.excerpt.toLowerCase().includes(searchTerm) ||
+                        article.category.toLowerCase().includes(searchTerm);
+                    
+                    if (matches) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Atualizar contador
+                articlesCount.innerHTML = `<strong>${visibleCount}</strong> de ${ARTICLES_DATABASE.length} artigos correspondem à sua busca`;
+                
+                // Mostrar/ocultar mensagem de "sem resultados"
+                if (visibleCount === 0 && searchTerm.length > 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            });
+        }
+
+        // Sistema de tema claro/escuro
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            
+            // Aplicar tema salvo
+            if (savedTheme === 'light') {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                themeToggle.querySelector('i').className = 'fas fa-sun';
+            }
+            
+            // Configurar alternância
+            themeToggle.addEventListener('click', function() {
+                const isDark = document.body.classList.contains('dark-theme');
+                
+                if (isDark) {
+                    document.body.classList.remove('dark-theme');
+                    document.body.classList.add('light-theme');
+                    this.querySelector('i').className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.body.classList.remove('light-theme');
+                    document.body.classList.add('dark-theme');
+                    this.querySelector('i').className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar ano atual
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Configurar tema
+            setupThemeToggle();
+            
+            // Carregar artigos
+            loadArticles();
+        });
     </script>
 </body>
 </html>
