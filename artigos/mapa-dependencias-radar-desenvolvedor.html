@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Mapa de Dependências: O Radar do Desenvolvedor para Código Legado | CodeCartographer</title>
+    <meta name="description" content="Como a visualização de dependências funciona como um radar para navegar em projetos legados, revelando topologia e saúde estrutural do software.">
+    
+    <meta property="og:title" content="Mapa de Dependências: O Radar do Desenvolvedor para Código Legado">
+    <meta property="og:description" content="Como a visualização de dependências funciona como um radar para navegar em projetos legados.">
+    <meta property="og:image" content="https://joaoclaudiano.github.io/legacymap/images/artigos/mapa-radar.jpg">
+    <meta property="og:url" content="https://joaoclaudiano.github.io/legacymap/artigos/mapa-dependencias-radar-desenvolvedor.html">
+    <meta property="og:type" content="article">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .article-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-title { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; color: #f8fafc; }
+        .article-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; color: #94a3b8; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #334155; }
+        .article-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .article-content { font-size: 1.125rem; line-height: 1.8; color: #e2e8f0; }
+        .article-content h2 { font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1.5rem; color: #f1f5f9; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .article-content h3 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #f1f5f9; }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content ul, .article-content ol { margin-bottom: 1.5rem; padding-left: 2rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content code { background: #1e293b; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        .article-content pre { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 1.5rem 0; }
+        .article-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 2rem 0; border: 1px solid #334155; }
+        .article-cta { background: #1e293b; border-radius: 10px; padding: 2rem; margin: 3rem 0; text-align: center; border-left: 4px solid #3b82f6; }
+        .cta-button { display: inline-block; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1rem; transition: background 0.2s; }
+        .cta-button:hover { background: #2563eb; }
+        .article-navigation { display: flex; justify-content: space-between; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #334155; }
+        .nav-prev, .nav-next { color: #94a3b8; text-decoration: none; max-width: 45%; }
+        .nav-prev:hover, .nav-next:hover { color: #3b82f6; }
+        .nav-label { display: block; font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem; }
+        @media (max-width: 768px) { .article-title { font-size: 2rem; } .article-meta { flex-direction: column; gap: 0.75rem; } .article-navigation { flex-direction: column; gap: 1.5rem; } .nav-prev, .nav-next { max-width: 100%; } }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
+        .comparison-table th, .comparison-table td { padding: 1rem; border: 1px solid #334155; text-align: left; }
+        .comparison-table th { background: #1e293b; }
+        .analogy-box { background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 1.5rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-map"></i> 
+            <span style="color: #3b82f6;">CODE</span>CARTOGRAPHER
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Início</a>
+            <a href="../artigos.html" class="nav-link"><i class="fas fa-newspaper"></i> Artigos</a>
+        </nav>
+        <div class="header-controls">
+            <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <article>
+            <header class="article-header">
+                <h1 class="article-title">Mapa de Dependências: O Radar do Desenvolvedor para Navegar em Código Legado</h1>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> Publicado em: 18 de Janeiro, 2026</span>
+                    <span><i class="far fa-folder"></i> Categoria: Arquitetura & Conceitos</span>
+                    <span><i class="far fa-clock"></i> Tempo de leitura: 6 minutos</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>Entrar em um projeto legado pela primeira vez pode ser uma experiência intimidante. É como chegar em uma cidade desconhecida sem mapa: você vê edifícios (módulos) e ruas (dependências), mas não compreende a lógica urbana, os bairros importantes, ou os caminhos mais eficientes. Um <strong>mapa de dependências</strong> é exatamente o radar que falta para navegar nesse território desconhecido.</p>
+                
+                <div class="analogy-box">
+                    <p><strong>🧭 Analogia Urbana:</strong> Assim como um mapa de metrô mostra conexões entre estações, um mapa de dependências mostra conexões entre módulos. Você rapidamente identifica "estações centrais" (hubs) e "linhas periféricas" (módulos isolados).</p>
+                </div>
+                
+                <h2>Para Além da Listagem de Arquivos</h2>
+                <p>A maioria dos desenvolvedores está acostumada a navegar código através de exploradores de arquivos ou buscas textuais. Essas abordagens são eficazes para tarefas pontuais, mas falham em revelar a <em>topologia</em> e a <em>saúde estrutural</em> do software como um todo.</p>
+                
+                <table class="comparison-table">
+                    <tr><th>Listagem de Arquivos</th><th>Mapa de Dependências</th></tr>
+                    <tr><td>Mostra hierarquia de pastas</td><td>Mostra relações lógicas</td></tr>
+                    <tr><td>Organização física</td><td>Organização conceitual</td></tr>
+                    <tr><td>Não revela acoplamento</td><td>Explicitamente mostra acoplamento</td></tr>
+                    <tr><td>Estática</td><td>Dinâmica e interativa</td></tr>
+                </table>
+                
+                <h2>A Linguagem Visual do seu Código</h2>
+                <p>Padrões específicos no grafo correspondem diretamente a conceitos de arquitetura:</p>
+                
+                <h3>1. "Hubs" - Nós Extremamente Conectados</h3>
+                <p>Módulos com dezenas de conexões entrando e saindo frequentemente indicam violações do <strong>Single Responsibility Principle</strong>. No gráfico, eles aparecem como grandes nós centrais com muitas arestas.</p>
+                
+                <pre><code>// Possível "God Object"
+class SistemaCompleto {
+  // Gerencia usuários, produtos, pedidos, logs, configurações...
+  // +30 métodos diferentes
+}</code></pre>
+                
+                <h3>2. "Ilhas" - Módulos Isolados</h3>
+                <p>Código que não é importado por ninguém pode ser "dead code" (código morto) ou uma funcionalidade bem desacoplada. A diferença está no contexto de negócio.</p>
+                
+                <h3>3. "Clusters" - Grupos Coesos</h3>
+                <p>Conjuntos de módulos fortemente conectados entre si mas pouco conectados com o resto do sistema frequentemente representam <strong>bounded contexts</strong> ou microsserviços inadvertidos.</p>
+                
+                <h2>Tomando Decisões Baseadas em Evidências</h2>
+                <p>A grande vantagem do mapa visual é que ele transforma intuição em evidência. Em vez de:</p>
+                <p><em>"Acho que o módulo AuthService está muito acoplado..."</em></p>
+                <p>Você pode afirmar:</p>
+                <p><em>"O AuthService tem 47 dependências diretas, sendo referenciado por 80% dos módulos do sistema, confirmando que é um ponto único de falha crítico."</em></p>
+                
+                <h2>Fluxo de Trabalho com o Mapa</h2>
+                <ol>
+                    <li><strong>Exploração Inicial:</strong> Gere o mapa completo para ter uma visão geral</li>
+                    <li><strong>Análise de Padrões:</strong> Identifique hubs, ilhas e clusters</li>
+                    <li><strong>Investigação Profunda:</strong> Clique nos nós problemáticos para ver detalhes</li>
+                    <li><strong>Planejamento de Ação:</strong> Defina prioridades baseadas em métricas objetivas</li>
+                </ol>
+                
+                <div class="article-cta">
+                    <h3>🚀 Visualize a Arquitetura do seu Projeto</h3>
+                    <p>Não fique no escuro. Gere seu primeiro mapa de dependências em segundos e veja o que seu código realmente revela.</p>
+                    <a href="../index.html" class="cta-button">
+                        <i class="fas fa-project-diagram"></i> Gerar Meu Mapa Agora
+                    </a>
+                </div>
+            </div>
+
+            <footer class="article-navigation">
+                <a href="como-identificar-dependencias-circulares.html" class="nav-prev">
+                    <span class="nav-label">← Artigo anterior</span>
+                    <span>Como Identificar Dependências Circulares</span>
+                </a>
+                <a href="5-problemas-arquitetura-revela.html" class="nav-next">
+                    <span class="nav-label">Próximo artigo →</span>
+                    <span>5 Problemas de Arquitetura que um Mapa Revela</span>
+                </a>
+            </footer>
+        </article>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <span>Conectado à API do GitHub</span><span>•</span>
+                <a href="../guia.html"><i class="fas fa-book"></i> Como Usar</a><span>•</span>
+                <a href="../politica-de-privacidade.html"><i class="fas fa-shield-alt"></i> Privacidade</a><span>•</span>
+                <a href="../contato.html"><i class="fas fa-envelope"></i> Contato</a><span>•</span>
+                <a href="../artigos.html"><i class="fas fa-newspaper"></i> Artigos</a><span>•</span>
+                <span id="currentYear">2026</span><span>•</span>
+                <a href="#" onclick="clearCache()"><i class="fas fa-trash-alt"></i> Limpar Cache</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            this.querySelector('i').className = document.body.classList.contains('light-theme') ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        });
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        }
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        function clearCache() { if (confirm('Limpar cache?')) { Object.keys(localStorage).forEach(key => { if (key.startsWith('codemap_')) localStorage.removeItem(key); }); alert('Cache limpo!'); } return false; }
+    </script>
+</body>
+</html>
