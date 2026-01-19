@@ -43,6 +43,10 @@
         .step-card { background: #1e293b; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; border-left: 4px solid #3b82f6; }
         .step-number { display: inline-block; background: #3b82f6; color: white; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; margin-right: 1rem; font-weight: bold; }
         .step-title { display: inline; font-size: 1.25rem; }
+        html, body {
+        height: 100%;
+        overflow-y: auto; /* Garante que a rolagem vertical funcione */
+        }
         @media (max-width: 768px) { .article-title { font-size: 2rem; } .article-meta { flex-direction: column; gap: 0.75rem; } .article-navigation { flex-direction: column; gap: 1.5rem; } .nav-prev, .nav-next { max-width: 100%; } }
     </style>
 </head>
