@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- COPIE TODA A SEÇÃO <head> DO SEU index.html AQUI -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigos & Guias - CodeCartographer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Inclua todos os links para Font Awesome, etc., iguais ao index.html -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Cabeçalho IDÊNTICO ao do index.html (será atualizado no Passo 2) -->
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-map"></i> 
+            <span style="color: #3b82f6;">CODE</span>CARTOGRAPHER
+        </div>
+        <div class="header-controls">
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="version-tag">v4.0 (Professional)</div>
+        </div>
+    </header>
+
+    <div class="content-with-sidebar">
+        <!-- Conteúdo Principal: Lista de Artigos -->
+        <main class="articles-main">
+            <h1>Artigos & Guias</h1>
+            <p class="page-subtitle">Aprenda sobre análise de código, arquitetura e boas práticas.</p>
+
+            <article class="article-card">
+                <h2><a href="#">Como Usar o CodeCartographer para Encontrar Dependências Circulares</a></h2>
+                <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 19 de Janeiro, 2026 | <i class="far fa-folder"></i> Tutorial</p>
+                <p>Um guia passo a passo para identificar um dos problemas mais comuns em código legado usando a visualização gráfica da ferramenta.</p>
+                <a href="#" class="read-more">Ler artigo completo →</a>
+            </article>
+
+            <article class="article-card">
+                <h2><a href="#">O Que é um Mapa de Dependências e Por Que Todo Desenvolvedor Deveria se Importar?</a></h2>
+                <p class="article-meta"><i class="far fa-calendar"></i> Publicado em: 15 de Janeiro, 2026 | <i class="far fa-folder"></i> Conceitos</p>
+                <p>Entenda como esta técnica de visualização pode revelar a saúde arquitetural do seu projeto e prevenir dívida técnica.</p>
+                <a href="#" class="read-more">Ler artigo completo →</a>
+            </article>
+
+            <!-- Adicione mais elementos <article> aqui no futuro -->
+        </main>
+
+        <!-- Sidebar (Coluna Lateral) -->
+        <aside class="articles-sidebar">
+            <div class="sidebar-widget">
+                <h3><i class="fas fa-search"></i> Buscar Artigos</h3>
+                <input type="search" placeholder="Digite uma palavra-chave..." class="search-box">
+            </div>
+
+            <div class="sidebar-widget">
+                <h3><i class="fas fa-fire"></i> Artigos Populares</h3>
+                <ul>
+                    <li><a href="#">5 Problemas Comuns que um Mapa de Dependências Revela</a></li>
+                    <li><a href="#">Introdução à Arquitetura de Software Visual</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3><i class="fas fa-tags"></i> Categorias</h3>
+                <ul>
+                    <li><a href="#">Tutoriais</a></li>
+                    <li><a href="#">Arquitetura</a></li>
+                    <li><a href="#">Refatoração</a></li>
+                    <li><a href="#">Casos de Uso</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3><i class="fas fa-newspaper"></i> Inscreva-se</h3>
+                <p>Receba novos artigos por e-mail.</p>
+                <input type="email" placeholder="seu@email.com" class="email-input">
+                <button class="subscribe-btn">Inscrever</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Rodapé IDÊNTICO ao do index.html (já atualizado com links) -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <!-- Os links que você já adicionou (Privacidade, Contato, etc.) -->
+                <span>Conectado à API do GitHub</span>
+                <span>•</span>
+                <a href="guia.html"><i class="fas fa-book"></i> Como Usar</a>
+                <span>•</span>
+                <a href="politica-de-privacidade.html"><i class="fas fa-shield-alt"></i> Privacidade</a>
+                <span>•</span>
+                <a href="contato.html"><i class="fas fa-envelope"></i> Contato</a>
+                <span>•</span>
+                <a href="artigos.html"><i class="fas fa-newspaper"></i> Artigos</a> <!-- Novo link -->
+                <span>•</span>
+                <span id="currentYear">2026</span>
+                <span>•</span>
+                <a href="#" onclick="clearCache()"><i class="fas fa-trash-alt"></i> Limpar Cache</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Copie os scripts do final do body do index.html aqui -->
+    <script>
+        // Scripts para tema, ano atual, etc. (iguais ao index.html)
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            const icon = this.querySelector('i');
+            icon.className = document.body.classList.contains('light-theme') ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        });
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        }
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
