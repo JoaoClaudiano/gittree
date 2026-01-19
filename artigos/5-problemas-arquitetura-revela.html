@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>5 Problemas de Arquitetura que um Mapa de Dependências Revela | CodeCartographer</title>
+    <meta name="description" content="Descubra os 5 padrões arquiteturais problemáticos mais comuns que são imediatamente visíveis em um mapa de dependências do seu código.">
+    
+    <meta property="og:title" content="5 Problemas de Arquitetura que um Mapa de Dependências Revela">
+    <meta property="og:description" content="Padrões problemáticos que saltam aos olhos na visualização gráfica do seu código.">
+    <meta property="og:image" content="https://joaoclaudiano.github.io/legacymap/images/artigos/5-problemas.jpg">
+    <meta property="og:url" content="https://joaoclaudiano.github.io/legacymap/artigos/5-problemas-arquitetura-revela.html">
+    <meta property="og:type" content="article">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .article-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-title { font-size: 2.5rem; line-height: 1.2; margin-bottom: 1rem; color: #f8fafc; }
+        .article-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; color: #94a3b8; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #334155; }
+        .article-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .article-content { font-size: 1.125rem; line-height: 1.8; color: #e2e8f0; }
+        .article-content h2 { font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1.5rem; color: #f1f5f9; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .article-content h3 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #f1f5f9; }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content ul, .article-content ol { margin-bottom: 1.5rem; padding-left: 2rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content code { background: #1e293b; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        .article-content pre { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 1.5rem 0; }
+        .article-cta { background: #1e293b; border-radius: 10px; padding: 2rem; margin: 3rem 0; text-align: center; border-left: 4px solid #3b82f6; }
+        .cta-button { display: inline-block; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1rem; transition: background 0.2s; }
+        .cta-button:hover { background: #2563eb; }
+        .article-navigation { display: flex; justify-content: space-between; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #334155; }
+        .nav-prev, .nav-next { color: #94a3b8; text-decoration: none; max-width: 45%; }
+        .nav-label { display: block; font-size: 0.875rem; color: #64748b; margin-bottom: 0.5rem; }
+        .problem-card { background: #1e293b; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; border-left: 4px solid; }
+        .problem-card.critical { border-left-color: #ef4444; }
+        .problem-card.warning { border-left-color: #f59e0b; }
+        .problem-card.info { border-left-color: #3b82f6; }
+        .problem-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .problem-number { background: #3b82f6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .problem-title { font-size: 1.5rem; margin: 0; }
+        .problem-severity { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500; margin-left: 1rem; }
+        .severity-critical { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+        .severity-high { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+        .severity-medium { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        @media (max-width: 768px) { .article-title { font-size: 2rem; } .article-meta { flex-direction: column; gap: 0.75rem; } .article-navigation { flex-direction: column; gap: 1.5rem; } .nav-prev, .nav-next { max-width: 100%; } }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <i class="fas fa-map"></i> 
+            <span style="color: #3b82f6;">CODE</span>CARTOGRAPHER
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Início</a>
+            <a href="../artigos.html" class="nav-link"><i class="fas fa-newspaper"></i> Artigos</a>
+        </nav>
+        <div class="header-controls">
+            <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <article>
+            <header class="article-header">
+                <h1 class="article-title">5 Problemas de Arquitetura que um Mapa de Dependências Revela Imediatamente</h1>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> Publicado em: 15 de Janeiro, 2026</span>
+                    <span><i class="far fa-folder"></i> Categoria: Análise & Diagnóstico</span>
+                    <span><i class="far fa-clock"></i> Tempo de leitura: 7 minutos</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>Muitos problemas de arquitetura são <strong>invisíveis durante a leitura linha-a-linha do código</strong>, mas saltam aos olhos quando vistos de cima através de um mapa de dependências. Neste artigo, exploramos os 5 padrões mais comuns que a visualização do CodeCartographer expõe em segundos.</p>
+                
+                <div class="problem-card critical">
+                    <div class="problem-header">
+                        <div class="problem-number">1</div>
+                        <h3 class="problem-title">O "Grande Hub" (God Object)</h3>
+                        <span class="problem-severity severity-critical">Crítico</span>
+                    </div>
+                    <p><strong>Como identificar:</strong> Um único módulo com dezenas (ou centenas) de dependências entrando e saindo. No grafo, aparece como um nó central enorme com arestas para todos os lados.</p>
+                    <p><strong>O que indica:</strong> Violação clara do <strong>Single Responsibility Principle</strong>. Uma classe ou módulo que faz coisas demais, acumulando responsabilidades ao longo do tempo.</p>
+                    <p><strong>Impacto:</strong> Qualquer mudança nesse módulo impacta grande parte do sistema. Testes são difíceis e frágeis. Novos desenvolvedores temem tocá-lo.</p>
+                    <pre><code>// Exemplo típico em projetos legados
+class SistemaManager {
+  // Gerencia usuários, configurações, logs, notificações,
+  // cache, autenticação, autorização, relatórios...
+  // 2000+ linhas de código
+}</code></pre>
+                </div>
+                
+                <div class="problem-card critical">
+                    <div class="problem-header">
+                        <div class="problem-number">2</div>
+                        <h3 class="problem-title">Ciclos de Dependência</h3>
+                        <span class="problem-severity severity-critical">Crítico</span>
+                    </div>
+                    <p><strong>Como identificar:</strong> Grupos de módulos que formam um "anel" ou "laço" no grafo. O CodeCartographer tem um detector automático que destaca esses ciclos.</p>
+                    <p><strong>O que indica:</strong> Acoplamento circular onde módulos dependem indiretamente de si mesmos. Impede o carregamento modular e causa efeitos colaterais imprevisíveis.</p>
+                    <p><strong>Impacto:</strong> Dificuldade extrema para testar unidades isoladamente. Problemas de inicialização (circular dependencies). Impossibilidade de reutilizar módulos individualmente.</p>
+                    <p><strong>Solução comum:</strong> Introdução de interfaces, inversão de dependência, ou extração de funcionalidade comum para um terceiro módulo.</p>
+                </div>
+                
+                <div class="problem-card warning">
+                    <div class="problem-header">
+                        <div class="problem-number">3</div>
+                        <h3 class="problem-title">Módulos Órfãos</h3>
+                        <span class="problem-severity severity-high">Alto</span>
+                    </div>
+                    <p><strong>Como identificar:</strong> Módulos que não são importados por ninguém. Aparecem isolados no grafo, sem arestas chegando neles (apenas saindo, se houver).</p>
+                    <p><strong>O que indica:</strong> Possível "dead code" (código morto) nunca executado, ou funcionalidade abandonada. Pode também ser código utilitário que deveria ser mais usado.</p>
+                    <p><strong>Como investigar:</strong> Verifique no histórico do Git quando foi a última modificação. Use ferramentas de cobertura de código para confirmar se é executado.</p>
+                    <p><strong>Ação:</strong> Se confirmado como dead code: remover. Se for utilitário útil: documentar e promover seu uso.</p>
+                </div>
+                
+                <div class="problem-card warning">
+                    <div class="problem-header">
+                        <div class="problem-number">4</div>
+                        <h3 class="problem-title">Acoplamento em Cascata</h3>
+                        <span class="problem-severity severity-high">Alto</span>
+                    </div>
+                    <p><strong>Como identificar:</strong> Longas cadeias lineares de dependências onde A → B → C → D... sem ramificações significativas.</p>
+                    <p><strong>O que indica:</strong> Falta de abstrações intermediárias. Muitas vezes resultado de desenvolvimento "túnel" sem pensar em interfaces.</p>
+                    <p><strong>Impacto:</strong> Uma mudança no início da cadeia impacta todos os módulos subsequentes. Dificuldade de reutilizar partes intermediárias.</p>
+                    <pre><code>// Padrão cascata comum
+Controller → Service → Repository → Database
+       ↓           ↓           ↓
+   Mudança aqui afeta TODOS abaixo</code></pre>
+                </div>
+                
+                <div class="problem-card info">
+                    <div class="problem-header">
+                        <div class="problem-number">5</div>
+                        <h3 class="problem-title">Fronteiras de Contexto Desrespeitadas</h3>
+                        <span class="problem-severity severity-medium">Médio</span>
+                    </div>
+                    <p><strong>Como identificar:</strong> Importações cruzadas entre camadas ou bounded contexts. Exemplo: módulos de UI importando diretamente lógica de acesso a dados.</p>
+                    <p><strong>O que indica:</strong> Violação de princípios de arquitetura limpa (Clean Architecture), arquitetura em camadas, ou boundaries de domínio.</p>
+                    <p><strong>Impacto:</strong> Dificuldade para testar isoladamente, impossibilidade de trocar camadas (ex: banco de dados), e acoplamento de tecnologias específicas.</p>
+                    <p><strong>Solução:</strong> Estabelecer interfaces claras entre camadas e garantir que dependências fluam em apenas uma direção (para dentro, em direção às políticas).</p>
+                </div>
+                
+                <h2>Fluxo de Diagnóstico com CodeCartographer</h2>
+                <ol>
+                    <li><strong>Gerar mapa completo</strong> do projeto</li>
+                    <li><strong>Usar filtro de "hubs"</strong> para encontrar módulos muito conectados</li>
+                    <li><strong>Ativar detector de ciclos</strong> para identificar dependências circulares</li>
+                    <li><strong>Buscar módulos isolados</strong> para encontrar possíveis dead code</li>
+                    <li><strong>Colorir por camada</strong> para verificar violações de boundaries</li>
+                </ol>
+                
+                <div class="article-cta">
+                    <h3>🔍 Encontre Problemas no seu Código</h3>
+                    <p>Não espere que problemas arquiteturais se tornem crises. Analise seu projeto agora e identifique esses padrões antes que impactem sua produtividade.</p>
+                    <a href="../index.html" class="cta-button">
+                        <i class="fas fa-search"></i> Diagnosticar Meu Projeto
+                    </a>
+                </div>
+            </div>
+
+            <footer class="article-navigation">
+                <a href="mapa-dependencias-radar-desenvolvedor.html" class="nav-prev">
+                    <span class="nav-label">← Artigo anterior</span>
+                    <span>Mapa de Dependências: O Radar do Desenvolvedor</span>
+                </a>
+                <a href="planejando-refatoracao-mapa-ordem.html" class="nav-next">
+                    <span class="nav-label">Próximo artigo →</span>
+                    <span>Planejando uma Grande Refatoração</span>
+                </a>
+            </footer>
+        </article>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <span>Conectado à API do GitHub</span><span>•</span>
+                <a href="../guia.html"><i class="fas fa-book"></i> Como Usar</a><span>•</span>
+                <a href="../politica-de-privacidade.html"><i class="fas fa-shield-alt"></i> Privacidade</a><span>•</span>
+                <a href="../contato.html"><i class="fas fa-envelope"></i> Contato</a><span>•</span>
+                <a href="../artigos.html"><i class="fas fa-newspaper"></i> Artigos</a><span>•</span>
+                <span id="currentYear">2026</span><span>•</span>
+                <a href="#" onclick="clearCache()"><i class="fas fa-trash-alt"></i> Limpar Cache</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            this.querySelector('i').className = document.body.classList.contains('light-theme') ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        });
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
+        }
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        function clearCache() { if (confirm('Limpar cache?')) { Object.keys(localStorage).forEach(key => { if (key.startsWith('codemap_')) localStorage.removeItem(key); }); alert('Cache limpo!'); } return false; }
+    </script>
+</body>
+</html>
