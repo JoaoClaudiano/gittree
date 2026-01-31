@@ -1,9 +1,27 @@
+// ==================== INICIALIZAÇÃO ====================
+// Verificar se React está disponível
+if (!window.React || !window.ReactDOM) {
+    console.error('React não está carregado! Verifique a ordem dos scripts.');
+    document.getElementById('app').innerHTML = `
+        <div style="text-align: center; padding: 40px; color: #ef4444;">
+            <h3><i class="fas fa-exclamation-triangle"></i> Erro de Dependência</h3>
+            <p>As bibliotecas React não foram carregadas corretamente.</p>
+            <button onclick="window.location.reload()" 
+                    style="padding: 10px 20px; margin-top: 20px; background: #3b82f6; 
+                           color: white; border: none; border-radius: 6px; cursor: pointer;">
+                Recarregar Página
+            </button>
+        </div>
+    `;
+    throw new Error('React não disponível');
+}
+
 const { useState, useEffect, useRef } = React;
 const { createRoot } = ReactDOM;
 
 // ==================== SISTEMA DE CACHE ====================
 const CACHE_PREFIX = 'codemap_';
-const CACHE_TTL = 24 * 60 * 60 * 1000;
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 horas
 
 const cache = {
     set: (key, data, ttl = CACHE_TTL) => {
@@ -14,6 +32,7 @@ const cache = {
                 timestamp: Date.now()
             };
             localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(item));
+            console.log(`Cache salvo: ${key}`);
             return true;
         } catch (err) {
             console.error('Erro ao salvar cache:', err);
@@ -29,9 +48,11 @@ const cache = {
             const item = JSON.parse(itemStr);
             if (Date.now() > item.expiry) {
                 localStorage.removeItem(CACHE_PREFIX + key);
+                console.log(`Cache expirado: ${key}`);
                 return null;
             }
             
+            console.log(`Cache carregado: ${key}`);
             return item.data;
         } catch (err) {
             console.error('Erro ao ler cache:', err);
@@ -41,15 +62,20 @@ const cache = {
     
     remove: (key) => {
         localStorage.removeItem(CACHE_PREFIX + key);
+        console.log(`Cache removido: ${key}`);
     },
     
     clear: () => {
         const keys = Object.keys(localStorage);
+        let count = 0;
         keys.forEach(key => {
             if (key.startsWith(CACHE_PREFIX)) {
                 localStorage.removeItem(key);
+                count++;
             }
         });
+        console.log(`Cache limpo: ${count} itens removidos`);
+        return count;
     },
     
     getStats: () => {
@@ -70,253 +96,82 @@ const cache = {
                         name: item.data.repoInfo.name,
                         owner: item.data.repoInfo.owner,
                         files: item.data.files ? item.data.files.length : 0,
-                        timestamp: item.timestamp
+                        timestamp: new Date(item.timestamp).toLocaleDateString()
                     });
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.warn(`Item inválido no cache: ${key}`);
+            }
         });
         
         stats.sizeKB = Math.round(stats.size / 1024 * 100) / 100;
+        stats.sizeMB = Math.round(stats.sizeKB / 1024 * 100) / 100;
         return stats;
     }
 };
 
-// ==================== ANÁLISE DE IMPORTS PROFUNDA ====================
-const analyzeImports = async (files, owner, repo, branch) => {
-    console.log('Iniciando análise profunda de imports...');
+// ==================== UTILITÁRIOS ====================
+const showNotification = (message, type = 'info') => {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        background: ${type === 'success' ? '#10b981' : 
+                     type === 'error' ? '#ef4444' : 
+                     type === 'warning' ? '#f59e0b' : '#3b82f6'};
+        color: white;
+        z-index: 10000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease;
+    `;
     
-    const importsData = {
-        nodes: [],
-        edges: [],
-        fileContents: {},
-        stats: {
-            totalFiles: files.length,
-            analyzedFiles: 0,
-            totalImports: 0,
-            internalImports: 0,
-            externalImports: 0
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-    };
-    
-    // Primeiro, criar nós para todos os arquivos
-    const fileMap = new Map();
-    files.forEach(file => {
-        const node = {
-            id: file.path,
-            name: file.path.split('/').pop(),
-            path: file.path,
-            type: 'file',
-            extension: file.extension,
-            language: getFileLanguage(file.path),
-            imports: [],
-            importedBy: [],
-            depth: file.path.split('/').length - 1,
-            isRoot: file.path.split('/').length === 1,
-            folderPath: file.path.substring(0, file.path.lastIndexOf('/')) || '/',
-            size: file.sizeKB || 0
-        };
-        importsData.nodes.push(node);
-        fileMap.set(file.path, node);
-    });
-    
-    // Analisar conteúdo dos arquivos para extrair imports
-    for (const node of importsData.nodes.slice(0, 50)) { // Limitar análise
-        try {
-            const contentRes = await fetch(
-                `https://api.github.com/repos/${owner}/${repo}/contents/${node.path}?ref=${branch}`,
-                { 
-                    headers: { 
-                        'Accept': 'application/vnd.github.v3.raw'
-                    }
-                }
-            );
-            
-            if (!contentRes.ok) continue;
-            
-            const content = await contentRes.text();
-            importsData.fileContents[node.path] = content;
-            importsData.stats.analyzedFiles++;
-            
-            // Extrair imports mais precisamente
-            const imports = extractImportsFromContent(content, node.path);
-            importsData.stats.totalImports += imports.length;
-            
-            node.imports = imports;
-            
-            // Processar cada import encontrado
-            imports.forEach(importPath => {
-                const resolvedPath = resolveImportPath(importPath, node.path, Array.from(fileMap.values()));
-                
-                if (resolvedPath && fileMap.has(resolvedPath)) {
-                    const targetNode = fileMap.get(resolvedPath);
-                    
-                    // Criar conexão
-                    importsData.edges.push({
-                        source: node.id,
-                        target: targetNode.id,
-                        id: `${node.id}->${targetNode.id}`,
-                        type: 'import',
-                        importPath: importPath
-                    });
-                    
-                    // Adicionar relação importedBy
-                    if (!targetNode.importedBy.includes(node.id)) {
-                        targetNode.importedBy.push(node.id);
-                    }
-                    
-                    importsData.stats.internalImports++;
-                } else {
-                    importsData.stats.externalImports++;
-                }
-            });
-            
-        } catch (err) {
-            console.warn(`Erro ao analisar ${node.path}:`, err);
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
-    }
+    `;
+    document.head.appendChild(style);
     
-    console.log('Análise completa:', importsData.stats);
-    return importsData;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                           type === 'error' ? 'exclamation-circle' : 
+                           type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 };
 
-const extractImportsFromContent = (content, filePath) => {
-    const imports = [];
-    
-    // Padrões de import para diferentes linguagens
-    const patterns = {
-        javascript: [
-            /from\s+['"](.+?)['"]/g,                    // ES6 import
-            /require\s*\(\s*['"](.+?)['"]\s*\)/g,        // CommonJS require
-            /import\s+['"](.+?)['"]/g,                   // ES6 import side-effect
-            /import\s*\(\s*['"](.+?)['"]\s*\)/g,         // Dynamic import
-            /export\s+.*from\s+['"](.+?)['"]/g          // Re-export
-        ],
-        typescript: [
-            /from\s+['"](.+?)['"]/g,
-            /require\s*\(\s*['"](.+?)['"]\s*\)/g,
-            /import\s+['"](.+?)['"]/g,
-            /import\s*\(\s*['"](.+?)['"]\s*\)/g,
-            /export\s+.*from\s+['"](.+?)['"]/g,
-            /<reference\s+path=['"](.+?)['"]\s*\/>/g     // TypeScript reference
-        ],
-        css: [
-            /@import\s+['"](.+?)['"]/g,                  // CSS import
-            /url\s*\(\s*['"]?(.+?)['"]?\s*\)/g           // CSS url
-        ]
+const getFileIcon = (extension) => {
+    const icons = {
+        'js': 'JS', 'jsx': 'JSX',
+        'ts': 'TS', 'tsx': 'TSX',
+        'css': 'CSS', 'scss': 'SCSS', 'less': 'LESS',
+        'json': '{}', 'md': 'MD',
+        'html': 'HTML', 'vue': 'VUE',
+        'svelte': 'SVL', 'py': 'PY',
+        'java': 'JAVA', 'rb': 'RB',
+        'php': 'PHP', 'go': 'GO',
+        'rs': 'RUST', 'cpp': 'C++', 'c': 'C'
     };
-    
-    const ext = filePath.split('.').pop().toLowerCase();
-    let relevantPatterns = [];
-    
-    if (['js', 'jsx'].includes(ext)) {
-        relevantPatterns = patterns.javascript;
-    } else if (['ts', 'tsx'].includes(ext)) {
-        relevantPatterns = patterns.typescript;
-    } else if (['css', 'scss', 'less'].includes(ext)) {
-        relevantPatterns = patterns.css;
-    } else {
-        relevantPatterns = [...patterns.javascript, ...patterns.typescript];
-    }
-    
-    // Extrair imports
-    relevantPatterns.forEach(pattern => {
-        let match;
-        while ((match = pattern.exec(content)) !== null) {
-            const importPath = match[1];
-            if (importPath && !importPath.startsWith('http')) {
-                imports.push(importPath);
-            }
-        }
-    });
-    
-    return imports;
-};
-
-const resolveImportPath = (importPath, sourcePath, allNodes) => {
-    // Normalizar caminhos
-    const sourceDir = sourcePath.substring(0, sourcePath.lastIndexOf('/')) || '';
-    const normalizedImport = importPath
-        .replace(/^\.\//, '')
-        .replace(/^\.\.\//, '');
-    
-    // Casos de resolução
-    const resolveCases = [];
-    
-    // Caso 1: Import relativo (./ ou ../)
-    if (importPath.startsWith('.')) {
-        // Calcular caminho absoluto
-        const parts = sourceDir.split('/').filter(p => p);
-        const importParts = importPath.split('/').filter(p => p);
-        
-        for (const part of importParts) {
-            if (part === '..') {
-                parts.pop();
-            } else if (part !== '.') {
-                parts.push(part);
-            }
-        }
-        
-        const absolutePath = parts.join('/');
-        
-        // Tentar com extensões comuns
-        resolveCases.push(
-            absolutePath,
-            `${absolutePath}.js`,
-            `${absolutePath}.ts`,
-            `${absolutePath}.jsx`,
-            `${absolutePath}.tsx`,
-            `${absolutePath}/index.js`,
-            `${absolutePath}/index.ts`,
-            `${absolutePath}/index.jsx`,
-            `${absolutePath}/index.tsx`
-        );
-    }
-    // Caso 2: Import de módulo (provavelmente externo)
-    else if (!importPath.startsWith('/') && !importPath.startsWith('.')) {
-        // Verificar se é um arquivo local referenciado como módulo
-        const possiblePaths = [
-            `node_modules/${importPath}`,
-            `src/${importPath}`,
-            `lib/${importPath}`,
-            `components/${importPath}`,
-            `utils/${importPath}`
-        ];
-        
-        possiblePaths.forEach(base => {
-            resolveCases.push(
-                base,
-                `${base}.js`,
-                `${base}.ts`,
-                `${base}/index.js`,
-                `${base}/index.ts`
-            );
-        });
-    }
-    // Caso 3: Import absoluto (/)
-    else {
-        const absPath = importPath.startsWith('/') ? importPath.slice(1) : importPath;
-        resolveCases.push(
-            absPath,
-            `${absPath}.js`,
-            `${absPath}.ts`,
-            `${absPath}.jsx`,
-            `${absPath}.tsx`
-        );
-    }
-    
-    // Procurar correspondência
-    for (const path of resolveCases) {
-        const exactMatch = allNodes.find(n => n.path === path);
-        if (exactMatch) return exactMatch.path;
-        
-        // Procurar correspondência parcial (sem extensão)
-        const partialMatch = allNodes.find(n => 
-            n.path.replace(/\.[^/.]+$/, "") === path.replace(/\.[^/.]+$/, "")
-        );
-        if (partialMatch) return partialMatch.path;
-    }
-    
-    return null;
+    return icons[extension] || '📄';
 };
 
 const getFileLanguage = (path) => {
@@ -333,648 +188,686 @@ const getFileLanguage = (path) => {
         'md': 'Markdown',
         'html': 'HTML',
         'vue': 'Vue.js',
-        'svelte': 'Svelte'
+        'svelte': 'Svelte',
+        'py': 'Python',
+        'java': 'Java',
+        'rb': 'Ruby',
+        'php': 'PHP',
+        'go': 'Go',
+        'rs': 'Rust',
+        'cpp': 'C++',
+        'c': 'C'
     };
     return languages[ext] || ext.toUpperCase();
 };
 
-// ==================== ÁRVORE DE DEPENDÊNCIAS INTERATIVA ====================
-const DependencyTree = ({ importsData, onNodeClick, repoBase }) => {
-    const containerRef = useRef(null);
-    const [selectedNode, setSelectedNode] = useState(null);
-    const [zoom, setZoom] = useState(1);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
-    const [isDragging, setIsDragging] = useState(false);
-    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+// ==================== ANÁLISE DE REPOSITÓRIO ====================
+const fetchRepositoryData = async (owner, repo) => {
+    console.log(`Buscando dados do repositório: ${owner}/${repo}`);
     
-    // Construir hierarquia de pastas
-    const buildFolderHierarchy = () => {
-        const root = {
-            id: 'root',
-            name: 'Repositório',
-            type: 'folder',
-            children: [],
-            path: '',
-            depth: 0
-        };
-        
-        const folderMap = new Map();
-        folderMap.set('', root);
-        
-        // Organizar arquivos por pasta
-        importsData.nodes.forEach(node => {
-            const folderPath = node.folderPath;
-            
-            // Criar pastas intermediárias se não existirem
-            const parts = folderPath === '/' ? [] : folderPath.split('/').filter(p => p);
-            let currentPath = '';
-            
-            for (let i = 0; i < parts.length; i++) {
-                const subPath = parts.slice(0, i + 1).join('/');
-                if (!folderMap.has(subPath)) {
-                    const folder = {
-                        id: `folder_${subPath}`,
-                        name: parts[i],
-                        type: 'folder',
-                        children: [],
-                        path: subPath,
-                        depth: i + 1,
-                        files: []
-                    };
-                    folderMap.set(subPath, folder);
-                    
-                    const parentPath = parts.slice(0, i).join('/') || '';
-                    folderMap.get(parentPath).children.push(folder);
-                }
-                currentPath = subPath;
-            }
-            
-            // Adicionar arquivo à pasta
-            const parentFolder = folderMap.get(folderPath);
-            if (parentFolder) {
-                parentFolder.children.push(node);
+    try {
+        // 1. Informações básicas do repositório
+        const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+            headers: { 
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'CodeCartographer/1.0'
             }
         });
         
-        return root;
-    };
-    
-    // Renderizar árvore
-    useEffect(() => {
-        if (!containerRef.current || !importsData || importsData.nodes.length === 0) return;
+        if (!repoRes.ok) {
+            if (repoRes.status === 404) {
+                throw new Error('Repositório não encontrado');
+            }
+            throw new Error(`GitHub API: ${repoRes.status} ${repoRes.statusText}`);
+        }
         
-        const container = containerRef.current;
-        container.innerHTML = '';
+        const repoData = await repoRes.json();
+        console.log('Repositório encontrado:', repoData.name);
         
-        const hierarchy = buildFolderHierarchy();
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        
-        // Criar SVG
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', '100%');
-        svg.setAttribute('height', '100%');
-        svg.style.cursor = isDragging ? 'grabbing' : 'grab';
-        
-        // Grupo para zoom/pan
-        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.setAttribute('transform', `translate(${offset.x}, ${offset.y}) scale(${zoom})`);
-        
-        // Calcular posições
-        const positions = calculateTreePositions(hierarchy, width, height);
-        
-        // Desenhar conexões (edges)
-        importsData.edges.forEach(edge => {
-            const sourcePos = positions.get(edge.source);
-            const targetPos = positions.get(edge.target);
-            
-            if (sourcePos && targetPos) {
-                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path.setAttribute('d', `M ${sourcePos.x} ${sourcePos.y} L ${targetPos.x} ${targetPos.y}`);
-                path.setAttribute('stroke', '#3b82f6');
-                path.setAttribute('stroke-width', '1.5');
-                path.setAttribute('fill', 'none');
-                path.setAttribute('opacity', '0.4');
-                path.setAttribute('marker-end', 'url(#arrowhead)');
-                g.appendChild(path);
+        // 2. Buscar estrutura de arquivos
+        const branch = repoData.default_branch || 'main';
+        const treeRes = await fetch(
+            `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`, {
+            headers: { 
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'CodeCartographer/1.0'
             }
         });
         
-        // Desenhar nós
-        positions.forEach((pos, id) => {
-            const node = importsData.nodes.find(n => n.id === id) || 
-                        { id, name: id.replace('folder_', '').split('/').pop(), type: 'folder' };
-            
-            const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-            group.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
-            
-            // Círculo para nó
-            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circle.setAttribute('r', node.type === 'folder' ? '20' : '15');
-            circle.setAttribute('fill', getNodeColor(node));
-            circle.setAttribute('stroke', selectedNode === node.id ? '#f59e0b' : '#475569');
-            circle.setAttribute('stroke-width', selectedNode === node.id ? '3' : '2');
-            circle.style.cursor = 'pointer';
-            circle.addEventListener('click', () => {
-                setSelectedNode(node.id);
-                if (onNodeClick) onNodeClick(node);
-            });
-            
-            // Ícone
-            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            text.setAttribute('text-anchor', 'middle');
-            text.setAttribute('dominant-baseline', 'central');
-            text.setAttribute('fill', 'white');
-            text.setAttribute('font-size', node.type === 'folder' ? '12' : '10');
-            text.setAttribute('font-weight', 'bold');
-            text.textContent = node.type === 'folder' ? '📁' : getFileIcon(node.extension);
-            
-            // Tooltip
-            const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-            title.textContent = `${node.name}\n${node.path}\nImporta: ${node.imports?.length || 0} arquivos\nImportado por: ${node.importedBy?.length || 0} arquivos`;
-            
-            group.appendChild(circle);
-            group.appendChild(text);
-            group.appendChild(title);
-            g.appendChild(group);
-            
-            // Label
-            const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            label.setAttribute('x', pos.x);
-            label.setAttribute('y', pos.y + (node.type === 'folder' ? 30 : 25));
-            label.setAttribute('text-anchor', 'middle');
-            label.setAttribute('fill', '#cbd5e1');
-            label.setAttribute('font-size', '10');
-            label.setAttribute('font-family', 'monospace');
-            label.textContent = node.name.length > 15 ? node.name.substring(0, 12) + '...' : node.name;
-            g.appendChild(label);
-        });
-        
-        // Definir arrowhead marker
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
-        marker.setAttribute('id', 'arrowhead');
-        marker.setAttribute('markerWidth', '10');
-        marker.setAttribute('markerHeight', '7');
-        marker.setAttribute('refX', '9');
-        marker.setAttribute('refY', '3.5');
-        marker.setAttribute('orient', 'auto');
-        
-        const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
-        polygon.setAttribute('fill', '#3b82f6');
-        
-        marker.appendChild(polygon);
-        defs.appendChild(marker);
-        
-        svg.appendChild(defs);
-        svg.appendChild(g);
-        container.appendChild(svg);
-        
-        // Event listeners para zoom/pan
-        const handleWheel = (e) => {
-            e.preventDefault();
-            const delta = e.deltaY > 0 ? 0.9 : 1.1;
-            setZoom(prev => Math.max(0.5, Math.min(3, prev * delta)));
-        };
-        
-        const handleMouseDown = (e) => {
-            if (e.button === 0) {
-                setIsDragging(true);
-                setDragStart({
-                    x: e.clientX - offset.x,
-                    y: e.clientY - offset.y
-                });
+        if (!treeRes.ok) {
+            if (treeRes.status === 403) {
+                throw new Error('Limite de requisições excedido. Tente novamente mais tarde.');
             }
-        };
-        
-        const handleMouseMove = (e) => {
-            if (!isDragging) return;
-            setOffset({
-                x: e.clientX - dragStart.x,
-                y: e.clientY - dragStart.y
-            });
-        };
-        
-        const handleMouseUp = () => {
-            setIsDragging(false);
-        };
-        
-        svg.addEventListener('wheel', handleWheel);
-        svg.addEventListener('mousedown', handleMouseDown);
-        svg.addEventListener('mousemove', handleMouseMove);
-        svg.addEventListener('mouseup', handleMouseUp);
-        svg.addEventListener('mouseleave', handleMouseUp);
-        
-        return () => {
-            svg.removeEventListener('wheel', handleWheel);
-            svg.removeEventListener('mousedown', handleMouseDown);
-            svg.removeEventListener('mousemove', handleMouseMove);
-            svg.removeEventListener('mouseup', handleMouseUp);
-            svg.removeEventListener('mouseleave', handleMouseUp);
-        };
-        
-    }, [importsData, selectedNode, zoom, offset, isDragging, onNodeClick]);
-    
-    const calculateTreePositions = (hierarchy, width, height) => {
-        const positions = new Map();
-        const nodeWidth = 150;
-        const nodeHeight = 80;
-        const verticalSpacing = 100;
-        const horizontalSpacing = 200;
-        
-        const traverse = (node, x, y, level) => {
-            positions.set(node.id, { x, y });
-            
-            if (node.children && node.children.length > 0) {
-                const childCount = node.children.length;
-                const startX = x - ((childCount - 1) * horizontalSpacing) / 2;
-                
-                node.children.forEach((child, index) => {
-                    const childX = startX + (index * horizontalSpacing);
-                    const childY = y + verticalSpacing;
-                    traverse(child, childX, childY, level + 1);
-                });
-            }
-        };
-        
-        traverse(hierarchy, width / 2, 100, 0);
-        return positions;
-    };
-    
-    const getNodeColor = (node) => {
-        if (node.type === 'folder') return '#1e293b';
-        
-        const colors = {
-            'js': '#3b82f6', 'jsx': '#06b6d4',
-            'ts': '#1d4ed8', 'tsx': '#1e40af',
-            'css': '#8b5cf6', 'scss': '#7c3aed',
-            'json': '#f59e0b',
-            'md': '#10b981',
-            'html': '#ef4444',
-            'vue': '#42b883',
-            'svelte': '#ff3e00'
-        };
-        return colors[node.extension] || '#6b7280';
-    };
-    
-    const getFileIcon = (extension) => {
-        const icons = {
-            'js': 'JS', 'jsx': 'JSX',
-            'ts': 'TS', 'tsx': 'TSX',
-            'css': 'CSS', 'scss': 'SCSS',
-            'json': '{}', 'md': 'MD',
-            'html': '</>', 'vue': 'VUE',
-            'svelte': 'SVL'
-        };
-        return icons[extension] || '📄';
-    };
-    
-    // Controles de zoom
-    const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 3));
-    const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.5));
-    const handleResetView = () => {
-        setZoom(1);
-        setOffset({ x: 0, y: 0 });
-    };
-    
-    return React.createElement('div', { 
-        style: { width: '100%', height: '100%', position: 'relative' }
-    }, [
-        // Controles
-        React.createElement('div', {
-            key: 'controls',
-            style: {
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                zIndex: 10,
-                display: 'flex',
-                gap: '5px'
-            }
-        }, [
-            React.createElement('button', {
-                key: 'zoom-in',
-                onClick: handleZoomIn,
-                style: {
-                    padding: '8px 12px',
-                    background: '#1e293b',
-                    color: '#cbd5e1',
-                    border: '1px solid #475569',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                }
-            }, '+'),
-            React.createElement('button', {
-                key: 'zoom-out',
-                onClick: handleZoomOut,
-                style: {
-                    padding: '8px 12px',
-                    background: '#1e293b',
-                    color: '#cbd5e1',
-                    border: '1px solid #475569',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                }
-            }, '−'),
-            React.createElement('button', {
-                key: 'reset',
-                onClick: handleResetView,
-                style: {
-                    padding: '8px 12px',
-                    background: '#1e293b',
-                    color: '#cbd5e1',
-                    border: '1px solid #475569',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                }
-            }, '⟲')
-        ]),
-        
-        // Container do gráfico
-        React.createElement('div', {
-            key: 'graph-container',
-            ref: containerRef,
-            style: {
-                width: '100%',
-                height: '100%',
-                background: '#0f172a',
-                borderRadius: '8px',
-                overflow: 'hidden'
-            }
-        }),
-        
-        // Legenda
-        React.createElement('div', {
-            key: 'legend',
-            style: {
-                position: 'absolute',
-                bottom: '20px',
-                left: '20px',
-                background: 'rgba(15, 23, 42, 0.9)',
-                padding: '10px',
-                borderRadius: '6px',
-                border: '1px solid rgba(255,255,255,0.1)',
-                fontSize: '11px',
-                color: '#cbd5e1'
-            }
-        }, [
-            React.createElement('div', {
-                key: 'title',
-                style: { fontWeight: 'bold', marginBottom: '8px' }
-            }, 'Legenda:'),
-            React.createElement('div', {
-                key: 'folder',
-                style: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }
-            }, [
-                React.createElement('div', {
-                    style: { width: '12px', height: '12px', background: '#1e293b', borderRadius: '50%', border: '1px solid #475569' }
-                }),
-                React.createElement('span', null, 'Pasta')
-            ]),
-            React.createElement('div', {
-                key: 'js',
-                style: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }
-            }, [
-                React.createElement('div', {
-                    style: { width: '12px', height: '12px', background: '#3b82f6', borderRadius: '50%' }
-                }),
-                React.createElement('span', null, 'Arquivo JavaScript')
-            ]),
-            React.createElement('div', {
-                key: 'ts',
-                style: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }
-            }, [
-                React.createElement('div', {
-                    style: { width: '12px', height: '12px', background: '#1d4ed8', borderRadius: '50%' }
-                }),
-                React.createElement('span', null, 'Arquivo TypeScript')
-            ]),
-            React.createElement('div', {
-                key: 'connection',
-                style: { display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }
-            }, [
-                React.createElement('div', {
-                    style: { width: '20px', height: '2px', background: '#3b82f6' }
-                }),
-                React.createElement('span', null, 'Dependência (import)')
-            ])
-        ])
-    ]);
-};
-
-// ==================== COMPONENTE PRINCIPAL APP ====================
-function App() {
-    const [url, setUrl] = useState('');
-    const [files, setFiles] = useState([]);
-    const [fileTree, setFileTree] = useState(null);
-    const [status, setStatus] = useState('Pronto para analisar');
-    const [repoBase, setRepoBase] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [repoInfo, setRepoInfo] = useState(null);
-    const [lastUrl, setLastUrl] = useState('');
-    
-    // Estados para análise de imports
-    const [importsData, setImportsData] = useState(null);
-    const [analyzingImports, setAnalyzingImports] = useState(false);
-    const [activeView, setActiveView] = useState('tree'); // 'tree', 'imports', 'graph'
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [cacheStats, setCacheStats] = useState(() => cache.getStats());
-    
-    const analyzeGithub = async (githubUrl = null, forceRefresh = false) => {
-        const urlToAnalyze = githubUrl || url;
-        if (!urlToAnalyze) {
-            setError('Por favor, insira uma URL do GitHub');
-            return;
+            throw new Error(`Erro ao buscar árvore: ${treeRes.status}`);
         }
         
-        const match = urlToAnalyze.match(/github\.com\/([^/]+)\/([^/]+)/);
-        if (!match) {
-            setError('URL do GitHub inválida. Formato: https://github.com/usuario/repositorio');
-            return;
+        const treeData = await treeRes.json();
+        
+        if (!treeData.tree || treeData.tree.length === 0) {
+            throw new Error('Repositório vazio ou sem arquivos visíveis');
         }
         
-        const [_, owner, repo] = match;
-        const currentRepo = `${owner}/${repo}`;
-        
-        const cacheKey = `repo_${currentRepo.replace(/[^a-zA-Z0-9]/g, '_')}`;
-        const cachedData = cache.get(cacheKey);
-        
-        if (!forceRefresh && cachedData) {
-            setStatus('📦 Carregando do cache...');
-            setTimeout(() => {
-                setFiles(cachedData.files);
-                setRepoInfo(cachedData.repoInfo);
-                setRepoBase(cachedData.repoBase);
-                setLastUrl(currentRepo);
-                setImportsData(null);
-                setStatus(`✅ ${cachedData.files.length} arquivos (do cache)`);
-                showNotification('Dados carregados do cache!', 'success');
-            }, 100);
-            return;
-        }
-        
-        setLoading(true);
-        setStatus('🔍 Conectando ao GitHub...');
-        setError(null);
-        setLastUrl(currentRepo);
-        setImportsData(null);
-        setActiveView('tree');
-        
-        try {
-            const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-                headers: { 'Accept': 'application/vnd.github.v3+json' }
+        // 3. Processar arquivos
+        const files = treeData.tree
+            .filter(item => item.type === 'blob')
+            .map(item => {
+                const extension = item.path.split('.').pop().toLowerCase();
+                return {
+                    ...item,
+                    path: item.path,
+                    extension: extension,
+                    sizeKB: item.size ? Math.round(item.size / 1024 * 10) / 10 : 0,
+                    language: getFileLanguage(item.path),
+                    isCodeFile: ['js', 'jsx', 'ts', 'tsx', 'py', 'java', 'rb', 'php', 'go'].includes(extension)
+                };
+            })
+            .filter(file => {
+                const path = file.path.toLowerCase();
+                // Filtrar pastas desnecessárias
+                return !path.includes('node_modules') && 
+                       !path.includes('dist') && 
+                       !path.includes('build') &&
+                       !path.includes('.git') &&
+                       !path.startsWith('.') &&
+                       !path.endsWith('.lock') &&
+                       !path.endsWith('.log');
             });
-            
-            if (!repoRes.ok) {
-                if (repoRes.status === 404) {
-                    throw new Error('Repositório não encontrado');
-                }
-                throw new Error(`Erro ${repoRes.status}: ${repoRes.statusText}`);
-            }
-            
-            const repoData = await repoRes.json();
-            setRepoInfo({
+        
+        console.log(`${files.length} arquivos processados`);
+        
+        return {
+            success: true,
+            repoInfo: {
                 name: repoData.name,
                 description: repoData.description,
                 stars: repoData.stargazers_count,
                 forks: repoData.forks_count,
                 language: repoData.language,
                 owner: repoData.owner.login,
-                default_branch: repoData.default_branch
-            });
+                default_branch: branch,
+                url: repoData.html_url
+            },
+            files: files,
+            stats: {
+                totalFiles: files.length,
+                codeFiles: files.filter(f => f.isCodeFile).length,
+                totalSizeKB: files.reduce((sum, f) => sum + f.sizeKB, 0)
+            }
+        };
+        
+    } catch (error) {
+        console.error('Erro no fetchRepositoryData:', error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+};
+
+// ==================== COMPONENTE DE LISTA DE ARQUIVOS ====================
+const FileList = ({ files, onFileClick }) => {
+    const [search, setSearch] = useState('');
+    const [filterType, setFilterType] = useState('all');
+    
+    const filteredFiles = files.filter(file => {
+        const matchesSearch = file.path.toLowerCase().includes(search.toLowerCase());
+        const matchesType = filterType === 'all' || 
+                           (filterType === 'code' && file.isCodeFile) ||
+                           (filterType === 'other' && !file.isCodeFile);
+        return matchesSearch && matchesType;
+    });
+    
+    const fileTypes = {
+        'js': filteredFiles.filter(f => f.extension === 'js').length,
+        'ts': filteredFiles.filter(f => f.extension === 'ts' || f.extension === 'tsx').length,
+        'css': filteredFiles.filter(f => ['css', 'scss', 'less'].includes(f.extension)).length,
+        'json': filteredFiles.filter(f => f.extension === 'json').length,
+        'md': filteredFiles.filter(f => f.extension === 'md').length,
+        'other': filteredFiles.filter(f => !['js', 'ts', 'tsx', 'css', 'scss', 'less', 'json', 'md'].includes(f.extension)).length
+    };
+    
+    return React.createElement('div', { 
+        className: 'file-list-container',
+        style: { 
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            borderRadius: '12px',
+            padding: '20px',
+            border: '1px solid #334155',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+        }
+    }, [
+        // Controles
+        React.createElement('div', {
+            key: 'controls',
+            style: { 
+                display: 'flex',
+                gap: '10px',
+                marginBottom: '20px',
+                flexWrap: 'wrap'
+            }
+        }, [
+            React.createElement('div', {
+                key: 'search',
+                style: { flex: 1, minWidth: '200px' }
+            }, [
+                React.createElement('input', {
+                    key: 'search-input',
+                    type: 'text',
+                    placeholder: '🔍 Buscar arquivos...',
+                    value: search,
+                    onChange: (e) => setSearch(e.target.value),
+                    style: {
+                        width: '100%',
+                        padding: '10px 15px',
+                        background: '#1e293b',
+                        border: '1px solid #475569',
+                        borderRadius: '8px',
+                        color: '#f8fafc',
+                        fontSize: '14px'
+                    }
+                })
+            ]),
             
-            const branch = repoData.default_branch || 'main';
-            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
-            
-            console.log('Buscando dados da API:', apiUrl);
-            
-            const res = await fetch(apiUrl, {
-                headers: { 'Accept': 'application/vnd.github.v3+json' }
-            });
-            
-            if (!res.ok) {
-                if (res.status === 404) {
-                    throw new Error('Branch principal não encontrada');
-                } else if (res.status === 403) {
-                    throw new Error('Limite de requisições excedido. Aguarde alguns minutos.');
+            React.createElement('select', {
+                key: 'filter',
+                value: filterType,
+                onChange: (e) => setFilterType(e.target.value),
+                style: {
+                    padding: '10px 15px',
+                    background: '#1e293b',
+                    border: '1px solid #475569',
+                    borderRadius: '8px',
+                    color: '#cbd5e1',
+                    fontSize: '14px',
+                    minWidth: '150px'
                 }
-                throw new Error(`Erro ${res.status}: ${res.statusText}`);
+            }, [
+                React.createElement('option', { key: 'all', value: 'all' }, '📁 Todos os arquivos'),
+                React.createElement('option', { key: 'code', value: 'code' }, '💻 Arquivos de código'),
+                React.createElement('option', { key: 'other', value: 'other' }, '📄 Outros arquivos')
+            ])
+        ]),
+        
+        // Estatísticas
+        React.createElement('div', {
+            key: 'stats',
+            style: {
+                display: 'flex',
+                gap: '10px',
+                marginBottom: '20px',
+                flexWrap: 'wrap'
+            }
+        }, [
+            React.createElement('div', {
+                key: 'total',
+                style: {
+                    padding: '8px 15px',
+                    background: 'rgba(59, 130, 246, 0.1)',
+                    borderRadius: '6px',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    fontSize: '12px'
+                }
+            }, [
+                React.createElement('span', { 
+                    key: 'label',
+                    style: { color: '#94a3b8' }
+                }, 'Total: '),
+                React.createElement('span', { 
+                    key: 'value',
+                    style: { color: '#3b82f6', fontWeight: 'bold' }
+                }, filteredFiles.length)
+            ]),
+            
+            Object.entries(fileTypes)
+                .filter(([type, count]) => count > 0)
+                .map(([type, count]) => 
+                    React.createElement('div', {
+                        key: type,
+                        style: {
+                            padding: '8px 15px',
+                            background: 'rgba(100, 116, 139, 0.1)',
+                            borderRadius: '6px',
+                            border: '1px solid rgba(100, 116, 139, 0.3)',
+                            fontSize: '12px'
+                        }
+                    }, [
+                        React.createElement('span', { 
+                            key: 'label',
+                            style: { color: '#94a3b8' }
+                        }, `${type}: `),
+                        React.createElement('span', { 
+                            key: 'value',
+                            style: { color: '#cbd5e1', fontWeight: 'bold' }
+                        }, count)
+                    ])
+                )
+        ]),
+        
+        // Lista de arquivos
+        React.createElement('div', {
+            key: 'list-container',
+            style: {
+                flex: 1,
+                overflowY: 'auto',
+                paddingRight: '5px'
+            }
+        }, 
+            filteredFiles.length === 0 
+                ? React.createElement('div', {
+                    key: 'empty',
+                    style: { 
+                        textAlign: 'center', 
+                        padding: '40px 20px',
+                        color: '#94a3b8' 
+                    }
+                }, [
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-search',
+                        style: { fontSize: '40px', marginBottom: '15px', opacity: 0.5 }
+                    }),
+                    React.createElement('p', { key: 'text' }, 
+                        search ? 'Nenhum arquivo encontrado' : 'Nenhum arquivo para mostrar'
+                    )
+                ])
+                : filteredFiles.map((file, index) => 
+                    React.createElement('div', {
+                        key: index,
+                        className: 'file-item',
+                        onClick: () => onFileClick && onFileClick(file),
+                        style: {
+                            padding: '12px 15px',
+                            marginBottom: '8px',
+                            background: 'rgba(30, 41, 59, 0.8)',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            border: '1px solid transparent',
+                            transition: 'all 0.2s',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px'
+                        },
+                        onMouseEnter: (e) => {
+                            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                            e.currentTarget.style.borderColor = '#3b82f6';
+                        },
+                        onMouseLeave: (e) => {
+                            e.currentTarget.style.background = 'rgba(30, 41, 59, 0.8)';
+                            e.currentTarget.style.borderColor = 'transparent';
+                        }
+                    }, [
+                        React.createElement('div', {
+                            key: 'icon',
+                            style: {
+                                width: '36px',
+                                height: '36px',
+                                background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+                                borderRadius: '6px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '14px',
+                                fontWeight: 'bold',
+                                color: '#3b82f6'
+                            }
+                        }, getFileIcon(file.extension)),
+                        
+                        React.createElement('div', {
+                            key: 'info',
+                            style: { flex: 1 }
+                        }, [
+                            React.createElement('div', {
+                                key: 'name',
+                                style: { 
+                                    fontFamily: "'JetBrains Mono', monospace",
+                                    fontSize: '13px',
+                                    color: '#f8fafc',
+                                    marginBottom: '4px',
+                                    wordBreak: 'break-all'
+                                }
+                            }, file.path),
+                            React.createElement('div', {
+                                key: 'details',
+                                style: { 
+                                    display: 'flex',
+                                    gap: '15px',
+                                    fontSize: '11px',
+                                    color: '#94a3b8'
+                                }
+                            }, [
+                                React.createElement('span', { key: 'size' }, `${file.sizeKB} KB`),
+                                React.createElement('span', { key: 'lang' }, file.language),
+                                React.createElement('span', { key: 'type' }, 
+                                    file.isCodeFile ? '💻 Código' : '📄 Documento'
+                                )
+                            ])
+                        ]),
+                        
+                        React.createElement('button', {
+                            key: 'view',
+                            onClick: (e) => {
+                                e.stopPropagation();
+                                window.open(`https://github.com/${file.repoInfo?.owner}/${file.repoInfo?.name}/blob/main/${file.path}`, '_blank');
+                            },
+                            style: {
+                                padding: '6px 12px',
+                                background: 'transparent',
+                                border: '1px solid #475569',
+                                borderRadius: '6px',
+                                color: '#94a3b8',
+                                fontSize: '11px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
+                            },
+                            onMouseEnter: (e) => {
+                                e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                                e.currentTarget.style.color = '#3b82f6';
+                                e.currentTarget.style.borderColor = '#3b82f6';
+                            },
+                            onMouseLeave: (e) => {
+                                e.currentTarget.style.background = 'transparent';
+                                e.currentTarget.style.color = '#94a3b8';
+                                e.currentTarget.style.borderColor = '#475569';
+                            }
+                        }, 'Abrir')
+                    ])
+                )
+        )
+    ]);
+};
+
+// ==================== COMPONENTE DE VISUALIZAÇÃO ====================
+const RepositoryVisualization = ({ repoInfo, files }) => {
+    const [viewMode, setViewMode] = useState('list'); // 'list', 'chart', 'graph'
+    const chartRef = useRef(null);
+    const chartInstance = useRef(null);
+    
+    // Estatísticas para gráficos
+    const fileExtensions = files.reduce((acc, file) => {
+        acc[file.extension] = (acc[file.extension] || 0) + 1;
+        return acc;
+    }, {});
+    
+    const topExtensions = Object.entries(fileExtensions)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+    
+    // Criar gráfico
+    useEffect(() => {
+        if (viewMode === 'chart' && chartRef.current && topExtensions.length > 0) {
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
             }
             
-            const data = await res.json();
-            
-            if (!data.tree) {
-                throw new Error('Estrutura do repositório não encontrada');
-            }
-            
-            const fileList = data.tree
-                .filter(f => f.type === 'blob')
-                .map(f => ({
-                    ...f,
-                    path: f.path,
-                    extension: f.path.split('.').pop().toLowerCase(),
-                    sizeKB: Math.round((f.size || 1024) / 1024 * 10) / 10,
-                    language: getFileLanguage(f.path)
-                }))
-                .filter(f => {
-                    const path = f.path.toLowerCase();
-                    return !path.includes('node_modules') && 
-                           !path.includes('dist') && 
-                           !path.includes('build') &&
-                           !path.includes('.git') &&
-                           !path.startsWith('.');
-                });
-            
-            if (fileList.length === 0) {
-                setError('Nenhum arquivo encontrado no repositório');
-                setFiles([]);
-                setFileTree(null);
-                setStatus('⚠️ Repositório vazio ou sem arquivos visíveis');
-                setLoading(false);
-                return;
-            }
-            
-            const repoBaseUrl = `https://github.com/${owner}/${repo}`;
-            setRepoBase(repoBaseUrl);
-            setFiles(fileList);
-            
-            // Salvar no cache
-            const cacheData = {
-                files: fileList,
-                repoInfo: {
-                    name: repoData.name,
-                    description: repoData.description,
-                    stars: repoData.stargazers_count,
-                    forks: repoData.forks_count,
-                    language: repoData.language,
-                    owner: repoData.owner.login,
-                    default_branch: repoData.default_branch
+            const ctx = chartRef.current.getContext('2d');
+            chartInstance.current = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: topExtensions.map(([ext]) => ext.toUpperCase()),
+                    datasets: [{
+                        data: topExtensions.map(([, count]) => count),
+                        backgroundColor: [
+                            '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
+                            '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#0f172a'
+                    }]
                 },
-                repoBase: repoBaseUrl,
-                timestamp: Date.now()
-            };
-            
-            if (cache.set(cacheKey, cacheData)) {
-                setCacheStats(cache.getStats());
-                showNotification('Análise salva no cache!', 'success');
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#cbd5e1',
+                                font: {
+                                    family: "'Inter', sans-serif",
+                                    size: 12
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribuição de Tipos de Arquivo',
+                            color: '#f8fafc',
+                            font: {
+                                family: "'Inter', sans-serif",
+                                size: 14,
+                                weight: '600'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        return () => {
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
             }
+        };
+    }, [viewMode, topExtensions]);
+    
+    return React.createElement('div', {
+        className: 'visualization-container',
+        style: { 
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            borderRadius: '12px',
+            padding: '25px',
+            border: '1px solid #334155'
+        }
+    }, [
+        // Cabeçalho
+        React.createElement('div', {
+            key: 'header',
+            style: { 
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '25px'
+            }
+        }, [
+            React.createElement('div', {
+                key: 'title'
+            }, [
+                React.createElement('h3', {
+                    key: 'repo-name',
+                    style: { 
+                        color: '#f8fafc',
+                        margin: '0 0 5px 0',
+                        fontSize: '18px'
+                    }
+                }, [
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-code-branch',
+                        style: { color: '#3b82f6', marginRight: '10px' }
+                    }),
+                    `${repoInfo.owner}/${repoInfo.name}`
+                ]),
+                repoInfo.description && React.createElement('p', {
+                    key: 'description',
+                    style: { 
+                        color: '#94a3b8',
+                        margin: '0',
+                        fontSize: '14px',
+                        maxWidth: '600px'
+                    }
+                }, repoInfo.description)
+            ]),
             
-            setStatus(`✅ ${fileList.length} arquivos carregados! Clique em "Analisar Imports"`);
-            setLoading(false);
+            React.createElement('div', {
+                key: 'stats',
+                style: { 
+                    display: 'flex',
+                    gap: '15px',
+                    alignItems: 'center'
+                }
+            }, [
+                React.createElement('div', {
+                    key: 'stars',
+                    style: { textAlign: 'center' }
+                }, [
+                    React.createElement('div', {
+                        key: 'count',
+                        style: { 
+                            color: '#f8fafc',
+                            fontSize: '18px',
+                            fontWeight: 'bold'
+                        }
+                    }, repoInfo.stars),
+                    React.createElement('div', {
+                        key: 'label',
+                        style: { 
+                            color: '#94a3b8',
+                            fontSize: '12px'
+                        }
+                    }, '⭐ Stars')
+                ]),
+                React.createElement('div', {
+                    key: 'forks',
+                    style: { textAlign: 'center' }
+                }, [
+                    React.createElement('div', {
+                        key: 'count',
+                        style: { 
+                            color: '#f8fafc',
+                            fontSize: '18px',
+                            fontWeight: 'bold'
+                        }
+                    }, repoInfo.forks),
+                    React.createElement('div', {
+                        key: 'label',
+                        style: { 
+                            color: '#94a3b8',
+                            fontSize: '12px'
+                        }
+                    }, '🍴 Forks')
+                ]),
+                React.createElement('div', {
+                    key: 'files',
+                    style: { textAlign: 'center' }
+                }, [
+                    React.createElement('div', {
+                        key: 'count',
+                        style: { 
+                            color: '#f8fafc',
+                            fontSize: '18px',
+                            fontWeight: 'bold'
+                        }
+                    }, files.length),
+                    React.createElement('div', {
+                        key: 'label',
+                        style: { 
+                            color: '#94a3b8',
+                            fontSize: '12px'
+                        }
+                    }, '📁 Arquivos')
+                ])
+            ])
+        ]),
+        
+        // Modos de visualização
+        React.createElement('div', {
+            key: 'view-tabs',
+            style: {
+                display: 'flex',
+                gap: '10px',
+                marginBottom: '25px',
+                borderBottom: '1px solid #334155',
+                paddingBottom: '10px'
+            }
+        }, [
+            React.createElement('button', {
+                key: 'list-view',
+                onClick: () => setViewMode('list'),
+                style: {
+                    padding: '10px 20px',
+                    background: viewMode === 'list' ? '#3b82f6' : 'transparent',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: viewMode === 'list' ? 'white' : '#cbd5e1',
+                    cursor: 'pointer',
+                    fontWeight: viewMode === 'list' ? '600' : '400',
+                    transition: 'all 0.2s'
+                }
+            }, [
+                React.createElement('i', {
+                    key: 'icon',
+                    className: 'fas fa-list',
+                    style: { marginRight: '8px' }
+                }),
+                'Lista de Arquivos'
+            ]),
             
-        } catch (err) {
-            console.error('Erro:', err);
-            setError(err.message);
-            setStatus('❌ Erro na conexão');
-            setFiles([]);
-            setFileTree(null);
-            setLoading(false);
-        }
-    };
-    
-    const analyzeImportsForRepo = async () => {
-        if (!repoInfo || files.length === 0) return;
+            React.createElement('button', {
+                key: 'chart-view',
+                onClick: () => setViewMode('chart'),
+                style: {
+                    padding: '10px 20px',
+                    background: viewMode === 'chart' ? '#3b82f6' : 'transparent',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: viewMode === 'chart' ? 'white' : '#cbd5e1',
+                    cursor: 'pointer',
+                    fontWeight: viewMode === 'chart' ? '600' : '400',
+                    transition: 'all 0.2s'
+                }
+            }, [
+                React.createElement('i', {
+                    key: 'icon',
+                    className: 'fas fa-chart-pie',
+                    style: { marginRight: '8px' }
+                }),
+                'Gráficos'
+            ])
+        ]),
         
-        setAnalyzingImports(true);
-        setStatus('🔍 Analisando imports nos arquivos...');
-        
-        try {
-            const [owner, repo] = lastUrl.split('/');
-            const branch = repoInfo.default_branch || 'main';
-            
-            const imports = await analyzeImports(files, owner, repo, branch);
-            setImportsData(imports);
-            setActiveView('imports');
-            setStatus(`✅ ${imports.stats.analyzedFiles} arquivos analisados, ${imports.stats.totalImports} imports encontrados`);
-        } catch (err) {
-            console.error('Erro na análise de imports:', err);
-            setError('Erro ao analisar imports: ' + err.message);
-            setStatus('❌ Falha na análise de imports');
-        } finally {
-            setAnalyzingImports(false);
-        }
-    };
+        // Conteúdo baseado no modo
+        viewMode === 'list' 
+            ? React.createElement(FileList, {
+                key: 'file-list',
+                files: files.map(f => ({ ...f, repoInfo })),
+                onFileClick: (file) => {
+                    window.open(`${repoInfo.url}/blob/${repoInfo.default_branch}/${file.path}`, '_blank');
+                }
+            })
+            : React.createElement('div', {
+                key: 'chart-view',
+                style: { minHeight: '400px' }
+            }, [
+                React.createElement('div', {
+                    key: 'chart-container',
+                    style: { 
+                        background: '#1e293b',
+                        borderRadius: '8px',
+                        padding: '20px',
+                        height: '400px'
+                    }
+                }, [
+                    React.createElement('canvas', {
+                        key: 'chart',
+                        ref: chartRef
+                    })
+                ])
+            ])
+    ]);
+};
+
+// ==================== COMPONENTE PRINCIPAL ====================
+function App() {
+    const [url, setUrl] = useState('');
+    const [status, setStatus] = useState('Pronto para analisar');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [repoData, setRepoData] = useState(null);
+    const [cacheStats, setCacheStats] = useState(() => cache.getStats());
+    const [showCachePanel, setShowCachePanel] = useState(false);
     
-    const showNotification = (message, type = 'info') => {
-        // Implementação simplificada de notificação
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.innerHTML = `
-            <div style="padding: 12px 16px; border-radius: 6px; background: ${
-                type === 'success' ? '#10b981' : 
-                type === 'error' ? '#ef4444' : '#3b82f6'
-            }; color: white; margin-bottom: 10px;">
-                ${message}
-            </div>
-        `;
-        
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 3000);
-    };
-    
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !loading) {
-            analyzeGithub();
-        }
-    };
-    
-    const handleNodeClick = (node) => {
-        setSelectedFile(node);
-        if (repoBase && node.type === 'file') {
-            window.open(`${repoBase}/blob/main/${node.path}`, '_blank');
-        }
-    };
-    
-    const handleClearCache = () => {
-        if (confirm('Tem certeza que deseja limpar todo o cache?')) {
-            cache.clear();
-            setCacheStats(cache.getStats());
-            showNotification('Cache limpo com sucesso!', 'success');
-        }
-    };
-    
+    // Exemplos de repositórios
     const examples = [
         { name: 'React', url: 'https://github.com/facebook/react' },
         { name: 'Vue.js', url: 'https://github.com/vuejs/vue' },
@@ -982,396 +875,861 @@ function App() {
         { name: 'Next.js', url: 'https://github.com/vercel/next.js' }
     ];
     
+    // Analisar repositório
+    const analyzeRepository = async (githubUrl = null) => {
+        const urlToAnalyze = githubUrl || url;
+        
+        if (!urlToAnalyze) {
+            setError('Por favor, insira uma URL do GitHub');
+            return;
+        }
+        
+        // Extrair owner/repo da URL
+        const match = urlToAnalyze.match(/github\.com\/([^/]+)\/([^/#?]+)/);
+        if (!match) {
+            setError('URL do GitHub inválida. Formato: https://github.com/usuario/repositorio');
+            return;
+        }
+        
+        const [_, owner, repo] = match;
+        const repoKey = `${owner}/${repo}`;
+        
+        // Verificar cache primeiro
+        const cacheKey = `repo_${owner}_${repo}`;
+        const cachedData = cache.get(cacheKey);
+        
+        if (cachedData) {
+            console.log('Carregando do cache:', cacheKey);
+            setStatus('📦 Carregando dados do cache...');
+            setTimeout(() => {
+                setRepoData(cachedData);
+                setStatus(`✅ ${cachedData.files.length} arquivos carregados (cache)`);
+                setError(null);
+                showNotification('Dados carregados do cache!', 'success');
+                setCacheStats(cache.getStats());
+            }, 300);
+            return;
+        }
+        
+        // Buscar da API
+        setLoading(true);
+        setStatus('🔍 Conectando ao GitHub...');
+        setError(null);
+        
+        try {
+            const result = await fetchRepositoryData(owner, repo);
+            
+            if (result.success) {
+                setRepoData(result);
+                
+                // Salvar no cache
+                cache.set(cacheKey, result);
+                setCacheStats(cache.getStats());
+                
+                setStatus(`✅ ${result.files.length} arquivos analisados com sucesso!`);
+                showNotification('Análise concluída e salva no cache!', 'success');
+            } else {
+                setError(result.error);
+                setStatus('❌ Erro na análise');
+                showNotification(result.error, 'error');
+            }
+        } catch (err) {
+            console.error('Erro na análise:', err);
+            setError(err.message);
+            setStatus('❌ Erro na conexão');
+            showNotification('Erro ao conectar com GitHub: ' + err.message, 'error');
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    // Limpar análise atual
+    const clearAnalysis = () => {
+        setRepoData(null);
+        setUrl('');
+        setStatus('Pronto para analisar');
+        setError(null);
+    };
+    
+    // Tecla Enter para análise
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !loading) {
+            analyzeRepository();
+        }
+    };
+    
+    // Atualizar estatísticas de cache
+    useEffect(() => {
+        const updateCacheStats = () => {
+            setCacheStats(cache.getStats());
+        };
+        
+        window.addEventListener('cacheCleared', updateCacheStats);
+        return () => window.removeEventListener('cacheCleared', updateCacheStats);
+    }, []);
+    
     return React.createElement('div', { 
-        style: { width: '100%', height: '100%', position: 'relative' } 
+        className: 'app-container',
+        style: { 
+            padding: '20px',
+            maxWidth: '1400px',
+            margin: '0 auto',
+            marginTop: '80px',
+            minHeight: 'calc(100vh - 160px)'
+        }
     }, [
-        // UI Layer
-        React.createElement('div', { 
-            key: 'ui-layer',
-            className: 'ui-layer'
+        // Painel lateral esquerdo (controles)
+        React.createElement('div', {
+            key: 'control-panel',
+            style: {
+                position: 'fixed',
+                left: '20px',
+                top: '90px',
+                width: '380px',
+                bottom: '100px',
+                background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+                borderRadius: '12px',
+                padding: '25px',
+                border: '1px solid #334155',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                zIndex: 100,
+                overflowY: 'auto'
+            }
         }, [
-            React.createElement('div', { 
-                key: 'header',
-                style: { marginBottom: '15px' }
+            // Título
+            React.createElement('div', {
+                key: 'panel-header',
+                style: { marginBottom: '25px' }
             }, [
-                React.createElement('h3', { 
+                React.createElement('h2', {
                     key: 'title',
-                    style: { margin: '0 0 10px 0', color: '#f8fafc' }
-                }, 'Code Dependency Tree'),
-                React.createElement('p', { 
+                    style: { 
+                        color: '#f8fafc',
+                        margin: '0 0 10px 0',
+                        fontSize: '22px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px'
+                    }
+                }, [
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-project-diagram',
+                        style: { color: '#3b82f6' }
+                    }),
+                    'Code Dependency Tree'
+                ]),
+                React.createElement('p', {
                     key: 'subtitle',
-                    style: { fontSize: '12px', color: '#94a3b8', margin: '0' }
-                }, 'Visualize as conexões entre arquivos baseadas em imports')
+                    style: { 
+                        fontSize: '14px', 
+                        color: '#94a3b8', 
+                        margin: '0',
+                        lineHeight: '1.5'
+                    }
+                }, 'Visualize a estrutura e dependências de qualquer repositório GitHub')
             ]),
             
-            // View Toggle
-            files.length > 0 && React.createElement('div', {
-                key: 'view-toggle',
-                className: 'view-toggle'
+            // Input de URL
+            React.createElement('div', {
+                key: 'input-container',
+                style: { marginBottom: '20px' }
             }, [
-                React.createElement('button', {
-                    key: 'tree-view',
-                    className: activeView === 'tree' ? 'active' : '',
-                    onClick: () => setActiveView('tree')
-                }, '📁 Lista de Arquivos'),
-                React.createElement('button', {
-                    key: 'imports-view',
-                    className: activeView === 'imports' ? 'active' : '',
-                    onClick: () => {
-                        if (!importsData && !analyzingImports) {
-                            analyzeImportsForRepo();
-                        } else {
-                            setActiveView('imports');
-                        }
-                    },
-                    disabled: analyzingImports
-                }, analyzingImports ? '🔍 Analisando...' : '🔗 Árvore de Imports')
-            ]),
-            
-            React.createElement('div', { 
-                key: 'input-group',
-                className: 'input-group'
-            }, [
-                React.createElement('input', { 
+                React.createElement('label', {
+                    key: 'label',
+                    htmlFor: 'github-url',
+                    style: { 
+                        display: 'block',
+                        color: '#cbd5e1',
+                        marginBottom: '8px',
+                        fontSize: '14px',
+                        fontWeight: '500'
+                    }
+                }, 'URL do Repositório GitHub'),
+                React.createElement('input', {
                     key: 'input',
-                    placeholder: 'https://github.com/usuario/projeto',
+                    id: 'github-url',
+                    type: 'text',
+                    placeholder: 'https://github.com/usuario/repositorio',
                     value: url,
-                    onChange: e => setUrl(e.target.value),
+                    onChange: (e) => setUrl(e.target.value),
                     onKeyPress: handleKeyPress,
-                    disabled: loading || analyzingImports
-                }),
-                React.createElement('button', { 
-                    key: 'button',
-                    onClick: () => analyzeGithub(),
-                    disabled: loading || analyzingImports
+                    disabled: loading,
+                    style: {
+                        width: '100%',
+                        padding: '12px 15px',
+                        background: '#1e293b',
+                        border: '1px solid #475569',
+                        borderRadius: '8px',
+                        color: '#f8fafc',
+                        fontSize: '14px',
+                        fontFamily: "'Inter', sans-serif"
+                    }
+                })
+            ]),
+            
+            // Botões de ação
+            React.createElement('div', {
+                key: 'action-buttons',
+                style: { 
+                    display: 'flex',
+                    gap: '10px',
+                    marginBottom: '25px'
+                }
+            }, [
+                React.createElement('button', {
+                    key: 'analyze-btn',
+                    onClick: () => analyzeRepository(),
+                    disabled: loading || !url,
+                    style: {
+                        flex: 1,
+                        padding: '14px 20px',
+                        background: loading ? '#475569' : '#3b82f6',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        cursor: loading ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.2s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '10px'
+                    }
                 }, loading ? [
-                    React.createElement('span', { key: 'spinner', className: 'loading-spinner' }),
+                    React.createElement('i', {
+                        key: 'spinner',
+                        className: 'fas fa-spinner fa-spin'
+                    }),
                     'ANALISANDO...'
                 ] : [
-                    React.createElement('i', { key: 'icon', className: 'fas fa-rocket' }),
-                    ' ANALISAR'
-                ])
-            ]),
-            
-            React.createElement('div', { 
-                key: 'status-box',
-                className: `status-box ${error ? 'error' : ''}`
-            }, [
-                React.createElement('strong', { key: 'label' }, 'Status: '),
-                status,
-                error && React.createElement('div', { 
-                    key: 'error',
-                    style: { marginTop: '8px', fontSize: '13px' }
-                }, error)
-            ]),
-            
-            // Controles de Cache
-            React.createElement('div', {
-                key: 'cache-controls',
-                className: 'cache-controls'
-            }, [
-                React.createElement('button', {
-                    key: 'load-cache',
-                    onClick: () => analyzeGithub(null, false),
-                    disabled: !lastUrl,
-                    title: 'Carregar do cache'
-                }, [
-                    React.createElement('i', { key: 'icon', className: 'fas fa-database' }),
-                    ' Carregar do Cache'
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-rocket'
+                    }),
+                    'ANALISAR'
                 ]),
-                React.createElement('button', {
-                    key: 'clear-cache',
-                    onClick: handleClearCache,
-                    title: 'Limpar cache'
+                
+                repoData && React.createElement('button', {
+                    key: 'clear-btn',
+                    onClick: clearAnalysis,
+                    style: {
+                        padding: '14px 20px',
+                        background: '#ef4444',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '15px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                    }
                 }, [
-                    React.createElement('i', { key: 'icon', className: 'fas fa-trash-alt' }),
-                    ' Limpar Cache'
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-trash-alt'
+                    }),
+                    'LIMPAR'
                 ])
             ]),
             
-            // Informações do Repositório
-            repoInfo && React.createElement('div', {
-                key: 'repo-info',
-                className: 'file-stats'
+            // Status
+            React.createElement('div', {
+                key: 'status-container',
+                style: {
+                    padding: '15px',
+                    background: error ? 'rgba(239, 68, 68, 0.1)' : 'rgba(30, 41, 59, 0.8)',
+                    borderRadius: '8px',
+                    marginBottom: '25px',
+                    border: `1px solid ${error ? '#ef4444' : '#475569'}`
+                }
             }, [
                 React.createElement('div', {
-                    key: 'name',
-                    style: { fontWeight: 'bold', marginBottom: '5px' }
-                }, `${repoInfo.owner}/${repoInfo.name}`),
-                repoInfo.description && React.createElement('div', {
-                    key: 'desc',
-                    style: { fontSize: '11px', marginBottom: '5px', color: '#cbd5e1' }
-                }, repoInfo.description),
-                React.createElement('div', {
-                    key: 'stats',
-                    className: 'stats-grid'
+                    key: 'status-header',
+                    style: { 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: error ? '10px' : '0'
+                    }
                 }, [
-                    React.createElement('div', { key: 'lang', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, 'Linguagem:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, repoInfo.language || 'Várias')
+                    React.createElement('strong', {
+                        key: 'label',
+                        style: { 
+                            color: error ? '#fca5a5' : '#cbd5e1',
+                            fontSize: '14px'
+                        }
+                    }, 'Status:'),
+                    React.createElement('span', {
+                        key: 'text',
+                        style: { 
+                            color: error ? '#fca5a5' : '#94a3b8',
+                            fontSize: '14px'
+                        }
+                    }, status)
+                ]),
+                
+                error && React.createElement('div', {
+                    key: 'error-message',
+                    style: { 
+                        marginTop: '10px', 
+                        padding: '10px',
+                        background: 'rgba(239, 68, 68, 0.2)',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        color: '#fca5a5'
+                    }
+                }, [
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-exclamation-circle',
+                        style: { marginRight: '8px' }
+                    }),
+                    error
+                ])
+            ]),
+            
+            // Cache Info
+            React.createElement('div', {
+                key: 'cache-info',
+                style: {
+                    marginBottom: '25px'
+                }
+            }, [
+                React.createElement('div', {
+                    key: 'cache-header',
+                    style: {
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '15px'
+                    }
+                }, [
+                    React.createElement('h4', {
+                        key: 'title',
+                        style: { 
+                            color: '#cbd5e1',
+                            margin: '0',
+                            fontSize: '15px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                        }
+                    }, [
+                        React.createElement('i', {
+                            key: 'icon',
+                            className: 'fas fa-database',
+                            style: { color: '#10b981' }
+                        }),
+                        'Cache Local'
                     ]),
-                    React.createElement('div', { key: 'stars', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, '⭐ Stars:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, repoInfo.stars)
+                    React.createElement('button', {
+                        key: 'toggle-btn',
+                        onClick: () => setShowCachePanel(!showCachePanel),
+                        style: {
+                            background: 'transparent',
+                            border: 'none',
+                            color: '#94a3b8',
+                            cursor: 'pointer',
+                            fontSize: '12px'
+                        }
+                    }, showCachePanel ? 'Ocultar' : 'Mostrar')
+                ]),
+                
+                showCachePanel && React.createElement('div', {
+                    key: 'cache-details',
+                    style: {
+                        background: 'rgba(30, 41, 59, 0.8)',
+                        borderRadius: '8px',
+                        padding: '15px',
+                        border: '1px solid #475569'
+                    }
+                }, [
+                    React.createElement('div', {
+                        key: 'stats',
+                        style: {
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(2, 1fr)',
+                            gap: '10px',
+                            marginBottom: '15px'
+                        }
+                    }, [
+                        React.createElement('div', {
+                            key: 'total',
+                            style: { textAlign: 'center' }
+                        }, [
+                            React.createElement('div', {
+                                key: 'value',
+                                style: { 
+                                    color: '#3b82f6',
+                                    fontSize: '20px',
+                                    fontWeight: 'bold'
+                                }
+                            }, cacheStats.total),
+                            React.createElement('div', {
+                                key: 'label',
+                                style: { 
+                                    color: '#94a3b8',
+                                    fontSize: '12px'
+                                }
+                            }, 'Repositórios')
+                        ]),
+                        React.createElement('div', {
+                            key: 'size',
+                            style: { textAlign: 'center' }
+                        }, [
+                            React.createElement('div', {
+                                key: 'value',
+                                style: { 
+                                    color: '#10b981',
+                                    fontSize: '20px',
+                                    fontWeight: 'bold'
+                                }
+                            }, cacheStats.sizeMB || '0'),
+                            React.createElement('div', {
+                                key: 'label',
+                                style: { 
+                                    color: '#94a3b8',
+                                    fontSize: '12px'
+                                }
+                            }, 'MB Armazenados')
+                        ])
                     ]),
-                    React.createElement('div', { key: 'forks', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, '🍴 Forks:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, repoInfo.forks)
-                    ]),
-                    React.createElement('div', { key: 'files', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, '📁 Arquivos:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, files.length)
+                    
+                    cacheStats.repos.length > 0 && React.createElement('div', {
+                        key: 'repo-list'
+                    }, [
+                        React.createElement('div', {
+                            key: 'list-title',
+                            style: {
+                                color: '#cbd5e1',
+                                fontSize: '13px',
+                                marginBottom: '10px'
+                            }
+                        }, 'Repositórios em cache:'),
+                        React.createElement('div', {
+                            key: 'repo-items',
+                            style: { maxHeight: '150px', overflowY: 'auto' }
+                        }, cacheStats.repos.map((repo, index) => 
+                            React.createElement('div', {
+                                key: index,
+                                style: {
+                                    padding: '8px 10px',
+                                    background: 'rgba(15, 23, 42, 0.5)',
+                                    borderRadius: '6px',
+                                    marginBottom: '5px',
+                                    fontSize: '12px',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }
+                            }, [
+                                React.createElement('span', {
+                                    key: 'name',
+                                    style: { color: '#cbd5e1' }
+                                }, `${repo.owner}/${repo.name}`),
+                                React.createElement('span', {
+                                    key: 'files',
+                                    style: { color: '#94a3b8', fontSize: '11px' }
+                                }, `${repo.files} arquivos`)
+                            ])
+                        ))
                     ])
                 ])
             ]),
             
-            // Estatísticas de Imports (se disponível)
-            importsData && React.createElement('div', {
-                key: 'imports-stats',
-                className: 'file-stats',
-                style: { marginTop: '10px' }
-            }, [
-                React.createElement('div', {
-                    key: 'title',
-                    style: { fontWeight: 'bold', marginBottom: '5px' }
-                }, '📊 Estatísticas de Imports'),
-                React.createElement('div', {
-                    key: 'stats',
-                    className: 'stats-grid'
-                }, [
-                    React.createElement('div', { key: 'analyzed', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, 'Analisados:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, importsData.stats.analyzedFiles)
-                    ]),
-                    React.createElement('div', { key: 'imports', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, 'Imports:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, importsData.stats.totalImports)
-                    ]),
-                    React.createElement('div', { key: 'internal', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, 'Internos:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, importsData.stats.internalImports)
-                    ]),
-                    React.createElement('div', { key: 'external', className: 'stat-item' }, [
-                        React.createElement('span', { key: 'label' }, 'Externos:'),
-                        React.createElement('span', { key: 'value', className: 'stat-value' }, importsData.stats.externalImports)
-                    ])
-                ])
-            ]),
-            
-            // Exemplos
-            files.length === 0 && React.createElement('div', {
-                key: 'examples',
-                style: { marginTop: '15px' }
+            // Exemplos rápidos
+            React.createElement('div', {
+                key: 'examples-section',
+                style: { marginTop: '25px' }
             }, [
                 React.createElement('p', {
                     key: 'label',
-                    style: { fontSize: '12px', color: '#94a3b8', marginBottom: '8px' }
+                    style: { 
+                        color: '#94a3b8', 
+                        fontSize: '14px',
+                        marginBottom: '12px'
+                    }
                 }, 'Experimente com:'),
                 React.createElement('div', {
-                    key: 'buttons',
-                    style: { display: 'flex', flexWrap: 'wrap', gap: '6px' }
-                }, examples.map((example, i) =>
+                    key: 'example-buttons',
+                    style: { 
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '8px'
+                    }
+                }, examples.map((example, index) => 
                     React.createElement('button', {
-                        key: `example-${i}`,
+                        key: `example-${index}`,
+                        onClick: () => {
+                            setUrl(example.url);
+                            setTimeout(() => analyzeRepository(example.url), 100);
+                        },
                         style: {
-                            padding: '6px 10px',
-                            background: 'rgba(30, 41, 59, 0.8)',
-                            color: '#cbd5e1',
-                            border: '1px solid #475569',
-                            borderRadius: '4px',
+                            padding: '8px 15px',
+                            background: 'rgba(59, 130, 246, 0.1)',
+                            color: '#3b82f6',
+                            border: '1px solid rgba(59, 130, 246, 0.3)',
+                            borderRadius: '6px',
                             cursor: 'pointer',
-                            fontSize: '11px',
-                            transition: 'all 0.2s'
+                            fontSize: '13px',
+                            transition: 'all 0.2s',
+                            flex: '1 0 calc(50% - 4px)'
                         },
                         onMouseEnter: (e) => {
                             e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
                             e.currentTarget.style.borderColor = '#3b82f6';
                         },
                         onMouseLeave: (e) => {
-                            e.currentTarget.style.background = 'rgba(30, 41, 59, 0.8)';
-                            e.currentTarget.style.borderColor = '#475569';
-                        },
-                        onClick: () => {
-                            setUrl(example.url);
-                            setTimeout(() => analyzeGithub(example.url), 100);
+                            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
                         }
                     }, example.name)
                 ))
-            ])
-        ]),
-        
-        // Visualização de Arquivos (Lista)
-        files.length > 0 && activeView === 'tree' && React.createElement('div', {
-            key: 'files-container',
-            className: 'tree-container',
-            style: { padding: '80px 20px 20px 420px' }
-        }, [
+            ]),
+            
+            // Informações
             React.createElement('div', {
-                key: 'files-view',
-                className: 'tree-view',
-                style: { maxHeight: 'calc(100vh - 120px)', overflow: 'auto' }
+                key: 'info-section',
+                style: {
+                    marginTop: '25px',
+                    padding: '15px',
+                    background: 'rgba(59, 130, 246, 0.05)',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(59, 130, 246, 0.1)'
+                }
             }, [
-                React.createElement('div', {
-                    key: 'controls',
-                    className: 'tree-controls'
-                }, [
-                    React.createElement('button', {
-                        key: 'analyze-btn',
-                        onClick: analyzeImportsForRepo,
-                        disabled: analyzingImports,
-                        style: { background: '#3b82f6', color: 'white' }
-                    }, analyzingImports ? '🔍 Analisando...' : '🔗 Analisar Imports'),
-                    React.createElement('span', {
-                        key: 'count',
-                        style: { marginLeft: 'auto', color: '#94a3b8', fontSize: '12px' }
-                    }, `${files.length} arquivos`)
-                ]),
-                
-                React.createElement('div', {
-                    key: 'files-list'
-                }, files.map((file, index) => 
-                    React.createElement('div', {
-                        key: index,
-                        style: {
-                            padding: '10px',
-                            margin: '5px 0',
-                            background: 'rgba(30, 41, 59, 0.8)',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            border: selectedFile?.path === file.path ? '2px solid #3b82f6' : '1px solid transparent',
-                            transition: 'all 0.2s'
-                        },
-                        onClick: () => handleNodeClick({
-                            id: file.path,
-                            name: file.path.split('/').pop(),
-                            path: file.path,
-                            type: 'file',
-                            extension: file.extension
-                        })
-                    }, [
-                        React.createElement('div', {
-                            key: 'name',
-                            style: { display: 'flex', alignItems: 'center', gap: '10px' }
-                        }, [
-                            React.createElement('span', {
-                                key: 'icon',
-                                style: { fontSize: '16px' }
-                            }, getFileIcon(file.extension)),
-                            React.createElement('span', {
-                                key: 'text',
-                                style: { fontFamily: 'monospace', fontSize: '13px' }
-                            }, file.path)
-                        ]),
-                        React.createElement('div', {
-                            key: 'details',
-                            style: { fontSize: '11px', color: '#94a3b8', marginTop: '5px' }
-                        }, [
-                            React.createElement('span', { key: 'size' }, `${file.sizeKB} KB • `),
-                            React.createElement('span', { key: 'lang' }, file.language)
-                        ])
-                    ])
-                ))
-            ])
-        ]),
-        
-        // Árvore de Imports (Grafo)
-        importsData && activeView === 'imports' && React.createElement('div', {
-            key: 'imports-container',
-            className: 'dependencies-container active',
-            style: { padding: '80px 20px 20px 420px' }
-        }, [
-            React.createElement('div', {
-                key: 'imports-view',
-                style: { width: '100%', height: '100%' }
-            }, [
-                React.createElement(DependencyTree, {
-                    key: 'dependency-tree',
-                    importsData: importsData,
-                    onNodeClick: handleNodeClick,
-                    repoBase: repoBase
-                })
-            ])
-        ]),
-        
-        // Tela inicial vazia
-        files.length === 0 && React.createElement('div', {
-            key: 'empty-state',
-            style: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
-                color: '#94a3b8',
-                textAlign: 'center'
-            }
-        }, [
-            React.createElement('div', { key: 'content' }, [
-                React.createElement('div', {
-                    key: 'icon',
-                    style: { fontSize: '60px', marginBottom: '20px' }
-                }, '🌳'),
-                React.createElement('h3', {
-                    key: 'title',
-                    style: { color: '#cbd5e1', marginBottom: '10px' }
-                }, 'Code Dependency Tree'),
                 React.createElement('p', {
-                    key: 'subtitle',
-                    style: { maxWidth: '500px', margin: '0 auto 20px' }
-                }, 'Cole uma URL do GitHub para visualizar a estrutura de imports do código'),
-                React.createElement('div', {
-                    key: 'examples',
-                    style: { marginTop: '30px' }
+                    key: 'info-text',
+                    style: { 
+                        color: '#94a3b8', 
+                        fontSize: '12px',
+                        margin: '0',
+                        lineHeight: '1.6'
+                    }
                 }, [
-                    React.createElement('p', {
-                        key: 'label',
-                        style: { fontSize: '14px', marginBottom: '10px' }
-                    }, 'Experimente com:'),
-                    React.createElement('div', {
-                        key: 'buttons',
-                        style: { display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }
-                    }, examples.map((example, i) =>
-                        React.createElement('button', {
-                            key: `example-${i}`,
-                            onClick: () => {
-                                setUrl(example.url);
-                                setTimeout(() => analyzeGithub(example.url), 100);
-                            },
-                            style: {
-                                padding: '10px 20px',
-                                background: 'rgba(30, 41, 59, 0.8)',
-                                color: '#cbd5e1',
-                                border: '1px solid #475569',
-                                borderRadius: '6px',
-                                cursor: 'pointer',
-                                fontSize: '13px',
-                                transition: 'all 0.2s'
-                            }
-                        }, example.name)
-                    ))
+                    React.createElement('i', {
+                        key: 'icon',
+                        className: 'fas fa-info-circle',
+                        style: { marginRight: '8px', color: '#3b82f6' }
+                    }),
+                    'Esta ferramenta analisa a estrutura de repositórios GitHub. Os dados são armazenados localmente no seu navegador.'
                 ])
             ])
-        ])
+        ]),
+        
+        // Área principal de conteúdo
+        React.createElement('div', {
+            key: 'main-content',
+            style: {
+                marginLeft: '420px',
+                minHeight: 'calc(100vh - 160px)'
+            }
+        }, 
+            repoData 
+                ? React.createElement(RepositoryVisualization, {
+                    key: 'visualization',
+                    repoInfo: repoData.repoInfo,
+                    files: repoData.files
+                })
+                : React.createElement('div', {
+                    key: 'empty-state',
+                    style: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: 'calc(100vh - 200px)',
+                        textAlign: 'center',
+                        padding: '40px 20px'
+                    }
+                }, [
+                    React.createElement('div', {
+                        key: 'icon',
+                        style: { 
+                            fontSize: '80px',
+                            color: '#334155',
+                            marginBottom: '30px',
+                            opacity: '0.5'
+                        }
+                    }, '🌳'),
+                    React.createElement('h3', {
+                        key: 'title',
+                        style: { 
+                            color: '#cbd5e1', 
+                            marginBottom: '15px',
+                            fontSize: '22px'
+                        }
+                    }, 'Visualize Dependências de Código'),
+                    React.createElement('p', {
+                        key: 'subtitle',
+                        style: { 
+                            color: '#94a3b8', 
+                            fontSize: '16px',
+                            maxWidth: '600px',
+                            marginBottom: '30px',
+                            lineHeight: '1.6'
+                        }
+                    }, 'Cole uma URL do GitHub para visualizar a estrutura de arquivos, dependências e métricas do repositório.'),
+                    React.createElement('div', {
+                        key: 'features',
+                        style: {
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(2, 1fr)',
+                            gap: '20px',
+                            maxWidth: '700px',
+                            marginTop: '40px'
+                        }
+                    }, [
+                        React.createElement('div', {
+                            key: 'feature-1',
+                            style: {
+                                padding: '20px',
+                                background: 'rgba(30, 41, 59, 0.8)',
+                                borderRadius: '10px',
+                                border: '1px solid #334155'
+                            }
+                        }, [
+                            React.createElement('div', {
+                                key: 'icon',
+                                style: {
+                                    fontSize: '24px',
+                                    color: '#3b82f6',
+                                    marginBottom: '15px'
+                                }
+                            }, '📊'),
+                            React.createElement('h4', {
+                                key: 'title',
+                                style: { 
+                                    color: '#f8fafc',
+                                    margin: '0 0 10px 0'
+                                }
+                            }, 'Análise de Estrutura'),
+                            React.createElement('p', {
+                                key: 'desc',
+                                style: { 
+                                    color: '#94a3b8',
+                                    fontSize: '14px',
+                                    margin: '0'
+                                }
+                            }, 'Visualize a organização de arquivos e pastas do repositório')
+                        ]),
+                        React.createElement('div', {
+                            key: 'feature-2',
+                            style: {
+                                padding: '20px',
+                                background: 'rgba(30, 41, 59, 0.8)',
+                                borderRadius: '10px',
+                                border: '1px solid #334155'
+                            }
+                        }, [
+                            React.createElement('div', {
+                                key: 'icon',
+                                style: {
+                                    fontSize: '24px',
+                                    color: '#10b981',
+                                    marginBottom: '15px'
+                                }
+                            }, '📈'),
+                            React.createElement('h4', {
+                                key: 'title',
+                                style: { 
+                                    color: '#f8fafc',
+                                    margin: '0 0 10px 0'
+                                }
+                            }, 'Métricas e Estatísticas'),
+                            React.createElement('p', {
+                                key: 'desc',
+                                style: { 
+                                    color: '#94a3b8',
+                                    fontSize: '14px',
+                                    margin: '0'
+                                }
+                            }, 'Distribuição de tipos de arquivos e informações do projeto')
+                        ]),
+                        React.createElement('div', {
+                            key: 'feature-3',
+                            style: {
+                                padding: '20px',
+                                background: 'rgba(30, 41, 59, 0.8)',
+                                borderRadius: '10px',
+                                border: '1px solid #334155'
+                            }
+                        }, [
+                            React.createElement('div', {
+                                key: 'icon',
+                                style: {
+                                    fontSize: '24px',
+                                    color: '#f59e0b',
+                                    marginBottom: '15px'
+                                }
+                            }, '💾'),
+                            React.createElement('h4', {
+                                key: 'title',
+                                style: { 
+                                    color: '#f8fafc',
+                                    margin: '0 0 10px 0'
+                                }
+                            }, 'Cache Local'),
+                            React.createElement('p', {
+                                key: 'desc',
+                                style: { 
+                                    color: '#94a3b8',
+                                    fontSize: '14px',
+                                    margin: '0'
+                                }
+                            }, 'Análises salvas localmente para acesso rápido e offline')
+                        ]),
+                        React.createElement('div', {
+                            key: 'feature-4',
+                            style: {
+                                padding: '20px',
+                                background: 'rgba(30, 41, 59, 0.8)',
+                                borderRadius: '10px',
+                                border: '1px solid '#334155'
+                            }
+                        }, [
+                            React.createElement('div', {
+                                key: 'icon',
+                                style: {
+                                    fontSize: '24px',
+                                    color: '#8b5cf6',
+                                    marginBottom: '15px'
+                                }
+                            }, '🚀'),
+                            React.createElement('h4', {
+                                key: 'title',
+                                style: { 
+                                    color: '#f8fafc',
+                                    margin: '0 0 10px 0'
+                                }
+                            }, 'Desempenho'),
+                            React.createElement('p', {
+                                key: 'desc',
+                                style: { 
+                                    color: '#94a3b8',
+                                    fontSize: '14px',
+                                    margin: '0'
+                                }
+                            }, 'Interface otimizada para análise rápida de grandes repositórios')
+                        ])
+                    ])
+                ])
+        )
     ]);
 }
 
-// Inicializar aplicação
+// ==================== INICIALIZAÇÃO DA APLICAÇÃO ====================
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM carregado, inicializando CodeCartographer...');
+    
     const container = document.getElementById('app');
-    if (container && React && ReactDOM) {
+    if (!container) {
+        console.error('Container #app não encontrado!');
+        return;
+    }
+    
+    // Remover tela de carregamento inicial
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+    }
+    
+    if (window.React && window.ReactDOM) {
+        console.log('React disponível, renderizando aplicação...');
         try {
             const root = createRoot(container);
             root.render(React.createElement(App));
+            console.log('Aplicação renderizada com sucesso!');
+            
+            // Adicionar classe para indicar que o React está pronto
+            container.classList.add('react-root');
+            
         } catch (error) {
-            console.error('Erro ao renderizar aplicação:', error);
+            console.error('Erro ao renderizar React:', error);
             container.innerHTML = `
                 <div style="text-align: center; padding: 40px; color: #dc2626;">
-                    <h3>Erro ao carregar a aplicação</h3>
-                    <p>${error.message}</p>
-                    <button onclick="window.location.reload()" style="padding: 10px 20px; margin-top: 20px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                        Recarregar Página
-                    </button>
+                    <h3><i class="fas fa-exclamation-triangle"></i> Erro ao Inicializar</h3>
+                    <p style="margin: 15px 0; color: #94a3b8;">Detalhes: ${error.message}</p>
+                    <div style="margin-top: 25px;">
+                        <button onclick="window.location.reload()" 
+                                style="padding: 10px 20px; margin: 5px; background: #3b82f6; 
+                                       color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            <i class="fas fa-redo"></i> Recarregar
+                        </button>
+                        <button onclick="localStorage.clear(); window.location.reload()" 
+                                style="padding: 10px 20px; margin: 5px; background: #ef4444; 
+                                       color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> Limpar Cache e Recarregar
+                        </button>
+                    </div>
                 </div>
             `;
         }
+    } else {
+        console.error('React não está disponível!');
+        container.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #ef4444;">
+                <h3><i class="fas fa-exclamation-triangle"></i> Dependências Não Carregadas</h3>
+                <p style="margin: 15px 0; color: #94a3b8;">
+                    As bibliotecas React não foram carregadas corretamente.
+                </p>
+                <button onclick="window.location.reload()" 
+                        style="padding: 10px 20px; margin-top: 20px; background: #3b82f6; 
+                               color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    Tentar Novamente
+                </button>
+            </div>
+        `;
     }
 });
+
+// Adicionar estilos globais
+const globalStyles = `
+    .react-root { min-height: 100vh; }
+    
+    /* Scrollbar customizada */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #1e293b; border-radius: 5px; }
+    ::-webkit-scrollbar-thumb { 
+        background: #475569; 
+        border-radius: 5px;
+        border: 2px solid #1e293b;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    
+    /* Animações */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .file-item { animation: fadeIn 0.3s ease; }
+    
+    /* Tema claro */
+    .light-theme {
+        background: #f8fafc;
+        color: #1e293b;
+    }
+    
+    .light-theme .main-header {
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .light-theme .main-footer {
+        background: #f1f5f9;
+        border-top: 1px solid #e2e8f0;
+    }
+`;
+
+// Injetar estilos globais
+const styleElement = document.createElement('style');
+styleElement.textContent = globalStyles;
+document.head.appendChild(styleElement);
+
+console.log('CodeCartographer v4.0 inicializado com sucesso!');
