@@ -40,6 +40,76 @@ body.light-theme {
     color: var(--light-text);
 }
 
+/* ==================== SCROLL HORIZONTAL ==================== */
+
+/* Container principal com scroll horizontal */
+.horizontal-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 15px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #475569 #1e293b;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-track {
+    background: #1e293b;
+    border-radius: 4px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Itens dentro do container horizontal */
+.horizontal-item {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+    white-space: normal;
+}
+
+/* Para a visualização de gráficos */
+.chart-container-horizontal {
+    min-width: 600px;
+    overflow-x: auto;
+}
+
+/* Para a lista de arquivos com nomes longos */
+.file-list-horizontal {
+    overflow-x: auto;
+    min-width: 100%;
+}
+
+.file-name-horizontal {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+/* ==================== LAYOUT RESPONSIVO ==================== */
+@media (max-width: 1400px) {
+    .visualization-container {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .visualization-container {
+        min-width: 700px;
+    }
+}
+
 /* ============ HEADER ============ */
 .main-header {
     background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
