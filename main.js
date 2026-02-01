@@ -1,4 +1,4 @@
-// main.js - CodeCartographer v4.0 (Corrigido para tratamento de URLs)
+// main.js - CodeCartographer v4.0 (Corrigido para árvores grandes)
 document.addEventListener('DOMContentLoaded', () => {
     console.log('CodeCartographer v4.0 inicializando...');
     initApp();
@@ -138,34 +138,26 @@ function updateCacheStatus() {
 }
 
 function loadDefaultRepo() {
-    // Tentar carregar último repositório analisado
     const lastRepo = localStorage.getItem('last-repo');
     if (lastRepo) {
         document.getElementById('repoInput').value = lastRepo;
     }
 }
 
-// FUNÇÃO CORRIGIDA: Extrai usuário/repositório de diferentes formatos
 function extractRepoInfo(input) {
-    // Limpar espaços
     let repo = input.trim();
     
-    // Remover trailing slash
     if (repo.endsWith('/')) {
         repo = repo.slice(0, -1);
     }
     
-    // Se for uma URL completa do GitHub
     if (repo.includes('github.com/')) {
-        // Extrair parte após github.com/
         const match = repo.match(/github\.com\/([^\/]+\/[^\/\?#]+)/);
         if (match && match[1]) {
-            // Remover .git se presente
             repo = match[1].replace(/\.git$/, '');
         }
     }
     
-    // Verificar se tem formato correto
     const parts = repo.split('/');
     if (parts.length !== 2) {
         throw new Error('Formato inválido. Use: usuário/repositório');
@@ -191,7 +183,6 @@ async function analyzeRepository() {
     showStatus('Processando entrada...', 'info');
     
     try {
-        // Extrair informações do repositório
         let repoInfo;
         try {
             repoInfo = extractRepoInfo(inputValue);
@@ -201,43 +192,37 @@ async function analyzeRepository() {
             return;
         }
         
-        // Salvar repositório atual
         localStorage.setItem('last-repo', inputValue);
         
-        // Atualizar status
         showStatus(`Buscando ${repoInfo.fullName}...`, 'info');
         
-        // Obter dados do repositório
         const repoData = await fetchGitHubRepo(repoInfo.owner, repoInfo.repo);
         if (!repoData) {
             throw new Error('Repositório não encontrado ou privado');
         }
         
-        // Atualizar interface
         updateRepoInfo(repoData);
         showStatus('Obtendo estrutura de arquivos...', 'info');
         
-        // Obter estrutura da árvore
-        const treeData = await fetchGitHubTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);
-        if (!treeData) {
-            throw new Error('Não foi possível obter a estrutura');
+        // Usar método melhorado para obter árvore completa
+        const treeData = await fetchCompleteTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);
+        if (!treeData || !treeData.tree || treeData.tree.length === 0) {
+            throw new Error('Não foi possível obter a estrutura completa');
         }
+        
+        showStatus(`Processando ${treeData.tree.length} itens...`, 'info');
         
         // Renderizar árvore
         renderTree(treeData);
         showStatus('Análise concluída!', 'success');
         
-        // Atualizar métricas
         updateMetrics(treeData);
-        
-        // Atualizar cache
         updateCacheStatus();
         
     } catch (error) {
         console.error('Erro na análise:', error);
         showStatus(`Erro: ${error.message}`, 'error');
         
-        // Mostrar dica para usuários
         if (error.message.includes('não encontrado')) {
             setTimeout(() => {
                 showStatus('Dica: Use formato "usuário/repositório" (ex: facebook/react)', 'info');
@@ -284,7 +269,8 @@ async function fetchGitHubRepo(owner, repo) {
     }
 }
 
-async function fetchGitHubTree(owner, repo, branch) {
+// NOVA FUNÇÃO: Obtém árvore completa mesmo para repositórios grandes
+async function fetchCompleteTree(owner, repo, branch) {
     try {
         // Primeiro, obter o SHA do commit mais recente
         const commitsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}`);
@@ -299,16 +285,82 @@ async function fetchGitHubTree(owner, repo, branch) {
         const commitData = await commitsResponse.json();
         const treeSha = commitData.commit.tree.sha;
         
-        // Obter a árvore recursivamente
+        // Tentar obter árvore recursiva (pode ser truncada para repositórios grandes)
         const treeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}?recursive=1`);
         
         if (!treeResponse.ok) {
             throw new Error('Não foi possível obter a estrutura do repositório');
         }
         
-        return await treeResponse.json();
+        const treeData = await treeResponse.json();
+        
+        // Verificar se a árvore foi truncada
+        if (treeData.truncated) {
+            showStatus('Repositório muito grande. Obtendo estrutura completa...', 'warning');
+            console.warn('Árvore truncada detectada. Usando método alternativo...');
+            
+            // Método alternativo: obter estrutura nível por nível
+            const completeTree = await fetchTreeByLevels(owner, repo, treeSha);
+            return completeTree;
+        }
+        
+        return treeData;
     } catch (error) {
         throw error;
+    }
+}
+
+// Função para obter árvore nível por nível (para repositórios grandes)
+async function fetchTreeByLevels(owner, repo, treeSha) {
+    try {
+        // Obter árvore raiz (sem recursivo)
+        const rootResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}`);
+        if (!rootResponse.ok) throw new Error('Erro ao obter árvore raiz');
+        
+        const rootData = await rootResponse.json();
+        let allItems = [...rootData.tree];
+        
+        // Processar pastas recursivamente
+        const folders = rootData.tree.filter(item => item.type === 'tree');
+        
+        for (const folder of folders) {
+            const folderItems = await processFolder(owner, repo, folder.sha, folder.path);
+            allItems = [...allItems, ...folderItems];
+        }
+        
+        return {
+            sha: treeSha,
+            tree: allItems,
+            truncated: false,
+            url: rootData.url
+        };
+    } catch (error) {
+        throw new Error(`Erro ao obter árvore por níveis: ${error.message}`);
+    }
+}
+
+async function processFolder(owner, repo, sha, path) {
+    try {
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${sha}`);
+        if (!response.ok) return [];
+        
+        const data = await response.json();
+        let items = data.tree.map(item => ({
+            ...item,
+            path: `${path}/${item.path}`
+        }));
+        
+        // Processar subpastas recursivamente
+        const subfolders = data.tree.filter(item => item.type === 'tree');
+        for (const folder of subfolders) {
+            const subfolderItems = await processFolder(owner, repo, folder.sha, `${path}/${folder.path}`);
+            items = [...items, ...subfolderItems];
+        }
+        
+        return items;
+    } catch (error) {
+        console.warn(`Erro ao processar pasta ${path}:`, error);
+        return [];
     }
 }
 
@@ -325,6 +377,9 @@ function updateRepoInfo(repoData) {
 }
 
 function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    }
     if (num >= 1000) {
         return (num / 1000).toFixed(1) + 'k';
     }
@@ -334,6 +389,8 @@ function formatNumber(num) {
 function renderTree(treeData) {
     const treeContainer = document.getElementById('treeContainer');
     if (!treeContainer || !treeData.tree) return;
+    
+    console.log(`Total de itens a processar: ${treeData.tree.length}`);
     
     // Organizar arquivos em estrutura hierárquica
     const fileTree = buildFileTree(treeData.tree);
@@ -348,47 +405,90 @@ function renderTree(treeData) {
     setTimeout(() => {
         attachTreeEvents();
     }, 100);
+    
+    // Log para debug
+    const folders = treeData.tree.filter(item => item.type === 'tree').length;
+    const files = treeData.tree.filter(item => item.type === 'blob').length;
+    console.log(`Pastas: ${folders}, Arquivos: ${files}`);
 }
 
+// FUNÇÃO MELHORADA: buildFileTree com tratamento melhor
 function buildFileTree(files) {
-    const root = { name: 'root', type: 'folder', children: [], path: '' };
+    // Criar mapa de nós por caminho
+    const nodeMap = new Map();
+    const root = { 
+        name: '/', 
+        type: 'folder', 
+        children: [], 
+        path: '',
+        fullPath: ''
+    };
+    nodeMap.set('', root);
     
+    // Primeiro, processar todos os itens
     files.forEach(file => {
         const pathParts = file.path.split('/');
-        let current = root;
+        let currentPath = '';
         
+        // Construir caminho completo para cada nível
         for (let i = 0; i < pathParts.length; i++) {
-            const part = pathParts[i];
             const isLast = i === pathParts.length - 1;
+            const path = pathParts.slice(0, i + 1).join('/');
+            const parentPath = pathParts.slice(0, i).join('/');
             
-            let child = current.children.find(c => c.name === part);
-            
-            if (!child) {
-                child = {
-                    name: part,
+            if (!nodeMap.has(path)) {
+                const node = {
+                    name: pathParts[i],
                     type: isLast ? (file.type === 'blob' ? 'file' : 'folder') : 'folder',
                     children: [],
-                    path: pathParts.slice(0, i + 1).join('/'),
-                    size: file.size || 0,
-                    sha: file.sha
+                    path: pathParts[i],
+                    fullPath: path,
+                    size: isLast ? (file.size || 0) : 0,
+                    sha: isLast ? (file.sha || '') : ''
                 };
-                current.children.push(child);
+                
+                nodeMap.set(path, node);
+                
+                // Adicionar ao pai
+                const parentNode = nodeMap.get(parentPath);
+                if (parentNode && !parentNode.children.find(c => c.fullPath === path)) {
+                    parentNode.children.push(node);
+                }
+            } else if (isLast) {
+                // Atualizar nó existente com informações do arquivo
+                const existingNode = nodeMap.get(path);
+                existingNode.type = file.type === 'blob' ? 'file' : 'folder';
+                existingNode.size = file.size || 0;
+                existingNode.sha = file.sha || '';
             }
-            
-            current = child;
         }
     });
     
-    return root.children[0] || root;
+    // Ordenar filhos de cada nó
+    nodeMap.forEach(node => {
+        if (node.children.length > 0) {
+            node.children.sort((a, b) => {
+                // Pastas primeiro, depois arquivos
+                if (a.type === 'folder' && b.type !== 'folder') return -1;
+                if (a.type !== 'folder' && b.type === 'folder') return 1;
+                // Depois ordenar por nome
+                return a.name.localeCompare(b.name);
+            });
+        }
+    });
+    
+    return root;
 }
 
 function renderTreeNode(container, node, depth = 0) {
+    if (!node || node.name === '') return;
+    
     const isFolder = node.type === 'folder';
     const hasChildren = node.children && node.children.length > 0;
     
     const nodeElement = document.createElement('div');
     nodeElement.className = 'tree-node';
-    nodeElement.dataset.path = node.path;
+    nodeElement.dataset.path = node.fullPath;
     
     const header = document.createElement('div');
     header.className = `tree-node-header ${node.type}`;
@@ -406,6 +506,15 @@ function renderTreeNode(container, node, depth = 0) {
     const badge = document.createElement('span');
     badge.className = 'tree-badge';
     badge.textContent = isFolder ? 'pasta' : 'arquivo';
+    
+    // Adicionar contador para pastas
+    if (isFolder && hasChildren) {
+        const countSpan = document.createElement('span');
+        countSpan.className = 'tree-count';
+        countSpan.textContent = `(${node.children.length})`;
+        countSpan.title = `${node.children.length} itens`;
+        header.appendChild(countSpan);
+    }
     
     // Adicionar tamanho para arquivos
     if (!isFolder && node.size > 0) {
@@ -425,13 +534,6 @@ function renderTreeNode(container, node, depth = 0) {
         const childrenContainer = document.createElement('div');
         childrenContainer.className = 'tree-node-children';
         childrenContainer.dataset.expanded = 'false';
-        
-        // Ordenar: pastas primeiro, depois arquivos
-        node.children.sort((a, b) => {
-            if (a.type === 'folder' && b.type !== 'folder') return -1;
-            if (a.type !== 'folder' && b.type === 'folder') return 1;
-            return a.name.localeCompare(b.name);
-        });
         
         node.children.forEach(child => {
             renderTreeNode(childrenContainer, child, depth + 1);
@@ -480,14 +582,13 @@ function attachTreeEvents() {
         });
     });
     
-    // Evento para arquivos (opcional)
+    // Evento para arquivos
     document.querySelectorAll('.tree-node-header.file').forEach(header => {
         header.addEventListener('click', (e) => {
             e.stopPropagation();
             const nodeElement = header.closest('.tree-node');
             const path = nodeElement.dataset.path;
             console.log('Arquivo clicado:', path);
-            // Aqui você pode adicionar funcionalidade para visualizar arquivos
         });
     });
 }
@@ -520,15 +621,27 @@ function searchTree(query) {
     const nodes = document.querySelectorAll('.tree-node-header');
     const searchTerm = query.toLowerCase();
     
+    if (searchTerm === '') {
+        // Mostrar todos os nós
+        document.querySelectorAll('.tree-node').forEach(node => {
+            node.style.display = '';
+        });
+        return;
+    }
+    
+    // Primeiro, ocultar todos
+    document.querySelectorAll('.tree-node').forEach(node => {
+        node.style.display = 'none';
+    });
+    
+    // Mostrar apenas os que correspondem
     nodes.forEach(node => {
         const nodeName = node.querySelector('.tree-name').textContent.toLowerCase();
-        const isMatch = searchTerm === '' || nodeName.includes(searchTerm);
-        
-        const treeNode = node.closest('.tree-node');
-        treeNode.style.display = isMatch ? '' : 'none';
-        
-        // Se encontrou, expandir pais
-        if (isMatch && searchTerm !== '') {
+        if (nodeName.includes(searchTerm)) {
+            const treeNode = node.closest('.tree-node');
+            treeNode.style.display = '';
+            
+            // Expandir pais
             expandParents(treeNode);
         }
     });
@@ -605,6 +718,9 @@ function showLoading(show) {
     const analyzeBtn = document.getElementById('analyzeBtn');
     if (analyzeBtn) {
         analyzeBtn.disabled = show;
+        analyzeBtn.innerHTML = show 
+            ? '<i class="fas fa-spinner fa-spin"></i> <span>Analisando...</span>'
+            : '<i class="fas fa-search"></i> <span>Analisar</span>';
     }
 }
 
@@ -618,7 +734,6 @@ function showStatus(message, type = 'info') {
     statusBox.className = 'status-box';
     statusBox.classList.add(type);
     
-    // Atualizar texto com ícone
     const icons = {
         info: 'fa-info-circle',
         success: 'fa-check-circle',
@@ -629,21 +744,11 @@ function showStatus(message, type = 'info') {
     statusText.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
 }
 
-// Exportar funções para uso global (opcional)
-window.CodeCartographer = {
-    init: initApp,
-    analyze: analyzeRepository,
-    expandAll: () => expandAllTreeNodes(true),
-    collapseAll: () => expandAllTreeNodes(false),
-    extractRepoInfo: extractRepoInfo
-};
-
-// Função auxiliar para teste rápido
+// Teste rápido
 function testRepo(repo) {
     document.getElementById('repoInput').value = repo;
     analyzeRepository();
 }
 
-// Adicione isto para permitir testes via console
 console.log('CodeCartographer v4.0 carregado!');
 console.log('Use testRepo("facebook/react") para testar rapidamente.');
