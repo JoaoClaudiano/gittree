@@ -1,0 +1,214 @@
+/* institutional.css - Estilo unificado para páginas institucionais */
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --primary-light: #34d399;
+    --dark-bg: #0f172a;
+    --dark-card: #1e293b;
+    --dark-border: #334155;
+    --dark-text: #f8fafc;
+    --dark-subtext: #94a3b8;
+    --light-bg: #f8fafc;
+    --light-card: #ffffff;
+    --light-border: #e2e8f0;
+    --light-text: #1e293b;
+    --light-subtext: #64748b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--dark-bg);
+    color: var(--dark-text);
+    line-height: 1.65;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.light-theme {
+    background: var(--light-bg);
+    color: var(--light-text);
+}
+
+/* ============ HEADER ============ */
+.institutional-header {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+    height: 70px;
+    border-bottom: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--dark-text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.light-theme .logo {
+    color: var(--light-text);
+}
+
+.logo-icon {
+    color: var(--primary);
+    font-size: 28px;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-subtext);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.back-button:hover {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--primary);
+}
+
+/* ============ MAIN CONTENT ============ */
+.institutional-main {
+    flex: 1;
+    max-width: 880px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 1.25rem;
+}
+
+.institutional-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.institutional-subtitle {
+    color: var(--dark-subtext);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+}
+
+.light-theme .institutional-subtitle {
+    color: var(--light-subtext);
+}
+
+.institutional-section {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    padding: 1.8rem;
+    margin-bottom: 1.6rem;
+}
+
+.light-theme .institutional-section {
+    background: var(--light-card);
+    border: 1px solid var(--light-border);
+}
+
+.section-title {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--dark-text);
+}
+
+.light-theme .section-title {
+    color: var(--light-text);
+}
+
+.institutional-text {
+    margin: 0.6rem 0 1rem;
+    color: var(--dark-subtext);
+}
+
+.light-theme .institutional-text {
+    color: var(--light-subtext);
+}
+
+/* ============ LISTS ============ */
+.institutional-list {
+    padding-left: 1.25rem;
+    color: var(--dark-subtext);
+}
+
+.light-theme .institutional-list {
+    color: var(--light-subtext);
+}
+
+.list-item {
+    margin-bottom: 0.45rem;
+}
+
+/* ============ NOTICE BOXES ============ */
+.notice-box {
+    background: rgba(90, 140, 255, 0.08);
+    border-left: 4px solid #5a8cff;
+    padding: 0.9rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin: 1rem 0;
+}
+
+/* ============ FOOTER ============ */
+.institutional-footer {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+    border-top: 1px solid var(--dark-border);
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--dark-subtext);
+}
+
+.light-theme .institutional-footer {
+    background: linear-gradient(135deg, var(--light-card) 0%, #f1f5f9 100%);
+    border-top: 1px solid var(--light-border);
+    color: var(--light-subtext);
+}
+
+/* ============ RESPONSIVIDADE ============ */
+@media (max-width: 768px) {
+    .institutional-main {
+        padding: 2rem 1rem;
+    }
+    
+    .institutional-title {
+        font-size: 1.8rem;
+    }
+    
+    .institutional-section {
+        padding: 1.2rem;
+    }
+    
+    .header-container {
+        padding: 0 15px;
+    }
+}
