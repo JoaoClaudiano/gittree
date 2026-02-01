@@ -1,191 +1,241 @@
-# LegacyMap  
-### Visualizador e Analisador de Arquitetura de Código Legado
+# 🌳 GitTree - Visualizador de Estrutura GitHub
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Versão](https://img.shields.io/badge/versão-0.1.0-blue)
-![Licença](https://img.shields.io/badge/license-MIT-green)
+---
 
-**Uma ferramenta interativa para mapear, visualizar e compreender a arquitetura e a saúde de sistemas legados de software.**
+**Uma ferramenta interativa para explorar e analisar a estrutura de repositórios GitHub de forma visual e intuitiva.**
+
+[![Status](https://img.shields.io/badge/status-ativo-brightgreen)]()
+[![Versão](https://img.shields.io/badge/versão-1.0-blue)]()
+[![Licença](https://img.shields.io/badge/licença-MIT-green)]()
 
 ---
 
 ## 📋 Índice
 
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Por que o LegacyMap?](#-por-que-o-legacymap)
+- [Visão Geral](#-visão-geral)
 - [Funcionalidades](#-funcionalidades)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Tecnologias](#-tecnologias)
+- [Demonstração](#-demonstração)
 - [Como Usar](#-como-usar)
-- [Roadmap](#-roadmap)
+- [Tecnologias](#-tecnologias)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [API GitHub](#-api-github)
+- [Cache Local](#-cache-local)
+- [Exportação](#-exportação)
+- [Privacidade](#-privacidade)
 - [Contribuindo](#-contribuindo)
 - [Licença](#-licença)
 - [Contato](#-contato)
 
 ---
 
-## 🎯 Sobre o Projeto
+## 🎯 Visão Geral
 
-O **LegacyMap** é uma aplicação web criada para ajudar desenvolvedores, arquitetos de software e equipes técnicas a **entender, documentar e discutir a arquitetura de sistemas legados**.
+O GitTree é uma aplicação web que permite visualizar a estrutura completa de qualquer repositório público do GitHub. Transforme listas de arquivos em uma árvore interativa, obtenha métricas detalhadas e exporte os dados para análise posterior.
 
-A ferramenta transforma estruturas de código complexas em **mapas visuais interativos**, permitindo identificar dependências, acoplamentos excessivos, ciclos arquiteturais e pontos críticos de manutenção.
-
-O projeto nasce da necessidade de **democratizar a análise arquitetural**, oferecendo uma alternativa acessível, didática e transparente às ferramentas corporativas tradicionais, frequentemente caras e opacas.
-
----
-
-## 🧭 Por que o LegacyMap?
-
-Sistemas legados raramente falham por bugs isolados — eles falham por **arquiteturas difíceis de compreender**.
-
-O LegacyMap foi pensado para:
-
-- Facilitar o **onboarding** em bases de código antigas  
-- Apoiar decisões de **refatoração, modernização ou migração**
-- Criar uma **linguagem visual comum** entre desenvolvedores, arquitetos e gestores
-- Reduzir dependência de métricas obscuras, priorizando **clareza e leitura estrutural**
-
-> Menos caixas pretas. Mais entendimento real do sistema.
+**Ideal para:**
+- Entender a organização de projetos open-source
+- Analisar a estrutura de dependências
+- Documentar arquitetura de software
+- Onboarding em novos projetos
 
 ---
 
 ## ✨ Funcionalidades
 
-- **📊 Mapa de Dependências Interativo**  
-  Visualização gráfica dos módulos e suas relações
+### 🌳 Visualização em Árvore
+- Estrutura hierárquica de pastas e arquivos
+- Expansão/colapso de diretórios
+- Ícones específicos por tipo de arquivo
+- Informações de tamanho para cada arquivo
+- Busca em tempo real na árvore
 
-- **🔍 Análise de Acoplamento e Coesão**  
-  Identificação de pontos críticos na arquitetura
+### 📊 Análise de Métricas
+- Contagem de arquivos e pastas
+- Tamanho total do repositório
+- Distribuição por tipos de arquivo
+- Estatísticas de estrelas, forks e watchers
+- Visualização em cards e gráficos
 
-- **🔄 Detecção de Dependências Cíclicas**  
-  Descoberta automática de ciclos problemáticos
+### 🎨 Interface Intuitiva
+- Tema claro/escuro (salvo automaticamente)
+- Design responsivo (mobile/desktop)
+- Navegação por abas (Árvore/Métricas)
+- Feedback visual em tempo real
+- Animações suaves e transições
 
-- **📈 Métricas de Saúde Arquitetural**  
-  Indicadores simples e interpretáveis
-
-- **📚 Biblioteca de Artigos Técnicos**  
-  Conteúdos curatoriais sobre arquitetura, dívida técnica e legado
-
-- **🎯 Workshop Guiado**  
-  Passo a passo para análise arquitetural de qualquer repositório
-
-- **📱 Design Responsivo**  
-  Funciona bem em desktop, tablet e mobile
+### 💾 Recursos Avançados
+- **Cache local** - Armazena análises para acesso rápido
+- **Exportação** - JSON e CSV com dados completos
+- **Busca inteligente** - Sugestões de repositórios populares
+- **Correção automática** - Detecta e corrige nomes de repositórios
+- **Histórico** - Lembra último repositório analisado
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## 🚀 Demonstração
 
-legacymap/
-│
-├── 📄 index.html              # Página principal
-├── 📄 artigos.html            # Lista de artigos técnicos
-├── 📄 guia.html               # Guia prático de uso
-├── 📄 contato.html            # Página de contato
-├── 📄 termos.html             # Termos de uso
-├── 📄 politica-de-privacidade.html # Política de privacidade
-│
-├── 📁 artigos/                # Artigos técnicos completos
-│   ├── 📄 comparativo-ferramentas-mercado.html
-│   ├── 📄 workshop-time-1h.html
-│   ├── 📄 opiniao-metricas-exageradas.html
-│   ├── 📄 gestao-divida-tecnica.html
-│   └── 📄 futuro-analise-codigo.html
-│
-├── 📄 template-artigo.html    # Template para novos artigos
-├── 📄 app.js                  # Lógica principal da aplicação
-├── 📄 style.css               # Estilos principais
-└── 📄 LICENSE                 # Licença do projeto
+**Teste agora:** [GitTree Online](https://seusite.com) *(substitua pelo seu link)*
+
+**Exemplos para testar:**
+- `facebook/react`
+- `vuejs/vue`
+- `torvalds/linux`
+- `microsoft/vscode`
+- `JoaoClaudiano/geocsv`
+
+## 📖 Como Usar
+
+### 1. Acesso Rápido
+1. Acesse a página principal (`index.html`)
+2. Cole uma URL do GitHub ou digite `usuário/repositório`
+3. Clique em **"Visualizar"** ou pressione **Enter**
+
+### 2. Formatos Aceitos
+```
+usuario/repositorio
+https://github.com/usuario/repositorio
+https://github.com/usuario/repositorio.git
+```
+---
+
+### 3. Navegação na Árvore
+- **Clique em pastas** para expandir/recolher
+- **Use a busca** para encontrar arquivos específicos
+- **Botões Expandir/Recolher** para controlar toda a árvore
+- **Passe o mouse** para ver detalhes dos arquivos
+
+---
+
+### 4. Exportação de Dados
+- **JSON** - Estrutura completa para análise programática
+- **CSV** - Tabela simplificada para planilhas
+- Os downloads começam automaticamente após processamento
 
 ---
 
 ## 🛠️ Tecnologias
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Ícones**: Font Awesome
-- **Hospedagem**: GitHub Pages (recomendado)
-- **Controle de Versão**: Git
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **Ícones:** Font Awesome 6
+- **Fontes:** Google Fonts (Inter)
+- **API:** GitHub REST API v3
+- **Armazenamento:** LocalStorage (cache)
+- **Design:** CSS Custom Properties (variáveis)
+- **Responsividade:** Media Queries CSS
 
-> O projeto prioriza simplicidade, transparência e fácil manutenção.
+## 📁 Estrutura do Projeto
+
+```
+gittree/
+├── 📄 index.html              # Página principal
+├── 📄 main.js                 # Lógica principal da aplicação
+├── 📄 style.css               # Estilos principais
+├── 📄 utils.js                # Funções utilitárias
+├── 📄 github-api.js           # Integração com API GitHub
+├── 📄 components.js           # Componentes React (se aplicável)
+├── 📄 _config.yml             # Configuração Jekyll (se aplicável)
+├── 📄 README.md               # Este arquivo
+│
+├── 📄 politica-de-privacidade.html
+├── 📄 termos.html
+├── 📄 contato.html
+├── 📄 guia.html
+│
+└── 📁 artigos/                # Artigos técnicos (se aplicável)
+```
+
+## 🔌 API GitHub
+
+O GitTree utiliza a API pública do GitHub com as seguintes requisições:
+
+1. **Informações do repositório:**
+   ```
+   GET https://api.github.com/repos/{owner}/{repo}
+   ```
+
+2. **Estrutura da árvore:**
+   ```
+   GET https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}?recursive=1
+   ```
+
+3. **Limites de uso:**
+   - 60 requisições por hora (não autenticado)
+   - Cache local reduz chamadas à API
+   - Mensagens de erro claras para limites excedidos
+
+## 💾 Cache Local
+
+### Funcionalidades:
+- Armazena análises por 24 horas
+- Reduz chamadas à API
+- Acelera acessos repetidos
+- Estatísticas de uso visíveis
+- Limpeza manual disponível
 
 ---
 
-## Fluxo Básico de Uso
+## 🔒 Privacidade
 
-Informe o repositório GitHub a ser analisado
+### Coleta de Dados
+- **Não coletamos** dados pessoais
+- **Não armazenamos** código analisado
+- **Não rastreamos** usuários individualmente
+- **Cache local** fica apenas no seu navegador
 
-Explore o mapa de dependências
+### Conformidade
+- Lei Geral de Proteção de Dados (LGPD)
+- Políticas do Google AdSense
+- Consentimento explícito para cookies
 
-Avalie métricas e pontos críticos
+**[Ver Política de Privacidade Completa](politica-de-privacidade.html)**
 
-Utilize os artigos e o guia para apoiar decisões técnicas
 
----
-
-## 📅 Roadmap
-Estrutura básica do site
-
-Biblioteca de artigos técnicos (5 artigos completos)
-
-Páginas informativas (contato, termos, privacidade)
-
-Integração com API do GitHub
-
-Mecanismo de análise de código em tempo real
-
-Visualização interativa de grafos de dependência
-
-Sistema de exportação de relatórios (PDF/PNG)
-
-Autenticação de usuários
-
-Histórico de análises
-
-Comparativo entre versões do código
-
----
-
-## 🤝 Contribuindo
-Contribuições são bem-vindas! Siga os passos abaixo:
-
-Faça um Fork do projeto
-
-Crie uma branch para sua feature (git checkout -b feature/nova-funcionalidade)
-
-Commit suas mudanças (git commit -m 'Adiciona nova funcionalidade')
-
-Push para a branch (git push origin feature/nova-funcionalidade)
-
-Abra um Pull Request
-
----
-
-## Diretrizes de Contribuição
-Mantenha o código limpo e bem documentado
-
-Adicione testes para novas funcionalidades
-
-Siga o padrão de código existente
-
-Atualize a documentação conforme necessário
+## Diretrizes
+- Mantenha o código limpo e documentado
+- Teste suas mudanças em diferentes navegadores
+- Siga o padrão de código existente
+- Atualize a documentação conforme necessário
 
 ---
 
 ## 📄 Licença
-Este projeto está licenciado sob a licença MIT. Consulte o arquivo LICENSE para detalhes.
+
+Este projeto está licenciado sob a **Licença MIT**. Veja o arquivo [LICENSE](LICENSE) para detalhes completos.
+
+**Resumo da licença:**
+- Uso comercial permitido
+- Modificações permitidas
+- Distribuição permitida
+- Sem garantia
+- Atribuição não obrigatória, mas apreciada
 
 ---
 
 ## 📞 Contato
-João Claudiano - GitHub
 
-Link do Projeto: https://github.com/JoaoClaudiano/legacymap
+**Desenvolvedor:** João Claudiano  
+**Email:** jooclaudiano@gmail.com  
+**GitHub:** [@JoaoClaudiano](https://github.com/JoaoClaudiano)  
+
+**Links Úteis:**
+- [Issues](https://github.com/JoaoClaudiano/gittree/issues) - Reportar bugs
+- [Contato](contato.html) - Página de contato
 
 ---
 
-## Desenvolvido com ❤️ para a comunidade de desenvolvimento de software
+## 🌟 Agradecimentos
 
-Se este projeto foi útil para você, considere dar uma ⭐ no repositório!
+- Equipe do **GitHub** pela API excelente
+- Comunidade **open-source** pelos exemplos
+- **Font Awesome** pelos ícones incríveis
+- **Google Fonts** pela fonte Inter
 
-Nota: Este projeto está em desenvolvimento ativo. Novas funcionalidades e melhorias são adicionadas regularmente. Consulte a seção Roadmap para acompanhar o que está planejado.
+---
 
+**Desenvolvido com ❤️ para a comunidade de desenvolvedores**
+
+*Se este projeto foi útil para você, considere dar uma ⭐ no repositório!*
+
+---
+
+*Nota: Este projeto está em desenvolvimento ativo. Novas funcionalidades e melhorias são adicionadas regularmente.*
