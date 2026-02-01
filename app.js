@@ -19,6 +19,49 @@ if (!window.React || !window.ReactDOM) {
 const { useState, useEffect, useRef } = React;
 const { createRoot } = ReactDOM;
 
+// ==================== FUNÇÕES UTILITÁRIAS GLOBAIS ====================
+const getFileIcon = (extension) => {
+    const icons = {
+        'js': 'JS', 'jsx': 'JSX',
+        'ts': 'TS', 'tsx': 'TSX',
+        'css': 'CSS', 'scss': 'SCSS', 'less': 'LESS',
+        'json': '{}', 'md': 'MD',
+        'html': 'HTML', 'vue': 'VUE',
+        'svelte': 'SVL', 'py': 'PY',
+        'java': 'JAVA', 'rb': 'RB',
+        'php': 'PHP', 'go': 'GO',
+        'rs': 'RUST', 'cpp': 'C++', 'c': 'C'
+    };
+    return icons[extension] || '📄';
+};
+
+const getFileLanguage = (path) => {
+    const ext = path.split('.').pop().toLowerCase();
+    const languages = {
+        'js': 'JavaScript',
+        'jsx': 'JavaScript (React)',
+        'ts': 'TypeScript',
+        'tsx': 'TypeScript (React)',
+        'css': 'CSS',
+        'scss': 'SCSS',
+        'less': 'LESS',
+        'json': 'JSON',
+        'md': 'Markdown',
+        'html': 'HTML',
+        'vue': 'Vue.js',
+        'svelte': 'Svelte',
+        'py': 'Python',
+        'java': 'Java',
+        'rb': 'Ruby',
+        'php': 'PHP',
+        'go': 'Go',
+        'rs': 'Rust',
+        'cpp': 'C++',
+        'c': 'C'
+    };
+    return languages[ext] || ext.toUpperCase();
+};
+
 // ==================== SISTEMA DE CACHE ====================
 const CACHE_PREFIX = 'codemap_';
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 horas
@@ -157,48 +200,6 @@ const showNotification = (message, type = 'info') => {
         notification.style.animation = 'fadeOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
-};
-
-const getFileIcon = (extension) => {
-    const icons = {
-        'js': 'JS', 'jsx': 'JSX',
-        'ts': 'TS', 'tsx': 'TSX',
-        'css': 'CSS', 'scss': 'SCSS', 'less': 'LESS',
-        'json': '{}', 'md': 'MD',
-        'html': 'HTML', 'vue': 'VUE',
-        'svelte': 'SVL', 'py': 'PY',
-        'java': 'JAVA', 'rb': 'RB',
-        'php': 'PHP', 'go': 'GO',
-        'rs': 'RUST', 'cpp': 'C++', 'c': 'C'
-    };
-    return icons[extension] || '📄';
-};
-
-const getFileLanguage = (path) => {
-    const ext = path.split('.').pop().toLowerCase();
-    const languages = {
-        'js': 'JavaScript',
-        'jsx': 'JavaScript (React)',
-        'ts': 'TypeScript',
-        'tsx': 'TypeScript (React)',
-        'css': 'CSS',
-        'scss': 'SCSS',
-        'less': 'LESS',
-        'json': 'JSON',
-        'md': 'Markdown',
-        'html': 'HTML',
-        'vue': 'Vue.js',
-        'svelte': 'Svelte',
-        'py': 'Python',
-        'java': 'Java',
-        'rb': 'Ruby',
-        'php': 'PHP',
-        'go': 'Go',
-        'rs': 'Rust',
-        'cpp': 'C++',
-        'c': 'C'
-    };
-    return languages[ext] || ext.toUpperCase();
 };
 
 // ==================== ANÁLISE DE REPOSITÓRIO ====================
@@ -1218,409 +1219,409 @@ function App() {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '8px'
-                        }
-                    }, [
-                        React.createElement('i', {
-                            key: 'icon',
-                            className: 'fas fa-database',
-                            style: { color: '#10b981' }
-                        }),
-                        'Cache Local'
-                    ]),
-                    React.createElement('button', {
-                        key: 'toggle-btn',
-                        onClick: () => setShowCachePanel(!showCachePanel),
-                        style: {
-                            background: 'transparent',
-                            border: 'none',
-                            color: '#94a3b8',
-                            cursor: 'pointer',
-                            fontSize: '12px'
-                        }
-                    }, showCachePanel ? 'Ocultar' : 'Mostrar')
-                ]),
-                
-                showCachePanel && React.createElement('div', {
-                    key: 'cache-details',
-                    style: {
-                        background: 'rgba(30, 41, 59, 0.8)',
-                        borderRadius: '8px',
-                        padding: '15px',
-                        border: '1px solid #475569'
-                    }
-                }, [
-                    React.createElement('div', {
-                        key: 'stats',
-                        style: {
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(2, 1fr)',
-                            gap: '10px',
-                            marginBottom: '15px'
-                        }
-                    }, [
-                        React.createElement('div', {
-                            key: 'total',
-                            style: { textAlign: 'center' }
-                        }, [
-                            React.createElement('div', {
-                                key: 'value',
-                                style: { 
-                                    color: '#3b82f6',
-                                    fontSize: '20px',
-                                    fontWeight: 'bold'
-                                }
-                            }, cacheStats.total),
-                            React.createElement('div', {
-                                key: 'label',
-                                style: { 
-                                    color: '#94a3b8',
-                                    fontSize: '12px'
-                                }
-                            }, 'Repositórios')
-                        ]),
-                        React.createElement('div', {
-                            key: 'size',
-                            style: { textAlign: 'center' }
-                        }, [
-                            React.createElement('div', {
-                                key: 'value',
-                                style: { 
-                                    color: '#10b981',
-                                    fontSize: '20px',
-                                    fontWeight: 'bold'
-                                }
-                            }, cacheStats.sizeMB || '0'),
-                            React.createElement('div', {
-                                key: 'label',
-                                style: { 
-                                    color: '#94a3b8',
-                                    fontSize: '12px'
-                                }
-                            }, 'MB Armazenados')
-                        ])
-                    ]),
-                    
-                    cacheStats.repos.length > 0 && React.createElement('div', {
-                        key: 'repo-list'
-                    }, [
-                        React.createElement('div', {
-                            key: 'list-title',
-                            style: {
-                                color: '#cbd5e1',
-                                fontSize: '13px',
-                                marginBottom: '10px'
-                            }
-                        }, 'Repositórios em cache:'),
-                        React.createElement('div', {
-                            key: 'repo-items',
-                            style: { maxHeight: '150px', overflowY: 'auto' }
-                        }, cacheStats.repos.map((repo, index) => 
-                            React.createElement('div', {
-                                key: index,
-                                style: {
-                                    padding: '8px 10px',
-                                    background: 'rgba(15, 23, 42, 0.5)',
-                                    borderRadius: '6px',
-                                    marginBottom: '5px',
-                                    fontSize: '12px',
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center'
-                                }
-                            }, [
-                                React.createElement('span', {
-                                    key: 'name',
-                                    style: { color: '#cbd5e1' }
-                                }, `${repo.owner}/${repo.name}`),
-                                React.createElement('span', {
-                                    key: 'files',
-                                    style: { color: '#94a3b8', fontSize: '11px' }
-                                }, `${repo.files} arquivos`)
-                            ])
-                        ))
-                    ])
-                ])
-            ]),
-            
-            // Exemplos rápidos
-            React.createElement('div', {
-                key: 'examples-section',
-                style: { marginTop: '25px' }
-            }, [
-                React.createElement('p', {
-                    key: 'label',
-                    style: { 
-                        color: '#94a3b8', 
-                        fontSize: '14px',
-                        marginBottom: '12px'
-                    }
-                }, 'Experimente com:'),
-                React.createElement('div', {
-                    key: 'example-buttons',
-                    style: { 
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '8px'
-                    }
-                }, examples.map((example, index) => 
-                    React.createElement('button', {
-                        key: `example-${index}`,
-                        onClick: () => {
-                            setUrl(example.url);
-                            setTimeout(() => analyzeRepository(example.url), 100);
-                        },
-                        style: {
-                            padding: '8px 15px',
-                            background: 'rgba(59, 130, 246, 0.1)',
-                            color: '#3b82f6',
-                            border: '1px solid rgba(59, 130, 246, 0.3)',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                            transition: 'all 0.2s',
-                            flex: '1 0 calc(50% - 4px)'
-                        },
-                        onMouseEnter: (e) => {
-                            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
-                            e.currentTarget.style.borderColor = '#3b82f6';
-                        },
-                        onMouseLeave: (e) => {
-                            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
-                            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
-                        }
-                    }, example.name)
-                ))
-            ]),
-            
-            // Informações
-            React.createElement('div', {
-                key: 'info-section',
-                style: {
-                    marginTop: '25px',
-                    padding: '15px',
-                    background: 'rgba(59, 130, 246, 0.05)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(59, 130, 246, 0.1)'
-                }
-            }, [
-                React.createElement('p', {
-                    key: 'info-text',
-                    style: { 
-                        color: '#94a3b8', 
-                        fontSize: '12px',
-                        margin: '0',
-                        lineHeight: '1.6'
                     }
                 }, [
                     React.createElement('i', {
                         key: 'icon',
-                        className: 'fas fa-info-circle',
-                        style: { marginRight: '8px', color: '#3b82f6' }
+                        className: 'fas fa-database',
+                        style: { color: '#10b981' }
                     }),
-                    'Esta ferramenta analisa a estrutura de repositórios GitHub. Os dados são armazenados localmente no seu navegador.'
+                    'Cache Local'
+                ]),
+                React.createElement('button', {
+                    key: 'toggle-btn',
+                    onClick: () => setShowCachePanel(!showCachePanel),
+                    style: {
+                        background: 'transparent',
+                        border: 'none',
+                        color: '#94a3b8',
+                        cursor: 'pointer',
+                        fontSize: '12px'
+                    }
+                }, showCachePanel ? 'Ocultar' : 'Mostrar')
+            ]),
+            
+            showCachePanel && React.createElement('div', {
+                key: 'cache-details',
+                style: {
+                    background: 'rgba(30, 41, 59, 0.8)',
+                    borderRadius: '8px',
+                    padding: '15px',
+                    border: '1px solid #475569'
+                }
+            }, [
+                React.createElement('div', {
+                    key: 'stats',
+                    style: {
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: '10px',
+                        marginBottom: '15px'
+                    }
+                }, [
+                    React.createElement('div', {
+                        key: 'total',
+                        style: { textAlign: 'center' }
+                    }, [
+                        React.createElement('div', {
+                            key: 'value',
+                            style: { 
+                                color: '#3b82f6',
+                                fontSize: '20px',
+                                fontWeight: 'bold'
+                            }
+                        }, cacheStats.total),
+                        React.createElement('div', {
+                            key: 'label',
+                            style: { 
+                                color: '#94a3b8',
+                                fontSize: '12px'
+                            }
+                        }, 'Repositórios')
+                    ]),
+                    React.createElement('div', {
+                        key: 'size',
+                        style: { textAlign: 'center' }
+                    }, [
+                        React.createElement('div', {
+                            key: 'value',
+                            style: { 
+                                color: '#10b981',
+                                fontSize: '20px',
+                                fontWeight: 'bold'
+                            }
+                        }, cacheStats.sizeMB || '0'),
+                        React.createElement('div', {
+                            key: 'label',
+                            style: { 
+                                color: '#94a3b8',
+                                fontSize: '12px'
+                            }
+                        }, 'MB Armazenados')
+                    ])
+                ]),
+                
+                cacheStats.repos.length > 0 && React.createElement('div', {
+                    key: 'repo-list'
+                }, [
+                    React.createElement('div', {
+                        key: 'list-title',
+                        style: {
+                            color: '#cbd5e1',
+                            fontSize: '13px',
+                            marginBottom: '10px'
+                        }
+                    }, 'Repositórios em cache:'),
+                    React.createElement('div', {
+                        key: 'repo-items',
+                        style: { maxHeight: '150px', overflowY: 'auto' }
+                    }, cacheStats.repos.map((repo, index) => 
+                        React.createElement('div', {
+                            key: index,
+                            style: {
+                                padding: '8px 10px',
+                                background: 'rgba(15, 23, 42, 0.5)',
+                                borderRadius: '6px',
+                                marginBottom: '5px',
+                                fontSize: '12px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                            }
+                        }, [
+                            React.createElement('span', {
+                                key: 'name',
+                                style: { color: '#cbd5e1' }
+                            }, `${repo.owner}/${repo.name}`),
+                            React.createElement('span', {
+                                key: 'files',
+                                style: { color: '#94a3b8', fontSize: '11px' }
+                            }, `${repo.files} arquivos`)
+                        ])
+                    ))
                 ])
             ])
         ]),
         
-        // Área principal de conteúdo
+        // Exemplos rápidos
         React.createElement('div', {
-            key: 'main-content',
-            style: {
-                marginLeft: '420px',
-                minHeight: 'calc(100vh - 160px)'
-            }
-        }, 
-            repoData 
-                ? React.createElement(RepositoryVisualization, {
-                    key: 'visualization',
-                    repoInfo: repoData.repoInfo,
-                    files: repoData.files
-                })
-                : React.createElement('div', {
-                    key: 'empty-state',
+            key: 'examples-section',
+            style: { marginTop: '25px' }
+        }, [
+            React.createElement('p', {
+                key: 'label',
+                style: { 
+                    color: '#94a3b8', 
+                    fontSize: '14px',
+                    marginBottom: '12px'
+                }
+            }, 'Experimente com:'),
+            React.createElement('div', {
+                key: 'example-buttons',
+                style: { 
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '8px'
+                }
+            }, examples.map((example, index) => 
+                React.createElement('button', {
+                    key: `example-${index}`,
+                    onClick: () => {
+                        setUrl(example.url);
+                        setTimeout(() => analyzeRepository(example.url), 100);
+                    },
                     style: {
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 'calc(100vh - 200px)',
-                        textAlign: 'center',
-                        padding: '40px 20px'
+                        padding: '8px 15px',
+                        background: 'rgba(59, 130, 246, 0.1)',
+                        color: '#3b82f6',
+                        border: '1px solid rgba(59, 130, 246, 0.3)',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '13px',
+                        transition: 'all 0.2s',
+                        flex: '1 0 calc(50% - 4px)'
+                    },
+                    onMouseEnter: (e) => {
+                        e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
+                        e.currentTarget.style.borderColor = '#3b82f6';
+                    },
+                    onMouseLeave: (e) => {
+                        e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    }
+                }, example.name)
+            ))
+        ]),
+        
+        // Informações
+        React.createElement('div', {
+            key: 'info-section',
+            style: {
+                marginTop: '25px',
+                padding: '15px',
+                background: 'rgba(59, 130, 246, 0.05)',
+                borderRadius: '8px',
+                border: '1px solid rgba(59, 130, 246, 0.1)'
+            }
+        }, [
+            React.createElement('p', {
+                key: 'info-text',
+                style: { 
+                    color: '#94a3b8', 
+                    fontSize: '12px',
+                    margin: '0',
+                    lineHeight: '1.6'
+                }
+            }, [
+                React.createElement('i', {
+                    key: 'icon',
+                    className: 'fas fa-info-circle',
+                    style: { marginRight: '8px', color: '#3b82f6' }
+                }),
+                'Esta ferramenta analisa a estrutura de repositórios GitHub. Os dados são armazenados localmente no seu navegador.'
+            ])
+        ])
+    ]),
+    
+    // Área principal de conteúdo
+    React.createElement('div', {
+        key: 'main-content',
+        style: {
+            marginLeft: '420px',
+            minHeight: 'calc(100vh - 160px)'
+        }
+    }, 
+        repoData 
+            ? React.createElement(RepositoryVisualization, {
+                key: 'visualization',
+                repoInfo: repoData.repoInfo,
+                files: repoData.files
+            })
+            : React.createElement('div', {
+                key: 'empty-state',
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: 'calc(100vh - 200px)',
+                    textAlign: 'center',
+                    padding: '40px 20px'
+                }
+            }, [
+                React.createElement('div', {
+                    key: 'icon',
+                    style: { 
+                        fontSize: '80px',
+                        color: '#334155',
+                        marginBottom: '30px',
+                        opacity: '0.5'
+                    }
+                }, '🌳'),
+                React.createElement('h3', {
+                    key: 'title',
+                    style: { 
+                        color: '#cbd5e1', 
+                        marginBottom: '15px',
+                        fontSize: '22px'
+                    }
+                }, 'Visualize Dependências de Código'),
+                React.createElement('p', {
+                    key: 'subtitle',
+                    style: { 
+                        color: '#94a3b8', 
+                        fontSize: '16px',
+                        maxWidth: '600px',
+                        marginBottom: '30px',
+                        lineHeight: '1.6'
+                    }
+                }, 'Cole uma URL do GitHub para visualizar a estrutura de arquivos, dependências e métricas do repositório.'),
+                React.createElement('div', {
+                    key: 'features',
+                    style: {
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: '20px',
+                        maxWidth: '700px',
+                        marginTop: '40px'
                     }
                 }, [
                     React.createElement('div', {
-                        key: 'icon',
-                        style: { 
-                            fontSize: '80px',
-                            color: '#334155',
-                            marginBottom: '30px',
-                            opacity: '0.5'
-                        }
-                    }, '🌳'),
-                    React.createElement('h3', {
-                        key: 'title',
-                        style: { 
-                            color: '#cbd5e1', 
-                            marginBottom: '15px',
-                            fontSize: '22px'
-                        }
-                    }, 'Visualize Dependências de Código'),
-                    React.createElement('p', {
-                        key: 'subtitle',
-                        style: { 
-                            color: '#94a3b8', 
-                            fontSize: '16px',
-                            maxWidth: '600px',
-                            marginBottom: '30px',
-                            lineHeight: '1.6'
-                        }
-                    }, 'Cole uma URL do GitHub para visualizar a estrutura de arquivos, dependências e métricas do repositório.'),
-                    React.createElement('div', {
-                        key: 'features',
+                        key: 'feature-1',
                         style: {
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(2, 1fr)',
-                            gap: '20px',
-                            maxWidth: '700px',
-                            marginTop: '40px'
+                            padding: '20px',
+                            background: 'rgba(30, 41, 59, 0.8)',
+                            borderRadius: '10px',
+                            border: '1px solid #334155'
                         }
                     }, [
                         React.createElement('div', {
-                            key: 'feature-1',
+                            key: 'icon',
                             style: {
-                                padding: '20px',
-                                background: 'rgba(30, 41, 59, 0.8)',
-                                borderRadius: '10px',
-                                border: '1px solid #334155'
+                                fontSize: '24px',
+                                color: '#3b82f6',
+                                marginBottom: '15px'
                             }
-                        }, [
-                            React.createElement('div', {
-                                key: 'icon',
-                                style: {
-                                    fontSize: '24px',
-                                    color: '#3b82f6',
-                                    marginBottom: '15px'
-                                }
-                            }, '📊'),
-                            React.createElement('h4', {
-                                key: 'title',
-                                style: { 
-                                    color: '#f8fafc',
-                                    margin: '0 0 10px 0'
-                                }
-                            }, 'Análise de Estrutura'),
-                            React.createElement('p', {
-                                key: 'desc',
-                                style: { 
-                                    color: '#94a3b8',
-                                    fontSize: '14px',
-                                    margin: '0'
-                                }
-                            }, 'Visualize a organização de arquivos e pastas do repositório')
-                        ]),
+                        }, '📊'),
+                        React.createElement('h4', {
+                            key: 'title',
+                            style: { 
+                                color: '#f8fafc',
+                                margin: '0 0 10px 0'
+                            }
+                        }, 'Análise de Estrutura'),
+                        React.createElement('p', {
+                            key: 'desc',
+                            style: { 
+                                color: '#94a3b8',
+                                fontSize: '14px',
+                                margin: '0'
+                            }
+                        }, 'Visualize a organização de arquivos e pastas do repositório')
+                    ]),
+                    React.createElement('div', {
+                        key: 'feature-2',
+                        style: {
+                            padding: '20px',
+                            background: 'rgba(30, 41, 59, 0.8)',
+                            borderRadius: '10px',
+                            border: '1px solid #334155'
+                        }
+                    }, [
                         React.createElement('div', {
-                            key: 'feature-2',
+                            key: 'icon',
                             style: {
-                                padding: '20px',
-                                background: 'rgba(30, 41, 59, 0.8)',
-                                borderRadius: '10px',
-                                border: '1px solid #334155'
+                                fontSize: '24px',
+                                color: '#10b981',
+                                marginBottom: '15px'
                             }
-                        }, [
-                            React.createElement('div', {
-                                key: 'icon',
-                                style: {
-                                    fontSize: '24px',
-                                    color: '#10b981',
-                                    marginBottom: '15px'
-                                }
-                            }, '📈'),
-                            React.createElement('h4', {
-                                key: 'title',
-                                style: { 
-                                    color: '#f8fafc',
-                                    margin: '0 0 10px 0'
-                                }
-                            }, 'Métricas e Estatísticas'),
-                            React.createElement('p', {
-                                key: 'desc',
-                                style: { 
-                                    color: '#94a3b8',
-                                    fontSize: '14px',
-                                    margin: '0'
-                                }
-                            }, 'Distribuição de tipos de arquivos e informações do projeto')
-                        ]),
+                        }, '📈'),
+                        React.createElement('h4', {
+                            key: 'title',
+                            style: { 
+                                color: '#f8fafc',
+                                margin: '0 0 10px 0'
+                            }
+                        }, 'Métricas e Estatísticas'),
+                        React.createElement('p', {
+                            key: 'desc',
+                            style: { 
+                                color: '#94a3b8',
+                                fontSize: '14px',
+                                margin: '0'
+                            }
+                        }, 'Distribuição de tipos de arquivos e informações do projeto')
+                    ]),
+                    React.createElement('div', {
+                        key: 'feature-3',
+                        style: {
+                            padding: '20px',
+                            background: 'rgba(30, 41, 59, 0.8)',
+                            borderRadius: '10px',
+                            border: '1px solid #334155'
+                        }
+                    }, [
                         React.createElement('div', {
-                            key: 'feature-3',
+                            key: 'icon',
                             style: {
-                                padding: '20px',
-                                background: 'rgba(30, 41, 59, 0.8)',
-                                borderRadius: '10px',
-                                border: '1px solid #334155'
+                                fontSize: '24px',
+                                color: '#f59e0b',
+                                marginBottom: '15px'
                             }
-                        }, [
-                            React.createElement('div', {
-                                key: 'icon',
-                                style: {
-                                    fontSize: '24px',
-                                    color: '#f59e0b',
-                                    marginBottom: '15px'
-                                }
-                            }, '💾'),
-                            React.createElement('h4', {
-                                key: 'title',
-                                style: { 
-                                    color: '#f8fafc',
-                                    margin: '0 0 10px 0'
-                                }
-                            }, 'Cache Local'),
-                            React.createElement('p', {
-                                key: 'desc',
-                                style: { 
-                                    color: '#94a3b8',
-                                    fontSize: '14px',
-                                    margin: '0'
-                                }
-                            }, 'Análises salvas localmente para acesso rápido e offline')
-                        ]),
+                        }, '💾'),
+                        React.createElement('h4', {
+                            key: 'title',
+                            style: { 
+                                color: '#f8fafc',
+                                margin: '0 0 10px 0'
+                            }
+                        }, 'Cache Local'),
+                        React.createElement('p', {
+                            key: 'desc',
+                            style: { 
+                                color: '#94a3b8',
+                                fontSize: '14px',
+                                margin: '0'
+                            }
+                        }, 'Análises salvas localmente para acesso rápido e offline')
+                    ]),
+                    React.createElement('div', {
+                        key: 'feature-4',
+                        style: {
+                            padding: '20px',
+                            background: 'rgba(30, 41, 59, 0.8)',
+                            borderRadius: '10px',
+                            border: '1px solid #334155'
+                        }
+                    }, [
                         React.createElement('div', {
-                            key: 'feature-4',
+                            key: 'icon',
                             style: {
-                                padding: '20px',
-                                background: 'rgba(30, 41, 59, 0.8)',
-                                borderRadius: '10px',
-                                border: '1px solid '#334155'
+                                fontSize: '24px',
+                                color: '#8b5cf6',
+                                marginBottom: '15px'
                             }
-                        }, [
-                            React.createElement('div', {
-                                key: 'icon',
-                                style: {
-                                    fontSize: '24px',
-                                    color: '#8b5cf6',
-                                    marginBottom: '15px'
-                                }
-                            }, '🚀'),
-                            React.createElement('h4', {
-                                key: 'title',
-                                style: { 
-                                    color: '#f8fafc',
-                                    margin: '0 0 10px 0'
-                                }
-                            }, 'Desempenho'),
-                            React.createElement('p', {
-                                key: 'desc',
-                                style: { 
-                                    color: '#94a3b8',
-                                    fontSize: '14px',
-                                    margin: '0'
-                                }
-                            }, 'Interface otimizada para análise rápida de grandes repositórios')
-                        ])
+                        }, '🚀'),
+                        React.createElement('h4', {
+                            key: 'title',
+                            style: { 
+                                color: '#f8fafc',
+                                margin: '0 0 10px 0'
+                            }
+                        }, 'Desempenho'),
+                        React.createElement('p', {
+                            key: 'desc',
+                            style: { 
+                                color: '#94a3b8',
+                                fontSize: '14px',
+                                margin: '0'
+                            }
+                        }, 'Interface otimizada para análise rápida de grandes repositórios')
                     ])
                 ])
-        )
-    ]);
+            ])
+    )
+]);
 }
 
 // ==================== INICIALIZAÇÃO DA APLICAÇÃO ====================
