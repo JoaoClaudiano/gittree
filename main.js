@@ -1,6 +1,6 @@
-// main.js - CodeCartographer v4.0 (Corrigido para tratamento melhor de repositórios)
+// GitTree v1.0 - Visualizador de Estrutura GitHub
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('CodeCartographer v4.0 inicializando...');
+    console.log('🌳 GitTree v1.0 inicializando...');
     initApp();
 });
 
@@ -11,14 +11,14 @@ function initApp() {
     initCache();
     loadDefaultRepo();
     
-    console.log('✅ CodeCartographer v4.0 inicializado');
+    console.log('✅ GitTree v1.0 inicializado');
 }
 
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
     
-    const savedTheme = localStorage.getItem('codecartographer-theme') || 'dark';
+    const savedTheme = localStorage.getItem('gittree-theme') || 'dark';
     if (savedTheme === 'light') {
         body.classList.add('light-theme');
         updateThemeIcon(true);
@@ -27,7 +27,7 @@ function initTheme() {
     themeToggle.addEventListener('click', () => {
         body.classList.toggle('light-theme');
         const isLight = body.classList.contains('light-theme');
-        localStorage.setItem('codecartographer-theme', isLight ? 'light' : 'dark');
+        localStorage.setItem('gittree-theme', isLight ? 'light' : 'dark');
         updateThemeIcon(isLight);
     });
 }
@@ -36,10 +36,10 @@ function updateThemeIcon(isLight) {
     const icon = document.querySelector('#themeToggle i');
     if (isLight) {
         icon.className = 'fas fa-sun';
-        document.querySelector('#themeToggle').title = 'Alternar para tema escuro';
+        themeToggle.title = 'Alternar para tema escuro';
     } else {
         icon.className = 'fas fa-moon';
-        document.querySelector('#themeToggle').title = 'Alternar para tema claro';
+        themeToggle.title = 'Alternar para tema claro';
     }
 }
 
@@ -60,6 +60,10 @@ function initViews() {
                     section.classList.add('active');
                 }
             });
+            
+            if (view === 'metrics') {
+                updateMetricsDisplay();
+            }
         });
     });
 }
@@ -72,6 +76,8 @@ function initControls() {
     const expandAllBtn = document.getElementById('expandAllBtn');
     const collapseAllBtn = document.getElementById('collapseAllBtn');
     const treeSearch = document.getElementById('treeSearch');
+    const exportJSONBtn = document.getElementById('exportJSONBtn');
+    const exportCSVBtn = document.getElementById('exportCSVBtn');
     
     if (analyzeBtn && repoInput) {
         analyzeBtn.addEventListener('click', analyzeRepository);
@@ -82,7 +88,7 @@ function initControls() {
     
     if (clearCacheBtn) {
         clearCacheBtn.addEventListener('click', () => {
-            if (confirm('Tem certeza que deseja limpar todo o cache?')) {
+            if (confirm('Limpar todo o cache?')) {
                 localStorage.clear();
                 updateCacheStatus();
                 showStatus('Cache limpo com sucesso!', 'success');
@@ -91,9 +97,7 @@ function initControls() {
     }
     
     if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            analyzeRepository();
-        });
+        refreshBtn.addEventListener('click', analyzeRepository);
     }
     
     if (expandAllBtn) {
@@ -110,7 +114,18 @@ function initControls() {
         });
     }
     
-    // Adicionar sugestões de repositórios populares
+    if (exportJSONBtn) {
+        exportJSONBtn.addEventListener('click', () => {
+            exportData('json');
+        });
+    }
+    
+    if (exportCSVBtn) {
+        exportCSVBtn.addEventListener('click', () => {
+            exportData('csv');
+        });
+    }
+    
     addPopularRepoSuggestions();
 }
 
@@ -118,7 +133,6 @@ function addPopularRepoSuggestions() {
     const input = document.getElementById('repoInput');
     if (!input) return;
     
-    // Criar datalist para sugestões
     const datalist = document.createElement('datalist');
     datalist.id = 'repoSuggestions';
     
@@ -133,7 +147,7 @@ function addPopularRepoSuggestions() {
         'python/cpython',
         'tensorflow/tensorflow',
         'pytorch/pytorch',
-        'JoaoClaudiano/geocsv' // Repositório do usuário
+        'JoaoClaudiano/geocsv'
     ];
     
     popularRepos.forEach(repo => {
@@ -142,7 +156,6 @@ function addPopularRepoSuggestions() {
         datalist.appendChild(option);
     });
     
-    // Adicionar datalist ao input
     input.setAttribute('list', 'repoSuggestions');
     document.body.appendChild(datalist);
 }
@@ -173,7 +186,6 @@ function loadDefaultRepo() {
     }
 }
 
-// FUNÇÃO MELHORADA: Extração mais robusta
 function extractRepoInfo(input) {
     if (!input || input.trim() === '') {
         throw new Error('Digite um repositório GitHub');
@@ -181,12 +193,8 @@ function extractRepoInfo(input) {
     
     let repo = input.trim();
     
-    // Remover trailing slash
-    if (repo.endsWith('/')) {
-        repo = repo.slice(0, -1);
-    }
+    if (repo.endsWith('/')) repo = repo.slice(0, -1);
     
-    // Caso 1: URL completa do GitHub
     if (repo.includes('github.com/')) {
         const match = repo.match(/github\.com\/([^\/]+\/[^\/\?#]+)/);
         if (match && match[1]) {
@@ -196,32 +204,25 @@ function extractRepoInfo(input) {
         }
     }
     
-    // Caso 2: Apenas usuário (vamos sugerir repositórios)
     if (!repo.includes('/')) {
-        throw new Error('Digite no formato: usuário/repositório');
+        throw new Error('Use: usuário/repositório');
     }
     
-    // Remover branch/tag se especificado (usuário/repo@branch ou usuário/repo:branch)
     repo = repo.split('@')[0].split(':')[0];
     
-    // Verificar formato final
     const parts = repo.split('/');
     if (parts.length !== 2) {
-        throw new Error('Formato inválido. Use: usuário/repositório');
+        throw new Error('Formato inválido');
     }
     
     const owner = parts[0].trim();
     const repoName = parts[1].trim();
     
     if (!owner || !repoName) {
-        throw new Error('Usuário e repositório não podem estar vazios');
+        throw new Error('Usuário/repositório não podem estar vazios');
     }
     
-    return {
-        owner: owner,
-        repo: repoName,
-        fullName: owner + '/' + repoName
-    };
+    return { owner, repo: repoName, fullName: owner + '/' + repoName };
 }
 
 async function analyzeRepository() {
@@ -240,75 +241,59 @@ async function analyzeRepository() {
         let repoInfo;
         try {
             repoInfo = extractRepoInfo(inputValue);
-            console.log('Repositório extraído:', repoInfo);
         } catch (error) {
             showStatus(error.message, 'error');
             showLoading(false);
             return;
         }
         
-        // Salvar no histórico
         localStorage.setItem('last-repo', inputValue);
         
-        // Verificar se é o repositório do usuário com erro de digitação
         if (repoInfo.repo === 'geocsvps' && repoInfo.owner === 'JoaoClaudiano') {
-            showStatus('Verificando repositório...', 'warning');
-            
-            // Tentar corrigir automaticamente
-            const correctedRepo = await tryCorrectRepoName(repoInfo.owner, repoInfo.repo);
-            if (correctedRepo) {
-                showStatus(`Corrigindo para: ${correctedRepo}`, 'info');
-                repoInfo.repo = correctedRepo;
-                repoInfo.fullName = `${repoInfo.owner}/${correctedRepo}`;
+            const corrected = await tryCorrectRepoName(repoInfo.owner, repoInfo.repo);
+            if (corrected) {
+                showStatus(`Corrigindo para: ${corrected}`, 'info');
+                repoInfo.repo = corrected;
+                repoInfo.fullName = `${repoInfo.owner}/${corrected}`;
                 repoInput.value = repoInfo.fullName;
             }
         }
         
         showStatus(`Buscando ${repoInfo.fullName}...`, 'info');
         
-        // Obter dados do repositório
         const repoData = await fetchGitHubRepo(repoInfo.owner, repoInfo.repo);
         if (!repoData) {
             throw new Error('Repositório não encontrado');
         }
         
-        // Atualizar interface
         updateRepoInfo(repoData);
         showStatus('Obtendo estrutura...', 'info');
         
-        // Obter árvore
         const treeData = await fetchCompleteTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);
-        if (!treeData || !treeData.tree || treeData.tree.length === 0) {
+        if (!treeData?.tree?.length) {
             throw new Error('Não foi possível obter a estrutura');
         }
         
         showStatus(`Processando ${treeData.tree.length} itens...`, 'info');
         
-        // Renderizar árvore
         renderTree(treeData);
-        showStatus('Análise concluída!', 'success');
-        
-        // Atualizar métricas
         updateMetrics(treeData);
         updateCacheStatus();
         
-    } catch (error) {
-        console.error('Erro na análise:', error);
+        showStatus('Estrutura carregada!', 'success');
         
-        // Tratamento de erros específicos
+    } catch (error) {
+        console.error('Erro:', error);
+        
         if (error.message.includes('404') || error.message.includes('não encontrado')) {
-            showStatus('Repositório não encontrado. Verifique o nome.', 'error');
-            
-            // Sugerir possíveis correções
-            const repoInput = document.getElementById('repoInput');
-            const value = repoInput.value.trim();
-            if (value.includes('geocsvps')) {
+            showStatus('Repositório não encontrado', 'error');
+            if (repoInput.value.includes('geocsvps')) {
                 setTimeout(() => {
                     showStatus('Tente: JoaoClaudiano/geocsv', 'info');
                 }, 2000);
             }
         } else if (error.message.includes('403') || error.message.includes('Limite')) {
-            showStatus('Limite de requisições excedido. Tente novamente mais tarde.', 'error');
+            showStatus('Limite de requisições excedido', 'error');
         } else {
             showStatus(`Erro: ${error.message}`, 'error');
         }
@@ -317,7 +302,6 @@ async function analyzeRepository() {
     }
 }
 
-// NOVA FUNÇÃO: Tentar corrigir nome do repositório
 async function tryCorrectRepoName(owner, repo) {
     const commonErrors = {
         'geocsvps': 'geocsv',
@@ -326,26 +310,20 @@ async function tryCorrectRepoName(owner, repo) {
         'geosvc': 'geocsv'
     };
     
-    // Verificar se há erro comum
     if (commonErrors[repo.toLowerCase()]) {
         return commonErrors[repo.toLowerCase()];
     }
     
-    // Tentar buscar repositórios do usuário para sugerir
     try {
         const response = await fetch(`https://api.github.com/users/${owner}/repos?per_page=100`);
         if (response.ok) {
             const repos = await response.json();
             const repoNames = repos.map(r => r.name);
-            
-            // Encontrar repositório mais similar
             const suggestions = findSimilarRepoNames(repo, repoNames);
-            if (suggestions.length > 0) {
-                return suggestions[0];
-            }
+            if (suggestions.length > 0) return suggestions[0];
         }
     } catch (error) {
-        console.warn('Não foi possível buscar repositórios do usuário:', error);
+        console.warn('Não foi possível buscar repositórios:', error);
     }
     
     return null;
@@ -357,69 +335,42 @@ function findSimilarRepoNames(input, repoList) {
     
     for (const repo of repoList) {
         const repoLower = repo.toLowerCase();
-        
-        // Verificar se é substring
         if (repoLower.includes(input) || input.includes(repoLower)) {
             suggestions.push(repo);
             continue;
         }
         
-        // Verificar similaridade (diferença de um caractere)
         if (Math.abs(repoLower.length - input.length) <= 2) {
             let diff = 0;
             const maxLen = Math.max(repoLower.length, input.length);
-            
             for (let i = 0; i < maxLen; i++) {
                 if (repoLower[i] !== input[i]) diff++;
                 if (diff > 2) break;
             }
-            
-            if (diff <= 2) {
-                suggestions.push(repo);
-            }
+            if (diff <= 2) suggestions.push(repo);
         }
     }
     
-    return suggestions.slice(0, 3); // Retorna até 3 sugestões
+    return suggestions.slice(0, 3);
 }
 
 async function fetchGitHubRepo(owner, repo) {
     try {
         const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-            headers: {
-                'Accept': 'application/vnd.github.v3+json'
-            }
+            headers: { 'Accept': 'application/vnd.github.v3+json' }
         });
         
-        console.log(`Status da resposta: ${response.status}`);
-        
-        if (response.status === 404) {
-            throw new Error('Repositório não encontrado (404)');
-        }
-        
+        if (response.status === 404) throw new Error('Repositório não encontrado (404)');
         if (response.status === 403) {
-            // Verificar se é limite de rate limit
             const rateLimit = response.headers.get('X-RateLimit-Remaining');
-            if (rateLimit === '0') {
-                throw new Error('Limite de requisições excedido. Tente novamente em 1 hora.');
-            }
+            if (rateLimit === '0') throw new Error('Limite de requisições excedido');
             throw new Error('Acesso não autorizado (403)');
         }
-        
-        if (response.status === 401) {
-            throw new Error('Acesso não autorizado. O repositório pode ser privado.');
-        }
-        
-        if (!response.ok) {
-            throw new Error(`Erro ${response.status}: ${response.statusText}`);
-        }
+        if (response.status === 401) throw new Error('Repositório pode ser privado');
+        if (!response.ok) throw new Error(`Erro ${response.status}`);
         
         const data = await response.json();
-        
-        // Verificar se é um repositório válido
-        if (!data.name || !data.owner) {
-            throw new Error('Resposta inválida da API do GitHub');
-        }
+        if (!data.name || !data.owner) throw new Error('Resposta inválida');
         
         return {
             name: data.name,
@@ -430,49 +381,32 @@ async function fetchGitHubRepo(owner, repo) {
             watchers: data.watchers_count || 0,
             default_branch: data.default_branch || 'main',
             size: data.size || 0,
-            owner: {
-                login: data.owner.login,
-                avatar_url: data.owner.avatar_url
-            },
-            html_url: data.html_url,
-            created_at: data.created_at,
-            updated_at: data.updated_at
+            owner: { login: data.owner.login, avatar_url: data.owner.avatar_url }
         };
     } catch (error) {
-        console.error('Erro em fetchGitHubRepo:', error);
         throw error;
     }
 }
 
 async function fetchCompleteTree(owner, repo, branch) {
     try {
-        // Obter SHA do commit mais recente
         const commitsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}`);
-        
-        if (!commitsResponse.ok) {
-            throw new Error(`Erro ao buscar commits: ${commitsResponse.status}`);
-        }
+        if (!commitsResponse.ok) throw new Error('Erro ao buscar commits');
         
         const commitData = await commitsResponse.json();
         const treeSha = commitData.commit.tree.sha;
         
-        // Tentar obter árvore recursiva
         const treeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}?recursive=1`);
         
         if (!treeResponse.ok) {
-            // Se falhar, tentar sem recursivo
-            const simpleTreeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}`);
-            if (!simpleTreeResponse.ok) {
-                throw new Error('Não foi possível obter a estrutura do repositório');
-            }
-            return await simpleTreeResponse.json();
+            const simpleResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}`);
+            if (!simpleResponse.ok) throw new Error('Não foi possível obter a estrutura');
+            return await simpleResponse.json();
         }
         
         const treeData = await treeResponse.json();
-        
-        // Se a árvore foi truncada, avisar
         if (treeData.truncated) {
-            showStatus('Repositório muito grande. Alguns arquivos podem não estar visíveis.', 'warning');
+            showStatus('Repositório muito grande. Estrutura pode estar incompleta.', 'warning');
         }
         
         return treeData;
@@ -499,12 +433,8 @@ function updateRepoInfo(repoData) {
 }
 
 function formatNumber(num) {
-    if (num >= 1000000) {
-        return (num / 1000000).toFixed(1) + 'M';
-    }
-    if (num >= 1000) {
-        return (num / 1000).toFixed(1) + 'k';
-    }
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
     return num.toString();
 }
 
@@ -512,22 +442,12 @@ function renderTree(treeData) {
     const treeContainer = document.getElementById('treeContainer');
     if (!treeContainer || !treeData.tree) return;
     
-    console.log(`Total de itens: ${treeData.tree.length}`);
-    
-    // Construir árvore hierárquica
     const root = buildFileTree(treeData.tree);
-    
-    // Limpar container
     treeContainer.innerHTML = '';
-    
-    // Renderizar
     renderTreeNode(treeContainer, root);
     
-    // Adicionar eventos
     setTimeout(() => {
         attachTreeEvents();
-        
-        // Expandir primeiro nível por padrão
         expandFirstLevel();
     }, 100);
 }
@@ -537,7 +457,6 @@ function buildFileTree(files) {
     const nodeMap = new Map();
     nodeMap.set('', root);
     
-    // Processar cada arquivo/pasta
     files.forEach(item => {
         const pathParts = item.path.split('/');
         let currentPath = '';
@@ -559,17 +478,12 @@ function buildFileTree(files) {
                 };
                 
                 nodeMap.set(path, node);
-                
-                // Adicionar ao pai
                 const parent = nodeMap.get(parentPath);
-                if (parent) {
-                    parent.children.push(node);
-                }
+                if (parent) parent.children.push(node);
             }
         }
     });
     
-    // Ordenar filhos de cada nó
     nodeMap.forEach(node => {
         if (node.children.length > 0) {
             node.children.sort((a, b) => {
@@ -584,7 +498,7 @@ function buildFileTree(files) {
 }
 
 function renderTreeNode(container, node, depth = 0) {
-    if (!node || depth > 10) return; // Limitar profundidade para performance
+    if (!node || depth > 10) return;
     
     const isFolder = node.type === 'folder';
     const hasChildren = node.children && node.children.length > 0;
@@ -599,9 +513,7 @@ function renderTreeNode(container, node, depth = 0) {
     
     const icon = document.createElement('i');
     icon.className = `tree-icon fas ${isFolder ? 'fa-folder' : 'fa-file'}`;
-    if (isFolder && hasChildren) {
-        icon.classList.add('collapsed');
-    }
+    if (isFolder && hasChildren) icon.classList.add('collapsed');
     
     const name = document.createElement('span');
     name.className = 'tree-name';
@@ -611,7 +523,6 @@ function renderTreeNode(container, node, depth = 0) {
     badge.className = 'tree-badge';
     badge.textContent = isFolder ? 'pasta' : 'arquivo';
     
-    // Contador para pastas
     if (isFolder && hasChildren) {
         const count = document.createElement('span');
         count.className = 'tree-count';
@@ -619,7 +530,6 @@ function renderTreeNode(container, node, depth = 0) {
         header.appendChild(count);
     }
     
-    // Tamanho para arquivos
     if (!isFolder && node.size > 0) {
         const size = document.createElement('span');
         size.className = 'tree-size';
@@ -632,7 +542,6 @@ function renderTreeNode(container, node, depth = 0) {
     header.appendChild(badge);
     nodeElement.appendChild(header);
     
-    // Renderizar filhos para pastas
     if (isFolder && hasChildren) {
         const childrenContainer = document.createElement('div');
         childrenContainer.className = 'tree-node-children';
@@ -657,26 +566,21 @@ function formatBytes(bytes) {
 }
 
 function attachTreeEvents() {
-    // Pastas expansíveis
     document.querySelectorAll('.tree-node-header.folder').forEach(header => {
         header.addEventListener('click', (e) => {
             e.stopPropagation();
-            
             const node = header.closest('.tree-node');
             const children = node.querySelector('.tree-node-children');
             const icon = header.querySelector('.tree-icon');
             
             if (children) {
                 const isExpanded = children.dataset.expanded === 'true';
-                
                 if (isExpanded) {
-                    // Recolher
                     children.dataset.expanded = 'false';
                     children.classList.remove('expanded');
                     icon.classList.remove('expanded');
                     icon.classList.add('collapsed');
                 } else {
-                    // Expandir
                     children.dataset.expanded = 'true';
                     children.classList.add('expanded');
                     icon.classList.remove('collapsed');
@@ -685,24 +589,12 @@ function attachTreeEvents() {
             }
         });
     });
-    
-    // Arquivos clicáveis
-    document.querySelectorAll('.tree-node-header.file').forEach(header => {
-        header.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const path = header.closest('.tree-node').dataset.path;
-            console.log('Arquivo:', path);
-            // Aqui poderia abrir preview do arquivo
-        });
-    });
 }
 
 function expandFirstLevel() {
-    const firstLevelFolders = document.querySelectorAll('.tree-node > .tree-node-children');
-    firstLevelFolders.forEach(container => {
+    document.querySelectorAll('.tree-node > .tree-node-children').forEach(container => {
         const header = container.parentElement.querySelector('.tree-node-header');
         const icon = header?.querySelector('.tree-icon');
-        
         if (container && header && icon) {
             container.dataset.expanded = 'true';
             container.classList.add('expanded');
@@ -713,15 +605,12 @@ function expandFirstLevel() {
 }
 
 function expandAllTreeNodes(expand = true) {
-    const containers = document.querySelectorAll('.tree-node-children');
-    const icons = document.querySelectorAll('.tree-node-header.folder .tree-icon');
-    
-    containers.forEach(container => {
+    document.querySelectorAll('.tree-node-children').forEach(container => {
         container.dataset.expanded = expand.toString();
         container.classList.toggle('expanded', expand);
     });
     
-    icons.forEach(icon => {
+    document.querySelectorAll('.tree-node-header.folder .tree-icon').forEach(icon => {
         icon.classList.toggle('collapsed', !expand);
         icon.classList.toggle('expanded', expand);
     });
@@ -736,33 +625,33 @@ function searchTree(query) {
         return;
     }
     
-    // Primeiro ocultar tudo
     nodes.forEach(node => node.style.display = 'none');
     
-    // Mostrar correspondências
     nodes.forEach(node => {
         const header = node.querySelector('.tree-node-header');
         if (header) {
             const name = header.querySelector('.tree-name')?.textContent.toLowerCase() || '';
             if (name.includes(searchTerm)) {
                 node.style.display = '';
-                
-                // Expandir pais
-                let parent = node.parentElement;
-                while (parent && parent.classList.contains('tree-node')) {
-                    const children = parent.querySelector('.tree-node-children');
-                    const icon = parent.querySelector('.tree-icon');
-                    if (children && icon) {
-                        children.dataset.expanded = 'true';
-                        children.classList.add('expanded');
-                        icon.classList.remove('collapsed');
-                        icon.classList.add('expanded');
-                    }
-                    parent = parent.parentElement;
-                }
+                expandParents(node);
             }
         }
     });
+}
+
+function expandParents(node) {
+    let parent = node.parentElement;
+    while (parent && parent.classList.contains('tree-node')) {
+        const children = parent.querySelector('.tree-node-children');
+        const icon = parent.querySelector('.tree-icon');
+        if (children && icon) {
+            children.dataset.expanded = 'true';
+            children.classList.add('expanded');
+            icon.classList.remove('collapsed');
+            icon.classList.add('expanded');
+        }
+        parent = parent.parentElement;
+    }
 }
 
 function updateMetrics(treeData) {
@@ -792,6 +681,55 @@ function updateMetrics(treeData) {
             </div>
         `;
     }
+    
+    window.currentTreeData = treeData;
+}
+
+function updateMetricsDisplay() {
+    if (!window.currentTreeData) return;
+    
+    const treeData = window.currentTreeData;
+    const files = treeData.tree.filter(item => item.type === 'blob');
+    const folders = treeData.tree.filter(item => item.type === 'tree');
+    const totalSize = files.reduce((sum, file) => sum + (file.size || 0), 0);
+    
+    const fileTypes = getFileTypes(files);
+    const statsDisplay = document.getElementById('statsDisplay');
+    if (statsDisplay) {
+        statsDisplay.innerHTML = `
+            <div class="stats-grid">
+                <div class="metric-card">
+                    <div class="metric-value">${files.length}</div>
+                    <div class="metric-label">Total de Arquivos</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${folders.length}</div>
+                    <div class="metric-label">Total de Pastas</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${formatBytes(totalSize)}</div>
+                    <div class="metric-label">Tamanho Total</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${fileTypes.length}</div>
+                    <div class="metric-label">Tipos de Arquivo</div>
+                </div>
+            </div>
+            ${fileTypes.length > 0 ? `
+                <div style="margin-top: 20px; text-align: left; width: 100%;">
+                    <h5 style="color: var(--dark-subtext); margin-bottom: 10px;">Tipos de Arquivo:</h5>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${fileTypes.map(type => `
+                            <span style="background: rgba(16, 185, 129, 0.1); color: var(--primary); 
+                                  padding: 4px 12px; border-radius: 20px; font-size: 12px;">
+                                ${type}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+        `;
+    }
 }
 
 function getFileTypes(files) {
@@ -800,7 +738,48 @@ function getFileTypes(files) {
         const match = file.path.match(/\.([^.]+)$/);
         types.add(match ? match[1].toLowerCase() : 'sem extensão');
     });
-    return Array.from(types);
+    return Array.from(types).sort();
+}
+
+function exportData(format) {
+    if (!window.currentTreeData) {
+        showStatus('Nenhum dado para exportar', 'warning');
+        return;
+    }
+    
+    showStatus(`Exportando como ${format.toUpperCase()}...`, 'info');
+    
+    setTimeout(() => {
+        showStatus(`Exportação ${format.toUpperCase()} concluída`, 'success');
+        
+        const dataStr = format === 'json' 
+            ? JSON.stringify(window.currentTreeData, null, 2)
+            : convertToCSV(window.currentTreeData);
+        
+        const dataBlob = new Blob([dataStr], { type: format === 'json' ? 'application/json' : 'text/csv' });
+        const url = URL.createObjectURL(dataBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `gittree-export-${Date.now()}.${format}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 1000);
+}
+
+function convertToCSV(treeData) {
+    if (!treeData.tree) return '';
+    
+    const headers = ['path', 'type', 'size', 'sha'];
+    const rows = treeData.tree.map(item => [
+        `"${item.path}"`,
+        item.type,
+        item.size || 0,
+        `"${item.sha || ''}"`
+    ]);
+    
+    return [headers.join(',')].concat(rows.map(row => row.join(','))).join('\n');
 }
 
 function showLoading(show) {
@@ -811,8 +790,8 @@ function showLoading(show) {
     if (btn) {
         btn.disabled = show;
         btn.innerHTML = show 
-            ? '<i class="fas fa-spinner fa-spin"></i> <span>Analisando...</span>'
-            : '<i class="fas fa-search"></i> <span>Analisar</span>';
+            ? '<i class="fas fa-spinner fa-spin"></i> <span>Carregando...</span>'
+            : '<i class="fas fa-eye"></i> <span>Visualizar</span>';
     }
 }
 
@@ -835,13 +814,11 @@ function showStatus(message, type = 'info') {
     text.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
 }
 
-// Funções de teste
 function testRepo(repo) {
     document.getElementById('repoInput').value = repo;
     analyzeRepository();
 }
 
-// Adicionar sugestão automática
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('repoInput');
     if (input) {
@@ -854,11 +831,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Expor para console
-window.CodeCartographer = {
+window.GitTree = {
     test: testRepo,
     analyze: analyzeRepository
 };
 
-console.log('CodeCartographer v4.0 carregado!');
-console.log('Teste com: CodeCartographer.test("facebook/react")');
+console.log('🌳 GitTree v1.0 carregado!');
+console.log('Teste com: GitTree.test("facebook/react")');
