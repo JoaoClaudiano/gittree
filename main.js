@@ -1,4 +1,4 @@
-// main.js - CodeCartographer v4.0 (Corrigido para árvores grandes)
+// main.js - CodeCartographer v4.0 (Corrigido para tratamento melhor de repositórios)
 document.addEventListener('DOMContentLoaded', () => {
     console.log('CodeCartographer v4.0 inicializando...');
     initApp();
@@ -18,7 +18,6 @@ function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
     
-    // Carregar tema salvo
     const savedTheme = localStorage.getItem('codecartographer-theme') || 'dark';
     if (savedTheme === 'light') {
         body.classList.add('light-theme');
@@ -52,11 +51,9 @@ function initViews() {
         button.addEventListener('click', () => {
             const view = button.dataset.view;
             
-            // Atualizar botões ativos
             viewButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             
-            // Atualizar views visíveis
             viewSections.forEach(section => {
                 section.classList.remove('active');
                 if (section.id === `${view}View`) {
@@ -76,7 +73,6 @@ function initControls() {
     const collapseAllBtn = document.getElementById('collapseAllBtn');
     const treeSearch = document.getElementById('treeSearch');
     
-    // Análise do repositório
     if (analyzeBtn && repoInput) {
         analyzeBtn.addEventListener('click', analyzeRepository);
         repoInput.addEventListener('keypress', (e) => {
@@ -84,7 +80,6 @@ function initControls() {
         });
     }
     
-    // Limpar cache
     if (clearCacheBtn) {
         clearCacheBtn.addEventListener('click', () => {
             if (confirm('Tem certeza que deseja limpar todo o cache?')) {
@@ -95,14 +90,12 @@ function initControls() {
         });
     }
     
-    // Recarregar
     if (refreshBtn) {
         refreshBtn.addEventListener('click', () => {
             analyzeRepository();
         });
     }
     
-    // Controles da árvore
     if (expandAllBtn) {
         expandAllBtn.addEventListener('click', () => expandAllTreeNodes(true));
     }
@@ -116,6 +109,42 @@ function initControls() {
             searchTree(e.target.value);
         });
     }
+    
+    // Adicionar sugestões de repositórios populares
+    addPopularRepoSuggestions();
+}
+
+function addPopularRepoSuggestions() {
+    const input = document.getElementById('repoInput');
+    if (!input) return;
+    
+    // Criar datalist para sugestões
+    const datalist = document.createElement('datalist');
+    datalist.id = 'repoSuggestions';
+    
+    const popularRepos = [
+        'facebook/react',
+        'vuejs/vue',
+        'angular/angular',
+        'sveltejs/svelte',
+        'nodejs/node',
+        'microsoft/vscode',
+        'torvalds/linux',
+        'python/cpython',
+        'tensorflow/tensorflow',
+        'pytorch/pytorch',
+        'JoaoClaudiano/geocsv' // Repositório do usuário
+    ];
+    
+    popularRepos.forEach(repo => {
+        const option = document.createElement('option');
+        option.value = repo;
+        datalist.appendChild(option);
+    });
+    
+    // Adicionar datalist ao input
+    input.setAttribute('list', 'repoSuggestions');
+    document.body.appendChild(datalist);
 }
 
 function initCache() {
@@ -144,29 +173,54 @@ function loadDefaultRepo() {
     }
 }
 
+// FUNÇÃO MELHORADA: Extração mais robusta
 function extractRepoInfo(input) {
+    if (!input || input.trim() === '') {
+        throw new Error('Digite um repositório GitHub');
+    }
+    
     let repo = input.trim();
     
+    // Remover trailing slash
     if (repo.endsWith('/')) {
         repo = repo.slice(0, -1);
     }
     
+    // Caso 1: URL completa do GitHub
     if (repo.includes('github.com/')) {
         const match = repo.match(/github\.com\/([^\/]+\/[^\/\?#]+)/);
         if (match && match[1]) {
             repo = match[1].replace(/\.git$/, '');
+        } else {
+            throw new Error('URL do GitHub inválida');
         }
     }
     
+    // Caso 2: Apenas usuário (vamos sugerir repositórios)
+    if (!repo.includes('/')) {
+        throw new Error('Digite no formato: usuário/repositório');
+    }
+    
+    // Remover branch/tag se especificado (usuário/repo@branch ou usuário/repo:branch)
+    repo = repo.split('@')[0].split(':')[0];
+    
+    // Verificar formato final
     const parts = repo.split('/');
     if (parts.length !== 2) {
         throw new Error('Formato inválido. Use: usuário/repositório');
     }
     
+    const owner = parts[0].trim();
+    const repoName = parts[1].trim();
+    
+    if (!owner || !repoName) {
+        throw new Error('Usuário e repositório não podem estar vazios');
+    }
+    
     return {
-        owner: parts[0],
-        repo: parts[1],
-        fullName: parts[0] + '/' + parts[1]
+        owner: owner,
+        repo: repoName,
+        fullName: owner + '/' + repoName
     };
 }
 
@@ -180,34 +234,52 @@ async function analyzeRepository() {
     }
     
     showLoading(true);
-    showStatus('Processando entrada...', 'info');
+    showStatus('Processando...', 'info');
     
     try {
         let repoInfo;
         try {
             repoInfo = extractRepoInfo(inputValue);
+            console.log('Repositório extraído:', repoInfo);
         } catch (error) {
             showStatus(error.message, 'error');
             showLoading(false);
             return;
         }
         
+        // Salvar no histórico
         localStorage.setItem('last-repo', inputValue);
+        
+        // Verificar se é o repositório do usuário com erro de digitação
+        if (repoInfo.repo === 'geocsvps' && repoInfo.owner === 'JoaoClaudiano') {
+            showStatus('Verificando repositório...', 'warning');
+            
+            // Tentar corrigir automaticamente
+            const correctedRepo = await tryCorrectRepoName(repoInfo.owner, repoInfo.repo);
+            if (correctedRepo) {
+                showStatus(`Corrigindo para: ${correctedRepo}`, 'info');
+                repoInfo.repo = correctedRepo;
+                repoInfo.fullName = `${repoInfo.owner}/${correctedRepo}`;
+                repoInput.value = repoInfo.fullName;
+            }
+        }
         
         showStatus(`Buscando ${repoInfo.fullName}...`, 'info');
         
+        // Obter dados do repositório
         const repoData = await fetchGitHubRepo(repoInfo.owner, repoInfo.repo);
         if (!repoData) {
-            throw new Error('Repositório não encontrado ou privado');
+            throw new Error('Repositório não encontrado');
         }
         
+        // Atualizar interface
         updateRepoInfo(repoData);
-        showStatus('Obtendo estrutura de arquivos...', 'info');
+        showStatus('Obtendo estrutura...', 'info');
         
-        // Usar método melhorado para obter árvore completa
+        // Obter árvore
         const treeData = await fetchCompleteTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);
         if (!treeData || !treeData.tree || treeData.tree.length === 0) {
-            throw new Error('Não foi possível obter a estrutura completa');
+            throw new Error('Não foi possível obter a estrutura');
         }
         
         showStatus(`Processando ${treeData.tree.length} itens...`, 'info');
@@ -216,33 +288,126 @@ async function analyzeRepository() {
         renderTree(treeData);
         showStatus('Análise concluída!', 'success');
         
+        // Atualizar métricas
         updateMetrics(treeData);
         updateCacheStatus();
         
     } catch (error) {
         console.error('Erro na análise:', error);
-        showStatus(`Erro: ${error.message}`, 'error');
         
-        if (error.message.includes('não encontrado')) {
-            setTimeout(() => {
-                showStatus('Dica: Use formato "usuário/repositório" (ex: facebook/react)', 'info');
-            }, 2000);
+        // Tratamento de erros específicos
+        if (error.message.includes('404') || error.message.includes('não encontrado')) {
+            showStatus('Repositório não encontrado. Verifique o nome.', 'error');
+            
+            // Sugerir possíveis correções
+            const repoInput = document.getElementById('repoInput');
+            const value = repoInput.value.trim();
+            if (value.includes('geocsvps')) {
+                setTimeout(() => {
+                    showStatus('Tente: JoaoClaudiano/geocsv', 'info');
+                }, 2000);
+            }
+        } else if (error.message.includes('403') || error.message.includes('Limite')) {
+            showStatus('Limite de requisições excedido. Tente novamente mais tarde.', 'error');
+        } else {
+            showStatus(`Erro: ${error.message}`, 'error');
         }
     } finally {
         showLoading(false);
     }
 }
 
+// NOVA FUNÇÃO: Tentar corrigir nome do repositório
+async function tryCorrectRepoName(owner, repo) {
+    const commonErrors = {
+        'geocsvps': 'geocsv',
+        'geocsvs': 'geocsv',
+        'geoscv': 'geocsv',
+        'geosvc': 'geocsv'
+    };
+    
+    // Verificar se há erro comum
+    if (commonErrors[repo.toLowerCase()]) {
+        return commonErrors[repo.toLowerCase()];
+    }
+    
+    // Tentar buscar repositórios do usuário para sugerir
+    try {
+        const response = await fetch(`https://api.github.com/users/${owner}/repos?per_page=100`);
+        if (response.ok) {
+            const repos = await response.json();
+            const repoNames = repos.map(r => r.name);
+            
+            // Encontrar repositório mais similar
+            const suggestions = findSimilarRepoNames(repo, repoNames);
+            if (suggestions.length > 0) {
+                return suggestions[0];
+            }
+        }
+    } catch (error) {
+        console.warn('Não foi possível buscar repositórios do usuário:', error);
+    }
+    
+    return null;
+}
+
+function findSimilarRepoNames(input, repoList) {
+    input = input.toLowerCase();
+    const suggestions = [];
+    
+    for (const repo of repoList) {
+        const repoLower = repo.toLowerCase();
+        
+        // Verificar se é substring
+        if (repoLower.includes(input) || input.includes(repoLower)) {
+            suggestions.push(repo);
+            continue;
+        }
+        
+        // Verificar similaridade (diferença de um caractere)
+        if (Math.abs(repoLower.length - input.length) <= 2) {
+            let diff = 0;
+            const maxLen = Math.max(repoLower.length, input.length);
+            
+            for (let i = 0; i < maxLen; i++) {
+                if (repoLower[i] !== input[i]) diff++;
+                if (diff > 2) break;
+            }
+            
+            if (diff <= 2) {
+                suggestions.push(repo);
+            }
+        }
+    }
+    
+    return suggestions.slice(0, 3); // Retorna até 3 sugestões
+}
+
 async function fetchGitHubRepo(owner, repo) {
     try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+            headers: {
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        console.log(`Status da resposta: ${response.status}`);
         
         if (response.status === 404) {
-            throw new Error('Repositório não encontrado');
+            throw new Error('Repositório não encontrado (404)');
         }
         
         if (response.status === 403) {
-            throw new Error('Limite de requisições excedido. Tente novamente mais tarde.');
+            // Verificar se é limite de rate limit
+            const rateLimit = response.headers.get('X-RateLimit-Remaining');
+            if (rateLimit === '0') {
+                throw new Error('Limite de requisições excedido. Tente novamente em 1 hora.');
+            }
+            throw new Error('Acesso não autorizado (403)');
+        }
+        
+        if (response.status === 401) {
+            throw new Error('Acesso não autorizado. O repositório pode ser privado.');
         }
         
         if (!response.ok) {
@@ -250,58 +415,64 @@ async function fetchGitHubRepo(owner, repo) {
         }
         
         const data = await response.json();
+        
+        // Verificar se é um repositório válido
+        if (!data.name || !data.owner) {
+            throw new Error('Resposta inválida da API do GitHub');
+        }
+        
         return {
             name: data.name,
             full_name: data.full_name,
             description: data.description || 'Sem descrição',
-            stars: data.stargazers_count,
-            forks: data.forks_count,
-            watchers: data.watchers_count,
-            default_branch: data.default_branch,
-            size: data.size,
+            stars: data.stargazers_count || 0,
+            forks: data.forks_count || 0,
+            watchers: data.watchers_count || 0,
+            default_branch: data.default_branch || 'main',
+            size: data.size || 0,
             owner: {
                 login: data.owner.login,
                 avatar_url: data.owner.avatar_url
-            }
+            },
+            html_url: data.html_url,
+            created_at: data.created_at,
+            updated_at: data.updated_at
         };
     } catch (error) {
+        console.error('Erro em fetchGitHubRepo:', error);
         throw error;
     }
 }
 
-// NOVA FUNÇÃO: Obtém árvore completa mesmo para repositórios grandes
 async function fetchCompleteTree(owner, repo, branch) {
     try {
-        // Primeiro, obter o SHA do commit mais recente
+        // Obter SHA do commit mais recente
         const commitsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}`);
         
         if (!commitsResponse.ok) {
-            if (commitsResponse.status === 404) {
-                throw new Error('Branch não encontrada');
-            }
-            throw new Error('Erro ao buscar commits');
+            throw new Error(`Erro ao buscar commits: ${commitsResponse.status}`);
         }
         
         const commitData = await commitsResponse.json();
         const treeSha = commitData.commit.tree.sha;
         
-        // Tentar obter árvore recursiva (pode ser truncada para repositórios grandes)
+        // Tentar obter árvore recursiva
         const treeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}?recursive=1`);
         
         if (!treeResponse.ok) {
-            throw new Error('Não foi possível obter a estrutura do repositório');
+            // Se falhar, tentar sem recursivo
+            const simpleTreeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}`);
+            if (!simpleTreeResponse.ok) {
+                throw new Error('Não foi possível obter a estrutura do repositório');
+            }
+            return await simpleTreeResponse.json();
         }
         
         const treeData = await treeResponse.json();
         
-        // Verificar se a árvore foi truncada
+        // Se a árvore foi truncada, avisar
         if (treeData.truncated) {
-            showStatus('Repositório muito grande. Obtendo estrutura completa...', 'warning');
-            console.warn('Árvore truncada detectada. Usando método alternativo...');
-            
-            // Método alternativo: obter estrutura nível por nível
-            const completeTree = await fetchTreeByLevels(owner, repo, treeSha);
-            return completeTree;
+            showStatus('Repositório muito grande. Alguns arquivos podem não estar visíveis.', 'warning');
         }
         
         return treeData;
@@ -310,70 +481,21 @@ async function fetchCompleteTree(owner, repo, branch) {
     }
 }
 
-// Função para obter árvore nível por nível (para repositórios grandes)
-async function fetchTreeByLevels(owner, repo, treeSha) {
-    try {
-        // Obter árvore raiz (sem recursivo)
-        const rootResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}`);
-        if (!rootResponse.ok) throw new Error('Erro ao obter árvore raiz');
-        
-        const rootData = await rootResponse.json();
-        let allItems = [...rootData.tree];
-        
-        // Processar pastas recursivamente
-        const folders = rootData.tree.filter(item => item.type === 'tree');
-        
-        for (const folder of folders) {
-            const folderItems = await processFolder(owner, repo, folder.sha, folder.path);
-            allItems = [...allItems, ...folderItems];
-        }
-        
-        return {
-            sha: treeSha,
-            tree: allItems,
-            truncated: false,
-            url: rootData.url
-        };
-    } catch (error) {
-        throw new Error(`Erro ao obter árvore por níveis: ${error.message}`);
-    }
-}
-
-async function processFolder(owner, repo, sha, path) {
-    try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${sha}`);
-        if (!response.ok) return [];
-        
-        const data = await response.json();
-        let items = data.tree.map(item => ({
-            ...item,
-            path: `${path}/${item.path}`
-        }));
-        
-        // Processar subpastas recursivamente
-        const subfolders = data.tree.filter(item => item.type === 'tree');
-        for (const folder of subfolders) {
-            const subfolderItems = await processFolder(owner, repo, folder.sha, `${path}/${folder.path}`);
-            items = [...items, ...subfolderItems];
-        }
-        
-        return items;
-    } catch (error) {
-        console.warn(`Erro ao processar pasta ${path}:`, error);
-        return [];
-    }
-}
-
 function updateRepoInfo(repoData) {
-    document.getElementById('repoTitle').textContent = repoData.full_name;
-    document.getElementById('repoDescription').textContent = repoData.description;
+    const title = document.getElementById('repoTitle');
+    const description = document.getElementById('repoDescription');
+    const stats = document.getElementById('repoStats');
     
-    const statsHTML = `
-        <span class="stat-item"><i class="fas fa-star"></i> ${formatNumber(repoData.stars)}</span>
-        <span class="stat-item"><i class="fas fa-code-branch"></i> ${formatNumber(repoData.forks)}</span>
-        <span class="stat-item"><i class="fas fa-eye"></i> ${formatNumber(repoData.watchers)}</span>
-    `;
-    document.getElementById('repoStats').innerHTML = statsHTML;
+    if (title) title.textContent = repoData.full_name;
+    if (description) description.textContent = repoData.description;
+    
+    if (stats) {
+        stats.innerHTML = `
+            <span class="stat-item"><i class="fas fa-star"></i> ${formatNumber(repoData.stars)}</span>
+            <span class="stat-item"><i class="fas fa-code-branch"></i> ${formatNumber(repoData.forks)}</span>
+            <span class="stat-item"><i class="fas fa-eye"></i> ${formatNumber(repoData.watchers)}</span>
+        `;
+    }
 }
 
 function formatNumber(num) {
@@ -390,76 +512,59 @@ function renderTree(treeData) {
     const treeContainer = document.getElementById('treeContainer');
     if (!treeContainer || !treeData.tree) return;
     
-    console.log(`Total de itens a processar: ${treeData.tree.length}`);
+    console.log(`Total de itens: ${treeData.tree.length}`);
     
-    // Organizar arquivos em estrutura hierárquica
-    const fileTree = buildFileTree(treeData.tree);
+    // Construir árvore hierárquica
+    const root = buildFileTree(treeData.tree);
     
     // Limpar container
     treeContainer.innerHTML = '';
     
-    // Renderizar árvore
-    renderTreeNode(treeContainer, fileTree);
+    // Renderizar
+    renderTreeNode(treeContainer, root);
     
-    // Adicionar eventos de clique
+    // Adicionar eventos
     setTimeout(() => {
         attachTreeEvents();
+        
+        // Expandir primeiro nível por padrão
+        expandFirstLevel();
     }, 100);
-    
-    // Log para debug
-    const folders = treeData.tree.filter(item => item.type === 'tree').length;
-    const files = treeData.tree.filter(item => item.type === 'blob').length;
-    console.log(`Pastas: ${folders}, Arquivos: ${files}`);
 }
 
-// FUNÇÃO MELHORADA: buildFileTree com tratamento melhor
 function buildFileTree(files) {
-    // Criar mapa de nós por caminho
+    const root = { name: '/', type: 'folder', children: [], path: '' };
     const nodeMap = new Map();
-    const root = { 
-        name: '/', 
-        type: 'folder', 
-        children: [], 
-        path: '',
-        fullPath: ''
-    };
     nodeMap.set('', root);
     
-    // Primeiro, processar todos os itens
-    files.forEach(file => {
-        const pathParts = file.path.split('/');
+    // Processar cada arquivo/pasta
+    files.forEach(item => {
+        const pathParts = item.path.split('/');
         let currentPath = '';
         
-        // Construir caminho completo para cada nível
         for (let i = 0; i < pathParts.length; i++) {
-            const isLast = i === pathParts.length - 1;
+            const part = pathParts[i];
             const path = pathParts.slice(0, i + 1).join('/');
             const parentPath = pathParts.slice(0, i).join('/');
             
             if (!nodeMap.has(path)) {
+                const isLast = i === pathParts.length - 1;
                 const node = {
-                    name: pathParts[i],
-                    type: isLast ? (file.type === 'blob' ? 'file' : 'folder') : 'folder',
+                    name: part,
+                    type: isLast ? (item.type === 'blob' ? 'file' : 'folder') : 'folder',
                     children: [],
-                    path: pathParts[i],
-                    fullPath: path,
-                    size: isLast ? (file.size || 0) : 0,
-                    sha: isLast ? (file.sha || '') : ''
+                    path: path,
+                    size: isLast ? (item.size || 0) : 0,
+                    sha: isLast ? (item.sha || '') : ''
                 };
                 
                 nodeMap.set(path, node);
                 
                 // Adicionar ao pai
-                const parentNode = nodeMap.get(parentPath);
-                if (parentNode && !parentNode.children.find(c => c.fullPath === path)) {
-                    parentNode.children.push(node);
+                const parent = nodeMap.get(parentPath);
+                if (parent) {
+                    parent.children.push(node);
                 }
-            } else if (isLast) {
-                // Atualizar nó existente com informações do arquivo
-                const existingNode = nodeMap.get(path);
-                existingNode.type = file.type === 'blob' ? 'file' : 'folder';
-                existingNode.size = file.size || 0;
-                existingNode.sha = file.sha || '';
             }
         }
     });
@@ -468,10 +573,8 @@ function buildFileTree(files) {
     nodeMap.forEach(node => {
         if (node.children.length > 0) {
             node.children.sort((a, b) => {
-                // Pastas primeiro, depois arquivos
                 if (a.type === 'folder' && b.type !== 'folder') return -1;
                 if (a.type !== 'folder' && b.type === 'folder') return 1;
-                // Depois ordenar por nome
                 return a.name.localeCompare(b.name);
             });
         }
@@ -481,17 +584,18 @@ function buildFileTree(files) {
 }
 
 function renderTreeNode(container, node, depth = 0) {
-    if (!node || node.name === '') return;
+    if (!node || depth > 10) return; // Limitar profundidade para performance
     
     const isFolder = node.type === 'folder';
     const hasChildren = node.children && node.children.length > 0;
     
     const nodeElement = document.createElement('div');
     nodeElement.className = 'tree-node';
-    nodeElement.dataset.path = node.fullPath;
+    nodeElement.dataset.path = node.path;
     
     const header = document.createElement('div');
     header.className = `tree-node-header ${node.type}`;
+    header.title = node.path || node.name;
     
     const icon = document.createElement('i');
     icon.className = `tree-icon fas ${isFolder ? 'fa-folder' : 'fa-file'}`;
@@ -507,29 +611,28 @@ function renderTreeNode(container, node, depth = 0) {
     badge.className = 'tree-badge';
     badge.textContent = isFolder ? 'pasta' : 'arquivo';
     
-    // Adicionar contador para pastas
+    // Contador para pastas
     if (isFolder && hasChildren) {
-        const countSpan = document.createElement('span');
-        countSpan.className = 'tree-count';
-        countSpan.textContent = `(${node.children.length})`;
-        countSpan.title = `${node.children.length} itens`;
-        header.appendChild(countSpan);
+        const count = document.createElement('span');
+        count.className = 'tree-count';
+        count.textContent = `(${node.children.length})`;
+        header.appendChild(count);
     }
     
-    // Adicionar tamanho para arquivos
+    // Tamanho para arquivos
     if (!isFolder && node.size > 0) {
-        const sizeSpan = document.createElement('span');
-        sizeSpan.className = 'tree-size';
-        sizeSpan.textContent = formatBytes(node.size);
-        header.appendChild(sizeSpan);
+        const size = document.createElement('span');
+        size.className = 'tree-size';
+        size.textContent = formatBytes(node.size);
+        header.appendChild(size);
     }
     
     header.appendChild(icon);
     header.appendChild(name);
     header.appendChild(badge);
-    
     nodeElement.appendChild(header);
     
+    // Renderizar filhos para pastas
     if (isFolder && hasChildren) {
         const childrenContainer = document.createElement('div');
         childrenContainer.className = 'tree-node-children';
@@ -554,27 +657,28 @@ function formatBytes(bytes) {
 }
 
 function attachTreeEvents() {
+    // Pastas expansíveis
     document.querySelectorAll('.tree-node-header.folder').forEach(header => {
         header.addEventListener('click', (e) => {
             e.stopPropagation();
             
-            const nodeElement = header.closest('.tree-node');
-            const childrenContainer = nodeElement.querySelector('.tree-node-children');
+            const node = header.closest('.tree-node');
+            const children = node.querySelector('.tree-node-children');
             const icon = header.querySelector('.tree-icon');
             
-            if (childrenContainer) {
-                const isExpanded = childrenContainer.dataset.expanded === 'true';
+            if (children) {
+                const isExpanded = children.dataset.expanded === 'true';
                 
                 if (isExpanded) {
                     // Recolher
-                    childrenContainer.dataset.expanded = 'false';
-                    childrenContainer.classList.remove('expanded');
+                    children.dataset.expanded = 'false';
+                    children.classList.remove('expanded');
                     icon.classList.remove('expanded');
                     icon.classList.add('collapsed');
                 } else {
                     // Expandir
-                    childrenContainer.dataset.expanded = 'true';
-                    childrenContainer.classList.add('expanded');
+                    children.dataset.expanded = 'true';
+                    children.classList.add('expanded');
                     icon.classList.remove('collapsed');
                     icon.classList.add('expanded');
                 }
@@ -582,100 +686,94 @@ function attachTreeEvents() {
         });
     });
     
-    // Evento para arquivos
+    // Arquivos clicáveis
     document.querySelectorAll('.tree-node-header.file').forEach(header => {
         header.addEventListener('click', (e) => {
             e.stopPropagation();
-            const nodeElement = header.closest('.tree-node');
-            const path = nodeElement.dataset.path;
-            console.log('Arquivo clicado:', path);
+            const path = header.closest('.tree-node').dataset.path;
+            console.log('Arquivo:', path);
+            // Aqui poderia abrir preview do arquivo
         });
+    });
+}
+
+function expandFirstLevel() {
+    const firstLevelFolders = document.querySelectorAll('.tree-node > .tree-node-children');
+    firstLevelFolders.forEach(container => {
+        const header = container.parentElement.querySelector('.tree-node-header');
+        const icon = header?.querySelector('.tree-icon');
+        
+        if (container && header && icon) {
+            container.dataset.expanded = 'true';
+            container.classList.add('expanded');
+            icon.classList.remove('collapsed');
+            icon.classList.add('expanded');
+        }
     });
 }
 
 function expandAllTreeNodes(expand = true) {
-    const childrenContainers = document.querySelectorAll('.tree-node-children');
+    const containers = document.querySelectorAll('.tree-node-children');
     const icons = document.querySelectorAll('.tree-node-header.folder .tree-icon');
     
-    childrenContainers.forEach(container => {
+    containers.forEach(container => {
         container.dataset.expanded = expand.toString();
-        if (expand) {
-            container.classList.add('expanded');
-        } else {
-            container.classList.remove('expanded');
-        }
+        container.classList.toggle('expanded', expand);
     });
     
     icons.forEach(icon => {
-        if (expand) {
-            icon.classList.remove('collapsed');
-            icon.classList.add('expanded');
-        } else {
-            icon.classList.remove('expanded');
-            icon.classList.add('collapsed');
-        }
+        icon.classList.toggle('collapsed', !expand);
+        icon.classList.toggle('expanded', expand);
     });
 }
 
 function searchTree(query) {
-    const nodes = document.querySelectorAll('.tree-node-header');
-    const searchTerm = query.toLowerCase();
+    const nodes = document.querySelectorAll('.tree-node');
+    const searchTerm = query.toLowerCase().trim();
     
-    if (searchTerm === '') {
-        // Mostrar todos os nós
-        document.querySelectorAll('.tree-node').forEach(node => {
-            node.style.display = '';
-        });
+    if (!searchTerm) {
+        nodes.forEach(node => node.style.display = '');
         return;
     }
     
-    // Primeiro, ocultar todos
-    document.querySelectorAll('.tree-node').forEach(node => {
-        node.style.display = 'none';
-    });
+    // Primeiro ocultar tudo
+    nodes.forEach(node => node.style.display = 'none');
     
-    // Mostrar apenas os que correspondem
+    // Mostrar correspondências
     nodes.forEach(node => {
-        const nodeName = node.querySelector('.tree-name').textContent.toLowerCase();
-        if (nodeName.includes(searchTerm)) {
-            const treeNode = node.closest('.tree-node');
-            treeNode.style.display = '';
-            
-            // Expandir pais
-            expandParents(treeNode);
-        }
-    });
-}
-
-function expandParents(node) {
-    let current = node;
-    while (current) {
-        const childrenContainer = current.querySelector('.tree-node-children');
-        const icon = current.querySelector('.tree-icon');
-        
-        if (childrenContainer) {
-            childrenContainer.dataset.expanded = 'true';
-            childrenContainer.classList.add('expanded');
-            if (icon) {
-                icon.classList.remove('collapsed');
-                icon.classList.add('expanded');
+        const header = node.querySelector('.tree-node-header');
+        if (header) {
+            const name = header.querySelector('.tree-name')?.textContent.toLowerCase() || '';
+            if (name.includes(searchTerm)) {
+                node.style.display = '';
+                
+                // Expandir pais
+                let parent = node.parentElement;
+                while (parent && parent.classList.contains('tree-node')) {
+                    const children = parent.querySelector('.tree-node-children');
+                    const icon = parent.querySelector('.tree-icon');
+                    if (children && icon) {
+                        children.dataset.expanded = 'true';
+                        children.classList.add('expanded');
+                        icon.classList.remove('collapsed');
+                        icon.classList.add('expanded');
+                    }
+                    parent = parent.parentElement;
+                }
             }
         }
-        
-        current = current.parentElement.closest('.tree-node');
-    }
+    });
 }
 
 function updateMetrics(treeData) {
     const files = treeData.tree.filter(item => item.type === 'blob');
     const folders = treeData.tree.filter(item => item.type === 'tree');
-    
     const totalSize = files.reduce((sum, file) => sum + (file.size || 0), 0);
     
     const metricsPreview = document.getElementById('metricsPreview');
     if (metricsPreview) {
-        const metricsGrid = metricsPreview.querySelector('.metrics-grid');
-        metricsGrid.innerHTML = `
+        const grid = metricsPreview.querySelector('.metrics-grid');
+        grid.innerHTML = `
             <div class="metric-card">
                 <div class="metric-value">${files.length}</div>
                 <div class="metric-label">Arquivos</div>
@@ -697,42 +795,35 @@ function updateMetrics(treeData) {
 }
 
 function getFileTypes(files) {
-    const extensions = new Set();
+    const types = new Set();
     files.forEach(file => {
         const match = file.path.match(/\.([^.]+)$/);
-        if (match) {
-            extensions.add(match[1]);
-        } else {
-            extensions.add('sem extensão');
-        }
+        types.add(match ? match[1].toLowerCase() : 'sem extensão');
     });
-    return Array.from(extensions);
+    return Array.from(types);
 }
 
 function showLoading(show) {
-    const loadingState = document.getElementById('loadingState');
-    if (loadingState) {
-        loadingState.classList.toggle('hidden', !show);
-    }
+    const loading = document.getElementById('loadingState');
+    const btn = document.getElementById('analyzeBtn');
     
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    if (analyzeBtn) {
-        analyzeBtn.disabled = show;
-        analyzeBtn.innerHTML = show 
+    if (loading) loading.classList.toggle('hidden', !show);
+    if (btn) {
+        btn.disabled = show;
+        btn.innerHTML = show 
             ? '<i class="fas fa-spinner fa-spin"></i> <span>Analisando...</span>'
             : '<i class="fas fa-search"></i> <span>Analisar</span>';
     }
 }
 
 function showStatus(message, type = 'info') {
-    const statusBox = document.getElementById('statusBox');
-    const statusText = document.getElementById('statusText');
+    const box = document.getElementById('statusBox');
+    const text = document.getElementById('statusText');
     
-    if (!statusBox || !statusText) return;
+    if (!box || !text) return;
     
-    // Reset classes
-    statusBox.className = 'status-box';
-    statusBox.classList.add(type);
+    box.className = 'status-box';
+    box.classList.add(type);
     
     const icons = {
         info: 'fa-info-circle',
@@ -741,14 +832,33 @@ function showStatus(message, type = 'info') {
         warning: 'fa-exclamation-triangle'
     };
     
-    statusText.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
+    text.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
 }
 
-// Teste rápido
+// Funções de teste
 function testRepo(repo) {
     document.getElementById('repoInput').value = repo;
     analyzeRepository();
 }
 
+// Adicionar sugestão automática
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('repoInput');
+    if (input) {
+        input.addEventListener('blur', () => {
+            const value = input.value.trim();
+            if (value && value.includes('geocsvps')) {
+                showStatus('Sugestão: tente "JoaoClaudiano/geocsv"', 'info');
+            }
+        });
+    }
+});
+
+// Expor para console
+window.CodeCartographer = {
+    test: testRepo,
+    analyze: analyzeRepository
+};
+
 console.log('CodeCartographer v4.0 carregado!');
-console.log('Use testRepo("facebook/react") para testar rapidamente.');
+console.log('Teste com: CodeCartographer.test("facebook/react")');
