@@ -1,4 +1,4 @@
-// main.js - CodeCartographer v4.0 (Funcional com árvore expansível)
+// main.js - CodeCartographer v4.0 (Corrigido para tratamento de URLs)
 document.addEventListener('DOMContentLoaded', () => {
     console.log('CodeCartographer v4.0 inicializando...');
     initApp();
@@ -98,12 +98,7 @@ function initControls() {
     // Recarregar
     if (refreshBtn) {
         refreshBtn.addEventListener('click', () => {
-            const repo = repoInput?.value.trim();
-            if (repo) {
-                analyzeRepository();
-            } else {
-                showStatus('Digite um repositório para recarregar', 'warning');
-            }
+            analyzeRepository();
         });
     }
     
@@ -150,26 +145,72 @@ function loadDefaultRepo() {
     }
 }
 
+// FUNÇÃO CORRIGIDA: Extrai usuário/repositório de diferentes formatos
+function extractRepoInfo(input) {
+    // Limpar espaços
+    let repo = input.trim();
+    
+    // Remover trailing slash
+    if (repo.endsWith('/')) {
+        repo = repo.slice(0, -1);
+    }
+    
+    // Se for uma URL completa do GitHub
+    if (repo.includes('github.com/')) {
+        // Extrair parte após github.com/
+        const match = repo.match(/github\.com\/([^\/]+\/[^\/\?#]+)/);
+        if (match && match[1]) {
+            // Remover .git se presente
+            repo = match[1].replace(/\.git$/, '');
+        }
+    }
+    
+    // Verificar se tem formato correto
+    const parts = repo.split('/');
+    if (parts.length !== 2) {
+        throw new Error('Formato inválido. Use: usuário/repositório');
+    }
+    
+    return {
+        owner: parts[0],
+        repo: parts[1],
+        fullName: parts[0] + '/' + parts[1]
+    };
+}
+
 async function analyzeRepository() {
     const repoInput = document.getElementById('repoInput');
-    const repo = repoInput.value.trim();
+    const inputValue = repoInput.value.trim();
     
-    if (!repo || !repo.includes('/')) {
-        showStatus('Formato inválido. Use: usuário/repositório', 'error');
+    if (!inputValue) {
+        showStatus('Digite um repositório GitHub', 'error');
         return;
     }
     
     showLoading(true);
-    showStatus('Conectando ao GitHub...', 'info');
+    showStatus('Processando entrada...', 'info');
     
     try {
+        // Extrair informações do repositório
+        let repoInfo;
+        try {
+            repoInfo = extractRepoInfo(inputValue);
+        } catch (error) {
+            showStatus(error.message, 'error');
+            showLoading(false);
+            return;
+        }
+        
         // Salvar repositório atual
-        localStorage.setItem('last-repo', repo);
+        localStorage.setItem('last-repo', inputValue);
+        
+        // Atualizar status
+        showStatus(`Buscando ${repoInfo.fullName}...`, 'info');
         
         // Obter dados do repositório
-        const repoData = await fetchGitHubRepo(repo);
+        const repoData = await fetchGitHubRepo(repoInfo.owner, repoInfo.repo);
         if (!repoData) {
-            throw new Error('Repositório não encontrado');
+            throw new Error('Repositório não encontrado ou privado');
         }
         
         // Atualizar interface
@@ -177,7 +218,7 @@ async function analyzeRepository() {
         showStatus('Obtendo estrutura de arquivos...', 'info');
         
         // Obter estrutura da árvore
-        const treeData = await fetchGitHubTree(repo, repoData.default_branch);
+        const treeData = await fetchGitHubTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);
         if (!treeData) {
             throw new Error('Não foi possível obter a estrutura');
         }
@@ -195,15 +236,33 @@ async function analyzeRepository() {
     } catch (error) {
         console.error('Erro na análise:', error);
         showStatus(`Erro: ${error.message}`, 'error');
+        
+        // Mostrar dica para usuários
+        if (error.message.includes('não encontrado')) {
+            setTimeout(() => {
+                showStatus('Dica: Use formato "usuário/repositório" (ex: facebook/react)', 'info');
+            }, 2000);
+        }
     } finally {
         showLoading(false);
     }
 }
 
-async function fetchGitHubRepo(repo) {
+async function fetchGitHubRepo(owner, repo) {
     try {
-        const response = await fetch(`https://api.github.com/repos/${repo}`);
-        if (!response.ok) throw new Error('Repositório não encontrado');
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+        
+        if (response.status === 404) {
+            throw new Error('Repositório não encontrado');
+        }
+        
+        if (response.status === 403) {
+            throw new Error('Limite de requisições excedido. Tente novamente mais tarde.');
+        }
+        
+        if (!response.ok) {
+            throw new Error(`Erro ${response.status}: ${response.statusText}`);
+        }
         
         const data = await response.json();
         return {
@@ -214,25 +273,38 @@ async function fetchGitHubRepo(repo) {
             forks: data.forks_count,
             watchers: data.watchers_count,
             default_branch: data.default_branch,
-            size: data.size
+            size: data.size,
+            owner: {
+                login: data.owner.login,
+                avatar_url: data.owner.avatar_url
+            }
         };
     } catch (error) {
         throw error;
     }
 }
 
-async function fetchGitHubTree(repo, branch) {
+async function fetchGitHubTree(owner, repo, branch) {
     try {
         // Primeiro, obter o SHA do commit mais recente
-        const commitsResponse = await fetch(`https://api.github.com/repos/${repo}/commits/${branch}`);
-        if (!commitsResponse.ok) throw new Error('Branch não encontrada');
+        const commitsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${branch}`);
+        
+        if (!commitsResponse.ok) {
+            if (commitsResponse.status === 404) {
+                throw new Error('Branch não encontrada');
+            }
+            throw new Error('Erro ao buscar commits');
+        }
         
         const commitData = await commitsResponse.json();
         const treeSha = commitData.commit.tree.sha;
         
         // Obter a árvore recursivamente
-        const treeResponse = await fetch(`https://api.github.com/repos/${repo}/git/trees/${treeSha}?recursive=1`);
-        if (!treeResponse.ok) throw new Error('Estrutura não disponível');
+        const treeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${treeSha}?recursive=1`);
+        
+        if (!treeResponse.ok) {
+            throw new Error('Não foi possível obter a estrutura do repositório');
+        }
         
         return await treeResponse.json();
     } catch (error) {
@@ -245,11 +317,18 @@ function updateRepoInfo(repoData) {
     document.getElementById('repoDescription').textContent = repoData.description;
     
     const statsHTML = `
-        <span class="stat-item"><i class="fas fa-star"></i> ${repoData.stars}</span>
-        <span class="stat-item"><i class="fas fa-code-branch"></i> ${repoData.forks}</span>
-        <span class="stat-item"><i class="fas fa-eye"></i> ${repoData.watchers}</span>
+        <span class="stat-item"><i class="fas fa-star"></i> ${formatNumber(repoData.stars)}</span>
+        <span class="stat-item"><i class="fas fa-code-branch"></i> ${formatNumber(repoData.forks)}</span>
+        <span class="stat-item"><i class="fas fa-eye"></i> ${formatNumber(repoData.watchers)}</span>
     `;
     document.getElementById('repoStats').innerHTML = statsHTML;
+}
+
+function formatNumber(num) {
+    if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'k';
+    }
+    return num.toString();
 }
 
 function renderTree(treeData) {
@@ -328,6 +407,14 @@ function renderTreeNode(container, node, depth = 0) {
     badge.className = 'tree-badge';
     badge.textContent = isFolder ? 'pasta' : 'arquivo';
     
+    // Adicionar tamanho para arquivos
+    if (!isFolder && node.size > 0) {
+        const sizeSpan = document.createElement('span');
+        sizeSpan.className = 'tree-size';
+        sizeSpan.textContent = formatBytes(node.size);
+        header.appendChild(sizeSpan);
+    }
+    
     header.appendChild(icon);
     header.appendChild(name);
     header.appendChild(badge);
@@ -339,6 +426,13 @@ function renderTreeNode(container, node, depth = 0) {
         childrenContainer.className = 'tree-node-children';
         childrenContainer.dataset.expanded = 'false';
         
+        // Ordenar: pastas primeiro, depois arquivos
+        node.children.sort((a, b) => {
+            if (a.type === 'folder' && b.type !== 'folder') return -1;
+            if (a.type !== 'folder' && b.type === 'folder') return 1;
+            return a.name.localeCompare(b.name);
+        });
+        
         node.children.forEach(child => {
             renderTreeNode(childrenContainer, child, depth + 1);
         });
@@ -347,6 +441,14 @@ function renderTreeNode(container, node, depth = 0) {
     }
     
     container.appendChild(nodeElement);
+}
+
+function formatBytes(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
 function attachTreeEvents() {
@@ -385,6 +487,7 @@ function attachTreeEvents() {
             const nodeElement = header.closest('.tree-node');
             const path = nodeElement.dataset.path;
             console.log('Arquivo clicado:', path);
+            // Aqui você pode adicionar funcionalidade para visualizar arquivos
         });
     });
 }
@@ -421,11 +524,12 @@ function searchTree(query) {
         const nodeName = node.querySelector('.tree-name').textContent.toLowerCase();
         const isMatch = searchTerm === '' || nodeName.includes(searchTerm);
         
-        node.closest('.tree-node').style.display = isMatch ? '' : 'none';
+        const treeNode = node.closest('.tree-node');
+        treeNode.style.display = isMatch ? '' : 'none';
         
         // Se encontrou, expandir pais
         if (isMatch && searchTerm !== '') {
-            expandParents(node.closest('.tree-node'));
+            expandParents(treeNode);
         }
     });
 }
@@ -454,7 +558,6 @@ function updateMetrics(treeData) {
     const folders = treeData.tree.filter(item => item.type === 'tree');
     
     const totalSize = files.reduce((sum, file) => sum + (file.size || 0), 0);
-    const sizeKB = Math.round(totalSize / 1024);
     
     const metricsPreview = document.getElementById('metricsPreview');
     if (metricsPreview) {
@@ -469,7 +572,7 @@ function updateMetrics(treeData) {
                 <div class="metric-label">Pastas</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">${sizeKB} KB</div>
+                <div class="metric-value">${formatBytes(totalSize)}</div>
                 <div class="metric-label">Tamanho</div>
             </div>
             <div class="metric-card">
@@ -486,6 +589,8 @@ function getFileTypes(files) {
         const match = file.path.match(/\.([^.]+)$/);
         if (match) {
             extensions.add(match[1]);
+        } else {
+            extensions.add('sem extensão');
         }
     });
     return Array.from(extensions);
@@ -513,16 +618,15 @@ function showStatus(message, type = 'info') {
     statusBox.className = 'status-box';
     statusBox.classList.add(type);
     
-    // Atualizar texto
-    if (type === 'info') {
-        statusText.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
-    } else if (type === 'success') {
-        statusText.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-    } else if (type === 'error') {
-        statusText.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-    } else if (type === 'warning') {
-        statusText.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
-    }
+    // Atualizar texto com ícone
+    const icons = {
+        info: 'fa-info-circle',
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        warning: 'fa-exclamation-triangle'
+    };
+    
+    statusText.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
 }
 
 // Exportar funções para uso global (opcional)
@@ -530,5 +634,16 @@ window.CodeCartographer = {
     init: initApp,
     analyze: analyzeRepository,
     expandAll: () => expandAllTreeNodes(true),
-    collapseAll: () => expandAllTreeNodes(false)
+    collapseAll: () => expandAllTreeNodes(false),
+    extractRepoInfo: extractRepoInfo
 };
+
+// Função auxiliar para teste rápido
+function testRepo(repo) {
+    document.getElementById('repoInput').value = repo;
+    analyzeRepository();
+}
+
+// Adicione isto para permitir testes via console
+console.log('CodeCartographer v4.0 carregado!');
+console.log('Use testRepo("facebook/react") para testar rapidamente.');
