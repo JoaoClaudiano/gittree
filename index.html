@@ -10,13 +10,6 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     
-    <!-- Vis Network para gráficos de dependências -->
-    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
-    
-    <!-- html2canvas para exportação de imagens -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    
     <!-- Chart.js para dashboard de métricas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -25,9 +18,6 @@
     
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- D3.js para visualizações -->
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     
     <!-- Pré-carregamento de fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,8 +96,11 @@
     </div>
 </footer>
 
-    <!-- Nosso aplicativo React (AGORA na ordem correta) -->
-    <script src="app.js"></script>
+    <!-- Módulos da aplicação (ordem importante) -->
+    <script src="utils.js"></script>
+    <script src="github-api.js"></script>
+    <script src="components.js"></script>
+    <script src="main.js"></script>
     
     <script>
         // Script para tema claro/escuro
@@ -133,7 +126,6 @@
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
         // Verificar status da API
-        // Verificar status da API (versão corrigida sem CORS)
         async function checkAPIStatus() {
             const statusElement = document.getElementById('api-status');
             
