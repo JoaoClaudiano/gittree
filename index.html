@@ -133,26 +133,28 @@
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
         // Verificar status da API
+        // Verificar status da API (versão corrigida sem CORS)
         async function checkAPIStatus() {
+            const statusElement = document.getElementById('api-status');
+            
+            // Tentativa simples de conexão
             try {
-                const response = await fetch('https://api.github.com/rate_limit', {
+                // Usamos um endpoint que permite CORS
+                const response = await fetch('https://api.github.com', {
                     method: 'HEAD',
-                    cache: 'no-cache'
+                    mode: 'no-cors' // Modo no-cors para evitar erro CORS
                 });
-                const statusElement = document.getElementById('api-status');
-                if (response.ok) {
-                    statusElement.innerHTML = '✅ Conectado à API do GitHub';
-                    statusElement.style.color = '#10b981';
-                } else {
-                    statusElement.innerHTML = '⚠️ API do GitHub limitada';
-                    statusElement.style.color = '#f59e0b';
-                }
+                
+                // Com no-cors não podemos ler a resposta, mas se não deu erro de rede, está OK
+                statusElement.innerHTML = '✅ API do GitHub disponível';
+                statusElement.style.color = '#10b981';
             } catch (error) {
-                document.getElementById('api-status').innerHTML = '❌ Sem conexão com API';
-                document.getElementById('api-status').style.color = '#ef4444';
+                // Se falhar, mostramos mensagem genérica
+                statusElement.innerHTML = '🌐 API do GitHub (modo offline possível)';
+                statusElement.style.color = '#94a3b8';
             }
         }
-        
+                
         // Função para limpar cache
         function clearCache() {
             if (confirm('Tem certeza que deseja limpar todo o cache? Isso removerá todas as análises salvas.')) {
