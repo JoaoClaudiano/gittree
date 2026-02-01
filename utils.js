@@ -14,6 +14,7 @@ const getFileIcon = (extension) => {
     return icons[extension] || '📄';
 };
 
+
 const getFileLanguage = (path) => {
     const ext = path.split('.').pop().toLowerCase();
     const languages = {
