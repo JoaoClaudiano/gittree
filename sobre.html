@@ -1,188 +1,51 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre o GitTree – A Ferramenta</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="institutional.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
-    <style>
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 2rem 0;
-        }
-        
-        .team-card {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 10px;
-        }
-        
-        .light-theme .team-card {
-            background: var(--light-card);
-            border: 1px solid var(--light-border);
-        }
-        
-        .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 2rem 0;
-        }
-        
-        .stat-card {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-    </style>
+    <title>Sobre</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-theme">
+<body>
     <header class="institutional-header">
-        <div class="header-container">
-            <div class="logo-container">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-tree logo-icon"></i>
-                    <span>GitTree</span>
-                </a>
-            </div>
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                Voltar para a Ferramenta
-            </a>
+        <div class="logo">
+            <span class="logo-text">GitTree</span>
         </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="guia.html">Guia</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title">🌳 Sobre o GitTree</h1>
-        <p class="institutional-subtitle">
-            Conectando desenvolvedores através da visualização de código
-        </p>
+        <h1 class="institutional-title">Sobre</h1>
 
         <section class="institutional-section">
-            <h2 class="section-title">Nossa Missão</h2>
+            <h2 class="section-title">História</h2>
             <p class="institutional-text">
-                O <strong>GitTree</strong> nasceu da necessidade de tornar a compreensão de código
-                mais acessível e intuitiva. Acreditamos que a visualização é uma ferramenta
-                poderosa para aprendizado e colaboração no desenvolvimento de software.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia velit velit, in fermentum elit tristique eget.
             </p>
+
             <p class="institutional-text">
-                Nossa missão é <strong>democratizar o entendimento de código</strong>,
-                permitindo que desenvolvedores de todos os níveis possam explorar,
-                analisar e compreender a estrutura de projetos de software de forma
-                visual e interativa.
+                Phasellus vestibulum neque neque, id vehicula augue mollis eget. Donec eleifend orci eu felis consequat, id feugiat libero condimentum.
             </p>
         </section>
 
         <section class="institutional-section">
-            <h2 class="section-title">O que Fazemos</h2>
-            <p class="institutional-text">
-                Transformamos repositórios GitHub complexos em visualizações claras e
-                interativas que ajudam você a:
-            </p>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">1. 🌳</div>
-                    <strong>Visualizar Estrutura</strong>
-                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
-                        Ver a hierarquia completa de arquivos
-                    </p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number">2. 📊</div>
-                    <strong>Analisar Métricas</strong>
-                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
-                        Entender a composição do projeto
-                    </p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number">3. 🚀</div>
-                    <strong>Explorar Rapidamente</strong>
-                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
-                        Navegar por projetos desconhecidos
-                    </p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number">4. 🤝</div>
-                    <strong>Colaborar Melhor</strong>
-                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
-                        Compartilhar entendimento de código
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="institutional-section">
-            <h2 class="section-title">Nossos Valores</h2>
-            
-            <div class="notice-box">
-                <strong>📖 Transparência:</strong> Acreditamos em código aberto e processos claros
-            </div>
-            
-            <div class="notice-box">
-                <strong>🎯 Simplicidade:</strong> Ferramentas complexas devem ser simples de usar
-            </div>
-            
-            <div class="notice-box">
-                <strong>🌍 Acessibilidade:</strong> Tecnologia disponível para todos
-            </div>
-            
-            <div class="notice-box">
-                <strong>💡 Inovação:</strong> Melhorar constantemente a experiência do desenvolvedor
-            </div>
-            
-            <div class="notice-box">
-                <strong>🔒 Privacidade:</strong> Respeitamos seus dados e sua privacidade
-            </div>
-        </section>
-
-        <section class="institutional-section">
-            <h2 class="section-title">A Equipe</h2>
-            
-            <div class="team-grid">
+            <h2 class="section-title">Nossa Equipe</h2>
+            <div class="team-section">
                 <div class="team-card">
                     <div class="avatar">
                         <i class="fas fa-user"></i>
                     </div>
-                    <h3 style="margin-bottom: 5px;">João Claudiano</h3>
+                    <h3 style="margin-bottom: 5px;">Joao Claudiano</h3>
                     <p class="institutional-text" style="font-size: 0.9rem;">
-                        Desenvolvedor & Fundador
+                        Desenvolvedor Fullstack e TDAH Orgulhoso 🧠💡
                     </p>
                     <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;">
-                        Criador do GitTree, apaixonado por ferramentas que
-                        facilitam a vida dos desenvolvedores.
+                        Idealizador do projeto 👍
+                    </p>
                     </p>
                 </div>
                 
@@ -248,7 +111,7 @@
                 </li>
                 <li class="list-item">
                     <strong>📄 Issues:</strong>
-                    <a href="https://github.com/JoaoClaudiano/legacymap/issues" style="color: #7aa2ff; text-decoration: none;">
+                    <a href="https://github.com/JoaoClaudiano/gittree/issues" style="color: #7aa2ff; text-decoration: none;">
                         Reportar problemas ou sugerir funcionalidades
                     </a>
                 </li>
