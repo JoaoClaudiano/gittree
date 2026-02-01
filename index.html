@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Favicon para evitar 404 -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
 </head>
 <body class="dark-theme">
     <!-- Header -->
@@ -19,13 +18,13 @@
                     <i class="fas fa-code-branch logo-icon"></i>
                     <span class="logo-text">CodeCartographer</span>
                 </a>
-                <div class="version-tag">v4.0 Professional</div>
+                <div class="version-tag">v4.0</div>
             </div>
             
             <nav class="main-nav">
                 <a href="index.html" class="nav-link active">
-                    <i class="fas fa-home"></i>
-                    <span>Análise</span>
+                    <i class="fas fa-search"></i>
+                    <span>Analisador</span>
                 </a>
                 <a href="guia.html" class="nav-link">
                     <i class="fas fa-book"></i>
@@ -38,235 +37,233 @@
             </nav>
             
             <div class="header-controls">
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+                <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Container principal com id="app" para compatibilidade -->
+    <!-- App Container -->
     <div id="app" class="app-main">
         <!-- Sidebar -->
         <aside class="app-sidebar">
             <div class="ui-layer">
-                <h3 class="section-title">
-                    <i class="fas fa-cogs"></i>
-                    Configurações
-                </h3>
+                <div class="section-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>Analisador GitHub</h3>
+                </div>
                 
                 <div class="input-group">
                     <input type="text" 
                            id="repoInput" 
-                           placeholder="ex: facebook/react"
-                           class="repo-input">
-                    <button id="analyzeBtn" class="analyze-btn">
+                           placeholder="usuário/repositório"
+                           class="repo-input"
+                           value="facebook/react">
+                    <button id="analyzeBtn" class="btn-primary">
                         <i class="fas fa-search"></i>
-                        Analisar
+                        <span>Analisar</span>
                     </button>
                 </div>
                 
-                <div class="status-box" id="statusBox">
-                    <i class="fas fa-info-circle"></i>
-                    <span id="statusText">Digite um repositório GitHub</span>
-                </div>
-                
-                <!-- View Toggle -->
-                <div class="view-toggle">
-                    <button class="view-btn active" data-view="tree">
-                        <i class="fas fa-folder-tree"></i>
-                        Árvore
-                    </button>
-                    <button class="view-btn" data-view="deps">
-                        <i class="fas fa-project-diagram"></i>
-                        Dependências
-                    </button>
-                    <button class="view-btn" data-view="metrics">
-                        <i class="fas fa-chart-bar"></i>
-                        Métricas
-                    </button>
-                </div>
-                
-                <!-- Cache Controls -->
-                <div class="cache-controls">
-                    <button id="clearCacheBtn">
-                        <i class="fas fa-trash"></i>
-                        Limpar Cache
-                    </button>
-                    <button id="refreshBtn">
-                        <i class="fas fa-sync"></i>
-                        Atualizar
-                    </button>
-                </div>
-                
-                <!-- Export Controls -->
-                <div class="export-controls">
-                    <button id="exportJSONBtn">
-                        <i class="fas fa-file-code"></i>
-                        JSON
-                    </button>
-                    <button id="exportPNGBtn">
-                        <i class="fas fa-image"></i>
-                        PNG
-                    </button>
-                    <button id="exportCSVBtn">
-                        <i class="fas fa-file-csv"></i>
-                        CSV
-                    </button>
-                </div>
-                
-                <!-- Metrics Dashboard -->
-                <div class="metrics-dashboard">
-                    <div class="metrics-header">
-                        <h4>
-                            <i class="fas fa-chart-line"></i>
-                            Estatísticas
-                        </h4>
+                <div class="status-container">
+                    <div class="status-box" id="statusBox">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="statusText">Digite um repositório GitHub</span>
                     </div>
-                    <div class="metrics-grid" id="metricsGrid">
-                        <!-- Dinâmico -->
+                </div>
+                
+                <div class="controls-section">
+                    <h4><i class="fas fa-eye"></i> Visualização</h4>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="tree">
+                            <i class="fas fa-folder-tree"></i>
+                            Árvore
+                        </button>
+                        <button class="view-btn" data-view="deps">
+                            <i class="fas fa-project-diagram"></i>
+                            Deps
+                        </button>
+                        <button class="view-btn" data-view="metrics">
+                            <i class="fas fa-chart-bar"></i>
+                            Métricas
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="controls-section">
+                    <h4><i class="fas fa-tools"></i> Ferramentas</h4>
+                    <div class="tool-buttons">
+                        <button id="clearCacheBtn" class="btn-secondary">
+                            <i class="fas fa-trash"></i>
+                            Limpar Cache
+                        </button>
+                        <button id="refreshBtn" class="btn-secondary">
+                            <i class="fas fa-redo"></i>
+                            Recarregar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="controls-section">
+                    <h4><i class="fas fa-download"></i> Exportar</h4>
+                    <div class="export-buttons">
+                        <button id="exportJSONBtn" class="btn-export">
+                            <i class="fas fa-file-code"></i>
+                            JSON
+                        </button>
+                        <button id="exportCSVBtn" class="btn-export">
+                            <i class="fas fa-file-csv"></i>
+                            CSV
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="metrics-preview" id="metricsPreview">
+                    <h4><i class="fas fa-chart-line"></i> Prévia</h4>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">--</div>
+                            <div class="metric-label">Arquivos</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">--</div>
+                            <div class="metric-label">Tamanho</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Área de Resultados -->
-        <div class="app-content">
-            <div class="content-container">
-                <!-- Loading State -->
-                <div id="loadingOverlay" class="loading-overlay hidden">
-                    <div class="loading-spinner"></div>
-                    <p>Analisando repositório...</p>
+        <!-- Main Content -->
+        <main class="app-content">
+            <div class="content-header">
+                <div class="content-title">
+                    <h2 id="repoTitle">Nenhum repositório selecionado</h2>
+                    <p id="repoDescription">Digite um repositório acima para começar a análise</p>
                 </div>
-
-                <!-- Tree View -->
-                <div class="view-container active" id="treeView">
-                    <div class="view-header">
-                        <h3>
-                            <i class="fas fa-folder-open"></i>
-                            Estrutura do Projeto
-                        </h3>
-                        <div class="view-actions">
-                            <button class="tree-action" id="collapseAllBtn">
-                                <i class="fas fa-compress"></i>
-                                Recolher
-                            </button>
-                            <button class="tree-action" id="expandAllBtn">
+                <div class="content-actions">
+                    <div class="repo-stats" id="repoStats">
+                        <span class="stat-item"><i class="fas fa-star"></i> --</span>
+                        <span class="stat-item"><i class="fas fa-code-branch"></i> --</span>
+                        <span class="stat-item"><i class="fas fa-eye"></i> --</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state hidden">
+                <div class="spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <p>Analisando repositório...</p>
+            </div>
+            
+            <!-- Tree View -->
+            <div class="view-section active" id="treeView">
+                <div class="view-toolbar">
+                    <div class="toolbar-left">
+                        <h3><i class="fas fa-folder-tree"></i> Estrutura do Projeto</h3>
+                    </div>
+                    <div class="toolbar-right">
+                        <div class="search-box">
+                            <input type="text" 
+                                   id="treeSearch" 
+                                   placeholder="Buscar arquivos..."
+                                   class="search-input">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="toolbar-actions">
+                            <button id="expandAllBtn" class="btn-toolbar">
                                 <i class="fas fa-expand"></i>
                                 Expandir
                             </button>
-                            <input type="text" 
-                                   class="tree-search" 
-                                   placeholder="Buscar arquivos..."
-                                   id="treeSearch">
-                        </div>
-                    </div>
-                    <div class="tree-view" id="treeContainer">
-                        <div class="tree-placeholder">
-                            <i class="fas fa-folder-open fa-3x"></i>
-                            <p>Nenhum repositório analisado ainda</p>
+                            <button id="collapseAllBtn" class="btn-toolbar">
+                                <i class="fas fa-compress"></i>
+                                Recolher
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <!-- Dependencies View -->
-                <div class="view-container" id="depsView">
-                    <div class="view-header">
-                        <h3>
-                            <i class="fas fa-network-wired"></i>
-                            Mapa de Dependências
-                        </h3>
-                        <div class="view-actions">
-                            <button class="deps-action" id="layoutBtn">
-                                <i class="fas fa-sitemap"></i>
-                                Layout
-                            </button>
-                            <button class="deps-action" id="filterDepsBtn">
-                                <i class="fas fa-filter"></i>
-                                Filtrar
-                            </button>
-                        </div>
-                    </div>
-                    <div class="deps-view">
-                        <div id="dependencyGraph">
-                            <div class="deps-placeholder">
-                                <i class="fas fa-project-diagram fa-3x"></i>
-                                <p>Análise de dependências será exibida aqui</p>
-                            </div>
-                        </div>
+                <div class="tree-container-wrapper">
+                    <div class="tree-container" id="treeContainer">
+                        <!-- Árvore será renderizada aqui -->
                     </div>
                 </div>
-
-                <!-- Metrics View -->
-                <div class="view-container" id="metricsView">
-                    <div class="view-header">
-                        <h3>
-                            <i class="fas fa-chart-pie"></i>
-                            Análise de Métricas
-                        </h3>
-                        <div class="view-actions">
-                            <button class="metrics-action" id="refreshMetricsBtn">
-                                <i class="fas fa-redo"></i>
-                                Atualizar
-                            </button>
-                        </div>
+            </div>
+            
+            <!-- Dependencies View -->
+            <div class="view-section" id="depsView">
+                <div class="view-toolbar">
+                    <h3><i class="fas fa-project-diagram"></i> Dependências</h3>
+                </div>
+                <div class="deps-container" id="depsContainer">
+                    <div class="deps-placeholder">
+                        <i class="fas fa-project-diagram fa-3x"></i>
+                        <p>Análise de dependências será exibida aqui</p>
                     </div>
-                    <div class="metrics-view">
-                        <div class="charts-grid">
-                            <div class="chart-container">
-                                <h4>Tipos de Arquivo</h4>
-                                <canvas id="fileTypesChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Metrics View -->
+            <div class="view-section" id="metricsView">
+                <div class="view-toolbar">
+                    <h3><i class="fas fa-chart-bar"></i> Métricas</h3>
+                </div>
+                <div class="metrics-container">
+                    <div class="charts-row">
+                        <div class="chart-box">
+                            <h4>Tipos de Arquivo</h4>
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-pie"></i>
+                                <p>Grafíco será gerado aqui</p>
                             </div>
-                            <div class="chart-container">
-                                <h4>Tamanho dos Arquivos</h4>
-                                <canvas id="fileSizesChart"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h4>Estatísticas</h4>
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-bar"></i>
+                                <p>Gráfico será gerado aqui</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-container">
-            <div class="footer-info">
-                <div class="cache-status" id="cacheStatus">
-                    <i class="fas fa-circle"></i>
-                    <span>Cache: 0MB</span>
-                </div>
-                <div class="footer-stats">
-                    <span id="fileCount">0 arquivos</span>
-                    •
-                    <span id="repoSize">0 KB</span>
+            <div class="footer-section">
+                <div class="footer-info">
+                    <span class="footer-text">
+                        <i class="fas fa-code"></i> CodeCartographer v4.0
+                    </span>
+                    <span class="footer-separator">•</span>
+                    <span class="footer-text" id="cacheStatus">
+                        <i class="fas fa-database"></i> Cache: 0KB
+                    </span>
                 </div>
             </div>
             
-            <div class="footer-links">
-                <a href="politica-de-privacidade.html" class="footer-link">
-                    <i class="fas fa-shield-alt"></i>
-                    Privacidade
-                </a>
-                <a href="termos.html" class="footer-link">
-                    <i class="fas fa-file-contract"></i>
-                    Termos
-                </a>
-                <a href="https://github.com" target="_blank" class="footer-link">
-                    <i class="fab fa-github"></i>
-                    GitHub
-                </a>
-                <a href="contato.html" class="footer-link">
-                    <i class="fas fa-bug"></i>
-                    Reportar Bug
-                </a>
+            <div class="footer-section">
+                <div class="footer-links">
+                    <a href="politica-de-privacidade.html" class="footer-link">
+                        <i class="fas fa-user-shield"></i> Privacidade
+                    </a>
+                    <a href="termos.html" class="footer-link">
+                        <i class="fas fa-file-contract"></i> Termos
+                    </a>
+                    <a href="https://github.com" target="_blank" class="footer-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts (ordem correta) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Scripts -->
     <script src="utils.js"></script>
     <script src="github-api.js"></script>
     <script src="components.js"></script>
