@@ -1731,4 +1731,81 @@ body.light-theme {
         flex-direction: column;
     }
 }
+/* ============ TREE SIZE ============ */
+.tree-size {
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--dark-subtext);
+    background: rgba(30, 41, 59, 0.5);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', Monaco, Consolas, monospace;
+}
 
+/* ============ TREE NODE STATES ============ */
+.tree-node-header.folder .tree-icon {
+    color: var(--primary-light);
+    transition: transform 0.2s ease;
+}
+
+.tree-node-header.file .tree-icon {
+    color: var(--dark-subtext);
+}
+
+.tree-node-header.folder:hover .tree-icon {
+    color: var(--primary);
+}
+
+/* ============ LOADING ANIMATION ============ */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.loading-state p {
+    animation: pulse 1.5s infinite;
+}
+
+/* ============ INPUT VALIDATION ============ */
+.repo-input:invalid {
+    border-color: var(--danger) !important;
+}
+
+.repo-input:focus:invalid {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+}
+
+/* ============ TOOLTIPS ============ */
+[title] {
+    position: relative;
+    cursor: help;
+}
+
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-card);
+    color: var(--dark-text);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    border: 1px solid var(--dark-border);
+    box-shadow: var(--shadow);
+}
+
+/* ============ RESPONSIVE IMPROVEMENTS ============ */
+@media (max-width: 768px) {
+    .tree-size {
+        display: none; /* Ocultar tamanhos em mobile para economizar espaço */
+    }
+    
+    .tree-badge {
+        font-size: 10px;
+        padding: 1px 6px;
+    }
+}
