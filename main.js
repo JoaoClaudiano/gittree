@@ -71,6 +71,7 @@ function initViews() {
 function initControls() {
     const analyzeBtn = document.getElementById('analyzeBtn');
     const repoInput = document.getElementById('repoInput');
+    const pasteBtn = document.getElementById('pasteBtn');
     const clearCacheBtn = document.getElementById('clearCacheBtn');
     const refreshBtn = document.getElementById('refreshBtn');
     const expandAllBtn = document.getElementById('expandAllBtn');
@@ -78,11 +79,28 @@ function initControls() {
     const treeSearch = document.getElementById('treeSearch');
     const exportJSONBtn = document.getElementById('exportJSONBtn');
     const exportCSVBtn = document.getElementById('exportCSVBtn');
+    const copyTreeBtn = document.getElementById('copyTreeBtn');
     
     if (analyzeBtn && repoInput) {
         analyzeBtn.addEventListener('click', analyzeRepository);
         repoInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') analyzeRepository();
+        });
+    }
+    
+    if (pasteBtn && repoInput) {
+        pasteBtn.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                    repoInput.value = text;
+                    showStatus('Link colado!', 'success');
+                    repoInput.focus();
+                }
+            } catch (err) {
+                console.error('Falha ao colar:', err);
+                showStatus('Não foi possível acessar a área de transferência', 'error');
+            }
         });
     }
     
@@ -126,7 +144,71 @@ function initControls() {
         });
     }
     
+    if (copyTreeBtn) {
+        copyTreeBtn.addEventListener('click', copyTreeAsText);
+    }
+    
     addPopularRepoSuggestions();
+}
+
+function copyTreeAsText() {
+    const treeContainer = document.getElementById('treeContainer');
+    if (!treeContainer) {
+        showStatus('Nenhuma árvore para copiar', 'warning');
+        return;
+    }
+    
+    // Função recursiva para coletar a estrutura
+    function collectTreeNodes(node, depth = 0, lines = []) {
+        const children = node.querySelector('.tree-node-children');
+        const header = node.querySelector('.tree-node-header');
+        
+        if (header) {
+            const icon = header.querySelector('.tree-icon');
+            const nameElem = header.querySelector('.tree-name');
+            const isFolder = header.classList.contains('folder');
+            const isExpanded = icon && icon.classList.contains('expanded');
+            
+            if (nameElem) {
+                const prefix = depth === 0 ? '' : '  '.repeat(depth - 1) + (children ? '├── ' : '└── ');
+                const name = nameElem.textContent;
+                const suffix = isFolder ? '/' : '';
+                lines.push(prefix + name + suffix);
+            }
+        }
+        
+        // Se for pasta expandida, processa filhos
+        if (children && children.dataset.expanded === 'true') {
+            const childNodes = children.querySelectorAll('.tree-node');
+            childNodes.forEach(child => collectTreeNodes(child, depth + 1, lines));
+        }
+        
+        return lines;
+    }
+    
+    // Coletar todas as linhas
+    const allNodes = treeContainer.querySelectorAll('.tree-node:first-child, .tree-node:not(.tree-node .tree-node)');
+    let allLines = [];
+    
+    allNodes.forEach(node => {
+        if (!node.parentElement.closest('.tree-node-children')) {
+            allLines = collectTreeNodes(node, 0, allLines);
+        }
+    });
+    
+    if (allLines.length === 0) {
+        showStatus('Árvore vazia', 'warning');
+        return;
+    }
+    
+    // Copiar para clipboard
+    const textToCopy = allLines.join('\n');
+    navigator.clipboard.writeText(textToCopy)
+        .then(() => showStatus('Estrutura copiada como texto!', 'success'))
+        .catch(err => {
+            console.error('Erro ao copiar:', err);
+            showStatus('Erro ao copiar', 'error');
+        });
 }
 
 function addPopularRepoSuggestions() {
