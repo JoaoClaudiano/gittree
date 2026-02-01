@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o GitTree – A Ferramenta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="institutional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
+    <style>
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .team-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 10px;
+        }
+        
+        .light-theme .team-card {
+            background: var(--light-card);
+            border: 1px solid var(--light-border);
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <header class="institutional-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-tree logo-icon"></i>
+                    <span>GitTree</span>
+                </a>
+            </div>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Voltar para a Ferramenta
+            </a>
+        </div>
+    </header>
+
+    <main class="institutional-main">
+        <h1 class="institutional-title">🌳 Sobre o GitTree</h1>
+        <p class="institutional-subtitle">
+            Conectando desenvolvedores através da visualização de código
+        </p>
+
+        <section class="institutional-section">
+            <h2 class="section-title">Nossa Missão</h2>
+            <p class="institutional-text">
+                O <strong>GitTree</strong> nasceu da necessidade de tornar a compreensão de código
+                mais acessível e intuitiva. Acreditamos que a visualização é uma ferramenta
+                poderosa para aprendizado e colaboração no desenvolvimento de software.
+            </p>
+            <p class="institutional-text">
+                Nossa missão é <strong>democratizar o entendimento de código</strong>,
+                permitindo que desenvolvedores de todos os níveis possam explorar,
+                analisar e compreender a estrutura de projetos de software de forma
+                visual e interativa.
+            </p>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">O que Fazemos</h2>
+            <p class="institutional-text">
+                Transformamos repositórios GitHub complexos em visualizações claras e
+                interativas que ajudam você a:
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1. 🌳</div>
+                    <strong>Visualizar Estrutura</strong>
+                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        Ver a hierarquia completa de arquivos
+                    </p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">2. 📊</div>
+                    <strong>Analisar Métricas</strong>
+                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        Entender a composição do projeto
+                    </p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">3. 🚀</div>
+                    <strong>Explorar Rapidamente</strong>
+                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        Navegar por projetos desconhecidos
+                    </p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">4. 🤝</div>
+                    <strong>Colaborar Melhor</strong>
+                    <p class="institutional-text" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        Compartilhar entendimento de código
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">Nossos Valores</h2>
+            
+            <div class="notice-box">
+                <strong>📖 Transparência:</strong> Acreditamos em código aberto e processos claros
+            </div>
+            
+            <div class="notice-box">
+                <strong>🎯 Simplicidade:</strong> Ferramentas complexas devem ser simples de usar
+            </div>
+            
+            <div class="notice-box">
+                <strong>🌍 Acessibilidade:</strong> Tecnologia disponível para todos
+            </div>
+            
+            <div class="notice-box">
+                <strong>💡 Inovação:</strong> Melhorar constantemente a experiência do desenvolvedor
+            </div>
+            
+            <div class="notice-box">
+                <strong>🔒 Privacidade:</strong> Respeitamos seus dados e sua privacidade
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">A Equipe</h2>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 style="margin-bottom: 5px;">João Claudiano</h3>
+                    <p class="institutional-text" style="font-size: 0.9rem;">
+                        Desenvolvedor & Fundador
+                    </p>
+                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;">
+                        Criador do GitTree, apaixonado por ferramentas que
+                        facilitam a vida dos desenvolvedores.
+                    </p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="avatar">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 style="margin-bottom: 5px;">Comunidade</h3>
+                    <p class="institutional-text" style="font-size: 0.9rem;">
+                        Contribuidores & Usuários
+                    </p>
+                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;">
+                        Você faz parte dessa jornada! Cada feedback,
+                        sugestão e uso da ferramenta nos ajuda a melhorar.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">Tecnologia</h2>
+            <p class="institutional-text">
+                O GitTree é construído com tecnologias modernas e confiáveis:
+            </p>
+            <ul class="institutional-list">
+                <li class="list-item">
+                    <strong>Frontend:</strong> HTML5, CSS3, JavaScript (ES6+)
+                </li>
+                <li class="list-item">
+                    <strong>APIs:</strong> GitHub REST API v3
+                </li>
+                <li class="list-item">
+                    <strong>Visualização:</strong> Chart.js para gráficos interativos
+                </li>
+                <li class="list-item">
+                    <strong>Hospedagem:</strong> GitHub Pages
+                </li>
+                <li class="list-item">
+                    <strong>Design:</strong> CSS Custom Properties para temas
+                </li>
+            </ul>
+            
+            <div class="tip-box" style="background: rgba(59, 130, 246, 0.1); border-left-color: #3b82f6;">
+                <strong>🌐 Código Aberto:</strong> O GitTree é open-source e disponível no GitHub.
+                Contribuições são bem-vindas!
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">Contato & Suporte</h2>
+            <p class="institutional-text">
+                Precisa de ajuda ou tem uma sugestão? Entre em contato:
+            </p>
+            <ul class="institutional-list">
+                <li class="list-item">
+                    <strong>📧 Email:</strong> jooclaudiano@gmail.com
+                </li>
+                <li class="list-item">
+                    <strong>🐙 GitHub:</strong> 
+                    <a href="https://github.com/JoaoClaudiano" style="color: #7aa2ff; text-decoration: none;">
+                        github.com/JoaoClaudiano
+                    </a>
+                </li>
+                <li class="list-item">
+                    <strong>📄 Issues:</strong>
+                    <a href="https://github.com/JoaoClaudiano/legacymap/issues" style="color: #7aa2ff; text-decoration: none;">
+                        Reportar problemas ou sugerir funcionalidades
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="institutional-footer">
+        © 2026 GitTree · Conectando desenvolvedores ao redor do mundo · 🌳
+    </footer>
+</body>
+</html>
