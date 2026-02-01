@@ -1,13 +1,14 @@
-<!-- Estrutura recomendada para index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Repository Analyzer</title>
+    <title>CodeCartographer v4.0 - GitHub Repository Analyzer</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon para evitar 404 -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
 </head>
 <body class="dark-theme">
     <!-- Header -->
@@ -16,9 +17,9 @@
             <div class="logo-container">
                 <a href="index.html" class="logo">
                     <i class="fas fa-code-branch logo-icon"></i>
-                    <span class="logo-text">RepoAnalyzer</span>
+                    <span class="logo-text">CodeCartographer</span>
                 </a>
-                <div class="version-tag">v2.1.0</div>
+                <div class="version-tag">v4.0 Professional</div>
             </div>
             
             <nav class="main-nav">
@@ -44,8 +45,8 @@
         </div>
     </header>
 
-    <!-- Conteúdo Principal -->
-    <main class="app-main">
+    <!-- Container principal com id="app" para compatibilidade -->
+    <div id="app" class="app-main">
         <!-- Sidebar -->
         <aside class="app-sidebar">
             <div class="ui-layer">
@@ -57,7 +58,7 @@
                 <div class="input-group">
                     <input type="text" 
                            id="repoInput" 
-                           placeholder="usuário/repositório"
+                           placeholder="ex: facebook/react"
                            class="repo-input">
                     <button id="analyzeBtn" class="analyze-btn">
                         <i class="fas fa-search"></i>
@@ -67,7 +68,7 @@
                 
                 <div class="status-box" id="statusBox">
                     <i class="fas fa-info-circle"></i>
-                    <span>Pronto para analisar</span>
+                    <span id="statusText">Digite um repositório GitHub</span>
                 </div>
                 
                 <!-- View Toggle -->
@@ -132,6 +133,12 @@
         <!-- Área de Resultados -->
         <div class="app-content">
             <div class="content-container">
+                <!-- Loading State -->
+                <div id="loadingOverlay" class="loading-overlay hidden">
+                    <div class="loading-spinner"></div>
+                    <p>Analisando repositório...</p>
+                </div>
+
                 <!-- Tree View -->
                 <div class="view-container active" id="treeView">
                     <div class="view-header">
@@ -155,7 +162,10 @@
                         </div>
                     </div>
                     <div class="tree-view" id="treeContainer">
-                        <!-- Árvore dinâmica -->
+                        <div class="tree-placeholder">
+                            <i class="fas fa-folder-open fa-3x"></i>
+                            <p>Nenhum repositório analisado ainda</p>
+                        </div>
                     </div>
                 </div>
 
@@ -178,7 +188,12 @@
                         </div>
                     </div>
                     <div class="deps-view">
-                        <div id="dependencyGraph"></div>
+                        <div id="dependencyGraph">
+                            <div class="deps-placeholder">
+                                <i class="fas fa-project-diagram fa-3x"></i>
+                                <p>Análise de dependências será exibida aqui</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -211,7 +226,7 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer class="main-footer">
@@ -241,7 +256,7 @@
                     <i class="fab fa-github"></i>
                     GitHub
                 </a>
-                <a href="#" class="footer-link" id="reportIssueBtn">
+                <a href="contato.html" class="footer-link">
                     <i class="fas fa-bug"></i>
                     Reportar Bug
                 </a>
@@ -249,16 +264,12 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts (ordem correta) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="utils.js"></script>
     <script src="github-api.js"></script>
     <script src="components.js"></script>
     <script src="main.js"></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- D3.js para gráficos de dependência -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
 </body>
 </html>
