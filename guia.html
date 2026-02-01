@@ -2,32 +2,265 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Como Usar - CodeCartographer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia do GitTree – Como Usar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="institutional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; }
-        .step { background: #f4f4f4; padding: 15px; border-left: 4px solid #007acc; margin: 20px 0; }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .light-theme .feature-card {
+            background: var(--light-card);
+            border: 1px solid var(--light-border);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .step-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .tip-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
     </style>
 </head>
-<body>
-    <h1>📖 Guia do CodeCartographer</h1>
-    <p>O <strong>CodeCartographer</strong> é uma ferramenta gratuita que gera um mapa visual das dependências entre arquivos do seu projeto, ajudando você a entender a arquitetura de código.</p>
+<body class="dark-theme">
+    <header class="institutional-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-tree logo-icon"></i>
+                    <span>GitTree</span>
+                </a>
+            </div>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Voltar para a Ferramenta
+            </a>
+        </div>
+    </header>
 
-    <div class="step">
-        <h2>🚀 Passo a Passo</h2>
-        <ol>
-            <li><strong>Cole a URL:</strong> No campo da página principal, cole a URL completa de um repositório <em>público</em> do GitHub (ex: <code>https://github.com/usuario/projeto</code>).</li>
-            <li><strong>Clique para Analisar:</strong> A ferramenta irá escanear os arquivos e identificar as declarações de importação (<code>import</code>, <code>require</code>).</li>
-            <li><strong>Explore o Mapa:</strong> Interaja com o gráfico gerado! Arrume os nós, clique para expandir/colapsar conexões e use o zoom.</li>
-        </ol>
-    </div>
+    <main class="institutional-main">
+        <h1 class="institutional-title">📖 Guia Completo do GitTree</h1>
+        <p class="institutional-subtitle">
+            Aprenda a usar todas as funcionalidades da ferramenta de visualização de repositórios GitHub
+        </p>
 
-    <h2>🎯 O Que Você Pode Descobrir</h2>
-    <ul>
-        <li><strong>Dependências Circulares:</strong> Encontre ciclos no código que podem causar bugs e dificultar a manutenção.</li>
-        <li><strong>Módulos Centrais:</strong> Identifique quais arquivos são os mais dependidos no projeto (potenciais gargalos).</li>
-        <li><strong>Estrutura do Projeto:</strong> Tenha uma visão de alto nível de como as partes do sistema se conectam.</li>
-    </ul>
+        <section class="institutional-section">
+            <h2 class="section-title">🌳 O que é o GitTree?</h2>
+            <p class="institutional-text">
+                O <strong>GitTree</strong> é uma ferramenta web gratuita que transforma repositórios GitHub
+                em visualizações interativas, permitindo que você explore a estrutura de arquivos,
+                analise métricas e entenda a organização do código de forma intuitiva.
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 style="margin-bottom: 10px;">Análise Visual</h3>
+                    <p class="institutional-text">Veja a estrutura completa do repositório em formato de árvore</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 style="margin-bottom: 10px;">Métricas Detalhadas</h3>
+                    <p class="institutional-text">Estatísticas e gráficos sobre arquivos e pastas</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 style="margin-bottom: 10px;">Fácil de Usar</h3>
+                    <p class="institutional-text">Basta colar a URL do GitHub e começar a explorar</p>
+                </div>
+            </div>
+        </section>
 
-    <p><a href="index.html">← Voltar para a Ferramenta</a></p>
+        <section class="institutional-section">
+            <h2 class="section-title">🚀 Começando em 3 Passos</h2>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">1</span>
+                    <strong>Cole a URL do GitHub</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    No campo principal da página inicial, cole qualquer URL de repositório público do GitHub.
+                    <br><br>
+                    <strong>Formatos aceitos:</strong><br>
+                    • <code>https://github.com/usuario/repositorio</code><br>
+                    • <code>usuario/repositorio</code><br>
+                    • <code>https://github.com/usuario/repositorio.git</code>
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">2</span>
+                    <strong>Clique em "Visualizar"</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    A ferramenta irá buscar a estrutura completa do repositório e processar todas as informações.
+                    O processo pode levar alguns segundos dependendo do tamanho do repositório.
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">3</span>
+                    <strong>Explore os Resultados</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    Navegue entre as abas "Árvore" e "Métricas" para explorar diferentes visualizações
+                    dos dados do repositório.
+                </p>
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">🎯 Funcionalidades Principais</h2>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">🌳 Visualização em Árvore</h3>
+            <p class="institutional-text">
+                Explore a estrutura hierárquica de pastas e arquivos:
+            </p>
+            <ul class="institutional-list">
+                <li class="list-item">
+                    <strong>Clique em pastas</strong> para expandir/recolher
+                </li>
+                <li class="list-item">
+                    <strong>Use a busca</strong> para encontrar arquivos específicos
+                </li>
+                <li class="list-item">
+                    <strong>Botões Expandir/Recolher</strong> para controlar toda a árvore
+                </li>
+                <li class="list-item">
+                    <strong>Copiar estrutura</strong> como texto ou Markdown
+                </li>
+            </ul>
+            
+            <div class="tip-box">
+                <strong>💡 Dica:</strong> Use o botão "Copiar Texto" na toolbar para copiar a estrutura
+                em formato ASCII e colar em documentações.
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">📊 Aba de Métricas</h3>
+            <p class="institutional-text">
+                Obtenha insights sobre o repositório:
+            </p>
+            <ul class="institutional-list">
+                <li class="list-item">
+                    <strong>Contagem de arquivos e pastas</strong>
+                </li>
+                <li class="list-item">
+                    <strong>Tamanho total do repositório</strong>
+                </li>
+                <li class="list-item">
+                    <strong>Gráfico de distribuição</strong> por tipo de arquivo
+                </li>
+                <li class="list-item">
+                    <strong>Estatísticas de GitHub</strong> (stars, forks, watchers)
+                </li>
+            </ul>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">⚡ Dicas Avançadas</h2>
+            
+            <div class="tip-box">
+                <strong>🔗 Colar Rapidamente:</strong> Use o botão "Colar" ao lado do campo de entrada
+                para colar automaticamente links copiados da área de transferência.
+            </div>
+            
+            <div class="tip-box">
+                <strong>💾 Cache Inteligente:</strong> O GitTree armazena análises localmente.
+                Repositórios analisados recentemente carregam instantaneamente.
+            </div>
+            
+            <div class="tip-box">
+                <strong📤 Exportar Dados:</strong> Use os botões "JSON" ou "CSV" para exportar
+                a análise completa para uso externo.
+            </div>
+            
+            <div class="tip-box">
+                <strong>🌗 Tema Claro/Escuro:</strong> Clique no ícone de lua/sol no canto superior
+                direito para alternar entre temas.
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">❓ Perguntas Frequentes</h2>
+            
+            <p class="institutional-text">
+                <strong>Q: O GitTree funciona com repositórios privados?</strong><br>
+                A: Não, apenas com repositórios públicos do GitHub.
+            </p>
+            
+            <p class="institutional-text">
+                <strong>Q: Meus dados são armazenados?</strong><br>
+                A: Não, o código analisado não é armazenado. Apenas metadados são mantidos
+                localmente no seu navegador para cache.
+            </p>
+            
+            <p class="institutional-text">
+                <strong>Q: Posso analisar qualquer repositório?</strong><br>
+                A: Sim, qualquer repositório público do GitHub. Alguns repositórios muito grandes
+                podem ter a estrutura truncada pela API do GitHub.
+            </p>
+            
+            <p class="institutional-text">
+                <strong>Q: A ferramenta é gratuita?</strong><br>
+                A: Sim, completamente gratuita e open-source.
+            </p>
+        </section>
+    </main>
+
+    <footer class="institutional-footer">
+        © GitTree · Ferramenta gratuita para desenvolvedores · 🌳
+    </footer>
 </body>
 </html>
