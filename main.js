@@ -764,11 +764,147 @@ function updateMetrics(treeData) {
         `;
     }
     
+    // Salvar dados para uso no gráfico
     window.currentTreeData = treeData;
+    
+    // Se estiver na aba de métricas, atualizar o gráfico imediatamente
+    if (document.querySelector('.view-btn[data-view="metrics"]')?.classList.contains('active')) {
+        updateMetricsDisplay();
+    }
+}
+
+// NOVA FUNÇÃO: Gerar gráfico de distribuição de arquivos
+function generateFileTypesChart(files) {
+    const fileTypesChartEl = document.getElementById('fileTypesChart');
+    if (!fileTypesChartEl) return;
+    
+    // Destruir gráfico anterior se existir
+    if (window.fileChart instanceof Chart) {
+        window.fileChart.destroy();
+    }
+    
+    // Se não houver arquivos, mostrar mensagem
+    if (files.length === 0) {
+        fileTypesChartEl.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
+                <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
+                <p>Nenhum arquivo para mostrar</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Contar tipos de arquivo
+    const typeCounts = {};
+    files.forEach(file => {
+        const match = file.path.match(/\.([^.]+)$/);
+        const type = match ? match[1].toUpperCase() : 'OUTROS';
+        typeCounts[type] = (typeCounts[type] || 0) + 1;
+    });
+    
+    // Ordenar por quantidade (mais comuns primeiro)
+    const sortedTypes = Object.entries(typeCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8); // Pegar apenas os 8 mais comuns
+    
+    // Preparar dados para o gráfico
+    const labels = sortedTypes.map(([type]) => type);
+    const data = sortedTypes.map(([, count]) => count);
+    
+    // Cores para o gráfico
+    const colors = [
+        'rgba(59, 130, 246, 0.8)',   // Azul
+        'rgba(16, 185, 129, 0.8)',   // Verde
+        'rgba(245, 158, 11, 0.8)',   // Amarelo
+        'rgba(239, 68, 68, 0.8)',    // Vermelho
+        'rgba(139, 92, 246, 0.8)',   // Roxo
+        'rgba(236, 72, 153, 0.8)',   // Rosa
+        'rgba(6, 182, 212, 0.8)',    // Ciano
+        'rgba(132, 204, 22, 0.8)'    // Lima
+    ];
+    
+    // Criar canvas para o gráfico
+    fileTypesChartEl.innerHTML = `
+        <div style="position: relative; height: 300px; width: 100%;">
+            <canvas id="fileDistributionChart"></canvas>
+        </div>
+    `;
+    
+    // Aguardar um pouco para o DOM atualizar
+    setTimeout(() => {
+        const ctx = document.getElementById('fileDistributionChart').getContext('2d');
+        
+        window.fileChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: colors.slice(0, labels.length),
+                    borderColor: colors.map(color => color.replace('0.8', '1')),
+                    borderWidth: 2,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            color: 'var(--dark-text)',
+                            font: {
+                                family: "'Inter', sans-serif",
+                                size: 12
+                            },
+                            padding: 15,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        titleColor: 'var(--dark-text)',
+                        bodyColor: 'var(--dark-subtext)',
+                        borderColor: 'var(--dark-border)',
+                        borderWidth: 1,
+                        cornerRadius: 6,
+                        displayColors: true,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${context.label}: ${value} arquivos (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%',
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1000
+                }
+            }
+        });
+    }, 100);
 }
 
 function updateMetricsDisplay() {
-    if (!window.currentTreeData) return;
+    if (!window.currentTreeData) {
+        // Mostrar mensagem se não há dados
+        const fileTypesChart = document.getElementById('fileTypesChart');
+        if (fileTypesChart) {
+            fileTypesChart.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
+                    <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
+                    <p>Analise um repositório para ver o gráfico</p>
+                </div>
+            `;
+        }
+        return;
+    }
     
     const treeData = window.currentTreeData;
     const files = treeData.tree.filter(item => item.type === 'blob');
@@ -776,6 +912,8 @@ function updateMetricsDisplay() {
     const totalSize = files.reduce((sum, file) => sum + (file.size || 0), 0);
     
     const fileTypes = getFileTypes(files);
+    
+    // 1. Atualizar estatísticas (parte já existente)
     const statsDisplay = document.getElementById('statsDisplay');
     if (statsDisplay) {
         statsDisplay.innerHTML = `
@@ -812,6 +950,9 @@ function updateMetricsDisplay() {
             ` : ''}
         `;
     }
+    
+    // 2. GERAR GRÁFICO REAL - NOVA FUNCIONALIDADE
+    generateFileTypesChart(files);
 }
 
 function getFileTypes(files) {
@@ -832,7 +973,7 @@ function exportData(format) {
     showStatus(`Exportando como ${format.toUpperCase()}...`, 'info');
     
     setTimeout(() => {
-        showStatus(`Exportação ${format.toUpperCase()} concluída`, 'success');
+        showStatus(`Exportação ${format.toUpperCase()} concluída', 'success`);
         
         const dataStr = format === 'json' 
             ? JSON.stringify(window.currentTreeData, null, 2)
