@@ -54,9 +54,12 @@
                 <div class="input-group">
                     <input type="text" 
                            id="repoInput" 
-                           placeholder="usuário/repositório"
+                           placeholder="usuário/repositório ou URL completa do GitHub"
                            class="repo-input"
                            value="facebook/react">
+                    <button id="pasteBtn" class="btn-secondary" title="Colar link da área de transferência">
+                        <i class="fas fa-paste"></i> Colar
+                    </button>
                     <button id="analyzeBtn" class="btn-primary">
                         <i class="fas fa-eye"></i>
                         <span>Visualizar</span>
@@ -164,13 +167,14 @@
                             <i class="fas fa-search"></i>
                         </div>
                         <div class="toolbar-actions">
+                            <button id="copyTreeBtn" class="btn-toolbar" title="Copiar estrutura como texto">
+                                <i class="fas fa-copy"></i> Copiar Texto
+                            </button>
                             <button id="expandAllBtn" class="btn-toolbar">
-                                <i class="fas fa-expand"></i>
-                                Expandir
+                                <i class="fas fa-expand"></i> Expandir
                             </button>
                             <button id="collapseAllBtn" class="btn-toolbar">
-                                <i class="fas fa-compress"></i>
-                                Recolher
+                                <i class="fas fa-compress"></i> Recolher
                             </button>
                         </div>
                     </div>
