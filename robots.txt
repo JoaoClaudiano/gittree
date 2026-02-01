@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-Sitemap: https://joaoclaudiano.github.io/legacymap/sitemap.xml
+Sitemap: https://joaoclaudiano.github.io/gittree/sitemap.xml
