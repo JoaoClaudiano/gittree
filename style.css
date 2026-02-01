@@ -31,6 +31,10 @@ html {
   overflow-y: scroll;
 }
 
+.conteiner {
+    overflow-y: scroll;
+}
+
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
