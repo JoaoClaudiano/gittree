@@ -112,7 +112,22 @@ const CodeAnalyzer = {
         if (!content) return { lines: 0, functions: 0, complexity: 0 };
         
         const lines = content.split('\n').length;
-        const functions = (content.match(/(function|const|let|var)\s+\w+\s*=|def\s+\w+\s*\(|class\s+\w+)/g) || []).length;
+        
+        // Expressão regular corrigida - removidos parênteses desbalanceados
+        const functionPatterns = [
+            /function\s+\w+\s*\(/g,
+            /const\s+\w+\s*=/g,
+            /let\s+\w+\s*=/g,
+            /var\s+\w+\s*=/g,
+            /def\s+\w+\s*\(/g,
+            /class\s+\w+/g
+        ];
+        
+        let functions = 0;
+        functionPatterns.forEach(pattern => {
+            const matches = content.match(pattern);
+            if (matches) functions += matches.length;
+        });
         
         // Métrica simples de complexidade
         const complexity = Math.round((lines * 0.3) + (functions * 2));
@@ -169,7 +184,6 @@ const GraphExporter = {
         </svg>`;
     }
 };
-
 // ==================== COMPONENTE DE GRAFO INTERATIVO ====================
 const InteractiveGraph = ({ files, repoInfo, onNodeClick }) => {
     const [graphData, setGraphData] = useState(null);
