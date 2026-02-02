@@ -74,13 +74,10 @@ O GitTree é uma aplicação web que permite visualizar a estrutura completa de 
 
 ## 🚀 Demonstração
 
-**Teste agora:** [GitTree Online](https://seusite.com) *(substitua pelo seu link)*
+**Teste agora:** [GitTree Online](https://joaoclaudiano.github.io/gittree/) 
 
 **Exemplos para testar:**
-- `facebook/react`
-- `vuejs/vue`
-- `torvalds/linux`
-- `microsoft/vscode`
+
 - `JoaoClaudiano/geocsv`
 
 ## 📖 Como Usar
