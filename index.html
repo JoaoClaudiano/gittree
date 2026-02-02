@@ -259,6 +259,25 @@
                 </div>
             </div>
             
+            <!-- Seção de Introdução para SEO -->
+            <div class="seo-intro" style="margin: 20px 0; padding: 20px; background: var(--dark-card); border-radius: 8px; border: 1px solid var(--dark-border);">
+                <h2 style="margin-bottom: 15px; color: var(--dark-text); font-size: 1.3rem;">
+                    <i class="fas fa-search" style="margin-right: 10px; color: var(--primary);"></i>
+                    Explore Repositórios GitHub como Nunca Antes
+                </h2>
+                <p style="margin-bottom: 15px; color: var(--dark-subtext); line-height: 1.6;">
+                    O <strong style="color: var(--primary);">GitTree</strong> é uma ferramenta gratuita que permite visualizar a estrutura completa de qualquer repositório público do GitHub. 
+                    Analise árvores de diretórios, veja métricas de arquivos e entenda a organização do código de forma visual e interativa.
+                </p>
+                <ul style="color: var(--dark-subtext); padding-left: 20px; margin-bottom: 0;">
+                    <li style="margin-bottom: 8px;"><strong>Visualize</strong> a estrutura hierárquica de pastas e arquivos</li>
+                    <li style="margin-bottom: 8px;"><strong>Analise</strong> métricas e estatísticas do código em tempo real</li>
+                    <li style="margin-bottom: 8px;"><strong>Explore</strong> repositórios sem precisar clonar ou baixar</li>
+                    <li style="margin-bottom: 8px;"><strong>Exporte</strong> dados em múltiplos formatos (JSON, CSV)</li>
+                    <li><strong>Compreenda</strong> projetos complexos de forma intuitiva</li>
+                </ul>
+            </div>
+            
             <div id="loadingState" class="loading-state hidden">
                 <div class="spinner">
                     <i class="fas fa-spinner fa-spin"></i>
@@ -520,6 +539,11 @@
         color: #000000;
     }
     
+    .high-contrast .seo-intro {
+        background: #222222;
+        border-color: #ffffff;
+    }
+    
     /* Ajustes para VLibras */
     .vw-plugin-top-wrapper {
         z-index: 9998;
@@ -535,6 +559,27 @@
         outline: 2px solid #00ffff;
     }
     
+    /* Estilos para a seção SEO */
+    .seo-intro ul {
+        list-style-type: none;
+    }
+    
+    .seo-intro li {
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .seo-intro li:before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: #10b981;
+    }
+    
+    .high-contrast .seo-intro li:before {
+        color: #00ffff;
+    }
+    
     @media (max-width: 768px) {
         .accessibility-toggle {
             bottom: 15px;
@@ -548,6 +593,15 @@
             bottom: 70px;
             right: 15px;
             width: 180px;
+        }
+        
+        .seo-intro {
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .seo-intro h2 {
+            font-size: 1.1rem;
         }
     }
     </style>
