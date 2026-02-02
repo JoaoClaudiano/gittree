@@ -1,9 +1,28 @@
 const CACHE_NAME = 'gittree-v1';
 const urlsToCache = [
-  '/gittree/index.html',
-  '/gittree/manifest.json',
-  // ADICIONE AQUI OS CAMINHOS DOS SEUS ARQUIVOS CSS E JS PRINCIPAIS
-  // Exemplo: '/gittree/css/style.css', '/gittree/js/app.js'
+  './',
+  './index.html',
+  './manifest.json',
+  './service-worker.js',
+  './android-chrome-192x192.png',
+  './android-chrome-512x512.png',
+  './style.css',
+  './main.js',
+  './sobre.html',
+  './termos.httml',
+  './guia.html',
+  './politica-de-privacidade.html',
+  './contato.html',
+  './404.html',
+  './institutional.css',
+  './utils.js',
+  './components.js',
+  './github-api.js'
+
+
+  // Adicione aqui seus arquivos CSS/JS principais, por exemplo:
+  // './style.css',
+  // './script.js'
 ];
 
 // Instalação: Cache dos arquivos essenciais
