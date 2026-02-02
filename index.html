@@ -84,9 +84,9 @@
     <meta name="theme-color" content="#0366d6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Link para o Manifest -->
-    <link rel="manifest" href="/gittree/manifest.json">
+    <!-- Meta tags para PWA -->
+    <meta name="theme-color" content="#24292e">
+    <link rel="manifest" href="manifest.json">
     
     <!-- Ícones para Apple -->
     <link rel="apple-touch-icon" href="/gittree/icons/icon-192x192.png">
@@ -782,16 +782,12 @@
     });
     </script>
     
-    <script>
-  // Registra o Service Worker
+<script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/gittree/service-worker.js')
-        .then(function(registration) {
-          console.log('ServiceWorker registrado com sucesso: ', registration.scope);
-        }, function(err) {
-          console.log('Falha ao registrar ServiceWorker: ', err);
-        });
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker registrado!', reg.scope))
+        .catch(err => console.log('Falha no registro:', err));
     });
   }
 </script>
