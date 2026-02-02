@@ -62,6 +62,10 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- VLibras Widget -->
+    <link rel="stylesheet" href="https://vlibras.gov.br/app/vlibras-plugin.css">
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -84,33 +88,58 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
+    <!-- Skip Link - Para leitores de tela e navegação por teclado -->
+    <a href="#main-content" class="skip-link" aria-label="Pular para o conteúdo principal">Pular para o conteúdo</a>
+    
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls" aria-label="Controles de acessibilidade">
+        <button id="high-contrast-toggle" class="accessibility-btn" aria-label="Alternar alto contraste">
+            <i class="fas fa-adjust"></i>
+            <span class="sr-only">Alto Contraste</span>
+        </button>
+        <button id="font-size-increase" class="accessibility-btn" aria-label="Aumentar tamanho da fonte">
+            <i class="fas fa-text-height"></i>
+            <span class="sr-only">A+</span>
+        </button>
+        <button id="font-size-decrease" class="accessibility-btn" aria-label="Diminuir tamanho da fonte">
+            <i class="fas fa-text-width"></i>
+            <span class="sr-only">A-</span>
+        </button>
+        <button id="font-size-reset" class="accessibility-btn" aria-label="Tamanho de fonte padrão">
+            <i class="fas fa-font"></i>
+            <span class="sr-only">A</span>
+        </button>
+    </div>
+    
     <header class="main-header">
         <div class="header-container">
             <div class="logo-container">
                 <a href="index.html" class="logo">
-                    <i class="fas fa-tree logo-icon" aria-label="GitTree Logo"></i>
+                    <i class="fas fa-tree logo-icon" aria-hidden="true"></i>
                     <span class="logo-text">GitTree</span>
                 </a>
-                <div class="version-tag">v1.0</div>
+                <div class="version-tag" aria-label="Versão 1.0">v1.0</div>
             </div>
             
             <nav class="main-nav" aria-label="Navegação principal">
-                <a href="index.html" class="nav-link active">
-                    <i class="fas fa-tree" aria-hidden="true"></i>
-                    <span>Visualizador</span>
-                </a>
-                <a href="sobre.html" class="nav-link">
-                    <i class="fas fa-info-circle" aria-hidden="true"></i>
-                    <span>Sobre</span>
-                </a>
-                <a href="guia.html" class="nav-link">
-                    <i class="fas fa-book" aria-hidden="true"></i>
-                    <span>Guia</span>
-                </a>
-                <a href="contato.html" class="nav-link">
-                    <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <span>Contato</span>
-                </a>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active" aria-current="page">
+                        <i class="fas fa-tree" aria-hidden="true"></i>
+                        <span>Visualizador</span>
+                    </a></li>
+                    <li><a href="sobre.html" class="nav-link">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                        <span>Sobre</span>
+                    </a></li>
+                    <li><a href="guia.html" class="nav-link">
+                        <i class="fas fa-book" aria-hidden="true"></i>
+                        <span>Guia</span>
+                    </a></li>
+                    <li><a href="contato.html" class="nav-link">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>Contato</span>
+                    </a></li>
+                </ul>
             </nav>
                         
             <div class="header-controls">
@@ -121,8 +150,8 @@
         </div>
     </header>
 
-    <div id="app" class="app-main">
-        <aside class="app-sidebar">
+    <main id="main-content" class="app-main" tabindex="-1">
+        <aside class="app-sidebar" aria-label="Painel de controle">
             <div class="ui-layer">
                 <div class="section-header">
                     <i class="fas fa-tree" aria-hidden="true"></i>
@@ -130,44 +159,49 @@
                 </div>
                 
                 <div class="input-group">
+                    <label for="repoInput" class="sr-only">Digite o repositório GitHub</label>
                     <input type="text" 
                            id="repoInput" 
                            placeholder="usuário/repositório ou URL completa do GitHub"
                            class="repo-input"
                            value="facebook/react"
-                           aria-label="Digite o repositório GitHub para visualizar">
-                    <button id="pasteBtn" class="btn-secondary" title="Colar link da área de transferência" aria-label="Colar link">
-                        <i class="fas fa-paste"></i> Colar
-                    </button>
-                    <button id="analyzeBtn" class="btn-primary" aria-label="Visualizar repositório">
-                        <i class="fas fa-eye"></i>
-                        <span>Visualizar</span>
-                    </button>
+                           aria-describedby="repoHelp">
+                    <div id="repoHelp" class="sr-only">Exemplos: facebook/react ou https://github.com/facebook/react</div>
+                    
+                    <div class="input-buttons">
+                        <button id="pasteBtn" class="btn-secondary" title="Colar link da área de transferência" aria-label="Colar link">
+                            <i class="fas fa-paste"></i> Colar
+                        </button>
+                        <button id="analyzeBtn" class="btn-primary" aria-label="Visualizar repositório">
+                            <i class="fas fa-eye"></i>
+                            <span>Visualizar</span>
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="status-container">
-                    <div class="status-box" id="statusBox">
+                    <div class="status-box" id="statusBox" role="status" aria-live="polite">
                         <i class="fas fa-info-circle" aria-hidden="true"></i>
                         <span id="statusText">Digite um repositório GitHub</span>
                     </div>
                 </div>
                 
-                <div class="controls-section">
-                    <h3><i class="fas fa-eye" aria-hidden="true"></i> Visualização</h3>
-                    <div class="view-toggle">
-                        <button class="view-btn active" data-view="tree" aria-label="Ver visualização em árvore">
+                <section aria-labelledby="visualization-heading">
+                    <h3 id="visualization-heading"><i class="fas fa-eye" aria-hidden="true"></i> Visualização</h3>
+                    <div class="view-toggle" role="tablist">
+                        <button class="view-btn active" data-view="tree" role="tab" aria-selected="true" aria-controls="treeView">
                             <i class="fas fa-folder-tree"></i>
                             Árvore
                         </button>
-                        <button class="view-btn" data-view="metrics" aria-label="Ver visualização de métricas">
+                        <button class="view-btn" data-view="metrics" role="tab" aria-selected="false" aria-controls="metricsView">
                             <i class="fas fa-chart-bar"></i>
                             Métricas
                         </button>
                     </div>
-                </div>
+                </section>
                 
-                <div class="controls-section">
-                    <h3><i class="fas fa-tools" aria-hidden="true"></i> Ferramentas</h3>
+                <section aria-labelledby="tools-heading">
+                    <h3 id="tools-heading"><i class="fas fa-tools" aria-hidden="true"></i> Ferramentas</h3>
                     <div class="tool-buttons">
                         <button id="clearCacheBtn" class="btn-secondary" aria-label="Limpar cache do navegador">
                             <i class="fas fa-trash"></i>
@@ -178,10 +212,10 @@
                             Recarregar
                         </button>
                     </div>
-                </div>
+                </section>
                 
-                <div class="controls-section">
-                    <h3><i class="fas fa-download" aria-hidden="true"></i> Exportar</h3>
+                <section aria-labelledby="export-heading">
+                    <h3 id="export-heading"><i class="fas fa-download" aria-hidden="true"></i> Exportar</h3>
                     <div class="export-buttons">
                         <button id="exportJSONBtn" class="btn-export" aria-label="Exportar dados em formato JSON">
                             <i class="fas fa-file-code"></i>
@@ -192,69 +226,72 @@
                             CSV
                         </button>
                     </div>
-                </div>
+                </section>
                 
-                <div class="metrics-preview" id="metricsPreview">
-                    <h3><i class="fas fa-chart-line" aria-hidden="true"></i> Prévia</h3>
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-value">--</div>
-                            <div class="metric-label">Arquivos</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value">--</div>
-                            <div class="metric-label">Tamanho</div>
+                <section aria-labelledby="preview-heading">
+                    <h3 id="preview-heading"><i class="fas fa-chart-line" aria-hidden="true"></i> Prévia</h3>
+                    <div class="metrics-preview" id="metricsPreview">
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value" aria-live="polite">--</div>
+                                <div class="metric-label">Arquivos</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value" aria-live="polite">--</div>
+                                <div class="metric-label">Tamanho</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </aside>
 
-        <main class="app-content">
+        <div class="app-content">
             <div class="content-header">
                 <div class="content-title">
                     <h1 id="repoTitle">Nenhum repositório selecionado</h1>
                     <p id="repoDescription">Digite um repositório acima para visualizar a estrutura</p>
                 </div>
                 <div class="content-actions">
-                    <div class="repo-stats" id="repoStats">
-                        <span class="stat-item"><i class="fas fa-star" aria-hidden="true"></i> --</span>
-                        <span class="stat-item"><i class="fas fa-code-branch" aria-hidden="true"></i> --</span>
-                        <span class="stat-item"><i class="fas fa-eye" aria-hidden="true"></i> --</span>
+                    <div class="repo-stats" id="repoStats" aria-label="Estatísticas do repositório">
+                        <span class="stat-item"><i class="fas fa-star" aria-hidden="true"></i> <span class="stat-value">--</span></span>
+                        <span class="stat-item"><i class="fas fa-code-branch" aria-hidden="true"></i> <span class="stat-value">--</span></span>
+                        <span class="stat-item"><i class="fas fa-eye" aria-hidden="true"></i> <span class="stat-value">--</span></span>
                     </div>
                 </div>
             </div>
             
             <!-- Seção de Introdução para SEO -->
-            <div class="intro-section" style="margin: 20px 0; padding: 20px; background: var(--dark-card); border-radius: 10px; border: 1px solid var(--dark-border);">
-                <h2 style="margin-bottom: 15px; color: var(--dark-text);">Explore Repositórios GitHub como Nunca Antes</h2>
-                <p style="margin-bottom: 15px; color: var(--dark-subtext); line-height: 1.6;">
+            <section class="intro-section" aria-labelledby="intro-heading">
+                <h2 id="intro-heading">Explore Repositórios GitHub como Nunca Antes</h2>
+                <p>
                     O <strong>GitTree</strong> é uma ferramenta gratuita que permite visualizar a estrutura completa de qualquer repositório público do GitHub. 
                     Analise árvores de diretórios, veja métricas de arquivos e entenda a organização do código de forma visual e interativa.
                 </p>
-                <ul style="color: var(--dark-subtext); padding-left: 20px; margin-bottom: 0;">
-                    <li style="margin-bottom: 8px;"><strong>Visualize</strong> a estrutura hierárquica de pastas e arquivos</li>
-                    <li style="margin-bottom: 8px;"><strong>Analise</strong> métricas e estatísticas do código em tempo real</li>
-                    <li style="margin-bottom: 8px;"><strong>Explore</strong> repositórios sem precisar clonar ou baixar</li>
-                    <li style="margin-bottom: 8px;"><strong>Exporte</strong> dados em múltiplos formatos (JSON, CSV)</li>
-                    <li style="margin-bottom: 8px;"><strong>Compreenda</strong> projetos complexos de forma intuitiva</li>
+                <ul>
+                    <li><strong>Visualize</strong> a estrutura hierárquica de pastas e arquivos</li>
+                    <li><strong>Analise</strong> métricas e estatísticas do código em tempo real</li>
+                    <li><strong>Explore</strong> repositórios sem precisar clonar ou baixar</li>
+                    <li><strong>Exporte</strong> dados em múltiplos formatos (JSON, CSV)</li>
+                    <li><strong>Compreenda</strong> projetos complexos de forma intuitiva</li>
                 </ul>
-            </div>
+            </section>
             
-            <div id="loadingState" class="loading-state hidden">
+            <div id="loadingState" class="loading-state hidden" role="alert" aria-live="assertive">
                 <div class="spinner">
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
                 </div>
                 <p>Carregando estrutura...</p>
             </div>
             
-            <div class="view-section active" id="treeView">
+            <div class="view-section active" id="treeView" role="tabpanel" aria-labelledby="tree-tab">
                 <div class="view-toolbar">
                     <div class="toolbar-left">
                         <h2><i class="fas fa-folder-tree" aria-hidden="true"></i> Estrutura do Repositório</h2>
                     </div>
                     <div class="toolbar-right">
                         <div class="search-box">
+                            <label for="treeSearch" class="sr-only">Buscar arquivos</label>
                             <input type="text" 
                                    id="treeSearch" 
                                    placeholder="Buscar arquivos..."
@@ -276,11 +313,11 @@
                     </div>
                 </div>
                 <div class="tree-container-wrapper">
-                    <div class="tree-container" id="treeContainer"></div>
+                    <div class="tree-container" id="treeContainer" role="tree" aria-label="Estrutura de diretórios"></div>
                 </div>
             </div>
             
-            <div class="view-section" id="metricsView">
+            <div class="view-section" id="metricsView" role="tabpanel" aria-labelledby="metrics-tab" hidden>
                 <div class="view-toolbar">
                     <h2><i class="fas fa-chart-bar" aria-hidden="true"></i> Métricas do Repositório</h2>
                 </div>
@@ -288,7 +325,7 @@
                     <div class="charts-row">
                         <div class="chart-box">
                             <h3>Distribuição de Arquivos</h3>
-                            <div class="chart-placeholder" id="fileTypesChart">
+                            <div class="chart-placeholder" id="fileTypesChart" role="img" aria-label="Gráfico de distribuição de tipos de arquivo">
                                 <i class="fas fa-chart-pie"></i>
                                 <p>Gráfico será gerado aqui</p>
                             </div>
@@ -302,10 +339,10 @@
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
-    <footer class="main-footer">
+    <footer class="main-footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-section">
                 <div class="footer-info">
@@ -314,7 +351,7 @@
                     </span>
                     <span class="footer-separator">•</span>
                     <span class="footer-text" id="cacheStatus">
-                        <i class="fas fa-database" aria-hidden="true"></i> Cache: 0KB
+                        <i class="fas fa-database" aria-hidden="true"></i> Cache: <span id="cacheValue">0KB</span>
                     </span>
                     <span class="footer-separator">•</span>
                     <span class="footer-text">
@@ -331,7 +368,7 @@
                     <a href="termos.html" class="footer-link">
                         <i class="fas fa-file-contract" aria-hidden="true"></i> Termos
                     </a>
-                    <a href="https://github.com" target="_blank" class="footer-link">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link">
                         <i class="fab fa-github" aria-hidden="true"></i> GitHub
                     </a>
                     <a href="contato.html" class="footer-link">
@@ -339,8 +376,25 @@
                     </a>
                 </div>
             </div>
+            
+            <div class="footer-section">
+                <div class="accessibility-info">
+                    <p>
+                        <i class="fas fa-universal-access" aria-hidden="true"></i> 
+                        Este site segue as diretrizes de acessibilidade digital.
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- VLibras Widget -->
+    <div vw class="enabled">
+        <div vw-access-button class="active" aria-label="Abrir tradutor para Libras"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
 
     <!-- Cookie Consent Banner (LGPD/GDPR) -->
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid #334155; padding: 15px; z-index: 1000; font-family: 'Inter', sans-serif;">
@@ -369,6 +423,13 @@
     <script src="main.js"></script>
 
     <script>
+    // Inicializar VLibras
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof VLibras !== 'undefined') {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        }
+    });
+
     // Cookie Management - SIMPLIFICADO
     function checkCookieConsent() {
         if (!localStorage.getItem('cookie_consent')) {
@@ -392,16 +453,78 @@
         console.log('Cookies rejeitados');
     }
 
-    // Verificar quando carrega a página
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkCookieConsent);
-    } else {
-        checkCookieConsent();
-    }
-    
-    // Track SEO Events
+    // Controles de Acessibilidade
     document.addEventListener('DOMContentLoaded', function() {
-        // Track tool usage
+        // Alto Contraste
+        const highContrastToggle = document.getElementById('high-contrast-toggle');
+        if (highContrastToggle) {
+            highContrastToggle.addEventListener('click', function() {
+                document.body.classList.toggle('high-contrast');
+                const isActive = document.body.classList.contains('high-contrast');
+                this.setAttribute('aria-pressed', isActive);
+                localStorage.setItem('highContrast', isActive);
+            });
+            
+            // Restaurar preferência
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+                highContrastToggle.setAttribute('aria-pressed', 'true');
+            }
+        }
+
+        // Controle de tamanho da fonte
+        const fontSizeIncrease = document.getElementById('font-size-increase');
+        const fontSizeDecrease = document.getElementById('font-size-decrease');
+        const fontSizeReset = document.getElementById('font-size-reset');
+
+        function changeFontSize(change) {
+            const html = document.documentElement;
+            const currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+            const newSize = change === 'reset' ? 16 : currentSize + change;
+            html.style.fontSize = newSize + 'px';
+            localStorage.setItem('fontSize', newSize);
+        }
+
+        if (fontSizeIncrease) {
+            fontSizeIncrease.addEventListener('click', () => changeFontSize(1));
+        }
+        
+        if (fontSizeDecrease) {
+            fontSizeDecrease.addEventListener('click', () => changeFontSize(-1));
+        }
+        
+        if (fontSizeReset) {
+            fontSizeReset.addEventListener('click', () => changeFontSize('reset'));
+        }
+
+        // Restaurar tamanho da fonte
+        const savedFontSize = localStorage.getItem('fontSize');
+        if (savedFontSize) {
+            document.documentElement.style.fontSize = savedFontSize + 'px';
+        }
+
+        // Navegação por teclado - Skip Link
+        const skipLink = document.querySelector('.skip-link');
+        if (skipLink) {
+            skipLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.setAttribute('tabindex', '-1');
+                    target.focus();
+                    setTimeout(() => target.removeAttribute('tabindex'), 1000);
+                }
+            });
+        }
+
+        // Verificar quando carrega a página
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', checkCookieConsent);
+        } else {
+            checkCookieConsent();
+        }
+        
+        // Track SEO Events
         const buttons = ['analyzeBtn', 'exportJSONBtn', 'exportCSVBtn', 'copyTreeBtn'];
         buttons.forEach(btnId => {
             const btn = document.getElementById(btnId);
@@ -436,5 +559,150 @@
         }
     });
     </script>
+
+    <style>
+    /* Estilos de Acessibilidade */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #10b981;
+        color: white;
+        padding: 8px;
+        z-index: 10000;
+        text-decoration: none;
+    }
+
+    .skip-link:focus {
+        top: 0;
+    }
+
+    .accessibility-controls {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .accessibility-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: #10b981;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: all 0.3s;
+    }
+
+    .accessibility-btn:hover {
+        background: #059669;
+        transform: scale(1.1);
+    }
+
+    .accessibility-btn[aria-pressed="true"] {
+        background: #047857;
+        box-shadow: 0 0 0 2px white;
+    }
+
+    /* Tema Alto Contraste */
+    .high-contrast {
+        --primary: #00ffff;
+        --primary-dark: #00cccc;
+        --primary-light: #80ffff;
+        --dark-bg: #000000;
+        --dark-card: #222222;
+        --dark-border: #ffffff;
+        --dark-text: #ffffff;
+        --dark-subtext: #cccccc;
+    }
+
+    .high-contrast .accessibility-btn {
+        background: #00ffff;
+        color: #000000;
+    }
+
+    .high-contrast .accessibility-btn:hover {
+        background: #00cccc;
+    }
+
+    /* Ajustes para VLibras */
+    .vw-plugin-top-wrapper {
+        z-index: 9998;
+    }
+
+    /* Melhorias de foco */
+    :focus {
+        outline: 3px solid #10b981;
+        outline-offset: 2px;
+    }
+
+    .high-contrast :focus {
+        outline: 3px solid #00ffff;
+        outline-offset: 3px;
+    }
+
+    button:focus, 
+    input:focus, 
+    a:focus {
+        position: relative;
+    }
+
+    /* Ajustes para leitores de tela */
+    [role="tablist"] button[aria-selected="true"] {
+        background: var(--primary-dark);
+    }
+
+    .intro-section ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .intro-section li {
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 10px;
+    }
+
+    .intro-section li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    /* Responsividade dos controles */
+    @media (max-width: 768px) {
+        .accessibility-controls {
+            bottom: 60px;
+            right: 10px;
+        }
+        
+        .accessibility-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+    }
+    </style>
 </body>
 </html>
