@@ -3,7 +3,6 @@ const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './service-worker.js',
   './icons/android-chrome-192x192.png',
   './icons/android-chrome-512x512.png',
   './style.css',
