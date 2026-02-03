@@ -9,7 +9,7 @@ const urlsToCache = [
   './style.css',
   './main.js',
   './sobre.html',
-  './termos.httml',
+  './termos.html',
   './guia.html',
   './politica-de-privacidade.html',
   './contato.html',
