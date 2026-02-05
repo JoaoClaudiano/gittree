@@ -6,66 +6,40 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
     const [copySuccess, setCopySuccess] = React.useState('');
     const treeContainerRef = React.useRef(null);
     
-    // Árvore memoizada - construída apenas uma vez quando files mudar
+    // Árvore memoizada para visualização
     const treeData = React.useMemo(() => {
-        if (files.length === 0) return {};
-        return buildTree(files);
-    }, [files]);
-    
-    // Inicializar com todas as pastas abertas por padrão
-    React.useEffect(() => {
-        if (Object.keys(treeData).length > 0) {
-            const allFolders = {};
-            const collectFolders = (node, currentPath = '') => {
-                Object.entries(node).forEach(([key, item]) => {
-                    if (item.type === 'folder') {
-                        allFolders[item.path] = true;
-                        if (Object.keys(item.children).length > 0) {
-                            collectFolders(item.children, item.path);
-                        }
-                    }
-                });
-            };
-            
-            collectFolders(treeData);
-            setExpandedFolders(allFolders);
-        }
-    }, [treeData]);
-    
-    // Construir estrutura de árvore - VERSÃO CORRIGIDA SEM DUPLICAÇÃO
-    const buildTree = (fileList) => {
-        if (!fileList || fileList.length === 0) return {};
+        if (!files || files.length === 0) return { root: {}, pathMap: new Map() };
         
-        const tree = {};
-        const pathMap = new Map(); // Mapeia caminhos completos para nós
+        const root = {};
+        const pathMap = new Map();
         
-        fileList.forEach(file => {
+        // Ordenar arquivos por caminho para consistência
+        const sortedFiles = [...files].sort((a, b) => a.path.localeCompare(b.path));
+        
+        sortedFiles.forEach(file => {
             const filePath = file.path;
-            
-            // Verificar se já processou este caminho exato
-            if (pathMap.has(filePath)) {
-                console.log('Caminho duplicado ignorado:', filePath);
-                return; // Já existe, pular
-            }
+            if (!filePath) return;
             
             const parts = filePath.split('/');
-            let currentNode = tree;
-            let currentFullPath = '';
+            let current = root;
             
+            // Construir estrutura de pastas
             for (let i = 0; i < parts.length; i++) {
                 const part = parts[i];
                 const isFile = i === parts.length - 1;
-                currentFullPath = currentFullPath ? `${currentFullPath}/${part}` : part;
+                const fullPath = parts.slice(0, i + 1).join('/');
                 
-                // Verificar se este nó já existe
-                let node = currentNode[part];
+                // Se já existe este nó e é um arquivo, pular (evitar duplicação)
+                if (current[part] && current[part].type === 'file' && isFile) {
+                    console.log('Arquivo duplicado ignorado:', filePath);
+                    return;
+                }
                 
-                if (!node) {
-                    // Criar novo nó
-                    node = {
+                if (!current[part]) {
+                    current[part] = {
                         name: part,
                         type: isFile ? 'file' : 'folder',
-                        path: currentFullPath,
+                        path: fullPath,
                         children: {},
                         isCodeFile: isFile ? file.isCodeFile : false,
                         extension: isFile ? file.extension : null,
@@ -73,71 +47,170 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         language: isFile ? file.language : null,
                         fileData: isFile ? file : null
                     };
-                    
-                    currentNode[part] = node;
-                    pathMap.set(currentFullPath, node);
                 }
                 
-                // Se for pasta e não for o último item, entrar nos children
+                pathMap.set(fullPath, current[part]);
+                
                 if (!isFile) {
-                    currentNode = node.children;
+                    current = current[part].children;
                 }
             }
         });
         
-        console.log('Árvore construída com', Object.keys(tree).length, 'itens na raiz');
-        return tree;
+        console.log('Árvore construída:', { 
+            arquivos: files.length, 
+            nós: pathMap.size,
+            raiz: Object.keys(root).length 
+        });
+        
+        return { root, pathMap };
+    }, [files]);
+    
+    // Inicializar com todas as pastas abertas
+    React.useEffect(() => {
+        const { root, pathMap } = treeData;
+        if (pathMap.size === 0) return;
+        
+        const allFolders = {};
+        const expandFolders = (node) => {
+            Object.values(node).forEach(item => {
+                if (item.type === 'folder') {
+                    allFolders[item.path] = true;
+                    if (Object.keys(item.children).length > 0) {
+                        expandFolders(item.children);
+                    }
+                }
+            });
+        };
+        
+        expandFolders(root);
+        setExpandedFolders(allFolders);
+    }, [treeData]);
+    
+    // ========== FUNÇÃO DEFINITIVA PARA GERAR TEXTO ==========
+    // Esta função trabalha diretamente com os caminhos dos arquivos
+    // SEM usar a árvore de visualização, evitando duplicação
+    const generateDefinitiveText = (useMarkdown = false) => {
+        if (!files || files.length === 0) return '';
+        
+        // 1. Extrair todos os componentes de caminho únicos
+        const allComponents = new Set();
+        
+        files.forEach(file => {
+            const path = file.path;
+            if (!path) return;
+            
+            const parts = path.split('/');
+            // Adicionar cada nível do caminho
+            for (let i = 0; i < parts.length; i++) {
+                const fullPath = parts.slice(0, i + 1).join('/');
+                allComponents.add(fullPath);
+            }
+        });
+        
+        // 2. Converter para array e ordenar
+        const sortedPaths = Array.from(allComponents).sort();
+        
+        // 3. Mapear cada caminho para seu nível e tipo
+        const pathInfo = new Map();
+        
+        sortedPaths.forEach(path => {
+            const parts = path.split('/');
+            const name = parts[parts.length - 1];
+            const level = parts.length - 1;
+            const isFile = files.some(f => f.path === path);
+            
+            pathInfo.set(path, {
+                name,
+                level,
+                isFile,
+                extension: isFile ? path.split('.').pop()?.toLowerCase() || '' : ''
+            });
+        });
+        
+        // 4. Determinar quais caminhos são os últimos em seu nível
+        const isLastAtLevel = new Map();
+        
+        sortedPaths.forEach((path, index) => {
+            const info = pathInfo.get(path);
+            const level = info.level;
+            
+            // Verificar se há algum caminho depois deste no mesmo nível
+            let isLast = true;
+            for (let i = index + 1; i < sortedPaths.length; i++) {
+                const nextPath = sortedPaths[i];
+                const nextInfo = pathInfo.get(nextPath);
+                
+                if (nextInfo.level < level) break; // Nível acima, parar
+                if (nextInfo.level === level) {
+                    isLast = false;
+                    break;
+                }
+            }
+            
+            isLastAtLevel.set(path, isLast);
+        });
+        
+        // 5. Gerar linhas formatadas
+        const lines = [];
+        
+        sortedPaths.forEach(path => {
+            const info = pathInfo.get(path);
+            const { name, level, isFile, extension } = info;
+            const isLast = isLastAtLevel.get(path);
+            
+            // Construir prefixo baseado na hierarquia
+            let prefix = '';
+            
+            // Para cada nível anterior, verificar se é o último
+            for (let i = 0; i < level; i++) {
+                // Encontrar o caminho pai neste nível
+                const parentPath = path.split('/').slice(0, i + 1).join('/');
+                const parentIsLast = isLastAtLevel.get(parentPath) || false;
+                
+                if (parentIsLast) {
+                    prefix += '    '; // Espaços para pais que são últimos
+                } else {
+                    prefix += '│   '; // Linha vertical para pais não últimos
+                }
+            }
+            
+            // Adicionar conector para este item
+            prefix += isLast ? '└── ' : '├── ';
+            
+            // Adicionar linha formatada
+            if (useMarkdown) {
+                const icon = isFile ? getFileIcon(extension) : '📁';
+                lines.push(`${prefix}${icon} ${name}${isFile ? '' : '/'}`);
+            } else {
+                lines.push(`${prefix}${name}${isFile ? '' : '/'}`);
+            }
+        });
+        
+        return lines.join('\n');
     };
     
-    // Função para copiar a árvore como markdown COM PROTEÇÃO CONTRA MÚLTIPLOS CLIQUES
+    // ========== FUNÇÕES DE CÓPIA USANDO A VERSÃO DEFINITIVA ==========
     const copyTreeToClipboard = async () => {
         // Evitar múltiplos cliques rápidos
         if (copySuccess.includes('✅') || copySuccess.includes('❌')) {
             return;
         }
         
-        // Verificar se há dados para copiar
-        if (Object.keys(treeData).length === 0) {
+        if (!files || files.length === 0) {
             setCopySuccess('❌ Nenhuma árvore para copiar');
             setTimeout(() => setCopySuccess(''), 3000);
             return;
         }
         
-        const generateTreeMarkdown = (node, level = 0, indent = '') => {
-            let markdown = '';
-            const nodeEntries = Object.entries(node);
-            
-            // Ordenar: pastas primeiro, depois arquivos
-            const sortedEntries = nodeEntries.sort(([aKey, aItem], [bKey, bItem]) => {
-                if (aItem.type === 'folder' && bItem.type !== 'folder') return -1;
-                if (aItem.type !== 'folder' && bItem.type === 'folder') return 1;
-                return aKey.localeCompare(bKey);
-            });
-            
-            sortedEntries.forEach(([key, item], index) => {
-                const isLast = index === sortedEntries.length - 1;
-                const prefix = level === 0 ? '' : `${indent}${isLast ? '└── ' : '├── '}`;
-                
-                if (item.type === 'folder') {
-                    markdown += `${prefix}📁 ${item.name}/\n`;
-                    const newIndent = indent + (level === 0 ? '' : (isLast ? '    ' : '│   '));
-                    markdown += generateTreeMarkdown(item.children, level + 1, newIndent);
-                } else {
-                    const icon = getFileIcon(item.extension);
-                    markdown += `${prefix}${icon} ${item.name}\n`;
-                }
-            });
-            
-            return markdown;
-        };
-        
-        let markdown = `# ${repoInfo?.name || 'Repository'} Structure\n\n`;
-        markdown += '```\n';
-        markdown += generateTreeMarkdown(treeData);
-        markdown += '```\n\n';
-        markdown += `*Generated by [GitTree](https://joaoclaudiano.github.io/gittree/)*`;
-        
         try {
+            const treeText = generateDefinitiveText(true);
+            const markdown = `# ${repoInfo?.name || 'Repository'} Structure\n\n` +
+                            '```\n' +
+                            treeText +
+                            '\n```\n\n' +
+                            `*Generated by [GitTree](https://joaoclaudiano.github.io/gittree/)*`;
+            
             await navigator.clipboard.writeText(markdown);
             setCopySuccess('✅ Copiado para área de transferência!');
             setTimeout(() => setCopySuccess(''), 3000);
@@ -148,49 +221,20 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         }
     };
     
-    // Função para copiar apenas a estrutura em texto simples COM PROTEÇÃO CONTRA MÚLTIPLOS CLIQUES
     const copySimpleTree = async () => {
         // Evitar múltiplos cliques rápidos
         if (copySuccess.includes('✅') || copySuccess.includes('❌')) {
             return;
         }
         
-        // Verificar se há dados para copiar
-        if (Object.keys(treeData).length === 0) {
+        if (!files || files.length === 0) {
             setCopySuccess('❌ Nenhuma árvore para copiar');
             setTimeout(() => setCopySuccess(''), 3000);
             return;
         }
         
-        const generateSimpleTree = (node, level = 0, prefix = '') => {
-            let text = '';
-            const nodeEntries = Object.entries(node);
-            
-            // Ordenar: pastas primeiro, depois arquivos
-            const sortedEntries = nodeEntries.sort(([aKey, aItem], [bKey, bItem]) => {
-                if (aItem.type === 'folder' && bItem.type !== 'folder') return -1;
-                if (aItem.type !== 'folder' && bItem.type === 'folder') return 1;
-                return aKey.localeCompare(bKey);
-            });
-            
-            sortedEntries.forEach(([key, item], index) => {
-                const isLast = index === sortedEntries.length - 1;
-                const currentPrefix = level === 0 ? '' : `${prefix}${isLast ? '└── ' : '├── '}`;
-                
-                text += `${currentPrefix}${item.name}${item.type === 'folder' ? '/' : ''}\n`;
-                
-                if (item.type === 'folder' && Object.keys(item.children).length > 0) {
-                    const newPrefix = prefix + (level === 0 ? '' : (isLast ? '    ' : '│   '));
-                    text += generateSimpleTree(item.children, level + 1, newPrefix);
-                }
-            });
-            
-            return text;
-        };
-        
-        const treeText = generateSimpleTree(treeData);
-        
         try {
+            const treeText = generateDefinitiveText(false);
             await navigator.clipboard.writeText(treeText);
             setCopySuccess('✅ Estrutura copiada!');
             setTimeout(() => setCopySuccess(''), 3000);
@@ -203,19 +247,16 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
     
     // Expandir todas as pastas
     const expandAll = () => {
-        const allFolders = {};
-        const collectFolders = (node) => {
-            Object.entries(node).forEach(([key, item]) => {
-                if (item.type === 'folder') {
-                    allFolders[item.path] = true;
-                    if (Object.keys(item.children).length > 0) {
-                        collectFolders(item.children);
-                    }
-                }
-            });
-        };
+        const { pathMap } = treeData;
+        if (pathMap.size === 0) return;
         
-        collectFolders(treeData);
+        const allFolders = {};
+        pathMap.forEach((item, path) => {
+            if (item.type === 'folder') {
+                allFolders[path] = true;
+            }
+        });
+        
         setExpandedFolders(allFolders);
     };
     
@@ -233,25 +274,25 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         }));
     };
     
-    // Renderizar árvore
-    const renderTree = (node, level = 0, fullPath = '') => {
+    // Renderizar árvore para visualização
+    const renderTree = (node, level = 0) => {
         if (!node || Object.keys(node).length === 0) return null;
         
-        const nodeEntries = Object.entries(node);
+        const entries = Object.entries(node);
         
         // Ordenar: pastas primeiro, depois arquivos
-        const sortedEntries = nodeEntries.sort(([aKey, aItem], [bKey, bItem]) => {
+        entries.sort(([aKey, aItem], [bKey, bItem]) => {
             if (aItem.type === 'folder' && bItem.type !== 'folder') return -1;
             if (aItem.type !== 'folder' && bItem.type === 'folder') return 1;
             return aKey.localeCompare(bKey);
         });
         
         const filteredEntries = search 
-            ? sortedEntries.filter(([key, value]) => 
-                value.name.toLowerCase().includes(search.toLowerCase()) ||
-                (value.type === 'file' && value.path.toLowerCase().includes(search.toLowerCase()))
+            ? entries.filter(([key, item]) => 
+                item.name.toLowerCase().includes(search.toLowerCase()) ||
+                item.path.toLowerCase().includes(search.toLowerCase())
               )
-            : sortedEntries;
+            : entries;
         
         if (filteredEntries.length === 0) return null;
         
@@ -273,7 +314,6 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                     // Pasta
                     React.createElement('div', {
                         key: 'folder',
-                        className: 'folder-item',
                         style: {
                             padding: '8px 12px',
                             borderRadius: '6px',
@@ -331,7 +371,7 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         }, `${Object.keys(item.children).length} itens`)
                     ]),
                     
-                    // Conteúdo da pasta (recursivo)
+                    // Conteúdo da pasta
                     isExpanded && hasChildren && React.createElement('div', {
                         key: 'children',
                         style: {
@@ -339,7 +379,7 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                             borderLeft: '2px dashed #475569',
                             paddingLeft: '8px'
                         }
-                    }, renderTree(item.children, level + 1, item.path))
+                    }, renderTree(item.children, level + 1))
                 ]);
             } else {
                 // Arquivo
@@ -352,7 +392,6 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                 }, [
                     React.createElement('div', {
                         key: 'file',
-                        className: 'file-item',
                         style: {
                             padding: '8px 12px',
                             borderRadius: '6px',
@@ -366,7 +405,9 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         },
                         onClick: () => {
                             setSelectedFile(item);
-                            if (onFileClick) onFileClick(item.fileData);
+                            if (onFileClick && item.fileData) {
+                                onFileClick(item.fileData);
+                            }
                         },
                         onMouseEnter: (e) => {
                             if (!isSelected) {
@@ -422,30 +463,24 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         });
     };
     
-    // Estatísticas da árvore
+    // Estatísticas
     const treeStats = React.useMemo(() => {
+        const { pathMap } = treeData;
         let totalFiles = 0;
         let totalFolders = 0;
         
-        const countItems = (node) => {
-            Object.entries(node).forEach(([key, item]) => {
-                if (item.type === 'folder') {
-                    totalFolders++;
-                    if (Object.keys(item.children).length > 0) {
-                        countItems(item.children);
-                    }
-                } else {
-                    totalFiles++;
-                }
-            });
-        };
-        
-        if (Object.keys(treeData).length > 0) {
-            countItems(treeData);
-        }
+        pathMap.forEach(item => {
+            if (item.type === 'file') {
+                totalFiles++;
+            } else {
+                totalFolders++;
+            }
+        });
         
         return { totalFiles, totalFolders };
     }, [treeData]);
+    
+    const { root, pathMap } = treeData;
     
     return React.createElement('div', {
         ref: treeContainerRef,
@@ -522,7 +557,7 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                     React.createElement('button', {
                         key: 'copy-markdown',
                         onClick: copyTreeToClipboard,
-                        title: 'Copiar como Markdown para README',
+                        title: 'Copiar como Markdown',
                         style: {
                             padding: '8px 16px',
                             background: 'rgba(59, 130, 246, 0.1)',
@@ -535,17 +570,17 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                             alignItems: 'center',
                             gap: '6px',
                             transition: 'all 0.2s',
-                            opacity: Object.keys(treeData).length === 0 ? 0.5 : 1
+                            opacity: files.length === 0 ? 0.5 : 1
                         },
-                        disabled: Object.keys(treeData).length === 0,
+                        disabled: files.length === 0,
                         onMouseEnter: (e) => {
-                            if (Object.keys(treeData).length > 0) {
+                            if (files.length > 0) {
                                 e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
                                 e.currentTarget.style.borderColor = '#3b82f6';
                             }
                         },
                         onMouseLeave: (e) => {
-                            if (Object.keys(treeData).length > 0) {
+                            if (files.length > 0) {
                                 e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
                                 e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
                             }
@@ -571,17 +606,17 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                             alignItems: 'center',
                             gap: '6px',
                             transition: 'all 0.2s',
-                            opacity: Object.keys(treeData).length === 0 ? 0.5 : 1
+                            opacity: files.length === 0 ? 0.5 : 1
                         },
-                        disabled: Object.keys(treeData).length === 0,
+                        disabled: files.length === 0,
                         onMouseEnter: (e) => {
-                            if (Object.keys(treeData).length > 0) {
+                            if (files.length > 0) {
                                 e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)';
                                 e.currentTarget.style.borderColor = '#8b5cf6';
                             }
                         },
                         onMouseLeave: (e) => {
-                            if (Object.keys(treeData).length > 0) {
+                            if (files.length > 0) {
                                 e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
                                 e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
                             }
@@ -643,17 +678,17 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         alignItems: 'center',
                         gap: '6px',
                         transition: 'all 0.2s',
-                        opacity: Object.keys(treeData).length === 0 ? 0.5 : 1
+                        opacity: pathMap.size === 0 ? 0.5 : 1
                     },
-                    disabled: Object.keys(treeData).length === 0,
+                    disabled: pathMap.size === 0,
                     onMouseEnter: (e) => {
-                        if (Object.keys(treeData).length > 0) {
+                        if (pathMap.size > 0) {
                             e.currentTarget.style.background = 'rgba(16, 185, 129, 0.2)';
                             e.currentTarget.style.borderColor = '#10b981';
                         }
                     },
                     onMouseLeave: (e) => {
-                        if (Object.keys(treeData).length > 0) {
+                        if (pathMap.size > 0) {
                             e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)';
                             e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.3)';
                         }
@@ -679,17 +714,17 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         alignItems: 'center',
                         gap: '6px',
                         transition: 'all 0.2s',
-                        opacity: Object.keys(treeData).length === 0 ? 0.5 : 1
+                        opacity: pathMap.size === 0 ? 0.5 : 1
                     },
-                    disabled: Object.keys(treeData).length === 0,
+                    disabled: pathMap.size === 0,
                     onMouseEnter: (e) => {
-                        if (Object.keys(treeData).length > 0) {
+                        if (pathMap.size > 0) {
                             e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
                             e.currentTarget.style.borderColor = '#ef4444';
                         }
                     },
                     onMouseLeave: (e) => {
-                        if (Object.keys(treeData).length > 0) {
+                        if (pathMap.size > 0) {
                             e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
                             e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
                         }
@@ -730,7 +765,7 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         'Nenhum arquivo para mostrar'
                     )
                 ])
-                : renderTree(treeData)
+                : renderTree(root)
         ]),
         
         // Rodapé com estatísticas
@@ -1681,7 +1716,7 @@ const RepositoryVisualization = ({ repoInfo, files }) => {
                                 color: '#f8fafc',
                                 margin: '0 0 8px 0',
                                 fontSize: '16px'
-                            }
+                        }
                         }, '📊 Distribuição de Tipos de Arquivo'),
                         React.createElement('p', {
                             key: 'subtitle',
@@ -2312,7 +2347,7 @@ function App() {
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '8px'
-                                }
+                                    }
                                 }, [
                                     React.createElement('span', {
                                         key: 'files',
