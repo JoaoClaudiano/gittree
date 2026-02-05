@@ -25,11 +25,17 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         }
     }, [files]);
     
-    // Construir estrutura de árvore
+    // Construir estrutura de árvore COM PROTEÇÃO CONTRA DUPLICATAS
     const buildTree = () => {
         const tree = {};
+        const processedPaths = new Set(); // Para evitar duplicatas
         
         files.forEach(file => {
+            if (processedPaths.has(file.path)) {
+                return; // Já processou este caminho, ignora
+            }
+            processedPaths.add(file.path);
+            
             const parts = file.path.split('/');
             let current = tree;
             
@@ -59,8 +65,13 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         return tree;
     };
     
-    // Função para copiar a árvore como markdown
+    // Função para copiar a árvore como markdown COM PROTEÇÃO CONTRA MÚLTIPLOS CLIQUES
     const copyTreeToClipboard = async () => {
+        // Evitar múltiplos cliques rápidos
+        if (copySuccess.includes('✅') || copySuccess.includes('❌')) {
+            return;
+        }
+        
         const generateTreeMarkdown = (node, level = 0, indent = '') => {
             let markdown = '';
             const nodeEntries = Object.entries(node);
@@ -100,8 +111,13 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         }
     };
     
-    // Função para copiar apenas a estrutura em texto simples
+    // Função para copiar apenas a estrutura em texto simples COM PROTEÇÃO CONTRA MÚLTIPLOS CLIQUES
     const copySimpleTree = async () => {
+        // Evitar múltiplos cliques rápidos
+        if (copySuccess.includes('✅') || copySuccess.includes('❌')) {
+            return;
+        }
+        
         const generateSimpleTree = (node, level = 0, prefix = '') => {
             let text = '';
             const nodeEntries = Object.entries(node);
@@ -2050,7 +2066,7 @@ function App() {
                                 style: { 
                                     color: '#94a3b8',
                                     fontSize: '12px'
-                                }
+                                    }
                             }, `${cacheStats.total} repositórios`)
                         ])
                     ]),
