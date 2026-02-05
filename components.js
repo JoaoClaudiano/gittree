@@ -25,28 +25,37 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
         }
     }, [files]);
     
-    // Construir estrutura de árvore COM PROTEÇÃO CONTRA DUPLICATAS
+    // Construir estrutura de árvore - VERSÃO CORRIGIDA SEM DUPLICAÇÃO
     const buildTree = () => {
         const tree = {};
-        const processedPaths = new Set(); // Para evitar duplicatas
+        const pathMap = new Map(); // Mapeia caminhos completos para nós
         
         files.forEach(file => {
-            if (processedPaths.has(file.path)) {
-                return; // Já processou este caminho, ignora
+            const filePath = file.path;
+            
+            // Verificar se já processou este caminho exato
+            if (pathMap.has(filePath)) {
+                return; // Já existe, pular
             }
-            processedPaths.add(file.path);
             
-            const parts = file.path.split('/');
-            let current = tree;
+            const parts = filePath.split('/');
+            let currentNode = tree;
+            let currentFullPath = '';
             
-            parts.forEach((part, index) => {
-                const isFile = index === parts.length - 1;
+            for (let i = 0; i < parts.length; i++) {
+                const part = parts[i];
+                const isFile = i === parts.length - 1;
+                currentFullPath = currentFullPath ? `${currentFullPath}/${part}` : part;
                 
-                if (!current[part]) {
-                    current[part] = {
+                // Verificar se este nó já existe
+                let node = currentNode[part];
+                
+                if (!node) {
+                    // Criar novo nó
+                    node = {
                         name: part,
                         type: isFile ? 'file' : 'folder',
-                        path: parts.slice(0, index + 1).join('/'),
+                        path: currentFullPath,
                         children: {},
                         isCodeFile: isFile ? file.isCodeFile : false,
                         extension: isFile ? file.extension : null,
@@ -54,12 +63,16 @@ const FileTree = ({ files, onFileClick, repoInfo }) => {
                         language: isFile ? file.language : null,
                         fileData: isFile ? file : null
                     };
+                    
+                    currentNode[part] = node;
+                    pathMap.set(currentFullPath, node);
                 }
                 
+                // Se for pasta e não for o último item, entrar nos children
                 if (!isFile) {
-                    current = current[part].children;
+                    currentNode = node.children;
                 }
-            });
+            }
         });
         
         return tree;
@@ -2066,7 +2079,7 @@ function App() {
                                 style: { 
                                     color: '#94a3b8',
                                     fontSize: '12px'
-                                    }
+                                }
                             }, `${cacheStats.total} repositórios`)
                         ])
                     ]),
