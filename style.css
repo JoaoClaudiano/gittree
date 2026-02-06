@@ -1119,6 +1119,13 @@ canvas {
 }
 
 /* ============ SKELETON SCREEN ============ */
+:root {
+    --skeleton-fade-delay-base: 50ms;
+    --skeleton-shimmer-delay-base: 100ms;
+    --skeleton-color-dark: rgba(55, 65, 81, 0.5);
+    --skeleton-color-light: rgba(203, 213, 225, 0.8);
+}
+
 .skeleton-container {
     padding: 20px;
     width: 100%;
@@ -1134,43 +1141,43 @@ canvas {
 }
 
 /* Staggered delay for cascade effect */
-.skeleton-tree-item:nth-child(1) { animation-delay: 0ms; }
-.skeleton-tree-item:nth-child(2) { animation-delay: 50ms; }
-.skeleton-tree-item:nth-child(3) { animation-delay: 100ms; }
-.skeleton-tree-item:nth-child(4) { animation-delay: 150ms; }
-.skeleton-tree-item:nth-child(5) { animation-delay: 200ms; }
-.skeleton-tree-item:nth-child(6) { animation-delay: 250ms; }
-.skeleton-tree-item:nth-child(7) { animation-delay: 300ms; }
-.skeleton-tree-item:nth-child(8) { animation-delay: 350ms; }
-.skeleton-tree-item:nth-child(9) { animation-delay: 400ms; }
-.skeleton-tree-item:nth-child(10) { animation-delay: 450ms; }
-.skeleton-tree-item:nth-child(11) { animation-delay: 500ms; }
-.skeleton-tree-item:nth-child(12) { animation-delay: 550ms; }
+.skeleton-tree-item:nth-child(1) { animation-delay: calc(0 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(2) { animation-delay: calc(1 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(3) { animation-delay: calc(2 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(4) { animation-delay: calc(3 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(5) { animation-delay: calc(4 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(6) { animation-delay: calc(5 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(7) { animation-delay: calc(6 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(8) { animation-delay: calc(7 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(9) { animation-delay: calc(8 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(10) { animation-delay: calc(9 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(11) { animation-delay: calc(10 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(12) { animation-delay: calc(11 * var(--skeleton-fade-delay-base)); }
 
 .skeleton-icon {
     width: 20px;
     height: 20px;
     border-radius: 4px;
-    background: rgba(51, 65, 85, 0.6);
+    background: var(--skeleton-color-dark);
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
 }
 
 .light-theme .skeleton-icon {
-    background: rgba(203, 213, 225, 0.8);
+    background: var(--skeleton-color-light);
 }
 
 .skeleton-bar {
     height: 16px;
     border-radius: 6px;
-    background: rgba(51, 65, 85, 0.6);
+    background: var(--skeleton-color-dark);
     position: relative;
     overflow: hidden;
 }
 
 .light-theme .skeleton-bar {
-    background: rgba(203, 213, 225, 0.8);
+    background: var(--skeleton-color-light);
 }
 
 /* Shimmer effect with linear gradient */
@@ -1203,29 +1210,29 @@ canvas {
 
 /* Staggered shimmer delay for cascade effect */
 .skeleton-tree-item:nth-child(1) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(1) .skeleton-bar::after { animation-delay: 0ms; }
+.skeleton-tree-item:nth-child(1) .skeleton-bar::after { animation-delay: calc(0 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(2) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(2) .skeleton-bar::after { animation-delay: 100ms; }
+.skeleton-tree-item:nth-child(2) .skeleton-bar::after { animation-delay: calc(1 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(3) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(3) .skeleton-bar::after { animation-delay: 200ms; }
+.skeleton-tree-item:nth-child(3) .skeleton-bar::after { animation-delay: calc(2 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(4) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(4) .skeleton-bar::after { animation-delay: 300ms; }
+.skeleton-tree-item:nth-child(4) .skeleton-bar::after { animation-delay: calc(3 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(5) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(5) .skeleton-bar::after { animation-delay: 400ms; }
+.skeleton-tree-item:nth-child(5) .skeleton-bar::after { animation-delay: calc(4 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(6) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(6) .skeleton-bar::after { animation-delay: 500ms; }
+.skeleton-tree-item:nth-child(6) .skeleton-bar::after { animation-delay: calc(5 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(7) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(7) .skeleton-bar::after { animation-delay: 600ms; }
+.skeleton-tree-item:nth-child(7) .skeleton-bar::after { animation-delay: calc(6 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(8) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(8) .skeleton-bar::after { animation-delay: 700ms; }
+.skeleton-tree-item:nth-child(8) .skeleton-bar::after { animation-delay: calc(7 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(9) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(9) .skeleton-bar::after { animation-delay: 800ms; }
+.skeleton-tree-item:nth-child(9) .skeleton-bar::after { animation-delay: calc(8 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(10) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(10) .skeleton-bar::after { animation-delay: 900ms; }
+.skeleton-tree-item:nth-child(10) .skeleton-bar::after { animation-delay: calc(9 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(11) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(11) .skeleton-bar::after { animation-delay: 1000ms; }
+.skeleton-tree-item:nth-child(11) .skeleton-bar::after { animation-delay: calc(10 * var(--skeleton-shimmer-delay-base)); }
 .skeleton-tree-item:nth-child(12) .skeleton-icon::after,
-.skeleton-tree-item:nth-child(12) .skeleton-bar::after { animation-delay: 1100ms; }
+.skeleton-tree-item:nth-child(12) .skeleton-bar::after { animation-delay: calc(11 * var(--skeleton-shimmer-delay-base)); }
 
 /* Pulse animation for smooth opacity */
 .skeleton-icon,
@@ -1279,10 +1286,10 @@ canvas {
 
 /* Dark mode optimized colors - graphite and deep gray to avoid harsh contrast */
 body:not(.light-theme) .skeleton-icon {
-    background: rgba(55, 65, 81, 0.5);
+    background: var(--skeleton-color-dark);
 }
 
 body:not(.light-theme) .skeleton-bar {
-    background: rgba(55, 65, 81, 0.5);
+    background: var(--skeleton-color-dark);
 }
 
