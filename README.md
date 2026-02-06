@@ -18,6 +18,7 @@
 - [Como Usar](#-como-usar)
 - [Tecnologias](#-tecnologias)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Guias de Implementação](#-guias-de-implementação)
 - [API GitHub](#-api-github)
 - [Cache Local](#-cache-local)
 - [Exportação](#-exportação)
@@ -140,6 +141,36 @@ gittree/
 │
 └── 📁 artigos/                # Artigos técnicos (se aplicável)
 ```
+
+## 📖 Guias de Implementação
+
+Este projeto serve como referência de arquitetura e SEO técnico. Consulte nossos guias:
+
+### 🏗️ [Implementation Guide (Completo)](./IMPLEMENTATION-GUIDE.md)
+Guia detalhado com:
+- Arquitetura modular e padrões de design
+- Configuração completa de SEO (robots.txt, sitemap, meta tags)
+- Componentes reutilizáveis (skeleton loader, modals, sidebars)
+- Middleware e scripts de automação
+- PWA com Service Worker
+- Performance e estratégias de cache
+- Acessibilidade WCAG 2.1
+- Analytics e monitoramento
+
+### 🚀 [Quick Start Boilerplate](./QUICK-START-BOILERPLATE.md)
+Referência rápida com templates copy-paste:
+- Setup básico em 5 minutos
+- Templates HTML prontos para usar
+- Componentes essenciais
+- Checklist pré-deploy
+- Scripts utilitários
+
+**Use estes guias para:**
+- ✅ Criar novos projetos com a mesma qualidade técnica
+- ✅ Implementar SEO profissional
+- ✅ Seguir melhores práticas de arquitetura
+- ✅ Construir componentes reutilizáveis
+- ✅ Otimizar performance e acessibilidade
 
 ## 🔌 API GitHub
 
