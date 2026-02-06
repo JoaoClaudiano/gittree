@@ -72,7 +72,27 @@ Análise e extração da metodologia arquitetural e de SEO.
 
 ---
 
-### 4. 📘 [README.md](./README.md) (Atualizado)
+### 4. 📊 [COMPARATIVE-ANALYSIS.md](./COMPARATIVE-ANALYSIS.md)
+**Análise Comparativa: GitTree vs ModeloTrabalhista (1,033 linhas)**
+
+Comparação detalhada entre dois projetos do mesmo desenvolvedor.
+
+**Conteúdo:**
+- ✅ Comparação de Estrutura de Pastas
+- ✅ Análise de SEO (robots.txt, sitemap.xml, meta tags)
+- ✅ Arquitetura e Componentes
+- ✅ Performance e PWA
+- ✅ Automação e Scripts
+- ✅ Semelhanças e Diferenças
+- ✅ Melhores Práticas Compartilhadas
+- ✅ Recomendações para Ambos os Projetos
+- ✅ Scorecard com Pontuações Detalhadas
+
+**Quando usar:** Para entender as diferenças entre projetos similares, identificar melhores práticas, ou decidir qual abordagem usar em novos projetos.
+
+---
+
+### 5. 📘 [README.md](./README.md) (Atualizado)
 **Documentação do Projeto GitTree**
 
 README principal do projeto com link para os guias de implementação.
@@ -98,6 +118,8 @@ README principal do projeto com link para os guias de implementação.
 | Implementar acessibilidade | IMPLEMENTATION-GUIDE.md (Seção 9) | 3-6h |
 | Configurar analytics | QUICK-START-BOILERPLATE.md | 15 min |
 | Apresentar para stakeholders | ARCHITECTURE-METHODOLOGY-SUMMARY.md | N/A |
+| Comparar com outro projeto | COMPARATIVE-ANALYSIS.md | 30-45 min |
+| Entender tradeoffs arquiteturais | COMPARATIVE-ANALYSIS.md | 30-45 min |
 
 ---
 
@@ -110,7 +132,8 @@ README principal do projeto com link para os guias de implementação.
 | IMPLEMENTATION-GUIDE.md | 1,620 | 12,000 | 45-60 min |
 | QUICK-START-BOILERPLATE.md | 605 | 4,500 | 15-20 min |
 | ARCHITECTURE-METHODOLOGY-SUMMARY.md | 592 | 4,200 | 15-20 min |
-| **Total** | **2,817** | **~20,700** | **~90 min** |
+| COMPARATIVE-ANALYSIS.md | 1,033 | 7,500 | 30-45 min |
+| **Total** | **3,850** | **~28,200** | **~130 min** |
 
 ### Cobertura de Tópicos
 
