@@ -5,6 +5,14 @@
     --secondary: #8b5cf6;
     --warning: #f59e0b;
     --danger: #ef4444;
+    /* Deep Charcoal Theme 2026 */
+    --deep-charcoal: #1a1d29;
+    --charcoal-lighter: #252936;
+    --charcoal-border: #2d3142;
+    --neon-blue: #00d4ff;
+    --neon-blue-glow: #00a3cc;
+    --neon-blue-dim: #0088aa;
+    /* Original dark theme (fallback) */
     --dark-bg: #0f172a;
     --dark-card: #1e293b;
     --dark-border: #334155;
@@ -1293,3 +1301,203 @@ body:not(.light-theme) .skeleton-bar {
     background: var(--skeleton-color-dark);
 }
 
+
+/* ============ DEEP CHARCOAL DARK MODE 2026 ============ */
+body.dark-theme,
+body:not(.light-theme) {
+    background: var(--deep-charcoal);
+}
+
+body.dark-theme .main-header,
+body:not(.light-theme) .main-header {
+    background: linear-gradient(135deg, var(--deep-charcoal) 0%, var(--charcoal-lighter) 100%);
+    border-bottom: 1px solid var(--charcoal-border);
+}
+
+body.dark-theme .card,
+body:not(.light-theme) .card {
+    background: var(--charcoal-lighter);
+    border-color: var(--charcoal-border);
+}
+
+/* Neon Blue Accents */
+.accent-neon {
+    color: var(--neon-blue);
+}
+
+.btn-neon {
+    background: var(--neon-blue);
+    color: #000;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.btn-neon:hover {
+    background: var(--neon-blue-glow);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Glassmorphism Effects */
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glassmorphism-strong {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Impact Highlight for Modified Files */
+.file-impact-high {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 212, 255, 0.05) 100%);
+    border-left: 3px solid var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.file-impact-medium {
+    background: rgba(0, 212, 255, 0.1);
+    border-left: 2px solid var(--neon-blue-glow);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.file-impact-low {
+    background: rgba(0, 212, 255, 0.05);
+    border-left: 1px solid var(--neon-blue-dim);
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+    }
+}
+
+/* Zero Layout Shift - Reserved Dimensions */
+.tree-container-reserved {
+    min-height: 400px;
+    width: 100%;
+    position: relative;
+}
+
+.tree-container-reserved::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+    /* Maintains aspect ratio */
+}
+
+/* Keyboard Navigation Focus Styles */
+.tree-item:focus,
+.tree-folder:focus,
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--neon-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Enhanced Tree Item Styles with Accessibility */
+.tree-item,
+.tree-folder {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tree-item:hover,
+.tree-folder:hover {
+    background: rgba(0, 212, 255, 0.1);
+    transform: translateX(2px);
+}
+
+.tree-item[aria-selected="true"],
+.tree-folder[aria-expanded="true"] {
+    background: rgba(0, 212, 255, 0.15);
+    border-left: 3px solid var(--neon-blue);
+}
+
+/* Smooth Transitions - Applied to interactive elements */
+.tree-item,
+.tree-folder,
+button,
+a,
+input,
+select,
+.card,
+.sidebar,
+.modal {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--deep-charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neon-blue-dim);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-blue);
+}
+
+/* Loading State Improvements */
+.loading-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(148, 163, 184, 0.1) 0%,
+        rgba(148, 163, 184, 0.2) 50%,
+        rgba(148, 163, 184, 0.1) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+    .ai-sidebar {
+        width: 100% !important;
+    }
+    
+    .bento-panel {
+        max-width: 100% !important;
+        margin: 0;
+        border-radius: 1rem 1rem 0 0;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .ai-sidebar,
+    .bento-panel-overlay,
+    .accessibility-toggle,
+    #cookie-banner {
+        display: none !important;
+    }
+}

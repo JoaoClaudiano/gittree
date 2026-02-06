@@ -317,6 +317,11 @@ async function analyzeRepository() {
     showLoading(true);
     showStatus('Processando...', 'info');
     
+    // Show skeleton loader
+    if (typeof window.showSkeletonLoader === 'function') {
+        window.showSkeletonLoader();
+    }
+    
     try {
         let repoInfo;
         try {
@@ -324,6 +329,9 @@ async function analyzeRepository() {
         } catch (error) {
             showStatus(error.message, 'error');
             showLoading(false);
+            if (typeof window.hideSkeletonLoader === 'function') {
+                window.hideSkeletonLoader();
+            }
             return;
         }
         
@@ -356,14 +364,29 @@ async function analyzeRepository() {
         
         showStatus(`Processando ${treeData.tree.length} itens...`, 'info');
         
+        // Hide skeleton loader before rendering actual tree
+        if (typeof window.hideSkeletonLoader === 'function') {
+            window.hideSkeletonLoader();
+        }
+        
         renderTree(treeData);
         updateMetrics(treeData);
         updateCacheStatus();
+        
+        // Store tree data for AI Navigator
+        if (window.GitTree2026) {
+            window.GitTree2026.treeData = window.currentTreeData;
+        }
         
         showStatus('Estrutura carregada!', 'success');
         
     } catch (error) {
         console.error('Erro:', error);
+        
+        // Hide skeleton loader on error
+        if (typeof window.hideSkeletonLoader === 'function') {
+            window.hideSkeletonLoader();
+        }
         
         if (error.message.includes('404') || error.message.includes('não encontrado')) {
             showStatus('Repositório não encontrado', 'error');

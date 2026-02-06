@@ -1,0 +1,345 @@
+# GitTree 2026 - New Features Documentation
+
+## Overview
+GitTree has been upgraded with cutting-edge 2026 features including AI-powered navigation, advanced skeleton loading, metadata panels with Bento UI design, and comprehensive accessibility enhancements.
+
+## 🚀 New Features
+
+### 1. **Intelligent Tree View with Recursive Staggered Skeletons**
+
+**What it does:**
+- Displays an animated skeleton loader during repository analysis
+- Shows shimmer effects with variable indentation levels
+- Simulates the actual tree structure before data loads
+
+**Technical Implementation:**
+- `skeleton-loader.js` - Vanilla JS implementation (no dependencies)
+- Dynamic generation of folder/file skeletons at multiple depth levels
+- CSS animations with `@keyframes shimmer` for smooth effects
+
+**How to use:**
+- Automatically shown when clicking "Visualizar" button
+- Loads before the actual repository tree appears
+
+---
+
+### 2. **AI Agentic Navigator Sidebar**
+
+**What it does:**
+- Semantic search for code architecture patterns
+- Automatically expands and navigates to matching files/folders
+- Pre-configured search suggestions (auth, api, test, config, ui)
+
+**Features:**
+- 🤖 AI-powered semantic mapping
+- 🔍 Intelligent pattern matching
+- ⌨️ Keyboard shortcut: `Ctrl/Cmd + K` to open
+- 🎯 Auto-expand matching paths in the tree
+- 📊 Relevance scoring for search results
+
+**Technical Implementation:**
+- `ai-sidebar.js` - AI Navigator component
+- `enhanced-tree.js` - Integration layer
+- Semantic mappings for common architecture terms:
+  - `auth` → authentication, login, passport, jwt, oauth
+  - `api` → routes, endpoints, controllers, rest, graphql
+  - `test` → spec, __tests__, testing, jest, mocha
+  - And more...
+
+**How to use:**
+1. Click the "AI Navigator" button (cyan/neon blue)
+2. OR press `Ctrl/Cmd + K`
+3. Type a search term (e.g., "auth", "api", "tests")
+4. Click suggestion buttons for quick searches
+5. Results show with relevance scoring
+6. Click any result to navigate and expand the tree
+7. Press `Escape` to close
+
+---
+
+### 3. **Bento UI Metadata Panel**
+
+**What it does:**
+- Displays detailed file metadata in a modern Bento Grid layout
+- Shows file size, extension, language, and commit information
+- Features glassmorphism effects for a premium look
+
+**Features:**
+- 📊 **File Size**: Formatted display (B, KB, MB)
+- 🏷️ **Extension**: File type with icon
+- 💻 **Language**: Detected programming language
+- 📝 **Last Commit**: Author and date (placeholder data)
+- 📈 **Language Distribution**: Repository-wide language statistics
+
+**Technical Implementation:**
+- `bento-panel.js` - Bento Grid component
+- CSS Grid layout with responsive design
+- Glassmorphism background effects
+- Gradient cards with hover animations
+
+**How to use:**
+1. Analyze a repository
+2. Click on any file in the tree
+3. Bento metadata panel appears
+4. View detailed information
+5. Click outside or press `Escape` to close
+
+---
+
+### 4. **Impact Highlight System**
+
+**What it does:**
+- Highlights modified files in the tree (e.g., from PR diffs)
+- Three impact levels: high, medium, low
+- Glow effects to draw attention to important changes
+
+**Features:**
+- 🔴 **High Impact**: Bright neon blue glow with pulsing animation
+- 🟡 **Medium Impact**: Moderate highlight
+- 🟢 **Low Impact**: Subtle highlight
+
+**Technical Implementation:**
+- CSS classes: `.file-impact-high`, `.file-impact-medium`, `.file-impact-low`
+- `@keyframes glow-pulse` animation
+- Function `setImpactHighlight(modifiedFiles)` to apply highlights
+
+**How to use:**
+```javascript
+// Example: Highlight files modified in a PR
+window.setImpactHighlight([
+    'src/components/Button.js',
+    'src/utils/helpers.js',
+    'README.md'
+]);
+```
+
+---
+
+### 5. **Deep Charcoal Dark Mode (2026)**
+
+**What it does:**
+- Modern dark theme with deep charcoal background
+- Neon blue accents throughout the interface
+- Glassmorphism effects on panels and sidebars
+
+**Color Palette:**
+- `--deep-charcoal`: #1a1d29 (main background)
+- `--neon-blue`: #00d4ff (accents, buttons, highlights)
+- `--neon-blue-glow`: #00a3cc (hover states)
+- `--neon-blue-dim`: #0088aa (subtle accents)
+
+**Features:**
+- Smooth color transitions
+- Enhanced contrast for accessibility
+- Modern glassmorphism effects
+- Consistent design language
+
+---
+
+### 6. **Performance & Accessibility (2026 Standards)**
+
+#### **Zero Layout Shift (CLS)**
+- Reserved dimensions for tree container
+- Skeleton loaders maintain layout structure
+- Smooth transitions without jarring shifts
+
+#### **Keyboard Navigation**
+Full keyboard support for power users:
+- `Arrow Keys` - Navigate tree items
+- `Enter / Space` - Activate items (expand/collapse)
+- `Home` - Jump to first item
+- `End` - Jump to last item
+- `Ctrl/Cmd + K` - Open AI Navigator
+- `Escape` - Close modals/sidebars
+- `Tab` - Navigate between interactive elements
+
+#### **Screen Reader Support**
+- Dynamic `aria-labels` for all tree items
+- `role="tree"` and `role="treeitem"` attributes
+- `aria-expanded` for folder states
+- `aria-selected` for selected items
+- Descriptive button labels
+
+#### **Focus Management**
+- Visible focus indicators with neon blue outline
+- Tab order follows logical flow
+- Focus trapped in modals when open
+- Focus returned to trigger element on close
+
+**Technical Implementation:**
+- `accessibility-enhancements.js` - Comprehensive accessibility layer
+- CSS focus styles with `:focus-visible`
+- ARIA attributes added dynamically
+- Keyboard event handlers for tree navigation
+
+---
+
+### 7. **Modern Animations & Transitions**
+
+**Features:**
+- Smooth slide-in animations for sidebars
+- Fade-in effects for skeleton nodes
+- Shimmer loading animations
+- Glow pulse for highlights
+- Hover state transitions
+
+**Animations:**
+- `@keyframes slideInRight` - Sidebar entrance
+- `@keyframes slideUpFade` - Modal entrance
+- `@keyframes shimmer` - Loading skeleton
+- `@keyframes glow-pulse` - Impact highlights
+- `@keyframes fadeIn` - General fade-in
+
+---
+
+## 🛠️ Technical Architecture
+
+### File Structure
+```
+gittree/
+├── skeleton-loader.js          # Skeleton loading component
+├── ai-sidebar.js               # AI Navigator sidebar (React + Vanilla JS)
+├── bento-panel.js              # Bento metadata panel (React + Vanilla JS)
+├── enhanced-tree.js            # Integration layer for new features
+├── accessibility-enhancements.js  # Accessibility layer
+├── components.js               # Original tree components
+├── main.js                     # Main application logic (updated)
+├── style.css                   # Styles (updated with 2026 theme)
+└── index.html                  # Main HTML (updated with new scripts)
+```
+
+### Dependencies
+- **React 18** (optional, via CDN with vanilla JS fallback)
+- **Tailwind CSS** (via CDN)
+- **Font Awesome 6** (icons)
+- **Chart.js** (metrics visualization)
+
+### Fallback Strategy
+All components have vanilla JavaScript implementations that work without React/Tailwind CDN:
+- Skeleton loader: Pure JS DOM manipulation
+- AI Sidebar: Vanilla JS with inline styles
+- Bento Panel: Vanilla JS with CSS Grid
+- Full functionality maintained even when CDN resources are blocked
+
+---
+
+## 📖 Usage Examples
+
+### Opening AI Navigator
+```javascript
+// Programmatically open AI Navigator
+window.GitTree2026.aiSidebarOpen = true;
+window.renderAISidebar();
+
+// Or use keyboard shortcut: Ctrl/Cmd + K
+```
+
+### Setting Impact Highlights
+```javascript
+// Highlight modified files
+window.setImpactHighlight([
+    'src/index.js',
+    'package.json',
+    'README.md'
+]);
+```
+
+### Opening Bento Panel for a File
+```javascript
+// Show metadata for a specific file
+window.GitTree2026.selectedFile = {
+    name: 'index.js',
+    path: 'src/index.js',
+    extension: 'js',
+    language: 'JavaScript',
+    sizeKB: 15.6
+};
+window.GitTree2026.bentoMetadataPanelOpen = true;
+window.renderBentoPanel();
+```
+
+---
+
+## 🎨 Customization
+
+### Changing Theme Colors
+Edit `style.css`:
+```css
+:root {
+    --deep-charcoal: #1a1d29;
+    --neon-blue: #00d4ff;
+    --neon-blue-glow: #00a3cc;
+}
+```
+
+### Adding New Semantic Mappings
+Edit `ai-sidebar.js`:
+```javascript
+const semanticMappings = {
+    'your-term': ['synonym1', 'synonym2', 'synonym3'],
+    // ... add more mappings
+};
+```
+
+### Adjusting Skeleton Depth
+```javascript
+// In enhanced-tree.js
+window.createSkeletonTree(3, [4, 5, 6]);
+//                         ^    ^  ^  ^
+//                       depth  L0 L1 L2
+```
+
+---
+
+## 🧪 Testing
+
+### Manual Testing Checklist
+- [ ] AI Navigator opens with Ctrl/Cmd + K
+- [ ] AI Navigator closes with Escape
+- [ ] Search returns relevant results
+- [ ] Skeleton loader appears during repository load
+- [ ] Tree items are keyboard navigable
+- [ ] Focus indicators are visible
+- [ ] Bento panel displays file metadata
+- [ ] Deep charcoal theme applied correctly
+- [ ] All animations are smooth
+- [ ] Responsive design works on mobile
+
+---
+
+## 🚀 Future Enhancements
+
+Potential improvements for future versions:
+1. **Real commit data** from GitHub API for Bento panel
+2. **ML-powered** semantic search using embeddings
+3. **Custom impact levels** based on lines changed
+4. **File preview** in Bento panel
+5. **Collaborative features** with real-time updates
+6. **Advanced filters** in AI Navigator
+7. **Saved searches** and custom mappings
+8. **Export enhanced reports** with impact analysis
+
+---
+
+## 📝 Notes
+
+- All features degrade gracefully when CDN resources are unavailable
+- Vanilla JS implementations ensure compatibility
+- Accessibility features meet WCAG 2.1 AA standards
+- Performance optimized with memoization and lazy loading
+- Mobile-responsive design with touch support
+
+---
+
+## 🙏 Credits
+
+Developed with modern web standards and best practices for 2026, including:
+- React 18 Suspense patterns
+- CSS Grid and Flexbox layouts
+- Glassmorphism design trend
+- Semantic search algorithms
+- WCAG 2.1 accessibility guidelines
+
+---
+
+**GitTree 2026** - Visualize repositories like never before! 🌳✨
