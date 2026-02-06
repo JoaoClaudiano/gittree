@@ -1,6 +1,72 @@
+# robots.txt para GitTree
+# Gerado automaticamente
+# 2026-02-06T22:47:19.960Z
+
+# Configuração padrão
 User-agent: *
 Allow: /
+
+# Áreas administrativas e privadas
 Disallow: /admin/
 Disallow: /private/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /scripts/
 
+# Arquivos técnicos (wildcards)
+Disallow: *.json
+Disallow: *.js.map
+Disallow: *.css.map
+Disallow: *_config.yml
+
+# Arquivos específicos
+Disallow: /google*.html
+Disallow: /404.html
+
+# Permitir recursos importantes
+Allow: /icons/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /manifest.json
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# DuckDuckBot
+User-agent: DuckDuckBot
+Allow: /
+
+# Slurp (Yahoo)
+User-agent: Slurp
+Allow: /
+
+# Baiduspider
+User-agent: Baiduspider
+Allow: /
+
+# YandexBot
+User-agent: YandexBot
+Allow: /
+
+# Bloquear bots maliciosos
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap
 Sitemap: https://joaoclaudiano.github.io/gittree/sitemap.xml

@@ -1,0 +1,30 @@
+{
+  "name": "gittree",
+  "version": "1.0.0",
+  "description": "GitTree - Visualizador de Estrutura GitHub",
+  "main": "index.html",
+  "scripts": {
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "generate-robots": "node scripts/generate-robots.js",
+    "generate-seo": "npm run generate-sitemap && npm run generate-robots",
+    "test": "echo \"No tests configured yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaoClaudiano/gittree.git"
+  },
+  "keywords": [
+    "github",
+    "tree",
+    "visualizer",
+    "repository",
+    "structure"
+  ],
+  "author": "João Claudiano",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoaoClaudiano/gittree/issues"
+  },
+  "homepage": "https://github.com/JoaoClaudiano/gittree#readme",
+  "devDependencies": {}
+}
