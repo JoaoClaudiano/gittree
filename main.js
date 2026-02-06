@@ -1003,9 +1003,69 @@ function convertToCSV(treeData) {
     return [headers.join(',')].concat(rows.map(row => row.join(','))).join('\n');
 }
 
+function createSkeletonScreen() {
+    const container = document.createElement('div');
+    container.className = 'skeleton-container';
+    container.setAttribute('aria-hidden', 'true');
+    
+    // Configuration for tree structure simulation
+    const items = [
+        { level: 0, width: 75 },
+        { level: 1, width: 65 },
+        { level: 1, width: 80 },
+        { level: 2, width: 60 },
+        { level: 2, width: 70 },
+        { level: 1, width: 85 },
+        { level: 0, width: 90 },
+        { level: 1, width: 70 },
+        { level: 1, width: 65 },
+        { level: 2, width: 75 },
+        { level: 0, width: 80 },
+        { level: 1, width: 70 }
+    ];
+    
+    items.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = `skeleton-tree-item level-${item.level}`;
+        
+        const icon = document.createElement('div');
+        icon.className = 'skeleton-icon';
+        
+        const bar = document.createElement('div');
+        bar.className = `skeleton-bar width-${item.width}`;
+        
+        row.appendChild(icon);
+        row.appendChild(bar);
+        container.appendChild(row);
+    });
+    
+    return container;
+}
+
+function showSkeletonInTree(show) {
+    const treeContainer = document.getElementById('treeContainer');
+    if (!treeContainer) return;
+    
+    if (show) {
+        // Clear existing content and show skeleton
+        treeContainer.innerHTML = '';
+        const skeleton = createSkeletonScreen();
+        treeContainer.appendChild(skeleton);
+    } else {
+        // Remove skeleton - actual content will be added by renderTree
+        const skeleton = treeContainer.querySelector('.skeleton-container');
+        if (skeleton) {
+            skeleton.remove();
+        }
+    }
+}
+
 function showLoading(show) {
     const loading = document.getElementById('loadingState');
     const btn = document.getElementById('analyzeBtn');
+    
+    // Show/hide skeleton in tree view
+    showSkeletonInTree(show);
     
     if (loading) loading.classList.toggle('hidden', !show);
     if (btn) {
