@@ -179,21 +179,19 @@ function copyTreeAsText() {
         
         // Se for pasta expandida, processa filhos
         if (children && children.dataset.expanded === 'true') {
-            const childNodes = children.querySelectorAll('.tree-node');
+            const childNodes = children.querySelectorAll(':scope > .tree-node');
             childNodes.forEach(child => collectTreeNodes(child, depth + 1, lines));
         }
         
         return lines;
     }
     
-    // Coletar todas as linhas
-    const allNodes = treeContainer.querySelectorAll('.tree-node:first-child, .tree-node:not(.tree-node .tree-node)');
+    // Coletar todas as linhas - apenas nós de nível superior
+    const allNodes = treeContainer.querySelectorAll(':scope > .tree-node');
     let allLines = [];
     
     allNodes.forEach(node => {
-        if (!node.parentElement.closest('.tree-node-children')) {
-            allLines = collectTreeNodes(node, 0, allLines);
-        }
+        allLines = collectTreeNodes(node, 0, allLines);
     });
     
     if (allLines.length === 0) {
