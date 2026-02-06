@@ -124,6 +124,26 @@ README principal do projeto com link para os guias de implementação.
 
 ---
 
+### 8. 🚀 [CACHE-STRATEGY.md](./CACHE-STRATEGY.md)
+**Estratégia de Cache e Service Worker (373 linhas)**
+
+Documentação técnica completa sobre caching, service worker e performance.
+
+**Conteúdo:**
+- ✅ Service Worker v2.0.0 com estratégias avançadas
+- ✅ 3 Estratégias de Cache (Cache-First, Network-First, Stale-While-Revalidate)
+- ✅ Cache Busting robusto com versionamento
+- ✅ Cache Control Headers por tipo de arquivo
+- ✅ Sistema de notificações de atualização
+- ✅ Ferramentas de debug (clearAppCache)
+- ✅ Performance metrics e benchmarks
+- ✅ Troubleshooting e best practices
+- ✅ Fluxo de atualização detalhado
+
+**Quando usar:** Para entender o sistema de cache, debugar problemas de cache, ou implementar service worker similar em outros projetos.
+
+---
+
 ## 🎯 Qual Guia Usar?
 
 ### Cenários Comuns
@@ -142,6 +162,9 @@ README principal do projeto com link para os guias de implementação.
 | Entender tradeoffs arquiteturais | COMPARATIVE-ANALYSIS.md | 30-45 min |
 | Ver o que foi implementado | IMPLEMENTATION-SUMMARY.md | 20-30 min |
 | Validar melhorias realizadas | IMPLEMENTATION-SUMMARY.md | 10-15 min |
+| Entender estratégia de cache | CACHE-STRATEGY.md | 15-20 min |
+| Debugar problemas de cache | CACHE-STRATEGY.md | 5-10 min |
+| Implementar service worker | CACHE-STRATEGY.md | 30-45 min |
 
 ---
 
@@ -156,7 +179,8 @@ README principal do projeto com link para os guias de implementação.
 | ARCHITECTURE-METHODOLOGY-SUMMARY.md | 592 | 4,200 | 15-20 min |
 | COMPARATIVE-ANALYSIS.md | 1,033 | 7,500 | 30-45 min |
 | IMPLEMENTATION-SUMMARY.md | 578 | 4,200 | 20-30 min |
-| **Total** | **4,428** | **~32,400** | **~150 min** |
+| CACHE-STRATEGY.md | 393 | 3,000 | 15-20 min |
+| **Total** | **4,821** | **~35,400** | **~165 min** |
 
 ### Cobertura de Tópicos
 
