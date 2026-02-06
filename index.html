@@ -845,13 +845,147 @@
     </script>
     
 <script>
+  /**
+   * Service Worker Registration com Cache Busting
+   * Detecta atualizações e força reload quando necessário
+   */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(reg => console.log('Service Worker registrado!', reg.scope))
-        .catch(err => console.log('Falha no registro:', err));
+      // Adiciona timestamp para forçar verificação de atualização
+      const swUrl = 'service-worker.js?v=' + new Date().getTime();
+      
+      navigator.serviceWorker.register(swUrl, {
+        updateViaCache: 'none' // Força verificação de atualização
+      })
+        .then(registration => {
+          console.log('[SW] Service Worker registrado!', registration.scope);
+          
+          // Verifica atualizações periodicamente (a cada 1 hora)
+          setInterval(() => {
+            registration.update();
+          }, 60 * 60 * 1000);
+          
+          // Detecta quando um novo service worker está aguardando
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // Novo service worker disponível
+                console.log('[SW] Nova versão disponível!');
+                
+                // Opcional: Mostrar notificação ao usuário
+                showUpdateNotification(registration);
+              }
+            });
+          });
+        })
+        .catch(err => {
+          console.log('[SW] Falha no registro:', err);
+        });
+      
+      // Detecta quando o service worker assume controle
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('[SW] Service Worker atualizado, recarregando página...');
+        window.location.reload();
+      });
     });
   }
+  
+  /**
+   * Mostra notificação de atualização disponível
+   */
+  function showUpdateNotification(registration) {
+    // Criar elemento de notificação
+    const notification = document.createElement('div');
+    notification.id = 'sw-update-notification';
+    notification.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #00d4ff;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10000;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      animation: slideIn 0.3s ease-out;
+    `;
+    
+    notification.innerHTML = `
+      <span>Nova versão disponível!</span>
+      <button id="sw-update-btn" style="
+        background: white;
+        color: #00d4ff;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+      ">Atualizar</button>
+      <button id="sw-dismiss-btn" style="
+        background: transparent;
+        color: white;
+        border: 1px solid white;
+        padding: 5px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+      ">Depois</button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Adicionar animação
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Handler para botão de atualizar
+    document.getElementById('sw-update-btn').addEventListener('click', () => {
+      // Envia mensagem para o service worker skip waiting
+      if (registration.waiting) {
+        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+      }
+      notification.remove();
+    });
+    
+    // Handler para botão de dispensar
+    document.getElementById('sw-dismiss-btn').addEventListener('click', () => {
+      notification.remove();
+    });
+  }
+  
+  /**
+   * Função auxiliar para limpar cache manualmente
+   * Útil para debug e desenvolvimento
+   */
+  window.clearAppCache = function() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistration().then(registration => {
+        if (registration) {
+          registration.active.postMessage({ type: 'CLEAR_CACHE' });
+          console.log('[SW] Comando de limpeza enviado');
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      });
+    }
+  };
 </script>
     
 </body>
