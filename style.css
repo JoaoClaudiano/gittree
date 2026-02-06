@@ -1118,3 +1118,178 @@ canvas {
     }
 }
 
+/* ============ SKELETON SCREEN ============ */
+:root {
+    --skeleton-fade-delay-base: 50ms;
+    --skeleton-shimmer-delay-base: 100ms;
+    --skeleton-color-dark: rgba(55, 65, 81, 0.5);
+    --skeleton-color-light: rgba(203, 213, 225, 0.8);
+}
+
+.skeleton-container {
+    padding: 20px;
+    width: 100%;
+}
+
+.skeleton-tree-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: skeletonFadeIn 0.3s ease-in-out forwards;
+}
+
+/* Staggered delay for cascade effect */
+.skeleton-tree-item:nth-child(1) { animation-delay: calc(0 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(2) { animation-delay: calc(1 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(3) { animation-delay: calc(2 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(4) { animation-delay: calc(3 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(5) { animation-delay: calc(4 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(6) { animation-delay: calc(5 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(7) { animation-delay: calc(6 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(8) { animation-delay: calc(7 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(9) { animation-delay: calc(8 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(10) { animation-delay: calc(9 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(11) { animation-delay: calc(10 * var(--skeleton-fade-delay-base)); }
+.skeleton-tree-item:nth-child(12) { animation-delay: calc(11 * var(--skeleton-fade-delay-base)); }
+
+.skeleton-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: var(--skeleton-color-dark);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.light-theme .skeleton-icon {
+    background: var(--skeleton-color-light);
+}
+
+.skeleton-bar {
+    height: 16px;
+    border-radius: 6px;
+    background: var(--skeleton-color-dark);
+    position: relative;
+    overflow: hidden;
+}
+
+.light-theme .skeleton-bar {
+    background: var(--skeleton-color-light);
+}
+
+/* Shimmer effect with linear gradient */
+.skeleton-icon::after,
+.skeleton-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%
+    );
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+.light-theme .skeleton-icon::after,
+.light-theme .skeleton-bar::after {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        transparent 100%
+    );
+}
+
+/* Staggered shimmer delay for cascade effect */
+.skeleton-tree-item:nth-child(1) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(1) .skeleton-bar::after { animation-delay: calc(0 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(2) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(2) .skeleton-bar::after { animation-delay: calc(1 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(3) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(3) .skeleton-bar::after { animation-delay: calc(2 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(4) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(4) .skeleton-bar::after { animation-delay: calc(3 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(5) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(5) .skeleton-bar::after { animation-delay: calc(4 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(6) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(6) .skeleton-bar::after { animation-delay: calc(5 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(7) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(7) .skeleton-bar::after { animation-delay: calc(6 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(8) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(8) .skeleton-bar::after { animation-delay: calc(7 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(9) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(9) .skeleton-bar::after { animation-delay: calc(8 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(10) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(10) .skeleton-bar::after { animation-delay: calc(9 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(11) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(11) .skeleton-bar::after { animation-delay: calc(10 * var(--skeleton-shimmer-delay-base)); }
+.skeleton-tree-item:nth-child(12) .skeleton-icon::after,
+.skeleton-tree-item:nth-child(12) .skeleton-bar::after { animation-delay: calc(11 * var(--skeleton-shimmer-delay-base)); }
+
+/* Pulse animation for smooth opacity */
+.skeleton-icon,
+.skeleton-bar {
+    animation: skeletonPulse 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes skeletonPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes skeletonFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Indentation levels for tree structure */
+.skeleton-tree-item.level-0 { padding-left: 0; }
+.skeleton-tree-item.level-1 { padding-left: 24px; }
+.skeleton-tree-item.level-2 { padding-left: 48px; }
+.skeleton-tree-item.level-3 { padding-left: 72px; }
+
+/* Variable widths for bars (60% to 90%) */
+.skeleton-bar.width-60 { width: 60%; }
+.skeleton-bar.width-65 { width: 65%; }
+.skeleton-bar.width-70 { width: 70%; }
+.skeleton-bar.width-75 { width: 75%; }
+.skeleton-bar.width-80 { width: 80%; }
+.skeleton-bar.width-85 { width: 85%; }
+.skeleton-bar.width-90 { width: 90%; }
+
+/* Dark mode optimized colors - graphite and deep gray to avoid harsh contrast */
+body:not(.light-theme) .skeleton-icon {
+    background: var(--skeleton-color-dark);
+}
+
+body:not(.light-theme) .skeleton-bar {
+    background: var(--skeleton-color-dark);
+}
+
