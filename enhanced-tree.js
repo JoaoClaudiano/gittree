@@ -483,7 +483,13 @@ function handleFileClickWithBento(file) {
 
 // Memoized tree component wrapper
 const MemoizedTreeWrapper = React.memo(({ files, repoInfo }) => {
-    return React.createElement(window.FileTree || FileTree, {
+    // Ensure FileTree is available
+    if (!window.FileTree) {
+        console.error('FileTree component not found');
+        return null;
+    }
+    
+    return React.createElement(window.FileTree, {
         files: files,
         repoInfo: repoInfo,
         onFileClick: handleFileClickWithBento

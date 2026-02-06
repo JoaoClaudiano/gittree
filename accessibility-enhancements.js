@@ -5,13 +5,14 @@
     'use strict';
     
     // Wait for components to be loaded
-    if (typeof FileTree === 'undefined') {
-        console.log('Waiting for FileTree component...');
-        setTimeout(arguments.callee, 100);
-        return;
-    }
-    
-    console.log('🎯 Enhancing accessibility...');
+    function initAccessibility() {
+        if (typeof FileTree === 'undefined') {
+            console.log('Waiting for FileTree component...');
+            setTimeout(initAccessibility, 100);
+            return;
+        }
+        
+        console.log('🎯 Enhancing accessibility...');
     
     // Add keyboard navigation support to tree items
     document.addEventListener('click', function(e) {
@@ -146,4 +147,8 @@
     });
     
     console.log('✅ Accessibility enhancements applied');
+}
+
+// Start initialization
+initAccessibility();
 })();

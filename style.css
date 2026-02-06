@@ -1426,8 +1426,16 @@ a:focus-visible {
     border-left: 3px solid var(--neon-blue);
 }
 
-/* Smooth Transitions */
-* {
+/* Smooth Transitions - Applied to interactive elements */
+.tree-item,
+.tree-folder,
+button,
+a,
+input,
+select,
+.card,
+.sidebar,
+.modal {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 

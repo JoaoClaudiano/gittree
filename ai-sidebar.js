@@ -68,11 +68,10 @@ const AISidebar = ({ treeData, onNavigate, isOpen, onClose }) => {
         setResults(matches.slice(0, 10)); // Limit to top 10 results
         setIsSearching(false);
         
-        // Auto-expand matching paths
+        // Auto-expand only the most relevant match
         if (matches.length > 0 && onNavigate) {
-            matches.slice(0, 5).forEach(match => {
-                onNavigate(match.path);
-            });
+            // Navigate to the most relevant result (highest score)
+            onNavigate(matches[0].path);
         }
     };
     
