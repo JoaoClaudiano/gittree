@@ -267,10 +267,6 @@
                 <div class="controls-section">
                     <h4><i class="fas fa-tools"></i> Ferramentas</h4>
                     <div class="tool-buttons">
-                        <button id="aiNavigatorBtn" class="btn-neon" style="width: 100%; margin-bottom: 8px;" title="🤖 AI Navigator - Busca semântica inteligente&#10;&#10;Encontre arquivos por conceito, não apenas por nome!&#10;Exemplos: 'auth', 'api', 'test', 'config', 'ui'&#10;&#10;✅ 100% Local e Gratuito - Roda no seu navegador&#10;✅ Sem limites - Use quantas vezes quiser&#10;&#10;Atalho: Ctrl/Cmd + K">
-                            <i class="fas fa-robot"></i>
-                            AI Navigator
-                        </button>
                         <button id="clearCacheBtn" class="btn-secondary" title="Limpar cache local de repositórios analisados">
                             <i class="fas fa-trash"></i>
                             Limpar Cache
@@ -346,36 +342,6 @@
                 </ul>
             </div>
             
-            <!-- AI Navigator Quick Info -->
-            <div class="ai-navigator-info" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 163, 204, 0.05) 100%); border-radius: 8px; border-left: 4px solid var(--neon-blue);">
-                <h3 style="margin-bottom: 10px; color: var(--dark-text); font-size: 1.1rem;">
-                    <i class="fas fa-robot" style="margin-right: 8px; color: var(--neon-blue);"></i>
-                    O que o AI Navigator faz?
-                </h3>
-                <p style="margin-bottom: 10px; color: var(--dark-subtext); line-height: 1.6;">
-                    O <strong style="color: var(--neon-blue);">AI Navigator</strong> é uma busca semântica inteligente que encontra arquivos por <strong>conceito</strong>, 
-                    não apenas por nome. Digite "auth" e encontre authentication, login, jwt, oauth automaticamente!
-                </p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 12px;">
-                    <span style="color: var(--dark-subtext); font-size: 0.9rem;">
-                        <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 5px;"></i>
-                        100% Local e Gratuito
-                    </span>
-                    <span style="color: var(--dark-subtext); font-size: 0.9rem;">
-                        <i class="fas fa-infinity" style="color: var(--primary); margin-right: 5px;"></i>
-                        Uso Ilimitado
-                    </span>
-                    <span style="color: var(--dark-subtext); font-size: 0.9rem;">
-                        <i class="fas fa-keyboard" style="color: var(--primary); margin-right: 5px;"></i>
-                        Atalho: Ctrl/Cmd + K
-                    </span>
-                </div>
-                <p style="margin-top: 10px; margin-bottom: 0; font-size: 0.9rem; color: var(--dark-subtext);">
-                    <a href="guia.html#ai-navigator" style="color: var(--neon-blue); text-decoration: none; font-weight: 500;">
-                        Saiba mais sobre o AI Navigator →
-                    </a>
-                </p>
-            </div>
             
             <div id="loadingState" class="loading-state hidden">
                 <div class="spinner">
@@ -516,7 +482,6 @@
     <script src="utils.js"></script>
     <script src="github-api.js"></script>
     <script src="skeleton-loader.js"></script>
-    <script src="ai-sidebar.js"></script>
     <script src="bento-panel.js"></script>
     <script src="components.js"></script>
     <script src="enhanced-tree.js"></script>
@@ -878,146 +843,21 @@
     
 <script>
   /**
-   * Service Worker Registration com Cache Busting
-   * Detecta atualizações e força reload quando necessário
+   * Service Worker Registration
+   * Simple registration without automatic reloads
    */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // Adiciona timestamp para forçar verificação de atualização
-      const swUrl = 'service-worker.js?v=' + new Date().getTime();
-      
-      navigator.serviceWorker.register(swUrl, {
-        updateViaCache: 'none' // Força verificação de atualização
-      })
+      navigator.serviceWorker.register('service-worker.js')
         .then(registration => {
           console.log('[SW] Service Worker registrado!', registration.scope);
-          
-          // Verifica atualizações periodicamente (a cada 1 hora)
-          setInterval(() => {
-            registration.update();
-          }, 60 * 60 * 1000);
-          
-          // Detecta quando um novo service worker está aguardando
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // Novo service worker disponível
-                console.log('[SW] Nova versão disponível!');
-                
-                // Opcional: Mostrar notificação ao usuário
-                showUpdateNotification(registration);
-              }
-            });
-          });
         })
         .catch(err => {
           console.log('[SW] Falha no registro:', err);
         });
-      
-      // Detecta quando o service worker assume controle
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('[SW] Service Worker atualizado, recarregando página...');
-        window.location.reload();
-      });
     });
   }
-  
-  /**
-   * Mostra notificação de atualização disponível
-   */
-  function showUpdateNotification(registration) {
-    // Criar elemento de notificação
-    const notification = document.createElement('div');
-    notification.id = 'sw-update-notification';
-    notification.style.cssText = `
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #00d4ff;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 10000;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      animation: slideIn 0.3s ease-out;
-    `;
-    
-    notification.innerHTML = `
-      <span>Nova versão disponível!</span>
-      <button id="sw-update-btn" style="
-        background: white;
-        color: #00d4ff;
-        border: none;
-        padding: 5px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-      ">Atualizar</button>
-      <button id="sw-dismiss-btn" style="
-        background: transparent;
-        color: white;
-        border: 1px solid white;
-        padding: 5px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-      ">Depois</button>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Adicionar animação
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideIn {
-        from {
-          transform: translateX(400px);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Handler para botão de atualizar
-    document.getElementById('sw-update-btn').addEventListener('click', () => {
-      // Envia mensagem para o service worker skip waiting
-      if (registration.waiting) {
-        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-      }
-      notification.remove();
-    });
-    
-    // Handler para botão de dispensar
-    document.getElementById('sw-dismiss-btn').addEventListener('click', () => {
-      notification.remove();
-    });
-  }
-  
-  /**
-   * Função auxiliar para limpar cache manualmente
-   * Útil para debug e desenvolvimento
-   */
-  window.clearAppCache = function() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistration().then(registration => {
-        if (registration) {
-          registration.active.postMessage({ type: 'CLEAR_CACHE' });
-          console.log('[SW] Comando de limpeza enviado');
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-        }
-      });
-    }
-  };
+
 </script>
     
 </body>
