@@ -1,16 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <title>Sobre</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="institutional.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre – GitTree</title>
+    <title data-i18n="aboutTitle">About</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="institutional.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="institutional.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
+    <style>
+        /* Language Selector Styles */
+        .language-selector {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            color: var(--dark-text);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-selector:hover {
+            border-color: var(--primary);
+            background: var(--dark-bg);
+        }
+        
+        .light-theme .language-selector {
+            background: var(--light-card);
+            border: 1px solid var(--light-border);
+            color: var(--light-text);
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body class="dark-theme">
     <header class="institutional-header">
@@ -21,41 +50,52 @@
                     <span>GitTree</span>
                 </a>
             </div>
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                Voltar para a Ferramenta
-            </a>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">English</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-i18n="backToTool">Back to Tool</span>
+                </a>
+            </div>
         </div>
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title">Sobre</h1>
+        <h1 class="institutional-title" data-i18n="aboutTitle">About</h1>
 
         <section class="institutional-section">
-            <h2 class="section-title">História</h2>
-            <p class="institutional-text">
+            <h2 class="section-title" data-i18n="aboutHistory">History</h2>
+            <p class="institutional-text" data-i18n="aboutHistoryText1">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia velit velit, in fermentum elit tristique eget.
             </p>
 
-            <p class="institutional-text">
+            <p class="institutional-text" data-i18n="aboutHistoryText2">
                 Phasellus vestibulum neque neque, id vehicula augue mollis eget. Donec eleifend orci eu felis consequat, id feugiat libero condimentum.
             </p>
         </section>
 
         <section class="institutional-section">
-            <h2 class="section-title">Nossa Equipe</h2>
+            <h2 class="section-title" data-i18n="aboutTeam">Our Team</h2>
             <div class="team-section">
                 <div class="team-card">
                     <div class="avatar">
                         <i class="fas fa-user"></i>
                     </div>
-                    <h3 style="margin-bottom: 5px;">Joao Claudiano</h3>
-                    <p class="institutional-text" style="font-size: 0.9rem;">
-                        Desenvolvedor Fullstack e TDAH Orgulhoso 🧠💡
+                    <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamFounder">Joao Claudiano</h3>
+                    <p class="institutional-text" style="font-size: 0.9rem;" data-i18n="aboutTeamFounderDesc">
+                        Fullstack Developer and Proud ADHD 🧠💡
                     </p>
-                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;">
-                        Idealizador do projeto 👍
-                    </p>
+                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="aboutTeamFounderRole">
+                        Project Ideator 👍
                     </p>
                 </div>
                 
@@ -63,71 +103,85 @@
                     <div class="avatar">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 style="margin-bottom: 5px;">Comunidade</h3>
-                    <p class="institutional-text" style="font-size: 0.9rem;">
-                        Contribuidores & Usuários
+                    <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamCommunity">Community</h3>
+                    <p class="institutional-text" style="font-size: 0.9rem;" data-i18n="aboutTeamCommunityDesc">
+                        Contributors & Users
                     </p>
-                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;">
-                        Você faz parte dessa jornada! Cada feedback,
-                        sugestão e uso da ferramenta nos ajuda a melhorar.
+                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="aboutTeamCommunityText">
+                        You're part of this journey! Every feedback, suggestion and use of the tool helps us improve.
                     </p>
                 </div>
             </div>
         </section>
 
         <section class="institutional-section">
-            <h2 class="section-title">Tecnologia</h2>
-            <p class="institutional-text">
-                O GitTree é construído com tecnologias modernas e confiáveis:
+            <h2 class="section-title" data-i18n="aboutTechnology">Technology</h2>
+            <p class="institutional-text" data-i18n="aboutTechnologyText">
+                GitTree is built with modern and reliable technologies:
             </p>
             <ul class="institutional-list">
                 <li class="list-item">
-                    <strong>Frontend:</strong> HTML5, CSS3, JavaScript (ES6+)
+                    <strong data-i18n="aboutTechFrontend">Frontend:</strong> <span data-i18n="aboutTechFrontendDesc">HTML5, CSS3, JavaScript (ES6+)</span>
                 </li>
                 <li class="list-item">
-                    <strong>APIs:</strong> GitHub REST API v3
+                    <strong data-i18n="aboutTechAPIs">APIs:</strong> <span data-i18n="aboutTechAPIsDesc">GitHub REST API v3</span>
                 </li>
                 <li class="list-item">
-                    <strong>Hospedagem:</strong> GitHub Pages
+                    <strong data-i18n="aboutTechHosting">Hosting:</strong> <span data-i18n="aboutTechHostingDesc">GitHub Pages</span>
                 </li>
                 <li class="list-item">
-                    <strong>Design:</strong> CSS Custom Properties para temas
+                    <strong data-i18n="aboutTechDesign">Design:</strong> <span data-i18n="aboutTechDesignDesc">CSS Custom Properties for themes</span>
                 </li>
             </ul>
             
             <div class="tip-box" style="background: rgba(59, 130, 246, 0.1); border-left-color: #3b82f6;">
-                <strong>🌐 Código Aberto:</strong> O GitTree é open-source e disponível no GitHub.
-                Contribuições são bem-vindas!
+                <strong data-i18n="aboutOpenSource">🌐 Open Source:</strong> <span data-i18n="aboutOpenSourceText">GitTree is open-source and available on GitHub. Contributions are welcome!</span>
             </div>
         </section>
 
         <section class="institutional-section">
-            <h2 class="section-title">Contato & Suporte</h2>
-            <p class="institutional-text">
-                Precisa de ajuda ou tem uma sugestão? Entre em contato:
+            <h2 class="section-title" data-i18n="aboutContactSupport">Contact & Support</h2>
+            <p class="institutional-text" data-i18n="aboutContactText">
+                Need help or have a suggestion? Get in touch:
             </p>
             <ul class="institutional-list">
                 <li class="list-item">
-                    <strong>📧 Email:</strong> gittree@proton.me
+                    <strong data-i18n="aboutContactEmail">📧 Email:</strong> gittree@proton.me
                 </li>
                 <li class="list-item">
-                    <strong>🐙 GitHub:</strong> 
+                    <strong data-i18n="aboutContactGitHub">🐙 GitHub:</strong> 
                     <a href="https://github.com/JoaoClaudiano" style="color: #7aa2ff; text-decoration: none;">
                         github.com/JoaoClaudiano
                     </a>
                 </li>
                 <li class="list-item">
-                    <strong>📄 Issues:</strong>
-                    <a href="https://github.com/JoaoClaudiano/gittree/issues" style="color: #7aa2ff; text-decoration: none;">
-                        Reportar problemas ou sugerir funcionalidades
+                    <strong data-i18n="aboutContactIssues">📄 Issues:</strong>
+                    <a href="https://github.com/JoaoClaudiano/gittree/issues" style="color: #7aa2ff; text-decoration: none;" data-i18n="aboutContactIssuesText">
+                        Report problems or suggest features
                     </a>
                 </li>
             </ul>
         </section>
     </main>
 
-    <footer class="institutional-footer">
-        © 2026 GitTree · Conectando desenvolvedores ao redor do mundo · 🌳
+    <footer class="institutional-footer" data-i18n="aboutFooter">
+        © 2026 GitTree · Connecting developers around the world · 🌳
     </footer>
+    
+    <script src="translations.js"></script>
+    <script>
+        // Initialize i18n on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initI18n();
+            
+            // Language selector
+            const languageSelector = document.getElementById('languageSelector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function(e) {
+                    setLanguage(e.target.value);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

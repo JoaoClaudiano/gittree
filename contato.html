@@ -1,16 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <title>Contato</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="institutional.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato – GitTree</title>
+    <title data-i18n="contactTitle">Contact</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="institutional.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="institutional.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
+    <style>
+        /* Language Selector Styles */
+        .language-selector {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            color: var(--dark-text);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-selector:hover {
+            border-color: var(--primary);
+            background: var(--dark-bg);
+        }
+        
+        .light-theme .language-selector {
+            background: var(--light-card);
+            border: 1px solid var(--light-border);
+            color: var(--light-text);
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body class="dark-theme">
     <header class="institutional-header">
@@ -21,20 +50,31 @@
                     <span>GitTree</span>
                 </a>
             </div>
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                Voltar para a Ferramenta
-            </a>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">English</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-i18n="backToTool">Back to Tool</span>
+                </a>
+            </div>
         </div>
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title">Contato</h1>
+        <h1 class="institutional-title" data-i18n="contactTitle">Contact</h1>
         
         <section class="institutional-section">
-            <p class="institutional-text">
-                Este canal está disponível para dúvidas, sugestões de melhoria
-                e comunicação de eventuais problemas técnicos relacionados ao GitTree.
+            <p class="institutional-text" data-i18n="contactText">
+                This channel is available for questions, improvement suggestions and communication of any technical problems related to GitTree.
             </p>
             
             <div class="notice-box">
@@ -43,61 +83,77 @@
             </div>
             
             <p class="institutional-text">
-                <strong>Horário de atendimento:</strong> Segunda a Sexta, das 9h às 18h (horário de Brasília)
+                <strong data-i18n="contactBusinessHours">Business Hours:</strong> <span data-i18n="contactBusinessHoursText">Monday to Friday, from 9am to 6pm (Brasilia time)</span>
             </p>
             
             <p class="institutional-text">
-                <strong>Tempo médio de resposta:</strong> 24-48 horas
+                <strong data-i18n="contactResponseTime">Average response time:</strong> <span data-i18n="contactResponseTimeText">24-48 hours</span>
             </p>
         </section>
 
         <section class="institutional-section">
-            <h2 class="section-title">Outros Canais</h2>
-            <p class="institutional-text">
-                Você também pode nos acompanhar por:
+            <h2 class="section-title" data-i18n="contactOtherChannels">Other Channels</h2>
+            <p class="institutional-text" data-i18n="contactOtherChannelsText">
+                You can also follow us through:
             </p>
             <ul class="institutional-list">
                 <li class="list-item">
-                    <strong>GitHub:</strong> 
+                    <strong data-i18n="contactGitHub">GitHub:</strong> 
                     <a href="https://github.com/JoaoClaudiano" style="color: #7aa2ff; text-decoration: none;">
                         github.com/JoaoClaudiano
                     </a>
                 </li>
                 <li class="list-item">
-                    <strong>Issues do Projeto:</strong>
-                    <a href="https://github.com/JoaoClaudiano/gittree/issues" style="color: #7aa2ff; text-decoration: none;">
-                        Reportar bugs ou sugerir funcionalidades
+                    <strong data-i18n="contactProjectIssues">Project Issues:</strong>
+                    <a href="https://github.com/JoaoClaudiano/gittree/issues" style="color: #7aa2ff; text-decoration: none;" data-i18n="contactProjectIssuesText">
+                        Report bugs or suggest features
                     </a>
                 </li>
             </ul>
         </section>
 
         <section class="institutional-section">
-            <h2 class="section-title">Informações Importantes</h2>
-            <p class="institutional-text">
-                <strong>🚫 O que NÃO oferecemos:</strong>
+            <h2 class="section-title" data-i18n="contactImportantInfo">Important Information</h2>
+            <p class="institutional-text" data-i18n="contactWhatWeDontOffer">
+                <strong>🚫 What we DON'T offer:</strong>
             </p>
             <ul class="institutional-list">
-                <li class="list-item">Suporte técnico individualizado</li>
-                <li class="list-item">Atendimento em tempo real (chat ao vivo)</li>
-                <li class="list-item">Consultoria personalizada</li>
-                <li class="list-item">Análise de repositórios privados</li>
+                <li class="list-item" data-i18n="contactNoIndividualSupport">Individual technical support</li>
+                <li class="list-item" data-i18n="contactNoLiveChat">Real-time support (live chat)</li>
+                <li class="list-item" data-i18n="contactNoPersonalizedConsulting">Personalized consulting</li>
+                <li class="list-item" data-i18n="contactNoPrivateRepos">Private repository analysis</li>
             </ul>
             
-            <p class="institutional-text">
-                <strong>✅ O que oferecemos:</strong>
+            <p class="institutional-text" data-i18n="contactWhatWeOffer">
+                <strong>✅ What we offer:</strong>
             </p>
             <ul class="institutional-list">
-                <li class="list-item">Respostas sobre o funcionamento da ferramenta</li>
-                <li class="list-item">Aceitação de sugestões de melhoria</li>
-                <li class="list-item">Correção de bugs reportados</li>
-                <li class="list-item">Esclarecimentos sobre privacidade e termos</li>
+                <li class="list-item" data-i18n="contactToolQuestions">Answers about how the tool works</li>
+                <li class="list-item" data-i18n="contactSuggestions">Accepting improvement suggestions</li>
+                <li class="list-item" data-i18n="contactBugFixes">Bug fixes reported</li>
+                <li class="list-item" data-i18n="contactPrivacyQuestions">Clarifications about privacy and terms</li>
             </ul>
         </section>
     </main>
 
-    <footer class="institutional-footer">
-        © GitTree · Conectando desenvolvedores · 🌳
+    <footer class="institutional-footer" data-i18n="contactFooter">
+        © GitTree · Connecting developers · 🌳
     </footer>
+    
+    <script src="translations.js"></script>
+    <script>
+        // Initialize i18n on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initI18n();
+            
+            // Language selector
+            const languageSelector = document.getElementById('languageSelector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function(e) {
+                    setLanguage(e.target.value);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
