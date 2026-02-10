@@ -83,7 +83,67 @@ const translations = {
         cookieReject: "Reject",
         
         // Version Tag
-        versionTooltip: "What does this version do? See the complete changelog"
+        versionTooltip: "What does this version do? See the complete changelog",
+        
+        // Institutional Pages - Common
+        backToTool: "Back to Tool",
+        
+        // About Page
+        aboutTitle: "About",
+        aboutHistory: "History",
+        aboutHistoryText1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia velit velit, in fermentum elit tristique eget.",
+        aboutHistoryText2: "Phasellus vestibulum neque neque, id vehicula augue mollis eget. Donec eleifend orci eu felis consequat, id feugiat libero condimentum.",
+        aboutTeam: "Our Team",
+        aboutTeamFounder: "Joao Claudiano",
+        aboutTeamFounderDesc: "Fullstack Developer and Proud ADHD 🧠💡",
+        aboutTeamFounderRole: "Project Ideator 👍",
+        aboutTeamCommunity: "Community",
+        aboutTeamCommunityDesc: "Contributors & Users",
+        aboutTeamCommunityText: "You're part of this journey! Every feedback, suggestion and use of the tool helps us improve.",
+        aboutTechnology: "Technology",
+        aboutTechnologyText: "GitTree is built with modern and reliable technologies:",
+        aboutTechFrontend: "Frontend",
+        aboutTechFrontendDesc: "HTML5, CSS3, JavaScript (ES6+)",
+        aboutTechAPIs: "APIs",
+        aboutTechAPIsDesc: "GitHub REST API v3",
+        aboutTechHosting: "Hosting",
+        aboutTechHostingDesc: "GitHub Pages",
+        aboutTechDesign: "Design",
+        aboutTechDesignDesc: "CSS Custom Properties for themes",
+        aboutOpenSource: "🌐 Open Source:",
+        aboutOpenSourceText: "GitTree is open-source and available on GitHub. Contributions are welcome!",
+        aboutContactSupport: "Contact & Support",
+        aboutContactText: "Need help or have a suggestion? Get in touch:",
+        aboutContactEmail: "📧 Email:",
+        aboutContactGitHub: "🐙 GitHub:",
+        aboutContactIssues: "📄 Issues:",
+        aboutContactIssuesText: "Report problems or suggest features",
+        aboutFooter: "© 2026 GitTree · Connecting developers around the world · 🌳",
+        
+        // Contact Page
+        contactTitle: "Contact",
+        contactText: "This channel is available for questions, improvement suggestions and communication of any technical problems related to GitTree.",
+        contactBusinessHours: "Business Hours:",
+        contactBusinessHoursText: "Monday to Friday, from 9am to 6pm (Brasilia time)",
+        contactResponseTime: "Average response time:",
+        contactResponseTimeText: "24-48 hours",
+        contactOtherChannels: "Other Channels",
+        contactOtherChannelsText: "You can also follow us through:",
+        contactGitHub: "GitHub:",
+        contactProjectIssues: "Project Issues:",
+        contactProjectIssuesText: "Report bugs or suggest features",
+        contactImportantInfo: "Important Information",
+        contactWhatWeDontOffer: "🚫 What we DON'T offer:",
+        contactNoIndividualSupport: "Individual technical support",
+        contactNoLiveChat: "Real-time support (live chat)",
+        contactNoPersonalizedConsulting: "Personalized consulting",
+        contactNoPrivateRepos: "Private repository analysis",
+        contactWhatWeOffer: "✅ What we offer:",
+        contactToolQuestions: "Answers about how the tool works",
+        contactSuggestions: "Accepting improvement suggestions",
+        contactBugFixes: "Bug fixes reported",
+        contactPrivacyQuestions: "Clarifications about privacy and terms",
+        contactFooter: "© GitTree · Connecting developers · 🌳"
     },
     
     pt: {
@@ -167,7 +227,67 @@ const translations = {
         cookieReject: "Recusar",
         
         // Version Tag
-        versionTooltip: "O que esta versão faz? Veja o changelog completo"
+        versionTooltip: "O que esta versão faz? Veja o changelog completo",
+        
+        // Institutional Pages - Common
+        backToTool: "Voltar para a Ferramenta",
+        
+        // About Page
+        aboutTitle: "Sobre",
+        aboutHistory: "História",
+        aboutHistoryText1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia velit velit, in fermentum elit tristique eget.",
+        aboutHistoryText2: "Phasellus vestibulum neque neque, id vehicula augue mollis eget. Donec eleifend orci eu felis consequat, id feugiat libero condimentum.",
+        aboutTeam: "Nossa Equipe",
+        aboutTeamFounder: "Joao Claudiano",
+        aboutTeamFounderDesc: "Desenvolvedor Fullstack e TDAH Orgulhoso 🧠💡",
+        aboutTeamFounderRole: "Idealizador do projeto 👍",
+        aboutTeamCommunity: "Comunidade",
+        aboutTeamCommunityDesc: "Contribuidores & Usuários",
+        aboutTeamCommunityText: "Você faz parte dessa jornada! Cada feedback, sugestão e uso da ferramenta nos ajuda a melhorar.",
+        aboutTechnology: "Tecnologia",
+        aboutTechnologyText: "O GitTree é construído com tecnologias modernas e confiáveis:",
+        aboutTechFrontend: "Frontend:",
+        aboutTechFrontendDesc: "HTML5, CSS3, JavaScript (ES6+)",
+        aboutTechAPIs: "APIs:",
+        aboutTechAPIsDesc: "GitHub REST API v3",
+        aboutTechHosting: "Hospedagem:",
+        aboutTechHostingDesc: "GitHub Pages",
+        aboutTechDesign: "Design:",
+        aboutTechDesignDesc: "CSS Custom Properties para temas",
+        aboutOpenSource: "🌐 Código Aberto:",
+        aboutOpenSourceText: "O GitTree é open-source e disponível no GitHub. Contribuições são bem-vindas!",
+        aboutContactSupport: "Contato & Suporte",
+        aboutContactText: "Precisa de ajuda ou tem uma sugestão? Entre em contato:",
+        aboutContactEmail: "📧 Email:",
+        aboutContactGitHub: "🐙 GitHub:",
+        aboutContactIssues: "📄 Issues:",
+        aboutContactIssuesText: "Reportar problemas ou sugerir funcionalidades",
+        aboutFooter: "© 2026 GitTree · Conectando desenvolvedores ao redor do mundo · 🌳",
+        
+        // Contact Page
+        contactTitle: "Contato",
+        contactText: "Este canal está disponível para dúvidas, sugestões de melhoria e comunicação de eventuais problemas técnicos relacionados ao GitTree.",
+        contactBusinessHours: "Horário de atendimento:",
+        contactBusinessHoursText: "Segunda a Sexta, das 9h às 18h (horário de Brasília)",
+        contactResponseTime: "Tempo médio de resposta:",
+        contactResponseTimeText: "24-48 horas",
+        contactOtherChannels: "Outros Canais",
+        contactOtherChannelsText: "Você também pode nos acompanhar por:",
+        contactGitHub: "GitHub:",
+        contactProjectIssues: "Issues do Projeto:",
+        contactProjectIssuesText: "Reportar bugs ou sugerir funcionalidades",
+        contactImportantInfo: "Informações Importantes",
+        contactWhatWeDontOffer: "🚫 O que NÃO oferecemos:",
+        contactNoIndividualSupport: "Suporte técnico individualizado",
+        contactNoLiveChat: "Atendimento em tempo real (chat ao vivo)",
+        contactNoPersonalizedConsulting: "Consultoria personalizada",
+        contactNoPrivateRepos: "Análise de repositórios privados",
+        contactWhatWeOffer: "✅ O que oferecemos:",
+        contactToolQuestions: "Respostas sobre o funcionamento da ferramenta",
+        contactSuggestions: "Aceitação de sugestões de melhoria",
+        contactBugFixes: "Correção de bugs reportados",
+        contactPrivacyQuestions: "Esclarecimentos sobre privacidade e termos",
+        contactFooter: "© GitTree · Conectando desenvolvedores · 🌳"
     },
     
     es: {
@@ -251,7 +371,26 @@ const translations = {
         cookieReject: "Rechazar",
         
         // Version Tag
-        versionTooltip: "¿Qué hace esta versión? Ver el registro de cambios completo"
+        versionTooltip: "¿Qué hace esta versión? Ver el registro de cambios completo",
+        
+        // Institutional Pages - Common
+        backToTool: "Volver a la Herramienta",
+        
+        // About Page
+        aboutTitle: "Acerca de",
+        aboutHistory: "Historia",
+        aboutTeam: "Nuestro Equipo",
+        aboutTeamFounder: "Joao Claudiano",
+        aboutTeamCommunity: "Comunidad",
+        aboutTechnology: "Tecnología",
+        aboutContactSupport: "Contacto y Soporte",
+        aboutFooter: "© 2026 GitTree · Conectando desarrolladores alrededor del mundo · 🌳",
+        
+        // Contact Page
+        contactTitle: "Contacto",
+        contactOtherChannels: "Otros Canales",
+        contactImportantInfo: "Información Importante",
+        contactFooter: "© GitTree · Conectando desarrolladores · 🌳"
     },
     
     fr: {
@@ -335,7 +474,22 @@ const translations = {
         cookieReject: "Refuser",
         
         // Version Tag
-        versionTooltip: "Que fait cette version? Voir le journal des modifications complet"
+        versionTooltip: "Que fait cette version? Voir le journal des modifications complet",
+        
+        // Institutional Pages - Common
+        backToTool: "Retour à l'Outil",
+        
+        // About Page
+        aboutTitle: "À propos",
+        aboutHistory: "Histoire",
+        aboutTeam: "Notre Équipe",
+        aboutTechnology: "Technologie",
+        aboutContactSupport: "Contact et Support",
+        aboutFooter: "© 2026 GitTree · Connecter les développeurs du monde entier · 🌳",
+        
+        // Contact Page
+        contactTitle: "Contact",
+        contactFooter: "© GitTree · Connecter les développeurs · 🌳"
     },
     
     it: {
@@ -419,7 +573,22 @@ const translations = {
         cookieReject: "Rifiuta",
         
         // Version Tag
-        versionTooltip: "Cosa fa questa versione? Vedi il registro delle modifiche completo"
+        versionTooltip: "Cosa fa questa versione? Vedi il registro delle modifiche completo",
+        
+        // Institutional Pages - Common
+        backToTool: "Torna allo Strumento",
+        
+        // About Page
+        aboutTitle: "Chi Siamo",
+        aboutHistory: "Storia",
+        aboutTeam: "Il Nostro Team",
+        aboutTechnology: "Tecnologia",
+        aboutContactSupport: "Contatto e Supporto",
+        aboutFooter: "© 2026 GitTree · Connettere sviluppatori in tutto il mondo · 🌳",
+        
+        // Contact Page
+        contactTitle: "Contatto",
+        contactFooter: "© GitTree · Connettere sviluppatori · 🌳"
     },
     
     ja: {
@@ -503,7 +672,22 @@ const translations = {
         cookieReject: "拒否",
         
         // Version Tag
-        versionTooltip: "このバージョンの機能は？完全な変更ログを表示"
+        versionTooltip: "このバージョンの機能は？完全な変更ログを表示",
+        
+        // Institutional Pages - Common
+        backToTool: "ツールに戻る",
+        
+        // About Page
+        aboutTitle: "概要",
+        aboutHistory: "歴史",
+        aboutTeam: "私たちのチーム",
+        aboutTechnology: "技術",
+        aboutContactSupport: "お問い合わせとサポート",
+        aboutFooter: "© 2026 GitTree · 世界中の開発者をつなぐ · 🌳",
+        
+        // Contact Page
+        contactTitle: "お問い合わせ",
+        contactFooter: "© GitTree · 開発者をつなぐ · 🌳"
     },
     
     ko: {
@@ -587,7 +771,22 @@ const translations = {
         cookieReject: "거부",
         
         // Version Tag
-        versionTooltip: "이 버전의 기능은? 전체 변경 로그 보기"
+        versionTooltip: "이 버전의 기능은? 전체 변경 로그 보기",
+        
+        // Institutional Pages - Common
+        backToTool: "도구로 돌아가기",
+        
+        // About Page
+        aboutTitle: "소개",
+        aboutHistory: "역사",
+        aboutTeam: "우리 팀",
+        aboutTechnology: "기술",
+        aboutContactSupport: "연락처 및 지원",
+        aboutFooter: "© 2026 GitTree · 전 세계 개발자 연결 · 🌳",
+        
+        // Contact Page
+        contactTitle: "연락처",
+        contactFooter: "© GitTree · 개발자 연결 · 🌳"
     },
     
     zh: {
@@ -671,7 +870,22 @@ const translations = {
         cookieReject: "拒绝",
         
         // Version Tag
-        versionTooltip: "此版本的功能？查看完整的更改日志"
+        versionTooltip: "此版本的功能？查看完整的更改日志",
+        
+        // Institutional Pages - Common
+        backToTool: "返回工具",
+        
+        // About Page
+        aboutTitle: "关于",
+        aboutHistory: "历史",
+        aboutTeam: "我们的团队",
+        aboutTechnology: "技术",
+        aboutContactSupport: "联系与支持",
+        aboutFooter: "© 2026 GitTree · 连接世界各地的开发者 · 🌳",
+        
+        // Contact Page
+        contactTitle: "联系",
+        contactFooter: "© GitTree · 连接开发者 · 🌳"
     }
 };
 
