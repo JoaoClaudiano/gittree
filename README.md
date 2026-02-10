@@ -292,7 +292,7 @@ O GitTree mantém um registro detalhado de todas as alterações, melhorias e co
 - 🔒 **Atualizações** de segurança
 - 📋 **Roadmap** de próximas funcionalidades
 
-**Versão Atual:** [1.0.0](CHANGELOG.md#100---2026-02-10) - Lançamento Inicial
+**Versão Atual:** [1.0.0](CHANGELOG.md) - Lançamento Inicial
 
 ---
 
