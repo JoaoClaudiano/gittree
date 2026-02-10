@@ -1481,10 +1481,6 @@ select,
 
 /* Responsive Improvements */
 @media (max-width: 768px) {
-    .ai-sidebar {
-        width: 100% !important;
-    }
-    
     .bento-panel {
         max-width: 100% !important;
         margin: 0;
@@ -1494,7 +1490,6 @@ select,
 
 /* Print Styles */
 @media print {
-    .ai-sidebar,
     .bento-panel-overlay,
     .accessibility-toggle,
     #cookie-banner {
