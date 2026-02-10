@@ -42,7 +42,6 @@ Esta é a **primeira versão estável** do GitTree, trazendo uma solução compl
 **Visualização Inteligente:**
 - Árvore interativa completa de arquivos e diretórios
 - Skeleton loader com animação durante carregamento
-- AI Navigator para busca semântica (atalho: `Ctrl/Cmd + K`)
 - Expansão/colapso individual ou em lote
 - Busca em tempo real com filtros
 

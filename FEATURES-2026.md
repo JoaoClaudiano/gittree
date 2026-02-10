@@ -1,7 +1,7 @@
 # GitTree 2026 - New Features Documentation
 
 ## Overview
-GitTree has been upgraded with cutting-edge 2026 features including AI-powered navigation, advanced skeleton loading, metadata panels with Bento UI design, and comprehensive accessibility enhancements.
+GitTree has been upgraded with cutting-edge 2026 features including advanced skeleton loading, metadata panels with Bento UI design, and comprehensive accessibility enhancements.
 
 ## 🚀 New Features
 
@@ -23,41 +23,7 @@ GitTree has been upgraded with cutting-edge 2026 features including AI-powered n
 
 ---
 
-### 2. **AI Agentic Navigator Sidebar**
-
-**What it does:**
-- Semantic search for code architecture patterns
-- Automatically expands and navigates to matching files/folders
-- Pre-configured search suggestions (auth, api, test, config, ui)
-
-**Features:**
-- 🤖 AI-powered semantic mapping
-- 🔍 Intelligent pattern matching
-- ⌨️ Keyboard shortcut: `Ctrl/Cmd + K` to open
-- 🎯 Auto-expand matching paths in the tree
-- 📊 Relevance scoring for search results
-
-**Technical Implementation:**
-- `ai-sidebar.js` - AI Navigator component
-- `enhanced-tree.js` - Integration layer
-- Semantic mappings for common architecture terms:
-  - `auth` → authentication, login, passport, jwt, oauth
-  - `api` → routes, endpoints, controllers, rest, graphql
-  - `test` → spec, __tests__, testing, jest, mocha
-  - And more...
-
-**How to use:**
-1. Click the "AI Navigator" button (cyan/neon blue)
-2. OR press `Ctrl/Cmd + K`
-3. Type a search term (e.g., "auth", "api", "tests")
-4. Click suggestion buttons for quick searches
-5. Results show with relevance scoring
-6. Click any result to navigate and expand the tree
-7. Press `Escape` to close
-
----
-
-### 3. **Bento UI Metadata Panel**
+### 2. **Bento UI Metadata Panel**
 
 **What it does:**
 - Displays detailed file metadata in a modern Bento Grid layout
@@ -86,7 +52,7 @@ GitTree has been upgraded with cutting-edge 2026 features including AI-powered n
 
 ---
 
-### 4. **Impact Highlight System**
+### 3. **Impact Highlight System**
 
 **What it does:**
 - Highlights modified files in the tree (e.g., from PR diffs)
@@ -115,7 +81,7 @@ window.setImpactHighlight([
 
 ---
 
-### 5. **Deep Charcoal Dark Mode (2026)**
+### 4. **Deep Charcoal Dark Mode (2026)**
 
 **What it does:**
 - Modern dark theme with deep charcoal background
@@ -136,7 +102,7 @@ window.setImpactHighlight([
 
 ---
 
-### 6. **Performance & Accessibility (2026 Standards)**
+### 5. **Performance & Accessibility (2026 Standards)**
 
 #### **Zero Layout Shift (CLS)**
 - Reserved dimensions for tree container
@@ -149,7 +115,6 @@ Full keyboard support for power users:
 - `Enter / Space` - Activate items (expand/collapse)
 - `Home` - Jump to first item
 - `End` - Jump to last item
-- `Ctrl/Cmd + K` - Open AI Navigator
 - `Escape` - Close modals/sidebars
 - `Tab` - Navigate between interactive elements
 
@@ -167,14 +132,13 @@ Full keyboard support for power users:
 - Focus returned to trigger element on close
 
 **Technical Implementation:**
-- `accessibility-enhancements.js` - Comprehensive accessibility layer
 - CSS focus styles with `:focus-visible`
 - ARIA attributes added dynamically
 - Keyboard event handlers for tree navigation
 
 ---
 
-### 7. **Modern Animations & Transitions**
+### 6. **Modern Animations & Transitions**
 
 **Features:**
 - Smooth slide-in animations for sidebars
@@ -198,10 +162,8 @@ Full keyboard support for power users:
 ```
 gittree/
 ├── skeleton-loader.js          # Skeleton loading component
-├── ai-sidebar.js               # AI Navigator sidebar (React + Vanilla JS)
 ├── bento-panel.js              # Bento metadata panel (React + Vanilla JS)
 ├── enhanced-tree.js            # Integration layer for new features
-├── accessibility-enhancements.js  # Accessibility layer
 ├── components.js               # Original tree components
 ├── main.js                     # Main application logic (updated)
 ├── style.css                   # Styles (updated with 2026 theme)
@@ -224,15 +186,6 @@ All components have vanilla JavaScript implementations that work without React/T
 ---
 
 ## 📖 Usage Examples
-
-### Opening AI Navigator
-```javascript
-// Programmatically open AI Navigator
-window.GitTree2026.aiSidebarOpen = true;
-window.renderAISidebar();
-
-// Or use keyboard shortcut: Ctrl/Cmd + K
-```
 
 ### Setting Impact Highlights
 ```javascript
@@ -272,15 +225,6 @@ Edit `style.css`:
 }
 ```
 
-### Adding New Semantic Mappings
-Edit `ai-sidebar.js`:
-```javascript
-const semanticMappings = {
-    'your-term': ['synonym1', 'synonym2', 'synonym3'],
-    // ... add more mappings
-};
-```
-
 ### Adjusting Skeleton Depth
 ```javascript
 // In enhanced-tree.js
@@ -294,9 +238,6 @@ window.createSkeletonTree(3, [4, 5, 6]);
 ## 🧪 Testing
 
 ### Manual Testing Checklist
-- [ ] AI Navigator opens with Ctrl/Cmd + K
-- [ ] AI Navigator closes with Escape
-- [ ] Search returns relevant results
 - [ ] Skeleton loader appears during repository load
 - [ ] Tree items are keyboard navigable
 - [ ] Focus indicators are visible
@@ -311,13 +252,10 @@ window.createSkeletonTree(3, [4, 5, 6]);
 
 Potential improvements for future versions:
 1. **Real commit data** from GitHub API for Bento panel
-2. **ML-powered** semantic search using embeddings
-3. **Custom impact levels** based on lines changed
-4. **File preview** in Bento panel
-5. **Collaborative features** with real-time updates
-6. **Advanced filters** in AI Navigator
-7. **Saved searches** and custom mappings
-8. **Export enhanced reports** with impact analysis
+2. **Custom impact levels** based on lines changed
+3. **File preview** in Bento panel
+4. **Collaborative features** with real-time updates
+5. **Export enhanced reports** with impact analysis
 
 ---
 

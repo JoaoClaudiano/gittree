@@ -11,13 +11,11 @@
             https://cdn.tailwindcss.com 
             https://cdn.jsdelivr.net 
             https://unpkg.com 
-            https://www.googletagmanager.com 
-            https://vlibras.gov.br;
+            https://www.googletagmanager.com;
         style-src 'self' 'unsafe-inline' 
             https://cdnjs.cloudflare.com 
             https://fonts.googleapis.com 
-            https://cdn.tailwindcss.com 
-            https://vlibras.gov.br;
+            https://cdn.tailwindcss.com;
         font-src 'self' 
             https://cdnjs.cloudflare.com 
             https://fonts.gstatic.com;
@@ -93,10 +91,6 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- VLibras Widget -->
-    <link rel="stylesheet" href="https://vlibras.gov.br/app/vlibras-plugin.css">
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -450,14 +444,6 @@
         </div>
     </footer>
 
-    <!-- VLibras Widget -->
-    <div vw class="enabled">
-        <div vw-access-button class="active" aria-label="Abrir tradutor para Libras"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
-        </div>
-    </div>
-
     <!-- Cookie Consent Banner (LGPD/GDPR) -->
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid #334155; padding: 15px; z-index: 1000; font-family: 'Inter', sans-serif;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
@@ -485,7 +471,6 @@
     <script src="bento-panel.js"></script>
     <script src="components.js"></script>
     <script src="enhanced-tree.js"></script>
-    <script src="accessibility-enhancements.js"></script>
     <script src="main.js"></script>
 
     <style>
@@ -614,11 +599,6 @@
         border-color: #ffffff;
     }
     
-    /* Ajustes para VLibras */
-    .vw-plugin-top-wrapper {
-        z-index: 9998;
-    }
-    
     /* Melhorias de foco para acessibilidade */
     :focus {
         outline: 2px solid #10b981;
@@ -677,13 +657,6 @@
     </style>
 
     <script>
-    // Inicializar VLibras
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof VLibras !== 'undefined') {
-            new window.VLibras.Widget('https://vlibras.gov.br/app');
-        }
-    });
-
     // Controles de Acessibilidade
     document.addEventListener('DOMContentLoaded', function() {
         // Elementos do menu de acessibilidade

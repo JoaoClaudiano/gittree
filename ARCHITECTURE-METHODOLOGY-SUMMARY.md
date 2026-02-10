@@ -30,8 +30,8 @@ O projeto segue uma **separação clara de responsabilidades**:
 ├── 🎨 Camada de UI (index.html, style.css, institutional.css)
 ├── 🧠 Camada de Lógica (main.js, components.js)
 ├── 🔌 Camada de Integração (github-api.js, utils.js)
-├── 🎭 Camada de Features (enhanced-tree.js, ai-sidebar.js, bento-panel.js)
-└── ♿ Camada de Acessibilidade (accessibility-enhancements.js, skeleton-loader.js)
+├── 🎭 Camada de Features (enhanced-tree.js, bento-panel.js)
+└── ♿ Camada de Acessibilidade (skeleton-loader.js)
 ```
 
 **Benefícios:**
@@ -230,25 +230,6 @@ class BentoModal {
     open()     // Abrir com animação
     close()    // Fechar com cleanup
     setupA11y() // Configurar acessibilidade
-}
-```
-
----
-
-### 3. AI Navigator Pattern (Semantic Search)
-
-**Inovação Identificada:**
-- Busca semântica com mapeamentos contextuais
-- Auto-expansão de paths relevantes
-- Scoring de relevância
-- Keyboard shortcuts (Cmd/Ctrl + K)
-
-**Mapeamentos Semânticos:**
-```javascript
-{
-    'auth': ['authentication', 'login', 'jwt', 'oauth'],
-    'api': ['routes', 'endpoints', 'controllers', 'rest'],
-    'test': ['spec', '__tests__', 'jest', 'mocha']
 }
 ```
 

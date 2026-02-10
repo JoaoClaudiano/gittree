@@ -21,9 +21,7 @@ const PRECACHE_URLS = [
   './github-api.js',
   './enhanced-tree.js',
   './skeleton-loader.js',
-  './ai-sidebar.js',
   './bento-panel.js',
-  './accessibility-enhancements.js',
   './icons/android-chrome-192x192.png',
   './icons/android-chrome-512x512.png',
   './404.html'
