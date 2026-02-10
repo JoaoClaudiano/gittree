@@ -80,6 +80,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "We use cookies to improve your experience. By continuing, you agree to our",
         cookieAccept: "Accept",
+        cookieReject: "Reject",
         
         // Version Tag
         versionTooltip: "What does this version do? See the complete changelog"
@@ -163,9 +164,10 @@ const translations = {
         // Cookie Banner
         cookieMessage: "Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa",
         cookieAccept: "Aceitar",
+        cookieReject: "Recusar",
         
         // Version Tag
-        versionTooltip: "O que está versão faz? Veja o changelog completo"
+        versionTooltip: "O que esta versão faz? Veja o changelog completo"
     },
     
     es: {
@@ -246,6 +248,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "Usamos cookies para mejorar su experiencia. Al continuar, acepta nuestra",
         cookieAccept: "Aceptar",
+        cookieReject: "Rechazar",
         
         // Version Tag
         versionTooltip: "¿Qué hace esta versión? Ver el registro de cambios completo"
@@ -329,6 +332,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre",
         cookieAccept: "Accepter",
+        cookieReject: "Refuser",
         
         // Version Tag
         versionTooltip: "Que fait cette version? Voir le journal des modifications complet"
@@ -412,6 +416,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "Utilizziamo i cookie per migliorare la tua esperienza. Continuando, accetti la nostra",
         cookieAccept: "Accetta",
+        cookieReject: "Rifiuta",
         
         // Version Tag
         versionTooltip: "Cosa fa questa versione? Vedi il registro delle modifiche completo"
@@ -495,6 +500,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "Cookieを使用してエクスペリエンスを向上させています。続行することで、当社の",
         cookieAccept: "承諾",
+        cookieReject: "拒否",
         
         // Version Tag
         versionTooltip: "このバージョンの機能は？完全な変更ログを表示"
@@ -578,6 +584,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "쿠키를 사용하여 경험을 개선합니다. 계속 진행하면 당사의",
         cookieAccept: "수락",
+        cookieReject: "거부",
         
         // Version Tag
         versionTooltip: "이 버전의 기능은? 전체 변경 로그 보기"
@@ -661,6 +668,7 @@ const translations = {
         // Cookie Banner
         cookieMessage: "我们使用Cookie来改善您的体验。继续使用即表示您同意我们的",
         cookieAccept: "接受",
+        cookieReject: "拒绝",
         
         // Version Tag
         versionTooltip: "此版本的功能？查看完整的更改日志"
