@@ -373,7 +373,7 @@ async function analyzeRepository() {
         updateMetrics(treeData);
         updateCacheStatus();
         
-        // Store tree data for AI Navigator
+        // Store tree data for enhanced features
         if (window.GitTree2026) {
             window.GitTree2026.treeData = window.currentTreeData;
         }
