@@ -54,6 +54,13 @@ body {
 }
 
 body.light-theme {
+    /* Override CSS variables for light theme */
+    --dark-bg: var(--light-bg);
+    --dark-card: var(--light-card);
+    --dark-border: var(--light-border);
+    --dark-text: var(--light-text);
+    --dark-subtext: var(--light-subtext);
+    
     background: var(--light-bg);
     color: var(--light-text);
 }
@@ -1491,7 +1498,6 @@ select,
 /* Print Styles */
 @media print {
     .bento-panel-overlay,
-    .accessibility-toggle,
     #cookie-banner {
         display: none !important;
     }
