@@ -1491,7 +1491,6 @@ select,
 /* Print Styles */
 @media print {
     .bento-panel-overlay,
-    .accessibility-toggle,
     #cookie-banner {
         display: none !important;
     }
