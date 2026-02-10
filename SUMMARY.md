@@ -50,7 +50,7 @@ All features from the problem statement have been successfully implemented and t
 - ✅ **Dynamic aria-labels** for tree items
 - ✅ **WCAG 2.1 AA compliance**
 
-**Files:** `accessibility-enhancements.js`, `enhanced-tree.js`, `style.css`
+**Files:** `enhanced-tree.js`, `style.css`
 
 ---
 
@@ -87,15 +87,14 @@ All features from the problem statement have been successfully implemented and t
 
 ## 📁 Files Created/Modified
 
-### New Files (8)
+### New Files (7)
 1. `skeleton-loader.js` - Skeleton loading component
 2. `ai-sidebar.js` - AI Navigator sidebar
 3. `bento-panel.js` - Bento metadata panel
 4. `enhanced-tree.js` - Integration layer
-5. `accessibility-enhancements.js` - Accessibility features
-6. `FEATURES-2026.md` - Feature documentation
-7. `DEMO-GUIDE.md` - Demo instructions
-8. `SUMMARY.md` - This file
+5. `FEATURES-2026.md` - Feature documentation
+6. `DEMO-GUIDE.md` - Demo instructions
+7. `SUMMARY.md` - This file
 
 ### Modified Files (3)
 1. `index.html` - Added new scripts and AI Navigator button

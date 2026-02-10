@@ -31,7 +31,7 @@ O projeto segue uma **separação clara de responsabilidades**:
 ├── 🧠 Camada de Lógica (main.js, components.js)
 ├── 🔌 Camada de Integração (github-api.js, utils.js)
 ├── 🎭 Camada de Features (enhanced-tree.js, ai-sidebar.js, bento-panel.js)
-└── ♿ Camada de Acessibilidade (accessibility-enhancements.js, skeleton-loader.js)
+└── ♿ Camada de Acessibilidade (skeleton-loader.js)
 ```
 
 **Benefícios:**

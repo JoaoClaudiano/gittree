@@ -35,7 +35,7 @@
 📦 Core Components Pattern
 ├── UI Components (bento-panel, skeleton-loader, ai-sidebar)
 ├── Utility Modules (utils.js, github-api.js)
-├── Feature Modules (enhanced-tree.js, accessibility-enhancements.js)
+├── Feature Modules (enhanced-tree.js)
 └── Main Orchestrator (main.js, components.js)
 ```
 
@@ -1224,7 +1224,6 @@ console.log(cache.getStats());
  * - Ajuste de tamanho de fonte
  * - Contraste alto
  * - Navegação por teclado
- * - Leitor de tela (VLibras)
  */
 
 class AccessibilityWidget {

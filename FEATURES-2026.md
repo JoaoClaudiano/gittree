@@ -167,7 +167,6 @@ Full keyboard support for power users:
 - Focus returned to trigger element on close
 
 **Technical Implementation:**
-- `accessibility-enhancements.js` - Comprehensive accessibility layer
 - CSS focus styles with `:focus-visible`
 - ARIA attributes added dynamically
 - Keyboard event handlers for tree navigation
@@ -201,7 +200,6 @@ gittree/
 ├── ai-sidebar.js               # AI Navigator sidebar (React + Vanilla JS)
 ├── bento-panel.js              # Bento metadata panel (React + Vanilla JS)
 ├── enhanced-tree.js            # Integration layer for new features
-├── accessibility-enhancements.js  # Accessibility layer
 ├── components.js               # Original tree components
 ├── main.js                     # Main application logic (updated)
 ├── style.css                   # Styles (updated with 2026 theme)

@@ -226,13 +226,11 @@ git push origin main
         https://cdn.tailwindcss.com 
         https://cdn.jsdelivr.net 
         https://unpkg.com 
-        https://www.googletagmanager.com 
-        https://vlibras.gov.br;
+        https://www.googletagmanager.com;
     style-src 'self' 'unsafe-inline' 
         https://cdnjs.cloudflare.com 
         https://fonts.googleapis.com 
-        https://cdn.tailwindcss.com 
-        https://vlibras.gov.br;
+        https://cdn.tailwindcss.com;
     font-src 'self' 
         https://cdnjs.cloudflare.com 
         https://fonts.gstatic.com;

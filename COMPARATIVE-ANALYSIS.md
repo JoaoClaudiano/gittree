@@ -368,7 +368,6 @@ Allow: /
 - ai-sidebar.js
 - bento-panel.js
 - enhanced-tree.js
-- accessibility-enhancements.js
 ```
 
 **ModeloTrabalhista:**
