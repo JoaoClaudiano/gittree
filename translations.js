@@ -702,8 +702,8 @@ function initI18n() {
         currentLanguage = savedLanguage;
     } else {
         // Detect browser language
-        const browserLang = navigator.language || navigator.userLanguage;
-        const langCode = browserLang.split('-')[0]; // Extract base language (e.g., 'pt' from 'pt-BR')
+        const browserLang = navigator.language || navigator.userLanguage || 'en';
+        const langCode = browserLang ? browserLang.split('-')[0] : 'en'; // Extract base language (e.g., 'pt' from 'pt-BR')
         
         if (translations[langCode]) {
             currentLanguage = langCode;
