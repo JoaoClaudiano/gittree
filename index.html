@@ -237,7 +237,7 @@
                     <button id="pasteBtn" class="btn-secondary" title="Colar link da área de transferência">
                         <i class="fas fa-paste"></i> Colar
                     </button>
-                    <button id="analyzeBtn" class="btn-primary">
+                    <button id="analyzeBtn" class="btn-primary" title="Analisar e visualizar a estrutura do repositório">
                         <i class="fas fa-eye"></i>
                         <span>Visualizar</span>
                     </button>
@@ -253,11 +253,11 @@
                 <div class="controls-section">
                     <h4><i class="fas fa-eye"></i> Visualização</h4>
                     <div class="view-toggle">
-                        <button class="view-btn active" data-view="tree">
+                        <button class="view-btn active" data-view="tree" title="Visualizar estrutura em árvore hierárquica">
                             <i class="fas fa-folder-tree"></i>
                             Árvore
                         </button>
-                        <button class="view-btn" data-view="metrics">
+                        <button class="view-btn" data-view="metrics" title="Visualizar métricas e estatísticas do repositório">
                             <i class="fas fa-chart-bar"></i>
                             Métricas
                         </button>
@@ -267,15 +267,15 @@
                 <div class="controls-section">
                     <h4><i class="fas fa-tools"></i> Ferramentas</h4>
                     <div class="tool-buttons">
-                        <button id="aiNavigatorBtn" class="btn-neon" style="width: 100%; margin-bottom: 8px;">
+                        <button id="aiNavigatorBtn" class="btn-neon" style="width: 100%; margin-bottom: 8px;" title="Abrir busca semântica inteligente (Ctrl/Cmd + K)">
                             <i class="fas fa-robot"></i>
                             AI Navigator
                         </button>
-                        <button id="clearCacheBtn" class="btn-secondary">
+                        <button id="clearCacheBtn" class="btn-secondary" title="Limpar cache local de repositórios analisados">
                             <i class="fas fa-trash"></i>
                             Limpar Cache
                         </button>
-                        <button id="refreshBtn" class="btn-secondary">
+                        <button id="refreshBtn" class="btn-secondary" title="Recarregar a análise do repositório atual">
                             <i class="fas fa-redo"></i>
                             Recarregar
                         </button>
@@ -285,11 +285,11 @@
                 <div class="controls-section">
                     <h4><i class="fas fa-download"></i> Exportar</h4>
                     <div class="export-buttons">
-                        <button id="exportJSONBtn" class="btn-export">
+                        <button id="exportJSONBtn" class="btn-export" title="Exportar estrutura completa em formato JSON">
                             <i class="fas fa-file-code"></i>
                             JSON
                         </button>
-                        <button id="exportCSVBtn" class="btn-export">
+                        <button id="exportCSVBtn" class="btn-export" title="Exportar lista de arquivos em formato CSV">
                             <i class="fas fa-file-csv"></i>
                             CSV
                         </button>
@@ -370,10 +370,10 @@
                             <button id="copyTreeBtn" class="btn-toolbar" title="Copiar estrutura como texto">
                                 <i class="fas fa-copy"></i> Copiar Texto
                             </button>
-                            <button id="expandAllBtn" class="btn-toolbar">
+                            <button id="expandAllBtn" class="btn-toolbar" title="Expandir todos os diretórios da árvore">
                                 <i class="fas fa-expand"></i> Expandir
                             </button>
-                            <button id="collapseAllBtn" class="btn-toolbar">
+                            <button id="collapseAllBtn" class="btn-toolbar" title="Recolher todos os diretórios da árvore">
                                 <i class="fas fa-compress"></i> Recolher
                             </button>
                         </div>
