@@ -17,7 +17,7 @@ Documentação técnica detalhada com exemplos práticos de código.
 - ✅ Estrutura de Pastas Recomendada (com template completo)
 - ✅ Configuração de SEO Técnico (robots.txt, sitemap.xml)
 - ✅ Meta Tags Dinâmicas (Open Graph, Twitter Cards, Schema.org)
-- ✅ Componentes Reutilizáveis (Skeleton Loader, Bento UI, AI Navigator)
+- ✅ Componentes Reutilizáveis (Skeleton Loader, Bento UI)
 - ✅ Middleware e Scripts de Automação (Service Worker, Cache Manager)
 - ✅ PWA e Manifest (configuração completa)
 - ✅ Performance e Cache (estratégias e implementações)
@@ -203,7 +203,6 @@ Documentação técnica completa sobre caching, service worker e performance.
 #### ✅ Componentes (100%)
 - Skeleton Loader
 - Modal/Panel System
-- AI Navigator Sidebar
 - Accessibility Widget
 - Cache Manager
 - Analytics Tracker

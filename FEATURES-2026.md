@@ -187,15 +187,6 @@ All components have vanilla JavaScript implementations that work without React/T
 
 ## 📖 Usage Examples
 
-### Opening AI Navigator
-```javascript
-// Programmatically open AI Navigator
-window.GitTree2026.aiSidebarOpen = true;
-window.renderAISidebar();
-
-// Or use keyboard shortcut: Ctrl/Cmd + K
-```
-
 ### Setting Impact Highlights
 ```javascript
 // Highlight modified files

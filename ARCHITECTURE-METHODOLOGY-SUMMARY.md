@@ -235,25 +235,6 @@ class BentoModal {
 
 ---
 
-### 3. AI Navigator Pattern (Semantic Search)
-
-**Inovação Identificada:**
-- Busca semântica com mapeamentos contextuais
-- Auto-expansão de paths relevantes
-- Scoring de relevância
-- Keyboard shortcuts (Cmd/Ctrl + K)
-
-**Mapeamentos Semânticos:**
-```javascript
-{
-    'auth': ['authentication', 'login', 'jwt', 'oauth'],
-    'api': ['routes', 'endpoints', 'controllers', 'rest'],
-    'test': ['spec', '__tests__', 'jest', 'mocha']
-}
-```
-
----
-
 ## ⚙️ Scripts de Automação e Middleware
 
 ### 1. Service Worker Strategy

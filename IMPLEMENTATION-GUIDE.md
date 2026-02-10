@@ -33,7 +33,7 @@
 #### 2. **Componentização**
 ```
 📦 Core Components Pattern
-├── UI Components (bento-panel, skeleton-loader, ai-sidebar)
+├── UI Components (bento-panel, skeleton-loader)
 ├── Utility Modules (utils.js, github-api.js)
 ├── Feature Modules (enhanced-tree.js)
 └── Main Orchestrator (main.js, components.js)
@@ -68,7 +68,6 @@ project-root/
 │   │   └── 📂 modules/
 │   │       ├── api-integration.js  # Integrações externas
 │   │       ├── skeleton-loader.js  # Componente de loading
-│   │       ├── ai-sidebar.js       # Navegação inteligente
 │   │       └── bento-panel.js      # Painel de metadados
 │   │
 │   └── 📂 icons/
@@ -539,129 +538,6 @@ class BentoModal {
 
 ---
 
-#### 3. **Sidebar Navigator** (AI-Enhanced Pattern)
-
-```javascript
-/**
- * AI NAVIGATOR SIDEBAR
- * 
- * Features:
- * - Semantic search
- * - Keyboard shortcuts
- * - Auto-expand matching paths
- * - Relevance scoring
- */
-
-class AINavigatorSidebar {
-    constructor(containerId) {
-        this.container = document.getElementById(containerId);
-        this.isOpen = false;
-        this.searchIndex = new Map();
-        
-        // Mapeamentos semânticos
-        this.semanticMappings = {
-            'auth': ['authentication', 'login', 'passport', 'jwt', 'oauth', 'session'],
-            'api': ['routes', 'endpoints', 'controllers', 'rest', 'graphql'],
-            'test': ['spec', '__tests__', 'testing', 'jest', 'mocha', 'cypress'],
-            'config': ['settings', 'environment', 'env', 'configuration'],
-            'ui': ['components', 'views', 'pages', 'screens', 'layouts']
-        };
-        
-        this.init();
-    }
-
-    init() {
-        this.createSidebarStructure();
-        this.setupKeyboardShortcuts();
-    }
-
-    setupKeyboardShortcuts() {
-        document.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + K para abrir
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                this.toggle();
-            }
-            
-            // ESC para fechar
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
-            }
-        });
-    }
-
-    search(query) {
-        const results = [];
-        const lowerQuery = query.toLowerCase();
-        
-        // Busca semântica
-        const semanticTerms = this.getSemanticTerms(lowerQuery);
-        
-        // Iterar pelo índice de busca
-        for (const [path, metadata] of this.searchIndex) {
-            const score = this.calculateRelevance(path, metadata, lowerQuery, semanticTerms);
-            if (score > 0) {
-                results.push({ path, metadata, score });
-            }
-        }
-        
-        // Ordenar por relevância
-        return results.sort((a, b) => b.score - a.score);
-    }
-
-    getSemanticTerms(query) {
-        const terms = [query];
-        for (const [key, synonyms] of Object.entries(this.semanticMappings)) {
-            if (query.includes(key) || synonyms.some(s => query.includes(s))) {
-                terms.push(...synonyms);
-            }
-        }
-        return [...new Set(terms)];
-    }
-
-    calculateRelevance(path, metadata, query, semanticTerms) {
-        let score = 0;
-        
-        // Match exato no nome do arquivo
-        if (path.toLowerCase().includes(query)) {
-            score += 10;
-        }
-        
-        // Match semântico
-        for (const term of semanticTerms) {
-            if (path.toLowerCase().includes(term)) {
-                score += 5;
-            }
-        }
-        
-        // Boost para certos tipos de arquivo
-        if (metadata.type === 'file') {
-            const ext = path.split('.').pop();
-            if (['js', 'ts', 'jsx', 'tsx', 'py', 'go'].includes(ext)) {
-                score += 2;
-            }
-        }
-        
-        return score;
-    }
-
-    toggle() {
-        this.isOpen ? this.close() : this.open();
-    }
-
-    open() {
-        this.isOpen = true;
-        this.container.classList.add('sidebar-open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    close() {
-        this.isOpen = false;
-        this.container.classList.remove('sidebar-open');
-        document.body.style.overflow = '';
-    }
-}
-```
 
 ---
 

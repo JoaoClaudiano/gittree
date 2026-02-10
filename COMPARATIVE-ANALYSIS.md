@@ -365,7 +365,6 @@ Allow: /
 ```javascript
 // Componentes separados por feature
 - skeleton-loader.js
-- ai-sidebar.js
 - bento-panel.js
 - enhanced-tree.js
 ```

@@ -42,10 +42,6 @@ Esta é a primeira versão estável do GitTree, um visualizador interativo de es
 
 #### Funcionalidades 2026
 - **Skeleton Loader Inteligente**: Carregamento com animação de estrutura
-- **AI Navigator Sidebar**: Busca semântica com navegação inteligente
-  - Atalho: `Ctrl/Cmd + K`
-  - Mapeamentos semânticos (auth, api, test, config, ui)
-  - Expansão automática de caminhos relevantes
 - **Bento UI Metadata Panel**: Painel de metadados com design moderno
   - Informações de arquivo (tamanho, extensão, linguagem)
   - Dados de commit (autor e data)
@@ -63,7 +59,6 @@ Esta é a primeira versão estável do GitTree, um visualizador interativo de es
   - `Arrow Keys`: Navegar na árvore
   - `Enter/Space`: Ativar itens
   - `Home/End`: Ir para início/fim
-  - `Ctrl/Cmd + K`: Abrir AI Navigator
   - `Escape`: Fechar modais
   - `Tab`: Navegar entre elementos
 - **Screen Reader**: Atributos ARIA completos
