@@ -259,8 +259,12 @@
                     <div class="feature-icon">🤖</div>
                     <h4 style="margin-bottom: 10px;">AI Navigator</h4>
                     <p class="institutional-text">
-                        Abre a busca semântica inteligente. Use para encontrar arquivos por
-                        palavras-chave como "auth", "api", "test", etc. Atalho: <code>Ctrl/Cmd + K</code>
+                        Busca semântica inteligente que entende conceitos de arquitetura de software.
+                        Encontra arquivos por significado, não apenas por nome. Por exemplo, buscar 
+                        "auth" encontra authentication, login, jwt, oauth, etc. Navegação automática 
+                        para os resultados mais relevantes. Atalho: <code>Ctrl/Cmd + K</code>
+                        <br><br>
+                        <strong>Veja a seção completa sobre AI Navigator abaixo para exemplos detalhados!</strong>
                     </p>
                 </div>
                 
@@ -368,6 +372,196 @@
                 <strong>💡 Dica Rápida:</strong> Passe o mouse sobre qualquer botão para ver uma
                 descrição rápida (tooltip) do que ele faz!
             </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title">🤖 AI Navigator - Busca Semântica Inteligente</h2>
+            
+            <p class="institutional-text">
+                O <strong>AI Navigator</strong> é uma ferramenta poderosa de busca semântica que ajuda você a 
+                encontrar rapidamente arquivos e diretórios em repositórios grandes usando inteligência artificial 
+                e mapeamento de conceitos arquiteturais.
+            </p>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">🎯 O que o AI Navigator faz?</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h4 style="margin-bottom: 10px;">Busca Semântica</h4>
+                    <p class="institutional-text">
+                        Não busca apenas pelo nome exato, mas entende o <strong>significado</strong> 
+                        da sua pesquisa. Por exemplo, pesquisar "auth" encontra também "authentication", 
+                        "login", "passport", "jwt", "oauth", etc.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h4 style="margin-bottom: 10px;">Mapeamento Inteligente</h4>
+                    <p class="institutional-text">
+                        Usa mapas semânticos pré-configurados para arquitetura de software, 
+                        reconhecendo padrões comuns como autenticação, APIs, testes, 
+                        configurações, componentes UI e mais.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4 style="margin-bottom: 10px;">Navegação Instantânea</h4>
+                    <p class="institutional-text">
+                        Ao encontrar resultados, expande automaticamente a árvore e navega 
+                        até o arquivo mais relevante, economizando tempo e cliques.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4 style="margin-bottom: 10px;">Score de Relevância</h4>
+                    <p class="institutional-text">
+                        Cada resultado recebe uma pontuação de relevância baseada em 
+                        correspondências exatas, parciais e localização no caminho.
+                    </p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">🚀 Como usar o AI Navigator?</h3>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">1</span>
+                    <strong>Abrir o AI Navigator</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    Existem duas formas de abrir:<br>
+                    • Clique no botão <strong>"AI Navigator"</strong> (azul neon) na barra lateral<br>
+                    • Use o atalho de teclado: <code>Ctrl + K</code> (Windows/Linux) ou <code>Cmd + K</code> (Mac)
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">2</span>
+                    <strong>Digite sua busca</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    Digite um termo relacionado ao que você procura. O AI Navigator entende 
+                    conceitos arquiteturais, não apenas nomes de arquivos.<br><br>
+                    <strong>Sugestões rápidas disponíveis:</strong><br>
+                    • <code>auth</code> - Autenticação e login<br>
+                    • <code>api</code> - Rotas e endpoints<br>
+                    • <code>test</code> - Arquivos de teste<br>
+                    • <code>config</code> - Configurações<br>
+                    • <code>ui</code> - Componentes de interface
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">3</span>
+                    <strong>Explore os resultados</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    Os resultados aparecem ordenados por relevância. Cada resultado mostra:<br>
+                    • Tipo (pasta 📁 ou arquivo 📄)<br>
+                    • Caminho completo no repositório<br>
+                    • Score de relevância (quanto maior, mais relevante)<br><br>
+                    Clique em qualquer resultado para expandir e navegar até ele na árvore.
+                </p>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">💡 Exemplos Práticos</h3>
+            
+            <div class="tip-box">
+                <strong>Exemplo 1 - Encontrar código de autenticação:</strong><br>
+                Digite <code>auth</code> no AI Navigator. Ele encontrará automaticamente:<br>
+                • authentication.js<br>
+                • login.component.tsx<br>
+                • passport-config.js<br>
+                • jwt-middleware.js<br>
+                • oauth/providers/
+            </div>
+            
+            <div class="tip-box">
+                <strong>Exemplo 2 - Localizar APIs:</strong><br>
+                Digite <code>api</code> para encontrar:<br>
+                • routes/api/<br>
+                • controllers/<br>
+                • endpoints.js<br>
+                • rest-client.js<br>
+                • graphql/schemas/
+            </div>
+            
+            <div class="tip-box">
+                <strong>Exemplo 3 - Achar testes:</strong><br>
+                Digite <code>test</code> para localizar:<br>
+                • __tests__/<br>
+                • *.spec.js<br>
+                • *.test.ts<br>
+                • jest.config.js<br>
+                • cypress/integration/
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">🗺️ Mapeamentos Semânticos Disponíveis</h3>
+            
+            <p class="institutional-text">
+                O AI Navigator conhece os seguintes conceitos arquiteturais:
+            </p>
+            
+            <ul class="institutional-list">
+                <li class="list-item">
+                    <strong>auth</strong> → authentication, login, passport, jwt, oauth, session
+                </li>
+                <li class="list-item">
+                    <strong>database</strong> → db, models, schema, migrations, sql, mongodb, postgres
+                </li>
+                <li class="list-item">
+                    <strong>api</strong> → routes, endpoints, controllers, rest, graphql
+                </li>
+                <li class="list-item">
+                    <strong>test</strong> → spec, __tests__, testing, jest, mocha, cypress
+                </li>
+                <li class="list-item">
+                    <strong>config</strong> → configuration, settings, env, environment
+                </li>
+                <li class="list-item">
+                    <strong>ui</strong> → components, views, pages, templates, frontend
+                </li>
+                <li class="list-item">
+                    <strong>middleware</strong> → interceptor, plugins, hooks
+                </li>
+                <li class="list-item">
+                    <strong>utils</strong> → helpers, common, shared, lib, utilities
+                </li>
+                <li class="list-item">
+                    <strong>docs</strong> → documentation, readme, wiki
+                </li>
+                <li class="list-item">
+                    <strong>assets</strong> → static, public, images, styles, css
+                </li>
+            </ul>
+            
+            <div class="tip-box">
+                <strong>🎯 Dica Pro:</strong> Você não precisa digitar exatamente os termos acima. 
+                O AI Navigator é inteligente o suficiente para entender variações e sinônimos. 
+                Por exemplo, "autenticação" ou "autenticar" também funcionam!
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;">⌨️ Atalhos de Teclado</h3>
+            
+            <ul class="institutional-list">
+                <li class="list-item">
+                    <strong>Ctrl/Cmd + K</strong> - Abrir/Fechar AI Navigator
+                </li>
+                <li class="list-item">
+                    <strong>Escape</strong> - Fechar AI Navigator
+                </li>
+                <li class="list-item">
+                    <strong>Enter</strong> - Executar busca
+                </li>
+                <li class="list-item">
+                    <strong>Tab</strong> - Navegar entre resultados (quando implementado)
+                </li>
+            </ul>
         </section>
 
         <section class="institutional-section">
