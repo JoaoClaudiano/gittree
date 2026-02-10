@@ -7,11 +7,18 @@ window.GitTree2026 = {
     selectedFile: null,
     treeData: null,
     impactHighlightFiles: new Set(),
-    isLoading: false
+    isLoading: false,
+    initialized: false
 };
 
 // Initialize new features
 function initGitTree2026Features() {
+    // Prevent double initialization
+    if (window.GitTree2026.initialized) {
+        console.log('⚠️ GitTree 2026 Features already initialized');
+        return;
+    }
+    
     console.log('🚀 Initializing GitTree 2026 Features...');
     
     // Add keyboard shortcuts
@@ -23,6 +30,7 @@ function initGitTree2026Features() {
         }
     });
     
+    window.GitTree2026.initialized = true;
     console.log('✅ GitTree 2026 Features initialized');
 }
 
