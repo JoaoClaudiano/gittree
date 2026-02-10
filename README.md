@@ -321,7 +321,7 @@ Este projeto está licenciado sob a **Licença MIT**. Veja o arquivo [LICENSE](L
 ## 📞 Contato
 
 **Desenvolvedor:** João Claudiano  
-**Email:** jooclaudiano@gmail.com  
+**Email:** gittree@proton.me  
 **GitHub:** [@JoaoClaudiano](https://github.com/JoaoClaudiano)  
 
 **Links Úteis:**
