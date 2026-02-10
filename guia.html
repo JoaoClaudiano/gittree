@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,36 @@
     <link rel="stylesheet" href="institutional.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
     <style>
+        /* Language Selector Styles */
+        .language-selector {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            color: var(--dark-text);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-selector:hover {
+            border-color: var(--primary);
+            background: var(--dark-bg);
+        }
+        
+        .light-theme .language-selector {
+            background: var(--light-card);
+            border: 1px solid var(--light-border);
+            color: var(--light-text);
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -78,10 +108,22 @@
                     <span>GitTree</span>
                 </a>
             </div>
-            <a href="index.html" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                Voltar para a Ferramenta
-            </a>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">English</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-i18n="backToTool">Back to Tool</span>
+                </a>
+            </div>
         </div>
     </header>
 
@@ -407,5 +449,21 @@
     <footer class="institutional-footer">
         © GitTree · Ferramenta gratuita para desenvolvedores · 🌳
     </footer>
+    
+    <script src="translations.js"></script>
+    <script>
+        // Initialize i18n on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initI18n();
+            
+            // Language selector
+            const languageSelector = document.getElementById('languageSelector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function(e) {
+                    setLanguage(e.target.value);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
