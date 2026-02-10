@@ -1,9 +1,8 @@
 // ==================== ENHANCED TREE INTEGRATION 2026 ====================
-// Integration layer for new features: AI Navigator, Bento Panel, Impact Highlighting, Skeleton Loading
+// Integration layer for new features: Bento Panel, Impact Highlighting, Skeleton Loading
 
 // State management for new features
 window.GitTree2026 = {
-    aiSidebarOpen: false,
     bentoMetadataPanelOpen: false,
     selectedFile: null,
     treeData: null,
@@ -15,239 +14,16 @@ window.GitTree2026 = {
 function initGitTree2026Features() {
     console.log('🚀 Initializing GitTree 2026 Features...');
     
-    // AI Navigator Button
-    const aiNavBtn = document.getElementById('aiNavigatorBtn');
-    if (aiNavBtn) {
-        aiNavBtn.addEventListener('click', () => {
-            window.GitTree2026.aiSidebarOpen = !window.GitTree2026.aiSidebarOpen;
-            renderAISidebar();
-        });
-    }
-    
     // Add keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-        // Ctrl/Cmd + K to open AI Navigator
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            window.GitTree2026.aiSidebarOpen = true;
-            renderAISidebar();
-        }
-        
         // Escape to close modals
         if (e.key === 'Escape') {
-            window.GitTree2026.aiSidebarOpen = false;
             window.GitTree2026.bentoMetadataPanelOpen = false;
-            renderAISidebar();
             renderBentoPanel();
         }
     });
     
     console.log('✅ GitTree 2026 Features initialized');
-}
-
-// Render AI Sidebar
-function renderAISidebar() {
-    const container = document.getElementById('aiSidebarContainer');
-    if (!container) {
-        // Create container if it doesn't exist
-        const div = document.createElement('div');
-        div.id = 'aiSidebarContainer';
-        document.body.appendChild(div);
-    }
-    
-    // Check if React is available
-    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
-        // Fallback to vanilla JS implementation
-        renderAISidebarVanilla();
-        return;
-    }
-    
-    const root = ReactDOM.createRoot(document.getElementById('aiSidebarContainer'));
-    root.render(
-        React.createElement(window.AISidebar, {
-            treeData: window.GitTree2026.treeData,
-            isOpen: window.GitTree2026.aiSidebarOpen,
-            onClose: () => {
-                window.GitTree2026.aiSidebarOpen = false;
-                renderAISidebar();
-            },
-            onNavigate: (path) => {
-                console.log('Navigate to:', path);
-                // Expand path in tree and scroll to it
-                expandAndScrollToPath(path);
-            }
-        })
-    );
-}
-
-// Vanilla JS implementation of AI Sidebar
-function renderAISidebarVanilla() {
-    const container = document.getElementById('aiSidebarContainer');
-    if (!container) return;
-    
-    if (!window.GitTree2026.aiSidebarOpen) {
-        container.innerHTML = '';
-        return;
-    }
-    
-    container.innerHTML = `
-        <div class="ai-sidebar-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; display: flex; justify-content: flex-end;">
-            <div class="ai-sidebar" style="width: 384px; height: 100%; background: rgba(26, 29, 41, 0.95); backdrop-filter: blur(20px); border-left: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); display: flex; flex-direction: column; animation: slideInRight 0.3s ease-out;">
-                <div class="p-6" style="padding: 1.5rem; border-bottom: 1px solid rgba(55, 65, 81, 0.5);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <h2 style="font-size: 1.25rem; font-weight: bold; color: white; display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.5rem;">🤖</span>
-                            AI Navigator
-                        </h2>
-                        <button id="closeAISidebar" style="color: rgb(156, 163, 175); background: none; border: none; padding: 0.5rem; cursor: pointer; border-radius: 0.5rem; font-size: 1.25rem;">✕</button>
-                    </div>
-                    <p style="font-size: 0.875rem; color: rgb(156, 163, 175);">Semantic code architecture search</p>
-                </div>
-                
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(55, 65, 81, 0.5);">
-                    <div style="position: relative;">
-                        <input type="text" id="aiSearchInput" placeholder="Search: auth, api, tests..." style="width: 100%; padding: 0.75rem 1rem; background: rgba(17, 24, 39, 0.5); border: 1px solid rgb(55, 65, 81); border-radius: 0.5rem; color: white; font-size: 0.875rem;">
-                        <button id="aiSearchBtn" style="position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); padding: 0.375rem 1rem; background: #00d4ff; color: black; font-weight: 600; border: none; border-radius: 0.375rem; cursor: pointer;">🔍</button>
-                    </div>
-                    <div style="margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        ${['auth', 'api', 'test', 'config', 'ui'].map(term => 
-                            `<button class="ai-suggestion-btn" data-term="${term}" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; background: rgba(31, 41, 55, 0.5); color: rgb(209, 213, 219); border: 1px solid rgb(55, 65, 81); border-radius: 9999px; cursor: pointer;">${term}</button>`
-                        ).join('')}
-                    </div>
-                </div>
-                
-                <div id="aiSearchResults" style="flex: 1; overflow-y: auto; padding: 1.5rem;">
-                    <div style="text-align: center; color: rgb(107, 114, 128); padding: 2rem 0;">
-                        <div style="font-size: 2.25rem; margin-bottom: 0.5rem;">💡</div>
-                        <p>Try searching for architecture patterns like "auth", "api", or "tests"</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <style>
-            @keyframes slideInRight {
-                from { transform: translateX(100%); }
-                to { transform: translateX(0); }
-            }
-        </style>
-    `;
-    
-    // Add event listeners
-    const closeBtn = document.getElementById('closeAISidebar');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            window.GitTree2026.aiSidebarOpen = false;
-            renderAISidebar();
-        });
-    }
-    
-    const overlay = container.querySelector('.ai-sidebar-overlay');
-    if (overlay) {
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                window.GitTree2026.aiSidebarOpen = false;
-                renderAISidebar();
-            }
-        });
-    }
-    
-    // Search functionality
-    const searchInput = document.getElementById('aiSearchInput');
-    const searchBtn = document.getElementById('aiSearchBtn');
-    
-    if (searchInput && searchBtn) {
-        const performSearch = () => {
-            const query = searchInput.value.trim();
-            if (!query) return;
-            
-            // Simple search implementation
-            const results = searchInTree(query);
-            displaySearchResults(results);
-        };
-        
-        searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') performSearch();
-        });
-    }
-    
-    // Suggestion buttons
-    const suggestionBtns = container.querySelectorAll('.ai-suggestion-btn');
-    suggestionBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const term = btn.getAttribute('data-term');
-            if (searchInput) {
-                searchInput.value = term;
-                const results = searchInTree(term);
-                displaySearchResults(results);
-            }
-        });
-    });
-}
-
-function searchInTree(query) {
-    // Simple search implementation
-    const results = [];
-    const lowerQuery = query.toLowerCase();
-    
-    // Search in current tree data if available
-    if (window.currentTreeData && window.currentTreeData.pathMap) {
-        window.currentTreeData.pathMap.forEach((node, path) => {
-            if (path.toLowerCase().includes(lowerQuery)) {
-                results.push({
-                    path: path,
-                    type: node.type,
-                    name: node.name
-                });
-            }
-        });
-    }
-    
-    return results.slice(0, 10);
-}
-
-function displaySearchResults(results) {
-    const resultsContainer = document.getElementById('aiSearchResults');
-    if (!resultsContainer) return;
-    
-    if (results.length === 0) {
-        resultsContainer.innerHTML = `
-            <div style="text-align: center; color: rgb(156, 163, 175); padding: 2rem 0;">
-                <div style="font-size: 2.25rem; margin-bottom: 0.5rem;">🔍</div>
-                <p>No results found</p>
-            </div>
-        `;
-        return;
-    }
-    
-    resultsContainer.innerHTML = results.map((result, idx) => `
-        <div class="search-result-item" data-path="${result.path}" style="padding: 0.75rem; background: rgba(17, 24, 39, 0.3); border: 1px solid rgba(55, 65, 81, 0.3); border-radius: 0.5rem; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s; animation: fadeIn 0.3s ease-out ${idx * 50}ms both;">
-            <div style="font-size: 0.75rem; color: #00d4ff; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.25rem;">
-                <span>${result.type === 'folder' ? '📁' : '📄'}</span>
-                ${result.type}
-            </div>
-            <div style="font-size: 0.875rem; color: white; font-family: monospace; word-break: break-all;">${result.path}</div>
-        </div>
-    `).join('');
-    
-    // Add click handlers
-    const items = resultsContainer.querySelectorAll('.search-result-item');
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            const path = item.getAttribute('data-path');
-            expandAndScrollToPath(path);
-        });
-        
-        item.addEventListener('mouseenter', () => {
-            item.style.background = 'rgba(31, 41, 55, 0.5)';
-            item.style.borderColor = 'rgba(0, 212, 255, 0.3)';
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            item.style.background = 'rgba(17, 24, 39, 0.3)';
-            item.style.borderColor = 'rgba(55, 65, 81, 0.3)';
-        });
-    });
 }
 
 // Render Bento Metadata Panel
@@ -501,7 +277,6 @@ window.initGitTree2026Features = initGitTree2026Features;
 window.showSkeletonLoader = showSkeletonLoader;
 window.hideSkeletonLoader = hideSkeletonLoader;
 window.setImpactHighlight = setImpactHighlight;
-window.renderAISidebar = renderAISidebar;
 window.renderBentoPanel = renderBentoPanel;
 window.handleFileClickWithBento = handleFileClickWithBento;
 window.MemoizedTreeWrapper = MemoizedTreeWrapper;
