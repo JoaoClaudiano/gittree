@@ -12,6 +12,7 @@
 
 ## 📋 Índice
 
+- [O que esta versão faz?](#-o-que-esta-versão-faz)
 - [Visão Geral](#-visão-geral)
 - [Funcionalidades](#-funcionalidades)
 - [Demonstração](#-demonstração)
@@ -23,9 +24,69 @@
 - [Cache Local](#-cache-local)
 - [Exportação](#-exportação)
 - [Privacidade](#-privacidade)
+- [Changelog](#-changelog)
 - [Contribuindo](#-contribuindo)
 - [Licença](#-licença)
 - [Contato](#-contato)
+
+---
+
+## 📦 O que esta versão faz?
+
+### Versão 1.0.0 - Lançamento Inicial (Fevereiro 2026)
+
+Esta é a **primeira versão estável** do GitTree, trazendo uma solução completa para visualização e análise de repositórios GitHub.
+
+#### 🎯 Principais Capacidades
+
+**Visualização Inteligente:**
+- Árvore interativa completa de arquivos e diretórios
+- Skeleton loader com animação durante carregamento
+- AI Navigator para busca semântica (atalho: `Ctrl/Cmd + K`)
+- Expansão/colapso individual ou em lote
+- Busca em tempo real com filtros
+
+**Análise Profunda:**
+- Métricas completas do repositório (arquivos, tamanho, estrutura)
+- Bento UI Metadata Panel com informações detalhadas de arquivos
+- Estatísticas de GitHub (stars, forks, watchers)
+- Distribuição por tipos de arquivo e linguagens
+- Gráficos interativos de visualização
+
+**Experiência Premium:**
+- Tema Deep Charcoal 2026 com efeitos glassmorphism
+- Design responsivo (desktop, tablet, mobile)
+- Modo claro/escuro com persistência
+- Navegação completa por teclado (WCAG 2.1 AA)
+- Animações suaves e modernas
+
+**Recursos Avançados:**
+- Cache local (24 horas) para acesso rápido
+- Exportação em JSON e CSV
+- Sistema de destacamento de arquivos importantes
+- Histórico de repositórios analisados
+- Correção automática de URLs do GitHub
+
+**Performance e Acessibilidade:**
+- Zero Layout Shift (CLS otimizado)
+- Suporte completo a leitores de tela
+- Navegação por teclado em todos os componentes
+- Indicadores de foco visíveis
+- Carregamento progressivo com skeleton
+
+#### 📊 Casos de Uso
+
+✅ **Desenvolvedores**: Explore estruturas de projetos open-source  
+✅ **Tech Leads**: Analise arquitetura de código  
+✅ **Estudantes**: Aprenda com projetos reais  
+✅ **Documentadores**: Gere visões gerais de repositórios  
+✅ **Code Reviewers**: Entenda mudanças estruturais
+
+#### 🚀 Acesse Agora
+
+**[GitTree Online - Versão 1.0.0](https://joaoclaudiano.github.io/gittree/)**
+
+Para ver o histórico completo de mudanças, consulte o [**CHANGELOG.md**](CHANGELOG.md).
 
 ---
 
@@ -217,6 +278,25 @@ O GitTree utiliza a API pública do GitHub com as seguintes requisições:
 
 **[Ver Política de Privacidade Completa](politica-de-privacidade.html)**
 
+---
+
+## 📝 Changelog
+
+### Acompanhe as Mudanças
+
+O GitTree mantém um registro detalhado de todas as alterações, melhorias e correções em cada versão. Consulte o [**CHANGELOG.md**](CHANGELOG.md) para:
+
+- ✨ **Novidades** adicionadas em cada versão
+- 🔧 **Melhorias** implementadas
+- 🐛 **Bugs** corrigidos
+- 🔒 **Atualizações** de segurança
+- 📋 **Roadmap** de próximas funcionalidades
+
+**Versão Atual:** [1.0.0](CHANGELOG.md#100---2026-02-10) - Lançamento Inicial
+
+---
+
+## 🤝 Contribuindo
 
 ## Diretrizes
 - Mantenha o código limpo e documentado
