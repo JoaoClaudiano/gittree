@@ -4,48 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' 
-            https://cdn.tailwindcss.com 
-            https://cdn.jsdelivr.net 
-            https://unpkg.com 
-            https://www.googletagmanager.com;
-        style-src 'self' 'unsafe-inline' 
-            https://cdnjs.cloudflare.com 
-            https://fonts.googleapis.com 
-            https://cdn.tailwindcss.com;
-        font-src 'self' 
-            https://cdnjs.cloudflare.com 
-            https://fonts.gstatic.com;
-        img-src 'self' data: https: http:;
-        connect-src 'self' 
-            https://api.github.com 
-            https://www.google-analytics.com 
-            https://www.googletagmanager.com;
-        frame-src 'self' 
-            https://www.googletagmanager.com;
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self';
-        frame-ancestors 'none';
-        upgrade-insecure-requests;
-    ">
-    
     <title>GitTree - GitHub Repository Structure Visualizer | Explore Repositories</title>
     <meta name="google-adsense-account" content="ca-pub-2518079690291956">
     <!-- Meta Description - CRITICAL FOR SEO -->
     <meta name="description" content="GitTree - Visualize and analyze the structure of any GitHub repository. Explore directory trees, code metrics, and real-time statistics. Free tool for developers.">
     <meta name="keywords" content="github, repository, tree, visualizer, code structure, github explorer, developer tools, open source, code analysis, repository metrics">
-    
     <!-- Canonical URL - Evita conteúdo duplicado -->
-    <link rel="canonical" href="https://joaoclaudiano.github.io/gittree/">
-    
+    <link rel="canonical" href="https://gittree.pages.dev/">
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="bsR4HOJBAwZBX_yK4xeLC5NZDXduDkPsyvDmOncTiRU" />
-    
     <!-- Schema.org JSON-LD - Melhora rich snippets no Google -->
     <script type="application/ld+json">
     {
@@ -70,7 +37,6 @@
       "image": "https://joaoclaudiano.github.io/gittree/og-image.png"
     }
     </script>
-    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://joaoclaudiano.github.io/gittree/">
@@ -81,7 +47,6 @@
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="GitTree">
-    
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://joaoclaudiano.github.io/gittree/">
@@ -89,11 +54,9 @@
     <meta property="twitter:description" content="Visualize e analise a estrutura de qualquer repositório GitHub de forma interativa">
     <meta property="twitter:image" content="https://joaoclaudiano.github.io/gittree/og-image.png">
     <meta property="twitter:creator" content="@joaoclaudiano">
-    
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -101,13 +64,10 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5LRXMXH9');</script>
     <!-- End Google Tag Manager -->
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -296,7 +256,6 @@
                     </div>
                 </div>
             </div>
-            
             <!-- Seção de Introdução para SEO -->
             <div class="seo-intro" style="margin: 20px 0; padding: 20px; background: var(--dark-card); border-radius: 8px; border: 1px solid var(--dark-border);">
                 <h2 style="margin-bottom: 15px; color: var(--dark-text); font-size: 1.3rem;">
@@ -411,7 +370,6 @@
             </div>
         </div>
     </footer>
-
     <!-- Cookie Consent Banner (LGPD/GDPR) -->
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid #334155; padding: 15px; z-index: 1000; font-family: 'Inter', sans-serif;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
@@ -431,7 +389,6 @@
             </div>
         </div>
     </div>
-
     <script src="utils.js"></script>
     <script src="github-api.js"></script>
     <script src="translations.js"></script>
@@ -528,7 +485,6 @@
         }
     }
     </style>
-
     <script>
     // Initialize i18n system
     document.addEventListener('DOMContentLoaded', function() {
@@ -544,8 +500,7 @@
                 });
             }
         }
-    });
-    
+    });  
     // Accessibility Controls
     // Cookie Management
     document.addEventListener('DOMContentLoaded', function() {
@@ -570,14 +525,11 @@
             document.getElementById('cookie-banner').style.display = 'none';
             console.log('Cookies rejeitados');
         }
-
         // Expor funções globalmente para o banner
         window.acceptAllCookies = acceptAllCookies;
         window.rejectAllCookies = rejectAllCookies;
-
         // Verificar cookies ao carregar a página
-        checkCookieConsent();
-        
+        checkCookieConsent(); 
         // Track SEO Events
         const buttons = ['analyzeBtn', 'exportJSONBtn', 'exportCSVBtn', 'copyTreeBtn'];
         buttons.forEach(btnId => {
@@ -594,7 +546,6 @@
                 });
             }
         });
-        
         // Track repo analysis
         const repoInput = document.getElementById('repoInput');
         const analyzeBtn = document.getElementById('analyzeBtn');
@@ -613,12 +564,7 @@
         }
     });
     </script>
-    
 <script>
-  /**
-   * Service Worker Registration
-   * Simple registration without automatic reloads
-   */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('service-worker.js')
@@ -630,8 +576,6 @@
         });
     });
   }
-
-</script>
-    
+</script>  
 </body>
 </html>
