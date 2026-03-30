@@ -85,7 +85,7 @@ Esta é a **primeira versão estável** do GitTree, trazendo uma solução compl
 
 **[GitTree Online - Versão 1.0.0](https://joaoclaudiano.github.io/gittree/)**
 
-Para ver o histórico completo de mudanças, consulte o [**CHANGELOG.md**](CHANGELOG.md).
+Para ver o histórico completo de mudanças, consulte o [**CHANGELOG.md**](docs/CHANGELOG.md).
 
 ---
 
@@ -206,7 +206,7 @@ gittree/
 
 Este projeto serve como referência de arquitetura e SEO técnico. Consulte nossos guias:
 
-### 🏗️ [Implementation Guide (Completo)](./IMPLEMENTATION-GUIDE.md)
+### 🏗️ [Implementation Guide (Completo)](./docs/IMPLEMENTATION-GUIDE.md)
 Guia detalhado com:
 - Arquitetura modular e padrões de design
 - Configuração completa de SEO (robots.txt, sitemap, meta tags)
@@ -217,7 +217,7 @@ Guia detalhado com:
 - Acessibilidade WCAG 2.1
 - Analytics e monitoramento
 
-### 🚀 [Quick Start Boilerplate](./QUICK-START-BOILERPLATE.md)
+### 🚀 [Quick Start Boilerplate](./docs/QUICK-START-BOILERPLATE.md)
 Referência rápida com templates copy-paste:
 - Setup básico em 5 minutos
 - Templates HTML prontos para usar
@@ -283,7 +283,7 @@ O GitTree utiliza a API pública do GitHub com as seguintes requisições:
 
 ### Acompanhe as Mudanças
 
-O GitTree mantém um registro detalhado de todas as alterações, melhorias e correções em cada versão. Consulte o [**CHANGELOG.md**](CHANGELOG.md) para:
+O GitTree mantém um registro detalhado de todas as alterações, melhorias e correções em cada versão. Consulte o [**CHANGELOG.md**](docs/CHANGELOG.md) para:
 
 - ✨ **Novidades** adicionadas em cada versão
 - 🔧 **Melhorias** implementadas
@@ -291,7 +291,7 @@ O GitTree mantém um registro detalhado de todas as alterações, melhorias e co
 - 🔒 **Atualizações** de segurança
 - 📋 **Roadmap** de próximas funcionalidades
 
-**Versão Atual:** [1.0.0](CHANGELOG.md) - Lançamento Inicial
+**Versão Atual:** [1.0.0](docs/CHANGELOG.md) - Lançamento Inicial
 
 ---
 
