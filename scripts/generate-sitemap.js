@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configurações
-const BASE_URL = 'https://joaoclaudiano.github.io/gittree';
+const BASE_URL = 'https://gittree.pages.dev';
 const OUTPUT_FILE = 'sitemap.xml';
 const ROOT_DIR = '.';
 

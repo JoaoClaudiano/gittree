@@ -1,6 +1,6 @@
 # robots.txt para GitTree
 # Gerado automaticamente
-# 2026-02-06T22:47:19.960Z
+# 2026-03-30T18:14:39.331Z
 
 # Configuração padrão
 User-agent: *
@@ -69,4 +69,4 @@ User-agent: DotBot
 Disallow: /
 
 # Sitemap
-Sitemap: https://joaoclaudiano.github.io/gittree/sitemap.xml
+Sitemap: https://gittree.pages.dev/sitemap.xml
