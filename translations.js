@@ -143,7 +143,28 @@ const translations = {
         contactSuggestions: "Accepting improvement suggestions",
         contactBugFixes: "Bug fixes reported",
         contactPrivacyQuestions: "Clarifications about privacy and terms",
-        contactFooter: "© GitTree · Connecting developers · 🌳"
+        contactFooter: "© GitTree · Connecting developers · 🌳",
+
+        // Guide Page
+        guideTitle: "GitTree User Guide",
+        guideSubtitle: "Learn how to use all the features of the GitHub repository visualization tool",
+        guideFooter: "© GitTree · Free tool for developers · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "Privacy Policy",
+        privacySubtitle: "Last updated: January 18, 2026",
+        privacyFooter: "© GitTree · Privacy by default · Transparency by design",
+
+        // Terms of Use Page
+        termsTitle: "Terms of Use",
+        termsSubtitle: "Last updated: January 18, 2026",
+        termsFooter: "© GitTree · Responsible use · Transparency",
+
+        // 404 Page
+        notFoundTitle: "Page Not Found",
+        notFoundText: "The page you are looking for does not exist or has been moved.",
+        notFoundBtn: "Back to GitTree",
+        notFoundFooter: "© GitTree · Connecting developers around the world · 🌳"
     },
     
     pt: {
@@ -287,7 +308,28 @@ const translations = {
         contactSuggestions: "Aceitação de sugestões de melhoria",
         contactBugFixes: "Correção de bugs reportados",
         contactPrivacyQuestions: "Esclarecimentos sobre privacidade e termos",
-        contactFooter: "© GitTree · Conectando desenvolvedores · 🌳"
+        contactFooter: "© GitTree · Conectando desenvolvedores · 🌳",
+
+        // Guide Page
+        guideTitle: "Guia do Usuário GitTree",
+        guideSubtitle: "Aprenda a usar todas as funcionalidades da ferramenta de visualização de repositórios GitHub",
+        guideFooter: "© GitTree · Ferramenta gratuita para desenvolvedores · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "Política de Privacidade",
+        privacySubtitle: "Última atualização: 18 de janeiro de 2026",
+        privacyFooter: "© GitTree · Privacidade por padrão · Transparência por design",
+
+        // Terms of Use Page
+        termsTitle: "Termos de Uso",
+        termsSubtitle: "Última atualização: 18 de janeiro de 2026",
+        termsFooter: "© GitTree · Uso responsável · Transparência",
+
+        // 404 Page
+        notFoundTitle: "Página Não Encontrada",
+        notFoundText: "A página que você está procurando não existe ou foi movida.",
+        notFoundBtn: "Voltar ao GitTree",
+        notFoundFooter: "© GitTree · Conectando desenvolvedores ao redor do mundo · 🌳"
     },
     
     es: {
@@ -390,7 +432,28 @@ const translations = {
         contactTitle: "Contacto",
         contactOtherChannels: "Otros Canales",
         contactImportantInfo: "Información Importante",
-        contactFooter: "© GitTree · Conectando desarrolladores · 🌳"
+        contactFooter: "© GitTree · Conectando desarrolladores · 🌳",
+
+        // Guide Page
+        guideTitle: "Guía del Usuario GitTree",
+        guideSubtitle: "Aprende a usar todas las funcionalidades de la herramienta de visualización de repositorios GitHub",
+        guideFooter: "© GitTree · Herramienta gratuita para desarrolladores · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "Política de Privacidad",
+        privacySubtitle: "Última actualización: 18 de enero de 2026",
+        privacyFooter: "© GitTree · Privacidad por defecto · Transparencia por diseño",
+
+        // Terms of Use Page
+        termsTitle: "Términos de Uso",
+        termsSubtitle: "Última actualización: 18 de enero de 2026",
+        termsFooter: "© GitTree · Uso responsable · Transparencia",
+
+        // 404 Page
+        notFoundTitle: "Página No Encontrada",
+        notFoundText: "La página que estás buscando no existe o ha sido movida.",
+        notFoundBtn: "Volver a GitTree",
+        notFoundFooter: "© GitTree · Conectando desarrolladores alrededor del mundo · 🌳"
     },
     
     fr: {
@@ -489,7 +552,28 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contact",
-        contactFooter: "© GitTree · Connecter les développeurs · 🌳"
+        contactFooter: "© GitTree · Connecter les développeurs · 🌳",
+
+        // Guide Page
+        guideTitle: "Guide Utilisateur GitTree",
+        guideSubtitle: "Apprenez à utiliser toutes les fonctionnalités de l'outil de visualisation de dépôts GitHub",
+        guideFooter: "© GitTree · Outil gratuit pour les développeurs · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "Politique de Confidentialité",
+        privacySubtitle: "Dernière mise à jour: 18 janvier 2026",
+        privacyFooter: "© GitTree · Confidentialité par défaut · Transparence par conception",
+
+        // Terms of Use Page
+        termsTitle: "Conditions d'Utilisation",
+        termsSubtitle: "Dernière mise à jour: 18 janvier 2026",
+        termsFooter: "© GitTree · Utilisation responsable · Transparence",
+
+        // 404 Page
+        notFoundTitle: "Page Introuvable",
+        notFoundText: "La page que vous recherchez n'existe pas ou a été déplacée.",
+        notFoundBtn: "Retour à GitTree",
+        notFoundFooter: "© GitTree · Connecter les développeurs du monde entier · 🌳"
     },
     
     it: {
@@ -588,7 +672,28 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contatto",
-        contactFooter: "© GitTree · Connettere sviluppatori · 🌳"
+        contactFooter: "© GitTree · Connettere sviluppatori · 🌳",
+
+        // Guide Page
+        guideTitle: "Guida Utente GitTree",
+        guideSubtitle: "Impara a usare tutte le funzionalità dello strumento di visualizzazione dei repository GitHub",
+        guideFooter: "© GitTree · Strumento gratuito per sviluppatori · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "Informativa sulla Privacy",
+        privacySubtitle: "Ultimo aggiornamento: 18 gennaio 2026",
+        privacyFooter: "© GitTree · Privacy per impostazione predefinita · Trasparenza per design",
+
+        // Terms of Use Page
+        termsTitle: "Termini di Utilizzo",
+        termsSubtitle: "Ultimo aggiornamento: 18 gennaio 2026",
+        termsFooter: "© GitTree · Uso responsabile · Trasparenza",
+
+        // 404 Page
+        notFoundTitle: "Pagina Non Trovata",
+        notFoundText: "La pagina che stai cercando non esiste o è stata spostata.",
+        notFoundBtn: "Torna a GitTree",
+        notFoundFooter: "© GitTree · Connettere sviluppatori in tutto il mondo · 🌳"
     },
     
     ja: {
@@ -687,7 +792,28 @@ const translations = {
         
         // Contact Page
         contactTitle: "お問い合わせ",
-        contactFooter: "© GitTree · 開発者をつなぐ · 🌳"
+        contactFooter: "© GitTree · 開発者をつなぐ · 🌳",
+
+        // Guide Page
+        guideTitle: "GitTree ユーザーガイド",
+        guideSubtitle: "GitHubリポジトリ可視化ツールのすべての機能の使い方を学ぶ",
+        guideFooter: "© GitTree · 開発者向け無料ツール · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "プライバシーポリシー",
+        privacySubtitle: "最終更新: 2026年1月18日",
+        privacyFooter: "© GitTree · デフォルトでプライバシー · デザインで透明性",
+
+        // Terms of Use Page
+        termsTitle: "利用規約",
+        termsSubtitle: "最終更新: 2026年1月18日",
+        termsFooter: "© GitTree · 責任ある使用 · 透明性",
+
+        // 404 Page
+        notFoundTitle: "ページが見つかりません",
+        notFoundText: "お探しのページは存在しないか、移動されました。",
+        notFoundBtn: "GitTreeに戻る",
+        notFoundFooter: "© GitTree · 世界中の開発者をつなぐ · 🌳"
     },
     
     ko: {
@@ -786,7 +912,28 @@ const translations = {
         
         // Contact Page
         contactTitle: "연락처",
-        contactFooter: "© GitTree · 개발자 연결 · 🌳"
+        contactFooter: "© GitTree · 개발자 연결 · 🌳",
+
+        // Guide Page
+        guideTitle: "GitTree 사용자 가이드",
+        guideSubtitle: "GitHub 저장소 시각화 도구의 모든 기능 사용법을 알아보세요",
+        guideFooter: "© GitTree · 개발자를 위한 무료 도구 · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "개인정보 보호정책",
+        privacySubtitle: "최종 업데이트: 2026년 1월 18일",
+        privacyFooter: "© GitTree · 기본적으로 프라이버시 · 설계에 의한 투명성",
+
+        // Terms of Use Page
+        termsTitle: "이용약관",
+        termsSubtitle: "최종 업데이트: 2026년 1월 18일",
+        termsFooter: "© GitTree · 책임 있는 사용 · 투명성",
+
+        // 404 Page
+        notFoundTitle: "페이지를 찾을 수 없습니다",
+        notFoundText: "찾고 있는 페이지가 존재하지 않거나 이동되었습니다.",
+        notFoundBtn: "GitTree로 돌아가기",
+        notFoundFooter: "© GitTree · 전 세계 개발자 연결 · 🌳"
     },
     
     zh: {
@@ -885,7 +1032,28 @@ const translations = {
         
         // Contact Page
         contactTitle: "联系",
-        contactFooter: "© GitTree · 连接开发者 · 🌳"
+        contactFooter: "© GitTree · 连接开发者 · 🌳",
+
+        // Guide Page
+        guideTitle: "GitTree 用户指南",
+        guideSubtitle: "学习如何使用 GitHub 仓库可视化工具的所有功能",
+        guideFooter: "© GitTree · 为开发者提供的免费工具 · 🌳",
+
+        // Privacy Policy Page
+        privacyTitle: "隐私政策",
+        privacySubtitle: "最后更新：2026年1月18日",
+        privacyFooter: "© GitTree · 默认隐私 · 透明设计",
+
+        // Terms of Use Page
+        termsTitle: "使用条款",
+        termsSubtitle: "最后更新：2026年1月18日",
+        termsFooter: "© GitTree · 负责任使用 · 透明度",
+
+        // 404 Page
+        notFoundTitle: "页面未找到",
+        notFoundText: "您正在寻找的页面不存在或已被移动。",
+        notFoundBtn: "返回 GitTree",
+        notFoundFooter: "© GitTree · 连接世界各地的开发者 · 🌳"
     }
 };
 
@@ -983,8 +1151,14 @@ function applyTranslations() {
 function updateSEO() {
     const t = translations[currentLanguage];
     
-    // Update page title
-    document.title = t.pageTitle;
+    // Update page title - use data-i18n key from <title> if present, otherwise use pageTitle
+    const titleEl = document.querySelector('title');
+    const titleKey = titleEl && titleEl.getAttribute('data-i18n');
+    if (titleKey && t[titleKey]) {
+        document.title = t[titleKey];
+    } else if (t.pageTitle) {
+        document.title = t.pageTitle;
+    }
     
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -999,24 +1173,26 @@ function updateSEO() {
         metaKeywords.setAttribute('name', 'keywords');
         document.head.appendChild(metaKeywords);
     }
-    metaKeywords.setAttribute('content', t.metaKeywords);
+    if (t.metaKeywords) {
+        metaKeywords.setAttribute('content', t.metaKeywords);
+    }
     
     // Update html lang attribute
     document.documentElement.setAttribute('lang', currentLanguage);
     
     // Update Open Graph tags
     const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute('content', t.pageTitle);
+    if (ogTitle && t.pageTitle) ogTitle.setAttribute('content', t.pageTitle);
     
     const ogDescription = document.querySelector('meta[property="og:description"]');
-    if (ogDescription) ogDescription.setAttribute('content', t.metaDescription);
+    if (ogDescription && t.metaDescription) ogDescription.setAttribute('content', t.metaDescription);
     
     // Update Twitter tags
     const twitterTitle = document.querySelector('meta[property="twitter:title"]');
-    if (twitterTitle) twitterTitle.setAttribute('content', t.pageTitle);
+    if (twitterTitle && t.pageTitle) twitterTitle.setAttribute('content', t.pageTitle);
     
     const twitterDescription = document.querySelector('meta[property="twitter:description"]');
-    if (twitterDescription) twitterDescription.setAttribute('content', t.metaDescription);
+    if (twitterDescription && t.metaDescription) twitterDescription.setAttribute('content', t.metaDescription);
 }
 
 /**

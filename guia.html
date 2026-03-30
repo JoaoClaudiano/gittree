@@ -3,101 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia do GitTree – Como Usar</title>
+    <title data-i18n="guideTitle">GitTree User Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="institutional.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
-    <style>
-        /* Language Selector Styles */
-        .language-selector {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            color: var(--dark-text);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-right: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .language-selector:hover {
-            border-color: var(--primary);
-            background: var(--dark-bg);
-        }
-        
-        .light-theme .language-selector {
-            background: var(--light-card);
-            border: 1px solid var(--light-border);
-            color: var(--light-text);
-        }
-        
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 2rem 0;
-        }
-        
-        .feature-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: transform 0.3s;
-        }
-        
-        .light-theme .feature-card {
-            background: var(--light-card);
-            border: 1px solid var(--light-border);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .step-box {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
-        }
-        
-        .step-number {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        
-        .tip-box {
-            background: rgba(245, 158, 11, 0.1);
-            border-left: 4px solid #f59e0b;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-    </style>
 </head>
 <body class="dark-theme">
     <header class="institutional-header">
@@ -128,9 +38,9 @@
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title">📖 Guia Completo do GitTree</h1>
-        <p class="institutional-subtitle">
-            Aprenda a usar todas as funcionalidades da ferramenta de visualização de repositórios GitHub
+        <h1 class="institutional-title" data-i18n="guideTitle">📖 GitTree User Guide</h1>
+        <p class="institutional-subtitle" data-i18n="guideSubtitle">
+            Learn how to use all the features of the GitHub repository visualization tool
         </p>
 
         <section class="institutional-section">
@@ -409,7 +319,7 @@
             </div>
             
             <div class="tip-box">
-                <strong📤 Exportar Dados:</strong> Use os botões "JSON" ou "CSV" para exportar
+                <strong>📤 Exportar Dados:</strong> Use os botões "JSON" ou "CSV" para exportar
                 a análise completa para uso externo.
             </div>
             
@@ -446,8 +356,8 @@
         </section>
     </main>
 
-    <footer class="institutional-footer">
-        © GitTree · Ferramenta gratuita para desenvolvedores · 🌳
+    <footer class="institutional-footer" data-i18n="guideFooter">
+        © GitTree · Free tool for developers · 🌳
     </footer>
     
     <script src="translations.js"></script>

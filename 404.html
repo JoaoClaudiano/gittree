@@ -1,20 +1,117 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página não encontrada - GitTree</title>
+    <title data-i18n="notFoundTitle">Page Not Found – GitTree</title>
     <link rel="stylesheet" href="institutional.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 1.25rem;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .error-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .error-text {
+            color: var(--dark-subtext);
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+        .light-theme .error-text {
+            color: var(--light-subtext);
+        }
+        .error-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .error-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
 </head>
 <body class="dark-theme">
-    <div style="text-align: center; padding: 100px 20px;">
-        <h1 style="font-size: 120px; color: #10b981;">404</h1>
-        <h2>Página não encontrada</h2>
-        <p>A página que você está procurando não existe.</p>
-        <a href="index.html" style="display: inline-block; margin-top: 20px; padding: 10px 30px; background: #10b981; color: white; text-decoration: none; border-radius: 5px;">
-            Voltar para o GitTree
-        </a>
-    </div>
+    <header class="institutional-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-tree logo-icon"></i>
+                    <span>GitTree</span>
+                </a>
+            </div>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">English</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-i18n="backToTool">Back to Tool</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="institutional-main">
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <h1 class="error-title" data-i18n="notFoundTitle">Page Not Found</h1>
+            <p class="error-text" data-i18n="notFoundText">
+                The page you are looking for does not exist or has been moved.
+            </p>
+            <a href="index.html" class="error-btn">
+                <i class="fas fa-tree"></i>
+                <span data-i18n="notFoundBtn">Back to GitTree</span>
+            </a>
+        </div>
+    </main>
+
+    <footer class="institutional-footer" data-i18n="notFoundFooter">
+        © GitTree · Connecting developers around the world · 🌳
+    </footer>
+
+    <script src="translations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initI18n();
+
+            const languageSelector = document.getElementById('languageSelector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function(e) {
+                    setLanguage(e.target.value);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
