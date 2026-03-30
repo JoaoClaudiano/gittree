@@ -75,6 +75,9 @@ const translations = {
         // Footer
         footerPrivacy: "Privacy Policy",
         footerTerms: "Terms of Use",
+        footerAbout: "About",
+        footerGuide: "Guide",
+        footerContact: "Contact",
         footerRights: "All rights reserved",
         
         // Cookie Banner
@@ -91,9 +94,8 @@ const translations = {
         // About Page
         aboutTitle: "About",
         aboutHistory: "History",
-        aboutHistoryText1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia velit velit, in fermentum elit tristique eget.",
-        aboutHistoryText2: "Phasellus vestibulum neque neque, id vehicula augue mollis eget. Donec eleifend orci eu felis consequat, id feugiat libero condimentum.",
-        aboutTeam: "Our Team",
+        aboutHistoryText1: "GitTree was born from a simple idea: to allow any developer to instantly visualize the file structure of a GitHub repository, without needing to clone it. Navigating unfamiliar codebases can be time-consuming — GitTree makes it fast and effortless.",
+        aboutHistoryText2: "Created in 2025 by João Claudiano, GitTree started as a personal project and has grown into a free, open-source tool used by developers worldwide. Our goal is to make repository exploration as simple and accessible as possible.",
         aboutTeamFounder: "Joao Claudiano",
         aboutTeamFounderDesc: "Fullstack Developer and Proud ADHD 🧠💡",
         aboutTeamFounderRole: "Project Ideator 👍",
@@ -240,6 +242,9 @@ const translations = {
         // Footer
         footerPrivacy: "Política de Privacidade",
         footerTerms: "Termos de Uso",
+        footerAbout: "Sobre",
+        footerGuide: "Guia",
+        footerContact: "Contato",
         footerRights: "Todos os direitos reservados",
         
         // Cookie Banner
@@ -256,8 +261,8 @@ const translations = {
         // About Page
         aboutTitle: "Sobre",
         aboutHistory: "História",
-        aboutHistoryText1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacinia velit velit, in fermentum elit tristique eget.",
-        aboutHistoryText2: "Phasellus vestibulum neque neque, id vehicula augue mollis eget. Donec eleifend orci eu felis consequat, id feugiat libero condimentum.",
+        aboutHistoryText1: "O GitTree nasceu de uma ideia simples: permitir que qualquer desenvolvedor visualize instantaneamente a estrutura de arquivos de um repositório do GitHub, sem precisar cloná-lo. Navegar em bases de código desconhecidas pode ser demorado — o GitTree torna esse processo rápido e descomplicado.",
+        aboutHistoryText2: "Criado em 2025 por João Claudiano, o GitTree começou como um projeto pessoal e cresceu para se tornar uma ferramenta gratuita e de código aberto usada por desenvolvedores do mundo inteiro. Nosso objetivo é tornar a exploração de repositórios tão simples e acessível quanto possível.",
         aboutTeam: "Nossa Equipe",
         aboutTeamFounder: "Joao Claudiano",
         aboutTeamFounderDesc: "Desenvolvedor Fullstack e TDAH Orgulhoso 🧠💡",
@@ -405,6 +410,9 @@ const translations = {
         // Footer
         footerPrivacy: "Política de Privacidad",
         footerTerms: "Términos de Uso",
+        footerAbout: "Acerca de",
+        footerGuide: "Guía",
+        footerContact: "Contacto",
         footerRights: "Todos los derechos reservados",
         
         // Cookie Banner
@@ -421,6 +429,8 @@ const translations = {
         // About Page
         aboutTitle: "Acerca de",
         aboutHistory: "Historia",
+        aboutHistoryText1: "GitTree nació de una idea simple: permitir que cualquier desarrollador visualice instantáneamente la estructura de archivos de un repositorio de GitHub, sin necesidad de clonarlo. Navegar por bases de código desconocidas puede ser tedioso — GitTree lo hace rápido y sencillo.",
+        aboutHistoryText2: "Creado en 2025 por João Claudiano, GitTree comenzó como un proyecto personal y se convirtió en una herramienta gratuita y de código abierto utilizada por desarrolladores de todo el mundo. Nuestro objetivo es hacer que la exploración de repositorios sea lo más simple y accesible posible.",
         aboutTeam: "Nuestro Equipo",
         aboutTeamFounder: "Joao Claudiano",
         aboutTeamCommunity: "Comunidad",
@@ -529,6 +539,9 @@ const translations = {
         // Footer
         footerPrivacy: "Politique de Confidentialité",
         footerTerms: "Conditions d'Utilisation",
+        footerAbout: "À propos",
+        footerGuide: "Guide",
+        footerContact: "Contact",
         footerRights: "Tous droits réservés",
         
         // Cookie Banner
@@ -545,6 +558,8 @@ const translations = {
         // About Page
         aboutTitle: "À propos",
         aboutHistory: "Histoire",
+        aboutHistoryText1: "GitTree est né d'une idée simple : permettre à tout développeur de visualiser instantanément la structure de fichiers d'un dépôt GitHub, sans avoir à le cloner. Naviguer dans des bases de code inconnues peut être fastidieux — GitTree le rend rapide et facile.",
+        aboutHistoryText2: "Créé en 2025 par João Claudiano, GitTree a commencé comme un projet personnel et est devenu un outil gratuit et open-source utilisé par des développeurs du monde entier. Notre objectif est de rendre l'exploration des dépôts aussi simple et accessible que possible.",
         aboutTeam: "Notre Équipe",
         aboutTechnology: "Technologie",
         aboutContactSupport: "Contact et Support",
@@ -649,6 +664,9 @@ const translations = {
         // Footer
         footerPrivacy: "Informativa sulla Privacy",
         footerTerms: "Termini di Utilizzo",
+        footerAbout: "Chi Siamo",
+        footerGuide: "Guida",
+        footerContact: "Contatto",
         footerRights: "Tutti i diritti riservati",
         
         // Cookie Banner
@@ -665,6 +683,8 @@ const translations = {
         // About Page
         aboutTitle: "Chi Siamo",
         aboutHistory: "Storia",
+        aboutHistoryText1: "GitTree è nato da un'idea semplice: consentire a qualsiasi sviluppatore di visualizzare istantaneamente la struttura dei file di un repository GitHub, senza doverlo clonare. Navigare in basi di codice sconosciute può essere noioso — GitTree lo rende veloce e semplice.",
+        aboutHistoryText2: "Creato nel 2025 da João Claudiano, GitTree è iniziato come un progetto personale ed è diventato uno strumento gratuito e open-source utilizzato da sviluppatori di tutto il mondo. Il nostro obiettivo è rendere l'esplorazione dei repository il più semplice e accessibile possibile.",
         aboutTeam: "Il Nostro Team",
         aboutTechnology: "Tecnologia",
         aboutContactSupport: "Contatto e Supporto",
@@ -769,6 +789,9 @@ const translations = {
         // Footer
         footerPrivacy: "プライバシーポリシー",
         footerTerms: "利用規約",
+        footerAbout: "概要",
+        footerGuide: "ガイド",
+        footerContact: "お問い合わせ",
         footerRights: "すべての権利を留保",
         
         // Cookie Banner
@@ -785,6 +808,8 @@ const translations = {
         // About Page
         aboutTitle: "概要",
         aboutHistory: "歴史",
+        aboutHistoryText1: "GitTreeはシンプルなアイデアから生まれました：開発者がクローンすることなく、GitHubリポジトリのファイル構造を瞬時に視覚化できるようにすること。見慣れないコードベースを調べるのは時間がかかります — GitTreeはそれを速くて簡単にします。",
+        aboutHistoryText2: "2025年にJoão Claudianoによって作成されたGitTreeは、個人プロジェクトとして始まり、世界中の開発者に使われる無料のオープンソースツールに成長しました。私たちの目標は、リポジトリの探索をできる限りシンプルでアクセスしやすくすることです。",
         aboutTeam: "私たちのチーム",
         aboutTechnology: "技術",
         aboutContactSupport: "お問い合わせとサポート",
@@ -889,6 +914,9 @@ const translations = {
         // Footer
         footerPrivacy: "개인정보 보호정책",
         footerTerms: "이용약관",
+        footerAbout: "소개",
+        footerGuide: "가이드",
+        footerContact: "연락처",
         footerRights: "모든 권리 보유",
         
         // Cookie Banner
@@ -905,6 +933,8 @@ const translations = {
         // About Page
         aboutTitle: "소개",
         aboutHistory: "역사",
+        aboutHistoryText1: "GitTree는 간단한 아이디어에서 탄생했습니다: 개발자가 클론 없이도 GitHub 리포지토리의 파일 구조를 즉시 시각화할 수 있도록 하는 것입니다. 낯선 코드베이스를 탐색하는 것은 시간이 걸릴 수 있습니다 — GitTree는 그것을 빠르고 쉽게 만들어 줍니다.",
+        aboutHistoryText2: "2025년 João Claudiano에 의해 만들어진 GitTree는 개인 프로젝트로 시작하여 전 세계 개발자들이 사용하는 무료 오픈소스 도구로 성장했습니다. 우리의 목표는 리포지토리 탐색을 최대한 간단하고 접근하기 쉽게 만드는 것입니다.",
         aboutTeam: "우리 팀",
         aboutTechnology: "기술",
         aboutContactSupport: "연락처 및 지원",
@@ -1009,6 +1039,9 @@ const translations = {
         // Footer
         footerPrivacy: "隐私政策",
         footerTerms: "使用条款",
+        footerAbout: "关于",
+        footerGuide: "指南",
+        footerContact: "联系",
         footerRights: "保留所有权利",
         
         // Cookie Banner
@@ -1025,6 +1058,8 @@ const translations = {
         // About Page
         aboutTitle: "关于",
         aboutHistory: "历史",
+        aboutHistoryText1: "GitTree 诞生于一个简单的想法：让任何开发者无需克隆即可即时可视化 GitHub 仓库的文件结构。浏览陌生的代码库可能耗时费力 — GitTree 让这一过程变得快速而轻松。",
+        aboutHistoryText2: "GitTree 由 João Claudiano 于 2025 年创建，从一个个人项目成长为全球开发者使用的免费开源工具。我们的目标是让仓库探索尽可能简单易用。",
         aboutTeam: "我们的团队",
         aboutTechnology: "技术",
         aboutContactSupport: "联系与支持",
