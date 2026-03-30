@@ -4,7 +4,7 @@
  */
 
 // Cache Versioning - Atualizar quando houver mudanças
-const CACHE_VERSION = '2.0.0';
+const CACHE_VERSION = '2.1.0';
 const CACHE_NAME = `gittree-v${CACHE_VERSION}`;
 const RUNTIME_CACHE = `gittree-runtime-v${CACHE_VERSION}`;
 
