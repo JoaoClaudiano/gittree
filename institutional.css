@@ -519,3 +519,30 @@ a.link-card:hover {
         padding: 0 15px;
     }
 }
+
+/* ============ SVG ICONS ============ */
+.svg-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+}
+
+.feature-icon .svg-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.section-title .svg-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: -0.2em;
+}
+
+.tip-box .svg-icon,
+.notice-box .svg-icon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: -0.15em;
+}
