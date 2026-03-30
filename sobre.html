@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="aboutTitle">About</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="institutional.css">
+    <meta name="description" content="About GitTree — free, open-source tool to instantly visualize any GitHub repository structure. Learn about the project, team, and technology.">
+    <title data-i18n="aboutTitle">About GitTree</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="institutional.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
 </head>
 <body class="dark-theme">
@@ -39,111 +39,218 @@
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title" data-i18n="aboutTitle">About</h1>
+        <h1 class="institutional-title" data-i18n="aboutTitle">About GitTree</h1>
+        <p class="institutional-subtitle" data-i18n="aboutSubtitle">Free, open-source tool to instantly explore GitHub repository structures</p>
 
+        <!-- What is GitTree? -->
+        <section class="institutional-section">
+            <h2 class="section-title" data-i18n="aboutMission">What is GitTree?</h2>
+            <p class="institutional-text" data-i18n="aboutMissionText">
+                GitTree is a free web tool that transforms any public GitHub repository into an interactive visualization. Explore directory structures, analyze code metrics, and understand project organization — all without cloning.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌳</div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature1Title">Visual Exploration</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature1Desc">Navigate the full repository tree in an intuitive, interactive format</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature2Title">Detailed Metrics</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature2Desc">Statistics, file distribution charts, and GitHub data in one place</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature3Title">No Setup Required</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature3Desc">Just paste a GitHub URL — no registration, no installation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📤</div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature4Title">Export & Share</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature4Desc">Export structure as JSON, CSV, or copy as text for documentation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- History -->
         <section class="institutional-section">
             <h2 class="section-title" data-i18n="aboutHistory">History</h2>
             <p class="institutional-text" data-i18n="aboutHistoryText1">
                 GitTree was born from a simple idea: to allow any developer to instantly visualize the file structure of a GitHub repository, without needing to clone it. Navigating unfamiliar codebases can be time-consuming — GitTree makes it fast and effortless.
             </p>
-
             <p class="institutional-text" data-i18n="aboutHistoryText2">
                 Created in 2025 by João Claudiano, GitTree started as a personal project and has grown into a free, open-source tool used by developers worldwide. Our goal is to make repository exploration as simple and accessible as possible.
             </p>
         </section>
 
+        <!-- Our Team -->
         <section class="institutional-section">
             <h2 class="section-title" data-i18n="aboutTeam">Our Team</h2>
             <div class="team-section">
                 <div class="team-card">
                     <div class="avatar">
-                        <i class="fas fa-user"></i>
+                        <img src="https://github.com/JoaoClaudiano.png?size=128"
+                             alt="João Claudiano"
+                             style="width:100%;height:100%;border-radius:50%;object-fit:cover;"
+                             onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-user\'></i>'">
                     </div>
-                    <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamFounder">Joao Claudiano</h3>
-                    <p class="institutional-text" style="font-size: 0.9rem;" data-i18n="aboutTeamFounderDesc">
-                        Fullstack Developer and Proud ADHD 🧠💡
+                    <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamFounder">João Claudiano</h3>
+                    <p class="institutional-text" style="font-size: 0.875rem; font-weight: 500; color: var(--primary-light);" data-i18n="aboutTeamFounderRole">
+                        Project Creator &amp; Maintainer
                     </p>
-                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="aboutTeamFounderRole">
-                        Project Ideator 👍
+                    <p class="institutional-text" style="font-size: 0.875rem; margin-top: 0.4rem;" data-i18n="aboutTeamFounderDesc">
+                        Fullstack Developer · ADHD 🧠💡
                     </p>
+                    <a href="https://github.com/JoaoClaudiano"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       style="display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;color:#7aa2ff;text-decoration:none;font-size:0.85rem;">
+                        <i class="fab fa-github"></i> github.com/JoaoClaudiano
+                    </a>
                 </div>
-                
+
                 <div class="team-card">
                     <div class="avatar">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamCommunity">Community</h3>
-                    <p class="institutional-text" style="font-size: 0.9rem;" data-i18n="aboutTeamCommunityDesc">
-                        Contributors & Users
+                    <p class="institutional-text" style="font-size: 0.875rem; font-weight: 500; color: var(--primary-light);" data-i18n="aboutTeamCommunityDesc">
+                        Contributors &amp; Users
                     </p>
-                    <p class="institutional-text" style="font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="aboutTeamCommunityText">
+                    <p class="institutional-text" style="font-size: 0.875rem; margin-top: 0.4rem;" data-i18n="aboutTeamCommunityText">
                         You're part of this journey! Every feedback, suggestion and use of the tool helps us improve.
                     </p>
+                    <a href="https://github.com/JoaoClaudiano/gittree/issues"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       style="display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;color:#7aa2ff;text-decoration:none;font-size:0.85rem;">
+                        <i class="fas fa-comment-alt"></i> <span data-i18n="aboutContactIssuesText">Report problems or suggest features</span>
+                    </a>
                 </div>
             </div>
         </section>
 
+        <!-- Technology -->
         <section class="institutional-section">
             <h2 class="section-title" data-i18n="aboutTechnology">Technology</h2>
             <p class="institutional-text" data-i18n="aboutTechnologyText">
                 GitTree is built with modern and reliable technologies:
             </p>
-            <ul class="institutional-list">
-                <li class="list-item">
-                    <strong data-i18n="aboutTechFrontend">Frontend:</strong> <span data-i18n="aboutTechFrontendDesc">HTML5, CSS3, JavaScript (ES6+)</span>
-                </li>
-                <li class="list-item">
-                    <strong data-i18n="aboutTechAPIs">APIs:</strong> <span data-i18n="aboutTechAPIsDesc">GitHub REST API v3</span>
-                </li>
-                <li class="list-item">
-                    <strong data-i18n="aboutTechHosting">Hosting:</strong> <span data-i18n="aboutTechHostingDesc">GitHub Pages</span>
-                </li>
-                <li class="list-item">
-                    <strong data-i18n="aboutTechDesign">Design:</strong> <span data-i18n="aboutTechDesignDesc">CSS Custom Properties for themes</span>
-                </li>
-            </ul>
-            
-            <div class="tip-box" style="background: rgba(59, 130, 246, 0.1); border-left-color: #3b82f6;">
-                <strong data-i18n="aboutOpenSource">🌐 Open Source:</strong> <span data-i18n="aboutOpenSourceText">GitTree is open-source and available on GitHub. Contributions are welcome!</span>
+
+            <div class="tech-stack">
+                <span class="tech-badge"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="tech-badge"><i class="fab fa-js"></i> JavaScript ES6+</span>
+                <span class="tech-badge"><i class="fab fa-github"></i> GitHub REST API v3</span>
+                <span class="tech-badge"><i class="fas fa-cloud"></i> GitHub Pages</span>
+                <span class="tech-badge"><i class="fas fa-palette"></i> CSS Custom Properties</span>
+            </div>
+
+            <div class="tip-box" style="background: rgba(59, 130, 246, 0.1); border-left-color: #3b82f6; margin-top: 1.25rem;">
+                <strong data-i18n="aboutOpenSource">🌐 Open Source:</strong>
+                <span data-i18n="aboutOpenSourceText"> GitTree is open-source and available on GitHub. Contributions are welcome!</span>
             </div>
         </section>
 
+        <!-- Open Source / Contribute -->
         <section class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutContactSupport">Contact & Support</h2>
+            <h2 class="section-title">🌐 Open Source</h2>
+            <p class="institutional-text" data-i18n="aboutContributeText">
+                GitTree is fully open-source. You can fork it, report issues, and submit pull requests on GitHub.
+            </p>
+            <div style="display:flex;gap:1rem;margin-top:1.25rem;flex-wrap:wrap;">
+                <a href="https://github.com/JoaoClaudiano/gittree"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="action-link action-link-primary">
+                    <i class="fab fa-github"></i>
+                    <span data-i18n="aboutViewGitHub">View on GitHub</span>
+                </a>
+                <a href="https://github.com/JoaoClaudiano/gittree/issues"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="action-link action-link-secondary">
+                    <i class="fas fa-bug"></i>
+                    <span data-i18n="aboutContactIssues">📄 Issues</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact & Support -->
+        <section class="institutional-section">
+            <h2 class="section-title" data-i18n="aboutContactSupport">Contact &amp; Support</h2>
             <p class="institutional-text" data-i18n="aboutContactText">
                 Need help or have a suggestion? Get in touch:
             </p>
             <ul class="institutional-list">
                 <li class="list-item">
-                    <strong data-i18n="aboutContactEmail">📧 Email:</strong> gittree@proton.me
+                    <strong data-i18n="aboutContactEmail">📧 Email:</strong>
+                    <a href="mailto:gittree@proton.me" style="color: #7aa2ff; text-decoration: none;">
+                        gittree@proton.me
+                    </a>
                 </li>
                 <li class="list-item">
-                    <strong data-i18n="aboutContactGitHub">🐙 GitHub:</strong> 
-                    <a href="https://github.com/JoaoClaudiano" style="color: #7aa2ff; text-decoration: none;">
+                    <strong data-i18n="aboutContactGitHub">🐙 GitHub:</strong>
+                    <a href="https://github.com/JoaoClaudiano"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       style="color: #7aa2ff; text-decoration: none;">
                         github.com/JoaoClaudiano
                     </a>
                 </li>
                 <li class="list-item">
                     <strong data-i18n="aboutContactIssues">📄 Issues:</strong>
-                    <a href="https://github.com/JoaoClaudiano/gittree/issues" style="color: #7aa2ff; text-decoration: none;" data-i18n="aboutContactIssuesText">
+                    <a href="https://github.com/JoaoClaudiano/gittree/issues"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       style="color: #7aa2ff; text-decoration: none;"
+                       data-i18n="aboutContactIssuesText">
                         Report problems or suggest features
                     </a>
                 </li>
             </ul>
         </section>
+
+        <!-- Explore More -->
+        <section class="institutional-section">
+            <h2 class="section-title" data-i18n="aboutExploreMore">Explore More</h2>
+            <div class="feature-grid">
+                <a href="guia.html" class="feature-card link-card">
+                    <div class="feature-icon">📖</div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutLinkGuide">📖 User Guide</h3>
+                    <p class="institutional-text" data-i18n="aboutLinkGuideDesc">Learn how to use all features of GitTree</p>
+                </a>
+                <a href="contato.html" class="feature-card link-card">
+                    <div class="feature-icon">📬</div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutLinkContact">📬 Contact</h3>
+                    <p class="institutional-text" data-i18n="aboutLinkContactDesc">Get in touch with the team</p>
+                </a>
+                <a href="index.html" class="feature-card link-card">
+                    <div class="feature-icon">🌳</div>
+                    <h3 style="margin-bottom: 8px;">GitTree</h3>
+                    <p class="institutional-text" data-i18n="aboutLinkToolDesc">Use the tool now — it's free</p>
+                </a>
+            </div>
+        </section>
     </main>
 
-    <footer class="institutional-footer" data-i18n="aboutFooter">
-        © 2026 GitTree · Connecting developers around the world · 🌳
+    <footer class="institutional-footer">
+        <nav class="footer-nav">
+            <a href="index.html">GitTree</a>
+            <a href="guia.html" data-i18n="footerGuide">Guide</a>
+            <a href="contato.html" data-i18n="footerContact">Contact</a>
+            <a href="politica-de-privacidade.html" data-i18n="footerPrivacy">Privacy Policy</a>
+            <a href="termos.html" data-i18n="footerTerms">Terms of Use</a>
+        </nav>
+        <p data-i18n="aboutFooter">© 2026 GitTree · Connecting developers around the world · 🌳</p>
     </footer>
-    
+
     <script src="translations.js"></script>
     <script>
-        // Initialize i18n on page load
         document.addEventListener('DOMContentLoaded', function() {
             initI18n();
-            
-            // Language selector
+
             const languageSelector = document.getElementById('languageSelector');
             if (languageSelector) {
                 languageSelector.addEventListener('change', function(e) {
