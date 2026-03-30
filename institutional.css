@@ -425,6 +425,82 @@ a.link-card:hover {
     color: var(--light-subtext);
 }
 
+/* ============ FOOTER — SHARED WITH MAIN PAGE ============ */
+.institutional-footer {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+    border-top: 1px solid var(--dark-border);
+    padding: 0 0;
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    flex-shrink: 0;
+}
+
+.light-theme .institutional-footer {
+    background: linear-gradient(135deg, var(--light-card) 0%, #f1f5f9 100%);
+    border-top: 1px solid var(--light-border);
+}
+
+.footer-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--dark-subtext);
+    font-size: 13px;
+}
+
+.light-theme .footer-text {
+    color: var(--light-subtext);
+}
+
+.footer-separator {
+    color: var(--dark-border);
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: var(--dark-subtext);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.light-theme .footer-link {
+    color: var(--light-subtext);
+}
+
+.footer-link:hover {
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
 /* ============ RESPONSIVIDADE ============ */
 @media (max-width: 768px) {
     .institutional-main {

@@ -41,6 +41,12 @@ jobs:
           npm run generate-seo
           echo "SEO files generated successfully"
 
+      - name: Build Tailwind CSS
+        run: |
+          echo "Building Tailwind CSS..."
+          npm run build:css
+          echo "Tailwind CSS built successfully"
+
       - name: Verify generated files
         run: |
           echo "Verifying sitemap.xml..."
