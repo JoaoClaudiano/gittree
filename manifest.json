@@ -2,8 +2,8 @@
   "name": "GitTree - Visualizador de Estrutura GitHub",
   "short_name": "GitTree",
   "description": "Visualizador interativo de estrutura de repositórios do GitHub. Explore árvores de diretórios, métricas de código e estatísticas em tempo real.",
-  "start_url": "/gittree/",
-  "scope": "/gittree/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#ffffff",
@@ -52,7 +52,7 @@
       "name": "Visualizar Repositório",
       "short_name": "Visualizar",
       "description": "Abrir visualizador de repositório",
-      "url": "/gittree/#visualizar",
+      "url": "/#visualizar",
       "icons": [
         {
           "src": "icons/android-chrome-192x192.png",
@@ -64,7 +64,7 @@
       "name": "Guia de Uso",
       "short_name": "Guia",
       "description": "Abrir guia de utilização",
-      "url": "/gittree/guia.html",
+      "url": "/guia.html",
       "icons": [
         {
           "src": "icons/android-chrome-192x192.png",

@@ -10,7 +10,7 @@
 const fs = require('fs');
 
 // Configurações
-const BASE_URL = 'https://joaoclaudiano.github.io/gittree';
+const BASE_URL = 'https://gittree.pages.dev';
 const OUTPUT_FILE = 'robots.txt';
 
 /**

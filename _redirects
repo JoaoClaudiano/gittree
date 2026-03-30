@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects
+# Redirect /index.html to root to avoid duplicate content
+/index.html / 301
