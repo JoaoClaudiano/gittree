@@ -43,25 +43,7 @@ function renderBentoPanel() {
         document.body.appendChild(div);
     }
     
-    // Check if React is available
-    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
-        // Fallback to vanilla JS implementation
-        renderBentoPanelVanilla();
-        return;
-    }
-    
-    const root = ReactDOM.createRoot(document.getElementById('bentoMetadataContainer'));
-    root.render(
-        React.createElement(window.BentoMetadataPanel, {
-            file: window.GitTree2026.selectedFile,
-            repoInfo: window.currentRepoInfo,
-            isOpen: window.GitTree2026.bentoMetadataPanelOpen,
-            onClose: () => {
-                window.GitTree2026.bentoMetadataPanelOpen = false;
-                renderBentoPanel();
-            }
-        })
-    );
+    renderBentoPanelVanilla();
 }
 
 // Vanilla JS implementation of Bento Panel
@@ -265,21 +247,6 @@ function handleFileClickWithBento(file) {
     renderBentoPanel();
 }
 
-// Memoized tree component wrapper
-const MemoizedTreeWrapper = React.memo(({ files, repoInfo }) => {
-    // Ensure FileTree is available
-    if (!window.FileTree) {
-        console.error('FileTree component not found');
-        return null;
-    }
-    
-    return React.createElement(window.FileTree, {
-        files: files,
-        repoInfo: repoInfo,
-        onFileClick: handleFileClickWithBento
-    });
-});
-
 // Export enhanced functions
 window.initGitTree2026Features = initGitTree2026Features;
 window.showSkeletonLoader = showSkeletonLoader;
@@ -287,7 +254,6 @@ window.hideSkeletonLoader = hideSkeletonLoader;
 window.setImpactHighlight = setImpactHighlight;
 window.renderBentoPanel = renderBentoPanel;
 window.handleFileClickWithBento = handleFileClickWithBento;
-window.MemoizedTreeWrapper = MemoizedTreeWrapper;
 
 // Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {

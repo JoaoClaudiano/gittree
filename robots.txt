@@ -1,6 +1,6 @@
 # robots.txt para GitTree
 # Gerado automaticamente
-# 2026-03-30T18:14:39.331Z
+# 2026-03-30T18:30:48.725Z
 
 # Configuração padrão
 User-agent: *

@@ -112,7 +112,7 @@ Documentação completa das implementações baseadas nas recomendações.
 
 ---
 
-### 7. 📘 [README.md](./README.md) (Atualizado)
+### 7. 📘 [README.md](../README.md) (Atualizado)
 **Documentação do Projeto GitTree**
 
 README principal do projeto com link para os guias de implementação.
