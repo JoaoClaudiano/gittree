@@ -60,6 +60,11 @@ const translations = {
         distributionTitle: "File Distribution by Type",
         fileTypesTitle: "File Types",
         
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 File Size",
+        bentoExtension: "🏷️ Extension",
+        bentoLanguage: "💻 Language",
+        
         // Status Messages
         statusAnalyzing: "Analyzing repository...",
         statusLoading: "Loading structure...",
@@ -368,8 +373,12 @@ const translations = {
         distributionTitle: "Distribuição de Arquivos por Tipo",
         fileTypesTitle: "Tipos de Arquivo",
         
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 Tamanho do Arquivo",
+        bentoExtension: "🏷️ Extensão",
+        bentoLanguage: "💻 Linguagem",
+        
         // Status Messages
-        statusAnalyzing: "Analisando repositório...",
         statusLoading: "Carregando estrutura...",
         statusSuccess: "Repositório carregado com sucesso!",
         statusError: "Erro ao carregar repositório",
@@ -676,6 +685,11 @@ const translations = {
         distributionTitle: "Distribución de Archivos por Tipo",
         fileTypesTitle: "Tipos de Archivo",
         
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 Tamaño del Archivo",
+        bentoExtension: "🏷️ Extensión",
+        bentoLanguage: "💻 Lenguaje",
+        
         // Status Messages
         statusAnalyzing: "Analizando repositorio...",
         statusLoading: "Cargando estructura...",
@@ -957,6 +971,11 @@ const translations = {
         distributionTitle: "Distribution des Fichiers par Type",
         fileTypesTitle: "Types de Fichiers",
         
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 Taille du Fichier",
+        bentoExtension: "🏷️ Extension",
+        bentoLanguage: "💻 Langage",
+        
         // Status Messages
         statusAnalyzing: "Analyse du dépôt...",
         statusLoading: "Chargement de la structure...",
@@ -1235,6 +1254,11 @@ const translations = {
         // File Distribution
         distributionTitle: "Distribuzione File per Tipo",
         fileTypesTitle: "Tipi di File",
+        
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 Dimensione File",
+        bentoExtension: "🏷️ Estensione",
+        bentoLanguage: "💻 Linguaggio",
         
         // Status Messages
         statusAnalyzing: "Analisi repository...",
