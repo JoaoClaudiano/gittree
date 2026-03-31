@@ -624,7 +624,8 @@ function renderTreeNode(container, node, depth = 0) {
     
     const badge = document.createElement('span');
     badge.className = 'tree-badge';
-    badge.textContent = isFolder ? 'pasta' : 'arquivo';
+    badge.setAttribute('data-i18n', isFolder ? 'treeBadgeFolder' : 'treeBadgeFile');
+    badge.textContent = t(isFolder ? 'treeBadgeFolder' : 'treeBadgeFile');
     
     if (isFolder && hasChildren) {
         const count = document.createElement('span');
@@ -820,7 +821,7 @@ function generateFileTypesChart(files) {
         fileTypesChartEl.innerHTML = `
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
                 <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
-                <p>Nenhum arquivo para mostrar</p>
+                <p>${t('chartNoFiles')}</p>
             </div>
         `;
         return;
@@ -830,7 +831,7 @@ function generateFileTypesChart(files) {
     const typeCounts = {};
     files.forEach(file => {
         const match = file.path.match(/\.([^.]+)$/);
-        const type = match ? match[1].toUpperCase() : 'OUTROS';
+        const type = match ? match[1].toUpperCase() : t('treeOther');
         typeCounts[type] = (typeCounts[type] || 0) + 1;
     });
     
@@ -907,7 +908,7 @@ function generateFileTypesChart(files) {
                                 const value = context.raw;
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 const percentage = Math.round((value / total) * 100);
-                                return `${context.label}: ${value} arquivos (${percentage}%)`;
+                                return `${context.label}: ${value} ${t('chartFilesUnit')} (${percentage}%)`;
                             }
                         }
                     }
