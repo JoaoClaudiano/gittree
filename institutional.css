@@ -263,7 +263,7 @@ body.light-theme {
 /* ============ FEATURE GRID ============ */
 .feature-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: 1.25rem;
     margin: 1.5rem 0;
 }
@@ -517,6 +517,77 @@ a.link-card:hover {
     
     .header-container {
         padding: 0 15px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 14px 16px;
+        gap: 10px;
+    }
+
+    .footer-links {
+        justify-content: center;
+        gap: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .institutional-title {
+        font-size: 1.5rem;
+    }
+
+    .institutional-header {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 0 12px;
+    }
+
+    .header-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .language-selector {
+        flex: 1;
+        max-width: 140px;
+    }
+
+    .institutional-section {
+        padding: 1rem;
+    }
+
+    .team-section {
+        flex-direction: column;
+    }
+
+    .team-card {
+        min-width: unset;
+    }
+
+    .action-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .footer-links {
+        gap: 10px;
+        font-size: 12px;
+    }
+
+    .footer-link {
+        font-size: 12px;
     }
 }
 
