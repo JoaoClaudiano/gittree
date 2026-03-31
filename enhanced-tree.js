@@ -104,7 +104,7 @@ function renderBentoPanelVanilla() {
                         
                         <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%); border-radius: 0.75rem; border: 1px solid rgba(168, 85, 247, 0.3);">
                             <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(216, 180, 254); margin-bottom: 0.5rem;">💻 Language</div>
-                            <div style="font-size: 1.5rem; font-weight: bold; color: white;">${file.language || 'Unknown'}</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: white;">${file.language || t('unknownLanguage')}</div>
                         </div>
                     </div>
                 </div>
