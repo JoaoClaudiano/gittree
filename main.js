@@ -36,10 +36,10 @@ function updateThemeIcon(isLight) {
     const icon = document.querySelector('#themeToggle i');
     if (isLight) {
         icon.className = 'fas fa-sun';
-        themeToggle.title = 'Alternar para tema escuro';
+        themeToggle.title = t('themeToggleLight');
     } else {
         icon.className = 'fas fa-moon';
-        themeToggle.title = 'Alternar para tema claro';
+        themeToggle.title = t('themeToggleDark');
     }
 }
 
@@ -94,22 +94,22 @@ function initControls() {
                 const text = await navigator.clipboard.readText();
                 if (text) {
                     repoInput.value = text;
-                    showStatus('Link colado!', 'success');
+                    showStatus(t('statusPasted'), 'success');
                     repoInput.focus();
                 }
             } catch (err) {
                 console.error('Falha ao colar:', err);
-                showStatus('Não foi possível acessar a área de transferência', 'error');
+                showStatus(t('statusClipboardError'), 'error');
             }
         });
     }
     
     if (clearCacheBtn) {
         clearCacheBtn.addEventListener('click', () => {
-            if (confirm('Limpar todo o cache?')) {
+            if (confirm(t('confirmClearCache'))) {
                 localStorage.clear();
                 updateCacheStatus();
-                showStatus('Cache limpo com sucesso!', 'success');
+                showStatus(t('statusCacheCleared'), 'success');
             }
         });
     }
@@ -154,7 +154,7 @@ function initControls() {
 function copyTreeAsText() {
     const treeContainer = document.getElementById('treeContainer');
     if (!treeContainer) {
-        showStatus('Nenhuma árvore para copiar', 'warning');
+        showStatus(t('statusNoTree'), 'warning');
         return;
     }
     
@@ -195,17 +195,17 @@ function copyTreeAsText() {
     });
     
     if (allLines.length === 0) {
-        showStatus('Árvore vazia', 'warning');
+        showStatus(t('statusEmptyTree'), 'warning');
         return;
     }
     
     // Copiar para clipboard
     const textToCopy = allLines.join('\n');
     navigator.clipboard.writeText(textToCopy)
-        .then(() => showStatus('Estrutura copiada como texto!', 'success'))
+        .then(() => showStatus(t('statusCopied'), 'success'))
         .catch(err => {
             console.error('Erro ao copiar:', err);
-            showStatus('Erro ao copiar', 'error');
+            showStatus(t('statusCopyError'), 'error');
         });
 }
 
@@ -310,12 +310,12 @@ async function analyzeRepository() {
     const inputValue = repoInput.value.trim();
     
     if (!inputValue) {
-        showStatus('Digite um repositório GitHub', 'error');
+        showStatus(t('statusDefault'), 'error');
         return;
     }
     
     showLoading(true);
-    showStatus('Processando...', 'info');
+    showStatus(t('statusAnalyzing'), 'info');
     
     // Show skeleton loader
     if (typeof window.showSkeletonLoader === 'function') {
@@ -340,14 +340,14 @@ async function analyzeRepository() {
         if (repoInfo.repo === 'geocsvps' && repoInfo.owner === 'JoaoClaudiano') {
             const corrected = await tryCorrectRepoName(repoInfo.owner, repoInfo.repo);
             if (corrected) {
-                showStatus(`Corrigindo para: ${corrected}`, 'info');
+                showStatus(`${t('statusCorrecting')} ${corrected}`, 'info');
                 repoInfo.repo = corrected;
                 repoInfo.fullName = `${repoInfo.owner}/${corrected}`;
                 repoInput.value = repoInfo.fullName;
             }
         }
         
-        showStatus(`Buscando ${repoInfo.fullName}...`, 'info');
+        showStatus(`${t('statusFetching')} ${repoInfo.fullName}...`, 'info');
         
         const repoData = await fetchGitHubRepo(repoInfo.owner, repoInfo.repo);
         if (!repoData) {
@@ -355,14 +355,14 @@ async function analyzeRepository() {
         }
         
         updateRepoInfo(repoData);
-        showStatus('Obtendo estrutura...', 'info');
+        showStatus(t('statusLoading'), 'info');
         
         const treeData = await fetchCompleteTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);
         if (!treeData?.tree?.length) {
             throw new Error('Não foi possível obter a estrutura');
         }
         
-        showStatus(`Processando ${treeData.tree.length} itens...`, 'info');
+        showStatus(t('statusProcessingItems').replace('{n}', treeData.tree.length), 'info');
         
         // Hide skeleton loader before rendering actual tree
         if (typeof window.hideSkeletonLoader === 'function') {
@@ -378,7 +378,7 @@ async function analyzeRepository() {
             window.GitTree2026.treeData = window.currentTreeData;
         }
         
-        showStatus('Estrutura carregada!', 'success');
+        showStatus(t('statusSuccess'), 'success');
         
     } catch (error) {
         console.error('Erro:', error);
@@ -389,16 +389,16 @@ async function analyzeRepository() {
         }
         
         if (error.message.includes('404') || error.message.includes('não encontrado')) {
-            showStatus('Repositório não encontrado', 'error');
+            showStatus(t('statusNotFound'), 'error');
             if (repoInput.value.includes('geocsvps')) {
                 setTimeout(() => {
                     showStatus('Tente: JoaoClaudiano/geocsv', 'info');
                 }, 2000);
             }
         } else if (error.message.includes('403') || error.message.includes('Limite')) {
-            showStatus('Limite de requisições excedido', 'error');
+            showStatus(t('statusRateLimit'), 'error');
         } else {
-            showStatus(`Erro: ${error.message}`, 'error');
+            showStatus(`${t('statusError')}: ${error.message}`, 'error');
         }
     } finally {
         showLoading(false);
@@ -509,7 +509,7 @@ async function fetchCompleteTree(owner, repo, branch) {
         
         const treeData = await treeResponse.json();
         if (treeData.truncated) {
-            showStatus('Repositório muito grande. Estrutura pode estar incompleta.', 'warning');
+            showStatus(t('statusTruncated'), 'warning');
         }
         
         return treeData;
@@ -769,19 +769,19 @@ function updateMetrics(treeData) {
         grid.innerHTML = `
             <div class="metric-card">
                 <div class="metric-value">${files.length}</div>
-                <div class="metric-label">Arquivos</div>
+                <div class="metric-label">${t('metricFiles')}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-value">${folders.length}</div>
-                <div class="metric-label">Pastas</div>
+                <div class="metric-label">${t('metricFolders')}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-value">${formatBytes(totalSize)}</div>
-                <div class="metric-label">Tamanho</div>
+                <div class="metric-label">${t('metricSize')}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-value">${getFileTypes(files).length}</div>
-                <div class="metric-label">Tipos</div>
+                <div class="metric-label">${t('metricTypes')}</div>
             </div>
         `;
     }
@@ -953,24 +953,24 @@ function updateMetricsDisplay() {
             <div class="stats-grid">
                 <div class="metric-card">
                     <div class="metric-value">${files.length}</div>
-                    <div class="metric-label">Total de Arquivos</div>
+                    <div class="metric-label">${t('metricTotalFiles')}</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">${folders.length}</div>
-                    <div class="metric-label">Total de Pastas</div>
+                    <div class="metric-label">${t('metricTotalFolders')}</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">${formatBytes(totalSize)}</div>
-                    <div class="metric-label">Tamanho Total</div>
+                    <div class="metric-label">${t('metricTotalSize')}</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">${fileTypes.length}</div>
-                    <div class="metric-label">Tipos de Arquivo</div>
+                    <div class="metric-label">${t('fileTypesTitle')}</div>
                 </div>
             </div>
             ${fileTypes.length > 0 ? `
                 <div style="margin-top: 20px; text-align: left; width: 100%;">
-                    <h5 style="color: var(--dark-subtext); margin-bottom: 10px;">Tipos de Arquivo:</h5>
+                    <h5 style="color: var(--dark-subtext); margin-bottom: 10px;">${t('fileTypesTitle')}:</h5>
                     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                         ${fileTypes.map(type => `
                             <span style="background: rgba(16, 185, 129, 0.1); color: var(--primary); 
@@ -999,14 +999,14 @@ function getFileTypes(files) {
 
 function exportData(format) {
     if (!window.currentTreeData) {
-        showStatus('Nenhum dado para exportar', 'warning');
+        showStatus(t('statusNoData'), 'warning');
         return;
     }
     
-    showStatus(`Exportando como ${format.toUpperCase()}...`, 'info');
+    showStatus(t('statusExporting').replace('{format}', format.toUpperCase()), 'info');
     
     setTimeout(() => {
-        showStatus(`Exportação ${format.toUpperCase()} concluída', 'success`);
+        showStatus(t('statusExported'), 'success');
         
         const dataStr = format === 'json' 
             ? JSON.stringify(window.currentTreeData, null, 2)
@@ -1106,8 +1106,8 @@ function showLoading(show) {
     if (btn) {
         btn.disabled = show;
         btn.innerHTML = show 
-            ? '<i class="fas fa-spinner fa-spin"></i> <span>Carregando...</span>'
-            : '<i class="fas fa-eye"></i> <span>Visualizar</span>';
+            ? `<i class="fas fa-spinner fa-spin"></i> <span>${t('btnLoading')}</span>`
+            : `<i class="fas fa-eye"></i> <span>${t('btnVisualize')}</span>`;
     }
 }
 
