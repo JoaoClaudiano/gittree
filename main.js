@@ -798,7 +798,18 @@ function updateMetrics(treeData) {
 function generateFileTypesChart(files) {
     const fileTypesChartEl = document.getElementById('fileTypesChart');
     if (!fileTypesChartEl) return;
-    
+
+    // Fallback when Chart.js failed to load
+    if (typeof Chart === 'undefined') {
+        fileTypesChartEl.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
+                <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
+                <p>Gráfico não disponível</p>
+            </div>
+        `;
+        return;
+    }
+
     // Destruir gráfico anterior se existir
     if (window.fileChart instanceof Chart) {
         window.fileChart.destroy();
