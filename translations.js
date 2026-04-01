@@ -23,6 +23,9 @@ const translations = {
         btnPaste: "Paste",
         btnVisualize: "Visualize",
         statusDefault: "Enter a GitHub repository",
+        noRepoTitle: "No repository selected",
+        noRepoDescription: "Enter a repository above to visualize the structure",
+
         
         // Controls
         controlsVisualization: "Visualization",
@@ -38,12 +41,18 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "Copy",
+        // Metrics Preview (Sidebar)
+        previewTitle: "Preview",
+
         
         // Search
         searchPlaceholder: "Search files and folders...",
         
         // Metrics
         metricsTitle: "Repository Metrics",
+        treeTitle: "Repository Structure",
+        statsTitle: "Statistics",
+
         metricsLoading: "Loading metrics...",
         metricFiles: "Files",
         metricFolders: "Folders",
@@ -64,6 +73,11 @@ const translations = {
         bentoFileSize: "💾 File Size",
         bentoExtension: "🏷️ Extension",
         bentoLanguage: "💻 Language",
+        // Chart Placeholders
+        chartPlaceholder: "Chart will be generated here",
+        chartUnavailable: "Chart unavailable",
+        chartAnalyzePrompt: "Analyze a repository to see the chart",
+
         
         // Status Messages
         statusAnalyzing: "Analyzing repository...",
@@ -87,6 +101,8 @@ const translations = {
         statusTruncated: "Repository too large. Structure may be incomplete.",
         statusNoData: "No data to export",
         statusExporting: "Exporting as {format}...",
+        cacheLabel: "Cache: {size}KB",
+
         btnLoading: "Loading...",
         
         // Accessibility
@@ -111,6 +127,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "What does this version do? See the complete changelog",
+        // SEO Intro Section
+        seoIntroTitle: "Explore GitHub Repositories Like Never Before",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong> is a free tool that allows you to visualize the complete structure of any public GitHub repository. Analyze directory trees, view file metrics, and understand code organization visually and interactively.',
+        seoIntroItem1: "<strong>Visualize</strong> the hierarchical structure of folders and files",
+        seoIntroItem2: "<strong>Analyze</strong> metrics and code statistics in real time",
+        seoIntroItem3: "<strong>Explore</strong> repositories without needing to clone or download",
+        seoIntroItem4: "<strong>Export</strong> data in multiple formats (JSON, CSV)",
+        seoIntroItem5: "<strong>Understand</strong> complex projects intuitively",
+
         
         // Institutional Pages - Common
         backToTool: "Back to Tool",
@@ -218,6 +243,8 @@ const translations = {
         chartNoFiles: "No files to show",
         chartFilesUnit: "files",
         treeOther: "OTHER",
+        noExtension: "no extension",
+
         unknownLanguage: "Unknown",
 
         // Guide Page – Section 1: What is GitTree?
@@ -336,6 +363,9 @@ const translations = {
         btnPaste: "Colar",
         btnVisualize: "Visualizar",
         statusDefault: "Digite um repositório GitHub",
+        noRepoTitle: "Nenhum repositório selecionado",
+        noRepoDescription: "Digite um repositório acima para visualizar a estrutura",
+
         
         // Controls
         controlsVisualization: "Visualização",
@@ -351,12 +381,21 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "Copiar",
+        // Vista Previa de Métricas (Barra Lateral)
+        previewTitle: "Vista Previa",
+
+        // Prévia de Métricas (Barra Lateral)
+        previewTitle: "Prévia",
+
         
         // Search
         searchPlaceholder: "Buscar arquivos e pastas...",
         
         // Metrics
         metricsTitle: "Métricas do Repositório",
+        treeTitle: "Estrutura do Repositório",
+        statsTitle: "Estatísticas",
+
         metricsLoading: "Carregando métricas...",
         metricFiles: "Arquivos",
         metricFolders: "Pastas",
@@ -377,6 +416,11 @@ const translations = {
         bentoFileSize: "💾 Tamanho do Arquivo",
         bentoExtension: "🏷️ Extensão",
         bentoLanguage: "💻 Linguagem",
+        // Placeholders do Gráfico
+        chartPlaceholder: "Gráfico será gerado aqui",
+        chartUnavailable: "Gráfico não disponível",
+        chartAnalyzePrompt: "Analise um repositório para ver o gráfico",
+
         
         // Status Messages
         statusAnalyzing: "Analisando repositório...",
@@ -400,6 +444,10 @@ const translations = {
         statusTruncated: "Repositório muito grande. Estrutura pode estar incompleta.",
         statusNoData: "Nenhum dado para exportar",
         statusExporting: "Exportando como {format}...",
+        cacheLabel: "Caché: {size}KB",
+
+        cacheLabel: "Cache: {size}KB",
+
         btnLoading: "Carregando...",
         
         // Accessibility
@@ -424,6 +472,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "O que esta versão faz? Veja o changelog completo",
+        // Seção de Introdução SEO
+        seoIntroTitle: "Explore Repositórios GitHub como Nunca Antes",
+        seoIntroText: 'O <strong style="color: var(--primary);">GitTree</strong> é uma ferramenta gratuita que permite visualizar a estrutura completa de qualquer repositório público do GitHub. Analise árvores de diretórios, veja métricas de arquivos e entenda a organização do código de forma visual e interativa.',
+        seoIntroItem1: "<strong>Visualize</strong> a estrutura hierárquica de pastas e arquivos",
+        seoIntroItem2: "<strong>Analise</strong> métricas e estatísticas do código em tempo real",
+        seoIntroItem3: "<strong>Explore</strong> repositórios sem precisar clonar ou baixar",
+        seoIntroItem4: "<strong>Exporte</strong> dados em múltiplos formatos (JSON, CSV)",
+        seoIntroItem5: "<strong>Compreenda</strong> projetos complexos de forma intuitiva",
+
         
         // Institutional Pages - Common
         backToTool: "Voltar para a Ferramenta",
@@ -531,6 +588,8 @@ const translations = {
         chartNoFiles: "Nenhum arquivo para mostrar",
         chartFilesUnit: "arquivos",
         treeOther: "OUTROS",
+        noExtension: "sem extensão",
+
         unknownLanguage: "Desconhecido",
 
         // Guide Page – Section 1: What is GitTree?
@@ -649,6 +708,9 @@ const translations = {
         btnPaste: "Pegar",
         btnVisualize: "Visualizar",
         statusDefault: "Ingrese un repositorio GitHub",
+        noRepoTitle: "Ningún repositorio seleccionado",
+        noRepoDescription: "Ingrese un repositorio arriba para visualizar la estructura",
+
         
         // Controls
         controlsVisualization: "Visualización",
@@ -670,6 +732,9 @@ const translations = {
         
         // Metrics
         metricsTitle: "Métricas del Repositorio",
+        treeTitle: "Estructura del Repositorio",
+        statsTitle: "Estadísticas",
+
         metricsLoading: "Cargando métricas...",
         metricFiles: "Archivos",
         metricFolders: "Carpetas",
@@ -690,6 +755,11 @@ const translations = {
         bentoFileSize: "💾 Tamaño del Archivo",
         bentoExtension: "🏷️ Extensión",
         bentoLanguage: "💻 Lenguaje",
+        // Marcadores de Posición del Gráfico
+        chartPlaceholder: "El gráfico se generará aquí",
+        chartUnavailable: "Gráfico no disponible",
+        chartAnalyzePrompt: "Analice un repositorio para ver el gráfico",
+
         
         // Status Messages
         statusAnalyzing: "Analizando repositorio...",
@@ -737,6 +807,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "¿Qué hace esta versión? Ver el registro de cambios completo",
+        // Sección de Introducción SEO
+        seoIntroTitle: "Explora Repositorios de GitHub como Nunca Antes",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong> es una herramienta gratuita que permite visualizar la estructura completa de cualquier repositorio público de GitHub. Analiza árboles de directorios, ve métricas de archivos y comprende la organización del código de forma visual e interactiva.',
+        seoIntroItem1: "<strong>Visualiza</strong> la estructura jerárquica de carpetas y archivos",
+        seoIntroItem2: "<strong>Analiza</strong> métricas y estadísticas del código en tiempo real",
+        seoIntroItem3: "<strong>Explora</strong> repositorios sin necesidad de clonar o descargar",
+        seoIntroItem4: "<strong>Exporta</strong> datos en múltiples formatos (JSON, CSV)",
+        seoIntroItem5: "<strong>Comprende</strong> proyectos complejos de forma intuitiva",
+
         
         // Institutional Pages - Common
         backToTool: "Volver a la Herramienta",
@@ -817,6 +896,8 @@ const translations = {
         chartNoFiles: "No hay archivos para mostrar",
         chartFilesUnit: "archivos",
         treeOther: "OTROS",
+        noExtension: "sin extensión",
+
         unknownLanguage: "Desconocido",
 
         // Guide Page – Section 1: What is GitTree?
@@ -935,6 +1016,9 @@ const translations = {
         btnPaste: "Coller",
         btnVisualize: "Visualiser",
         statusDefault: "Entrez un dépôt GitHub",
+        noRepoTitle: "Aucun dépôt sélectionné",
+        noRepoDescription: "Entrez un dépôt ci-dessus pour visualiser la structure",
+
         
         // Controls
         controlsVisualization: "Visualisation",
@@ -950,12 +1034,18 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "Copier",
+        // Aperçu des Métriques (Barre Latérale)
+        previewTitle: "Aperçu",
+
         
         // Search
         searchPlaceholder: "Rechercher fichiers et dossiers...",
         
         // Metrics
         metricsTitle: "Métriques du Dépôt",
+        treeTitle: "Structure du Dépôt",
+        statsTitle: "Statistiques",
+
         metricsLoading: "Chargement des métriques...",
         metricFiles: "Fichiers",
         metricFolders: "Dossiers",
@@ -976,6 +1066,11 @@ const translations = {
         bentoFileSize: "💾 Taille du Fichier",
         bentoExtension: "🏷️ Extension",
         bentoLanguage: "💻 Langage",
+        // Espaces Réservés du Graphique
+        chartPlaceholder: "Le graphique sera généré ici",
+        chartUnavailable: "Graphique non disponible",
+        chartAnalyzePrompt: "Analysez un dépôt pour voir le graphique",
+
         
         // Status Messages
         statusAnalyzing: "Analyse du dépôt...",
@@ -999,6 +1094,8 @@ const translations = {
         statusTruncated: "Dépôt trop grand. La structure peut être incomplète.",
         statusNoData: "Aucune donnée à exporter",
         statusExporting: "Exportation en {format}...",
+        cacheLabel: "Cache : {size}Ko",
+
         btnLoading: "Chargement...",
         
         // Accessibility
@@ -1023,6 +1120,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "Que fait cette version? Voir le journal des modifications complet",
+        // Section d'Introduction SEO
+        seoIntroTitle: "Explorez les Dépôts GitHub Comme Jamais Auparavant",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong> est un outil gratuit qui vous permet de visualiser la structure complète de n\'importe quel dépôt public GitHub. Analysez les arborescences de répertoires, consultez les métriques de fichiers et comprenez l\'organisation du code de manière visuelle et interactive.',
+        seoIntroItem1: "<strong>Visualisez</strong> la structure hiérarchique des dossiers et fichiers",
+        seoIntroItem2: "<strong>Analysez</strong> les métriques et statistiques du code en temps réel",
+        seoIntroItem3: "<strong>Explorez</strong> les dépôts sans avoir besoin de les cloner ou télécharger",
+        seoIntroItem4: "<strong>Exportez</strong> les données en plusieurs formats (JSON, CSV)",
+        seoIntroItem5: "<strong>Comprenez</strong> des projets complexes de manière intuitive",
+
         
         // Institutional Pages - Common
         backToTool: "Retour à l'Outil",
@@ -1101,6 +1207,8 @@ const translations = {
         chartNoFiles: "Aucun fichier à afficher",
         chartFilesUnit: "fichiers",
         treeOther: "AUTRES",
+        noExtension: "sans extension",
+
         unknownLanguage: "Inconnu",
 
         // Guide Page – Section 1: What is GitTree?
@@ -1219,6 +1327,9 @@ const translations = {
         btnPaste: "Incolla",
         btnVisualize: "Visualizza",
         statusDefault: "Inserisci un repository GitHub",
+        noRepoTitle: "Nessun repository selezionato",
+        noRepoDescription: "Inserisci un repository sopra per visualizzare la struttura",
+
         
         // Controls
         controlsVisualization: "Visualizzazione",
@@ -1234,12 +1345,18 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "Copia",
+        // Anteprima Metriche (Barra Laterale)
+        previewTitle: "Anteprima",
+
         
         // Search
         searchPlaceholder: "Cerca file e cartelle...",
         
         // Metrics
         metricsTitle: "Metriche del Repository",
+        treeTitle: "Struttura del Repository",
+        statsTitle: "Statistiche",
+
         metricsLoading: "Caricamento metriche...",
         metricFiles: "File",
         metricFolders: "Cartelle",
@@ -1260,6 +1377,11 @@ const translations = {
         bentoFileSize: "💾 Dimensione File",
         bentoExtension: "🏷️ Estensione",
         bentoLanguage: "💻 Linguaggio",
+        // Segnaposto Grafico
+        chartPlaceholder: "Il grafico verrà generato qui",
+        chartUnavailable: "Grafico non disponibile",
+        chartAnalyzePrompt: "Analizza un repository per vedere il grafico",
+
         
         // Status Messages
         statusAnalyzing: "Analisi repository...",
@@ -1283,6 +1405,8 @@ const translations = {
         statusTruncated: "Repository troppo grande. La struttura potrebbe essere incompleta.",
         statusNoData: "Nessun dato da esportare",
         statusExporting: "Esportazione come {format}...",
+        cacheLabel: "Cache: {size}KB",
+
         btnLoading: "Caricamento...",
         
         // Accessibility
@@ -1307,6 +1431,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "Cosa fa questa versione? Vedi il registro delle modifiche completo",
+        // Sezione Introduzione SEO
+        seoIntroTitle: "Esplora i Repository GitHub Come Mai Prima",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong> è uno strumento gratuito che ti permette di visualizzare la struttura completa di qualsiasi repository pubblico GitHub. Analizza alberi di directory, visualizza metriche dei file e comprendi l\'organizzazione del codice in modo visivo e interattivo.',
+        seoIntroItem1: "<strong>Visualizza</strong> la struttura gerarchica di cartelle e file",
+        seoIntroItem2: "<strong>Analizza</strong> metriche e statistiche del codice in tempo reale",
+        seoIntroItem3: "<strong>Esplora</strong> repository senza dover clonare o scaricare",
+        seoIntroItem4: "<strong>Esporta</strong> dati in più formati (JSON, CSV)",
+        seoIntroItem5: "<strong>Comprendi</strong> progetti complessi in modo intuitivo",
+
         
         // Institutional Pages - Common
         backToTool: "Torna allo Strumento",
@@ -1385,6 +1518,8 @@ const translations = {
         chartNoFiles: "Nessun file da mostrare",
         chartFilesUnit: "file",
         treeOther: "ALTRI",
+        noExtension: "senza estensione",
+
         unknownLanguage: "Sconosciuto",
 
         // Guide Page – Section 1: What is GitTree?
@@ -1503,6 +1638,9 @@ const translations = {
         btnPaste: "貼り付け",
         btnVisualize: "表示",
         statusDefault: "GitHubリポジトリを入力してください",
+        noRepoTitle: "リポジトリが選択されていません",
+        noRepoDescription: "上のリポジトリを入力して構造を表示してください",
+
         
         // Controls
         controlsVisualization: "表示",
@@ -1518,12 +1656,18 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "コピー",
+        // メトリクスプレビュー（サイドバー）
+        previewTitle: "プレビュー",
+
         
         // Search
         searchPlaceholder: "ファイルとフォルダを検索...",
         
         // Metrics
         metricsTitle: "リポジトリメトリクス",
+        treeTitle: "リポジトリの構造",
+        statsTitle: "統計",
+
         metricsLoading: "メトリクスを読み込み中...",
         metricFiles: "ファイル",
         metricFolders: "フォルダ",
@@ -1544,6 +1688,11 @@ const translations = {
         bentoFileSize: "💾 ファイルサイズ",
         bentoExtension: "🏷️ 拡張子",
         bentoLanguage: "💻 言語",
+        // グラフのプレースホルダー
+        chartPlaceholder: "ここにグラフが生成されます",
+        chartUnavailable: "グラフを利用できません",
+        chartAnalyzePrompt: "グラフを表示するにはリポジトリを分析してください",
+
         
         // Status Messages
         statusAnalyzing: "リポジトリを分析中...",
@@ -1567,6 +1716,8 @@ const translations = {
         statusTruncated: "リポジトリが大きすぎます。構造が不完全な可能性があります。",
         statusNoData: "エクスポートするデータがありません",
         statusExporting: "{format}としてエクスポート中...",
+        cacheLabel: "キャッシュ: {size}KB",
+
         btnLoading: "読み込み中...",
         
         // Accessibility
@@ -1591,6 +1742,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "このバージョンの機能は？完全な変更ログを表示",
+        // SEOイントロセクション
+        seoIntroTitle: "GitHubリポジトリを今までにない方法で探索しましょう",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong>は、任意の公開GitHubリポジトリの完全な構造を可視化できる無料ツールです。ディレクトリツリーを分析し、ファイルメトリクスを確認し、コードの組織を視覚的かつインタラクティブに理解できます。',
+        seoIntroItem1: "<strong>可視化</strong> フォルダーとファイルの階層構造",
+        seoIntroItem2: "<strong>分析</strong> リアルタイムのコードメトリクスと統計",
+        seoIntroItem3: "<strong>探索</strong> クローンやダウンロードなしでリポジトリを閲覧",
+        seoIntroItem4: "<strong>エクスポート</strong> 複数の形式（JSON、CSV）でデータ出力",
+        seoIntroItem5: "<strong>理解</strong> 複雑なプロジェクトを直感的に把握",
+
         
         // Institutional Pages - Common
         backToTool: "ツールに戻る",
@@ -1669,6 +1829,8 @@ const translations = {
         chartNoFiles: "表示するファイルがありません",
         chartFilesUnit: "ファイル",
         treeOther: "その他",
+        noExtension: "拡張子なし",
+
         unknownLanguage: "不明",
 
         // Guide Page – Section 1: What is GitTree?
@@ -1787,6 +1949,9 @@ const translations = {
         btnPaste: "붙여넣기",
         btnVisualize: "시각화",
         statusDefault: "GitHub 저장소를 입력하세요",
+        noRepoTitle: "선택된 저장소 없음",
+        noRepoDescription: "위에 저장소를 입력하여 구조를 시각화하세요",
+
         
         // Controls
         controlsVisualization: "시각화",
@@ -1802,12 +1967,18 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "복사",
+        // 메트릭스 미리보기 (사이드바)
+        previewTitle: "미리보기",
+
         
         // Search
         searchPlaceholder: "파일 및 폴더 검색...",
         
         // Metrics
         metricsTitle: "저장소 메트릭스",
+        treeTitle: "저장소 구조",
+        statsTitle: "통계",
+
         metricsLoading: "메트릭스 로드 중...",
         metricFiles: "파일",
         metricFolders: "폴더",
@@ -1828,6 +1999,11 @@ const translations = {
         bentoFileSize: "💾 파일 크기",
         bentoExtension: "🏷️ 확장자",
         bentoLanguage: "💻 언어",
+        // 차트 플레이스홀더
+        chartPlaceholder: "여기에 차트가 생성됩니다",
+        chartUnavailable: "차트를 사용할 수 없습니다",
+        chartAnalyzePrompt: "차트를 보려면 저장소를 분석하세요",
+
         
         // Status Messages
         statusAnalyzing: "저장소 분석 중...",
@@ -1851,6 +2027,8 @@ const translations = {
         statusTruncated: "저장소가 너무 큽니다. 구조가 불완전할 수 있습니다.",
         statusNoData: "내보낼 데이터가 없습니다",
         statusExporting: "{format}으로 내보내는 중...",
+        cacheLabel: "캐시: {size}KB",
+
         btnLoading: "로딩 중...",
         
         // Accessibility
@@ -1875,6 +2053,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "이 버전의 기능은? 전체 변경 로그 보기",
+        // SEO 소개 섹션
+        seoIntroTitle: "GitHub 저장소를 전에 없던 방식으로 탐색하세요",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong>는 모든 공개 GitHub 저장소의 전체 구조를 시각화할 수 있는 무료 도구입니다. 디렉토리 트리를 분석하고, 파일 메트릭을 확인하고, 코드 구성을 시각적이고 대화형으로 이해할 수 있습니다.',
+        seoIntroItem1: "<strong>시각화</strong> 폴더와 파일의 계층 구조",
+        seoIntroItem2: "<strong>분석</strong> 실시간 코드 메트릭 및 통계",
+        seoIntroItem3: "<strong>탐색</strong> 복제나 다운로드 없이 저장소 탐색",
+        seoIntroItem4: "<strong>내보내기</strong> 여러 형식(JSON, CSV)으로 데이터 내보내기",
+        seoIntroItem5: "<strong>이해</strong> 복잡한 프로젝트를 직관적으로 파악",
+
         
         // Institutional Pages - Common
         backToTool: "도구로 돌아가기",
@@ -1953,6 +2140,8 @@ const translations = {
         chartNoFiles: "표시할 파일이 없습니다",
         chartFilesUnit: "파일",
         treeOther: "기타",
+        noExtension: "확장자 없음",
+
         unknownLanguage: "알 수 없음",
 
         // Guide Page – Section 1: What is GitTree?
@@ -2071,6 +2260,9 @@ const translations = {
         btnPaste: "粘贴",
         btnVisualize: "可视化",
         statusDefault: "输入GitHub仓库",
+        noRepoTitle: "未选择任何仓库",
+        noRepoDescription: "在上方输入仓库以可视化其结构",
+
         
         // Controls
         controlsVisualization: "可视化",
@@ -2086,12 +2278,18 @@ const translations = {
         btnExportJSON: "JSON",
         btnExportCSV: "CSV",
         btnCopyTree: "复制",
+        // 指标预览（侧边栏）
+        previewTitle: "预览",
+
         
         // Search
         searchPlaceholder: "搜索文件和文件夹...",
         
         // Metrics
         metricsTitle: "仓库指标",
+        treeTitle: "仓库结构",
+        statsTitle: "统计",
+
         metricsLoading: "加载指标中...",
         metricFiles: "文件",
         metricFolders: "文件夹",
@@ -2112,6 +2310,11 @@ const translations = {
         bentoFileSize: "💾 文件大小",
         bentoExtension: "🏷️ 扩展名",
         bentoLanguage: "💻 语言",
+        // 图表占位符
+        chartPlaceholder: "图表将在此生成",
+        chartUnavailable: "图表不可用",
+        chartAnalyzePrompt: "分析仓库以查看图表",
+
         
         // Status Messages
         statusAnalyzing: "分析仓库中...",
@@ -2135,6 +2338,8 @@ const translations = {
         statusTruncated: "存储库太大。结构可能不完整。",
         statusNoData: "没有可导出的数据",
         statusExporting: "正在导出为 {format}...",
+        cacheLabel: "缓存：{size}KB",
+
         btnLoading: "加载中...",
         
         // Accessibility
@@ -2159,6 +2364,15 @@ const translations = {
         
         // Version Tag
         versionTooltip: "此版本的功能？查看完整的更改日志",
+        // SEO 简介部分
+        seoIntroTitle: "以前所未有的方式探索 GitHub 仓库",
+        seoIntroText: '<strong style="color: var(--primary);">GitTree</strong> 是一款免费工具，可以可视化任何公开 GitHub 仓库的完整结构。分析目录树、查看文件指标，并以可视化和交互方式理解代码组织。',
+        seoIntroItem1: "<strong>可视化</strong> 文件夹和文件的层次结构",
+        seoIntroItem2: "<strong>分析</strong> 实时代码指标和统计",
+        seoIntroItem3: "<strong>探索</strong> 无需克隆或下载的仓库",
+        seoIntroItem4: "<strong>导出</strong> 多种格式（JSON、CSV）的数据",
+        seoIntroItem5: "<strong>理解</strong> 直观地掌握复杂项目",
+
         
         // Institutional Pages - Common
         backToTool: "返回工具",
@@ -2237,6 +2451,8 @@ const translations = {
         chartNoFiles: "没有文件可显示",
         chartFilesUnit: "文件",
         treeOther: "其他",
+        noExtension: "无扩展名",
+
         unknownLanguage: "未知",
 
         // Guide Page – Section 1: What is GitTree?
