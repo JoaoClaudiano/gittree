@@ -93,17 +93,17 @@ function renderBentoPanelVanilla() {
                 <div style="padding: 1.5rem;">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                         <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(17, 24, 39, 0.5) 0%, rgba(31, 41, 55, 0.3) 100%); border-radius: 0.75rem; border: 1px solid rgba(55, 65, 81, 0.5);">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(156, 163, 175); margin-bottom: 0.5rem;">💾 File Size</div>
+                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(156, 163, 175); margin-bottom: 0.5rem;">${t('bentoFileSize')}</div>
                             <div style="font-size: 1.875rem; font-weight: bold; color: white;">${formatFileSize(file.sizeKB || 0)}</div>
                         </div>
                         
                         <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(29, 78, 216, 0.2) 100%); border-radius: 0.75rem; border: 1px solid rgba(59, 130, 246, 0.3);">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(147, 197, 253); margin-bottom: 0.5rem;">🏷️ Extension</div>
+                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(147, 197, 253); margin-bottom: 0.5rem;">${t('bentoExtension')}</div>
                             <div style="font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace;">.${file.extension || 'unknown'}</div>
                         </div>
                         
                         <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%); border-radius: 0.75rem; border: 1px solid rgba(168, 85, 247, 0.3);">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(216, 180, 254); margin-bottom: 0.5rem;">💻 Language</div>
+                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(216, 180, 254); margin-bottom: 0.5rem;">${t('bentoLanguage')}</div>
                             <div style="font-size: 1.5rem; font-weight: bold; color: white;">${file.language || t('unknownLanguage')}</div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@ function showSkeletonLoader() {
         skeletonContainer.appendChild(skeleton);
     } else {
         // Simple fallback
-        skeletonContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #94a3b8;">Carregando estrutura...</div>';
+        skeletonContainer.innerHTML = `<div style="padding: 20px; text-align: center; color: #94a3b8;">${t('statusLoading')}</div>`;
     }
     
     treeView.appendChild(skeletonContainer);
