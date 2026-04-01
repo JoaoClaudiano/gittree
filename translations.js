@@ -101,7 +101,7 @@ const translations = {
         statusTruncated: "Repository too large. Structure may be incomplete.",
         statusNoData: "No data to export",
         statusExporting: "Exporting as {format}...",
-        cacheLabel: "Cache: {size}KB",
+        cacheLabel: "Cache: {size}",
 
         btnLoading: "Loading...",
         
@@ -501,9 +501,9 @@ const translations = {
         statusTruncated: "Repositório muito grande. Estrutura pode estar incompleta.",
         statusNoData: "Nenhum dado para exportar",
         statusExporting: "Exportando como {format}...",
-        cacheLabel: "Caché: {size}KB",
+        cacheLabel: "Caché: {size}",
 
-        cacheLabel: "Cache: {size}KB",
+        cacheLabel: "Cache: {size}",
 
         btnLoading: "Carregando...",
         
@@ -1265,7 +1265,7 @@ const translations = {
         statusTruncated: "Dépôt trop grand. La structure peut être incomplète.",
         statusNoData: "Aucune donnée à exporter",
         statusExporting: "Exportation en {format}...",
-        cacheLabel: "Cache : {size}Ko",
+        cacheLabel: "Cache: {size}",
 
         btnLoading: "Chargement...",
         
@@ -1633,7 +1633,7 @@ const translations = {
         statusTruncated: "Repository troppo grande. La struttura potrebbe essere incompleta.",
         statusNoData: "Nessun dato da esportare",
         statusExporting: "Esportazione come {format}...",
-        cacheLabel: "Cache: {size}KB",
+        cacheLabel: "Cache: {size}",
 
         btnLoading: "Caricamento...",
         
@@ -2001,7 +2001,7 @@ const translations = {
         statusTruncated: "リポジトリが大きすぎます。構造が不完全な可能性があります。",
         statusNoData: "エクスポートするデータがありません",
         statusExporting: "{format}としてエクスポート中...",
-        cacheLabel: "キャッシュ: {size}KB",
+        cacheLabel: "キャッシュ: {size}",
 
         btnLoading: "読み込み中...",
         
@@ -2369,7 +2369,7 @@ const translations = {
         statusTruncated: "저장소가 너무 큽니다. 구조가 불완전할 수 있습니다.",
         statusNoData: "내보낼 데이터가 없습니다",
         statusExporting: "{format}으로 내보내는 중...",
-        cacheLabel: "캐시: {size}KB",
+        cacheLabel: "캐시: {size}",
 
         btnLoading: "로딩 중...",
         
@@ -2737,7 +2737,7 @@ const translations = {
         statusTruncated: "存储库太大。结构可能不完整。",
         statusNoData: "没有可导出的数据",
         statusExporting: "正在导出为 {format}...",
-        cacheLabel: "缓存：{size}KB",
+        cacheLabel: "缓存：{size}",
 
         btnLoading: "加载中...",
         
