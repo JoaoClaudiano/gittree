@@ -3183,3 +3183,14 @@ function t(key) {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { translations, languageNames, initI18n, setLanguage, t };
 }
+
+// Re-apply translations when a page is restored from the back/forward cache (bfcache).
+// DOMContentLoaded does not re-fire on bfcache restore, so language changes made on
+// another page would not take effect without this listener.
+if (typeof window !== 'undefined') {
+    window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+            initI18n();
+        }
+    });
+}
