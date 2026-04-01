@@ -256,7 +256,7 @@ function updateCacheStatus() {
     }
     
     const sizeKB = Math.round(totalSize / 1024);
-    cacheStatus.innerHTML = `<i class="fas fa-database"></i> Cache: ${sizeKB}KB`;
+    cacheStatus.innerHTML = `<i class="fas fa-database"></i> ${t('cacheLabel').replace('{size}', sizeKB)}`;
 }
 
 function loadDefaultRepo() {
@@ -805,7 +805,7 @@ function generateFileTypesChart(files) {
         fileTypesChartEl.innerHTML = `
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
                 <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
-                <p>Gráfico não disponível</p>
+                <p>${t('chartUnavailable')}</p>
             </div>
         `;
         return;
@@ -932,7 +932,7 @@ function updateMetricsDisplay() {
             fileTypesChart.innerHTML = `
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
                     <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
-                    <p>Analise um repositório para ver o gráfico</p>
+                    <p>${t('chartAnalyzePrompt')}</p>
                 </div>
             `;
         }
@@ -992,7 +992,7 @@ function getFileTypes(files) {
     const types = new Set();
     files.forEach(file => {
         const match = file.path.match(/\.([^.]+)$/);
-        types.add(match ? match[1].toLowerCase() : 'sem extensão');
+        types.add(match ? match[1].toLowerCase() : t('noExtension'));
     });
     return Array.from(types).sort();
 }

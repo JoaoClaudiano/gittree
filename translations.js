@@ -2623,18 +2623,33 @@ function setLanguage(langCode) {
  * Apply translations to all elements with data-i18n attribute
  */
 function applyTranslations() {
-    const elements = document.querySelectorAll('[data-i18n]');
-    const t = translations[currentLanguage];
-    
-    elements.forEach(element => {
+    const tr = translations[currentLanguage];
+
+    // data-i18n: plain text (or placeholder for inputs)
+    document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        if (t[key]) {
-            // Check if element is an input with placeholder
+        if (tr[key]) {
             if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                element.setAttribute('placeholder', t[key]);
+                element.setAttribute('placeholder', tr[key]);
             } else {
-                element.textContent = t[key];
+                element.textContent = tr[key];
             }
+        }
+    });
+
+    // data-i18n-html: innerHTML (for strings containing HTML markup)
+    document.querySelectorAll('[data-i18n-html]').forEach(element => {
+        const key = element.getAttribute('data-i18n-html');
+        if (tr[key]) {
+            element.innerHTML = tr[key];
+        }
+    });
+
+    // data-i18n-title: title attribute
+    document.querySelectorAll('[data-i18n-title]').forEach(element => {
+        const key = element.getAttribute('data-i18n-title');
+        if (tr[key]) {
+            element.setAttribute('title', tr[key]);
         }
     });
 }
