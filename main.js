@@ -248,15 +248,24 @@ function updateCacheStatus() {
     const cacheStatus = document.getElementById('cacheStatus');
     if (!cacheStatus) return;
     
-    let totalSize = 0;
+    let totalChars = 0;
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         const value = localStorage.getItem(key);
-        totalSize += key.length + value.length;
+        totalChars += key.length + value.length;
     }
     
-    const sizeKB = Math.round(totalSize / 1024);
-    cacheStatus.innerHTML = `<i class="fas fa-database"></i> ${t('cacheLabel').replace('{size}', sizeKB)}`;
+    // Each JS character is 2 bytes (UTF-16)
+    const totalBytes = totalChars * 2;
+    let sizeLabel;
+    if (totalBytes === 0) {
+        sizeLabel = '0 KB';
+    } else if (totalBytes < 1024) {
+        sizeLabel = totalBytes + ' B';
+    } else {
+        sizeLabel = (totalBytes / 1024).toFixed(1) + ' KB';
+    }
+    cacheStatus.innerHTML = `<i class="fas fa-database"></i> Cache: ${sizeLabel}`;
 }
 
 function loadDefaultRepo() {
