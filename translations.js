@@ -379,6 +379,7 @@ const translations = {
         bentoLanguage: "💻 Linguagem",
         
         // Status Messages
+        statusAnalyzing: "Analisando repositório...",
         statusLoading: "Carregando estrutura...",
         statusSuccess: "Repositório carregado com sucesso!",
         statusError: "Erro ao carregar repositório",
@@ -1539,6 +1540,11 @@ const translations = {
         distributionTitle: "タイプ別ファイル分布",
         fileTypesTitle: "ファイルタイプ",
         
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 ファイルサイズ",
+        bentoExtension: "🏷️ 拡張子",
+        bentoLanguage: "💻 言語",
+        
         // Status Messages
         statusAnalyzing: "リポジトリを分析中...",
         statusLoading: "構造を読み込み中...",
@@ -1818,6 +1824,11 @@ const translations = {
         distributionTitle: "유형별 파일 분포",
         fileTypesTitle: "파일 유형",
         
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 파일 크기",
+        bentoExtension: "🏷️ 확장자",
+        bentoLanguage: "💻 언어",
+        
         // Status Messages
         statusAnalyzing: "저장소 분석 중...",
         statusLoading: "구조 로드 중...",
@@ -2096,6 +2107,11 @@ const translations = {
         // File Distribution
         distributionTitle: "按类型的文件分布",
         fileTypesTitle: "文件类型",
+        
+        // Bento Panel (File Metadata)
+        bentoFileSize: "💾 文件大小",
+        bentoExtension: "🏷️ 扩展名",
+        bentoLanguage: "💻 语言",
         
         // Status Messages
         statusAnalyzing: "分析仓库中...",
