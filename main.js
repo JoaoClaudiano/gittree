@@ -265,7 +265,7 @@ function updateCacheStatus() {
     } else {
         sizeLabel = (totalBytes / 1024).toFixed(1) + ' KB';
     }
-    cacheStatus.innerHTML = `<i class="fas fa-database"></i> Cache: ${sizeLabel}`;
+    cacheStatus.innerHTML = `<i class="fas fa-database"></i> ${t('cacheLabel').replace('{size}', sizeLabel)}`;
 }
 
 function loadDefaultRepo() {
