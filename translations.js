@@ -145,6 +145,7 @@ const translations = {
         aboutSubtitle: "Free, open-source tool to instantly explore GitHub repository structures",
         aboutMission: "What is GitTree?",
         aboutMissionText: "GitTree is a free web tool that transforms any public GitHub repository into an interactive visualization. Explore directory structures, analyze code metrics, and understand project organization — all without cloning.",
+        aboutMissionText2: "Whether you are evaluating a new dependency, onboarding to an unfamiliar codebase, conducting a code review, or documenting a project's structure, GitTree gives you an instant, structured view that would otherwise require local setup and manual inspection.",
         aboutFeature1Title: "Visual Exploration",
         aboutFeature1Desc: "Navigate the full repository tree in an intuitive, interactive format",
         aboutFeature2Title: "Detailed Metrics",
@@ -175,6 +176,8 @@ const translations = {
         aboutTechDesignDesc: "CSS Custom Properties for themes",
         aboutOpenSource: "🌐 Open Source:",
         aboutOpenSourceText: "GitTree is open-source and available on GitHub. Contributions are welcome!",
+        aboutChipTeam: "Team",
+        aboutChipOpenSource: "Open Source",
         aboutContributeText: "GitTree is fully open-source. You can fork it, report issues, and submit pull requests on GitHub.",
         aboutViewGitHub: "View on GitHub",
         aboutContactSupport: "Contact & Support",
@@ -193,6 +196,9 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contact",
+        contactChipEmail: "Email",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "Scope",
         contactText: "This channel is available for questions, improvement suggestions and communication of any technical problems related to GitTree.",
         contactBusinessHours: "Business Hours:",
         contactBusinessHoursText: "Monday to Friday, from 9am to 6pm (Brasilia time)",
@@ -218,11 +224,22 @@ const translations = {
 
         // Guide Page
         guideTitle: "GitTree User Guide",
+        guideChipGettingStarted: "Getting Started",
+        guideChipFeatures: "Features",
+        guideChipButtons: "Buttons",
+        guideChipAdvanced: "Advanced Tips",
+        guideChipFaq: "FAQ",
         guideSubtitle: "Learn how to use all the features of the GitHub repository visualization tool",
         guideFooter: "© GitTree · Free tool for developers · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "Privacy Policy",
+        privacyChipLegal: "Legal Basis",
+        privacyChipData: "Data Collected",
+        privacyChipCookies: "Cookies",
+        privacyChipSharing: "Data Sharing",
+        privacyChipRights: "User Rights",
+        privacyChipUpdates: "Updates",
         privacySubtitle: "Last updated: January 18, 2026",
         privacyFooter: "© GitTree · Privacy by default · Transparency by design",
         privacyIntroText: "GitTree values privacy and the protection of personal data. This Privacy Policy transparently describes how information is collected, used, and protected when using our website.",
@@ -256,6 +273,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "Terms of Use",
+        termsChipService: "Service",
+        termsChipUsage: "Usage",
+        termsChipIP: "IP",
+        termsChipLiability: "Liability",
+        termsChipAvailability: "Availability",
+        termsChipPrivacy: "Privacy",
+        termsChipChanges: "Changes",
         termsSubtitle: "Last updated: January 18, 2026",
         termsFooter: "© GitTree · Responsible use · Transparency",
         termsIntroText: "By accessing or using <strong>GitTree</strong>, you agree to these Terms of Use. If you disagree with any condition described here, we recommend that you do not use the tool.",
@@ -547,6 +571,7 @@ const translations = {
         aboutSubtitle: "Ferramenta gratuita e open-source para explorar estruturas de repositórios GitHub instantaneamente",
         aboutMission: "O que é o GitTree?",
         aboutMissionText: "O GitTree é uma ferramenta web gratuita que transforma qualquer repositório público do GitHub em uma visualização interativa. Explore estruturas de diretórios, analise métricas de código e entenda a organização do projeto — tudo sem precisar clonar.",
+        aboutMissionText2: "Seja para avaliar uma nova dependência, integrar-se a uma base de código desconhecida, realizar uma revisão de código ou documentar a estrutura de um projeto, o GitTree oferece uma visão estruturada e imediata, sem necessidade de configuração local ou inspeção manual.",
         aboutFeature1Title: "Exploração Visual",
         aboutFeature1Desc: "Navegue pela árvore completa do repositório em formato interativo e intuitivo",
         aboutFeature2Title: "Métricas Detalhadas",
@@ -577,6 +602,8 @@ const translations = {
         aboutTechDesignDesc: "CSS Custom Properties para temas",
         aboutOpenSource: "🌐 Código Aberto:",
         aboutOpenSourceText: "O GitTree é open-source e disponível no GitHub. Contribuições são bem-vindas!",
+        aboutChipTeam: "Equipe",
+        aboutChipOpenSource: "Código Aberto",
         aboutContributeText: "O GitTree é totalmente open-source. Você pode criar um fork, reportar issues e enviar pull requests no GitHub.",
         aboutViewGitHub: "Ver no GitHub",
         aboutContactSupport: "Contato & Suporte",
@@ -595,6 +622,9 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contato",
+        contactChipEmail: "Email",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "Escopo",
         contactText: "Este canal está disponível para dúvidas, sugestões de melhoria e comunicação de eventuais problemas técnicos relacionados ao GitTree.",
         contactBusinessHours: "Horário de atendimento:",
         contactBusinessHoursText: "Segunda a Sexta, das 9h às 18h (horário de Brasília)",
@@ -620,11 +650,22 @@ const translations = {
 
         // Guide Page
         guideTitle: "Guia do Usuário GitTree",
+        guideChipGettingStarted: "Primeiros Passos",
+        guideChipFeatures: "Funcionalidades",
+        guideChipButtons: "Botões",
+        guideChipAdvanced: "Dicas Avançadas",
+        guideChipFaq: "FAQ",
         guideSubtitle: "Aprenda a usar todas as funcionalidades da ferramenta de visualização de repositórios GitHub",
         guideFooter: "© GitTree · Ferramenta gratuita para desenvolvedores · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "Política de Privacidade",
+        privacyChipLegal: "Base Legal",
+        privacyChipData: "Dados Coletados",
+        privacyChipCookies: "Cookies",
+        privacyChipSharing: "Compartilhamento",
+        privacyChipRights: "Direitos do Usuário",
+        privacyChipUpdates: "Atualizações",
         privacySubtitle: "Última atualização: 18 de janeiro de 2026",
         privacyFooter: "© GitTree · Privacidade por padrão · Transparência por design",
         privacyIntroText: "O <strong>GitTree</strong> valoriza a privacidade e a proteção de dados pessoais. Esta Política de Privacidade descreve de forma transparente como as informações são coletadas, utilizadas e protegidas ao utilizar nosso site.",
@@ -658,6 +699,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "Termos de Uso",
+        termsChipService: "Serviço",
+        termsChipUsage: "Uso",
+        termsChipIP: "PI",
+        termsChipLiability: "Responsabilidade",
+        termsChipAvailability: "Disponibilidade",
+        termsChipPrivacy: "Privacidade",
+        termsChipChanges: "Alterações",
         termsSubtitle: "Última atualização: 18 de janeiro de 2026",
         termsFooter: "© GitTree · Uso responsável · Transparência",
         termsIntroText: "Ao acessar ou utilizar o <strong>GitTree</strong>, você concorda com os presentes Termos de Uso. Caso não concorde com qualquer condição aqui descrita, recomendamos que não utilize a ferramenta.",
@@ -939,6 +987,7 @@ const translations = {
         aboutSubtitle: "Herramienta gratuita y open-source para explorar estructuras de repositorios GitHub al instante",
         aboutMission: "¿Qué es GitTree?",
         aboutMissionText: "GitTree es una herramienta web gratuita que transforma cualquier repositorio público de GitHub en una visualización interactiva. Explora estructuras de directorios, analiza métricas de código y comprende la organización del proyecto, todo sin necesidad de clonar.",
+        aboutMissionText2: "Ya sea que estés evaluando una nueva dependencia, familiarizándote con una base de código desconocida, realizando una revisión de código o documentando la estructura de un proyecto, GitTree te ofrece una vista estructurada e instantánea que de otro modo requeriría configuración local e inspección manual.",
         aboutFeature1Title: "Exploración Visual",
         aboutFeature1Desc: "Navega por el árbol completo del repositorio en formato interactivo e intuitivo",
         aboutFeature2Title: "Métricas Detalladas",
@@ -961,6 +1010,8 @@ const translations = {
         aboutTechnologyText: "GitTree está construido con tecnologías modernas y confiables:",
         aboutOpenSource: "🌐 Código Abierto:",
         aboutOpenSourceText: "GitTree es open-source y está disponible en GitHub. ¡Las contribuciones son bienvenidas!",
+        aboutChipTeam: "Equipo",
+        aboutChipOpenSource: "Código Abierto",
         aboutContributeText: "GitTree es totalmente open-source. Puedes bifurcarlo, reportar problemas y enviar pull requests en GitHub.",
         aboutViewGitHub: "Ver en GitHub",
         aboutContactSupport: "Contacto y Soporte",
@@ -979,17 +1030,31 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contacto",
+        contactChipEmail: "Email",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "Alcance",
         contactOtherChannels: "Otros Canales",
         contactImportantInfo: "Información Importante",
         contactFooter: "© GitTree · Conectando desarrolladores · 🌳",
 
         // Guide Page
         guideTitle: "Guía del Usuario GitTree",
+        guideChipGettingStarted: "Primeros Pasos",
+        guideChipFeatures: "Funcionalidades",
+        guideChipButtons: "Botones",
+        guideChipAdvanced: "Consejos Avanzados",
+        guideChipFaq: "FAQ",
         guideSubtitle: "Aprende a usar todas las funcionalidades de la herramienta de visualización de repositorios GitHub",
         guideFooter: "© GitTree · Herramienta gratuita para desarrolladores · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "Política de Privacidad",
+        privacyChipLegal: "Base Legal",
+        privacyChipData: "Datos Recopilados",
+        privacyChipCookies: "Cookies",
+        privacyChipSharing: "Compartición de Datos",
+        privacyChipRights: "Derechos del Usuario",
+        privacyChipUpdates: "Actualizaciones",
         privacySubtitle: "Última actualización: 18 de enero de 2026",
         privacyFooter: "© GitTree · Privacidad por defecto · Transparencia por diseño",
         privacyIntroText: "GitTree valora la privacidad y la protección de datos personales. Esta Política de Privacidad describe de forma transparente cómo se recopila, utiliza y protege la información al usar nuestro sitio.",
@@ -1023,6 +1088,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "Términos de Uso",
+        termsChipService: "Servicio",
+        termsChipUsage: "Uso",
+        termsChipIP: "PI",
+        termsChipLiability: "Responsabilidad",
+        termsChipAvailability: "Disponibilidad",
+        termsChipPrivacy: "Privacidad",
+        termsChipChanges: "Cambios",
         termsSubtitle: "Última actualización: 18 de enero de 2026",
         termsFooter: "© GitTree · Uso responsable · Transparencia",
         termsIntroText: "Al acceder o utilizar <strong>GitTree</strong>, acepta estos Términos de Uso. Si no está de acuerdo con alguna condición descrita aquí, le recomendamos que no utilice la herramienta.",
@@ -1309,6 +1381,7 @@ const translations = {
         aboutSubtitle: "Outil gratuit et open-source pour explorer instantanément les structures de dépôts GitHub",
         aboutMission: "Qu'est-ce que GitTree ?",
         aboutMissionText: "GitTree est un outil web gratuit qui transforme n'importe quel dépôt GitHub public en une visualisation interactive. Explorez les structures de répertoires, analysez les métriques de code et comprenez l'organisation du projet — le tout sans cloner.",
+        aboutMissionText2: "Que vous évaluiez une nouvelle dépendance, vous familiarisiez avec une base de code inconnue, réalisiez une revue de code ou documentiez la structure d'un projet, GitTree vous offre une vue structurée et instantanée qui nécessiterait sinon une installation locale et une inspection manuelle.",
         aboutFeature1Title: "Exploration Visuelle",
         aboutFeature1Desc: "Naviguez dans l'arborescence complète du dépôt dans un format interactif et intuitif",
         aboutFeature2Title: "Métriques Détaillées",
@@ -1331,6 +1404,8 @@ const translations = {
         aboutTechnologyText: "GitTree est construit avec des technologies modernes et fiables :",
         aboutOpenSource: "🌐 Open Source :",
         aboutOpenSourceText: "GitTree est open-source et disponible sur GitHub. Les contributions sont les bienvenues !",
+        aboutChipTeam: "Équipe",
+        aboutChipOpenSource: "Open Source",
         aboutContributeText: "GitTree est entièrement open-source. Vous pouvez le forker, signaler des problèmes et soumettre des pull requests sur GitHub.",
         aboutViewGitHub: "Voir sur GitHub",
         aboutContactSupport: "Contact et Support",
@@ -1349,15 +1424,29 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contact",
+        contactChipEmail: "Email",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "Portée",
         contactFooter: "© GitTree · Connecter les développeurs · 🌳",
 
         // Guide Page
         guideTitle: "Guide Utilisateur GitTree",
+        guideChipGettingStarted: "Premiers Pas",
+        guideChipFeatures: "Fonctionnalités",
+        guideChipButtons: "Boutons",
+        guideChipAdvanced: "Conseils Avancés",
+        guideChipFaq: "FAQ",
         guideSubtitle: "Apprenez à utiliser toutes les fonctionnalités de l'outil de visualisation de dépôts GitHub",
         guideFooter: "© GitTree · Outil gratuit pour les développeurs · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "Politique de Confidentialité",
+        privacyChipLegal: "Base Légale",
+        privacyChipData: "Données Collectées",
+        privacyChipCookies: "Cookies",
+        privacyChipSharing: "Partage de Données",
+        privacyChipRights: "Droits Utilisateur",
+        privacyChipUpdates: "Mises à jour",
         privacySubtitle: "Dernière mise à jour: 18 janvier 2026",
         privacyFooter: "© GitTree · Confidentialité par défaut · Transparence par conception",
         privacyIntroText: "GitTree valorise la confidentialité et la protection des données personnelles. Cette Politique de Confidentialité décrit de manière transparente comment les informations sont collectées, utilisées et protégées lors de l\'utilisation de notre site.",
@@ -1391,6 +1480,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "Conditions d'Utilisation",
+        termsChipService: "Service",
+        termsChipUsage: "Utilisation",
+        termsChipIP: "PI",
+        termsChipLiability: "Responsabilité",
+        termsChipAvailability: "Disponibilité",
+        termsChipPrivacy: "Confidentialité",
+        termsChipChanges: "Modifications",
         termsSubtitle: "Dernière mise à jour: 18 janvier 2026",
         termsFooter: "© GitTree · Utilisation responsable · Transparence",
         termsIntroText: "En accédant ou en utilisant <strong>GitTree</strong>, vous acceptez les présentes Conditions d\'Utilisation. Si vous n\'acceptez pas l\'une des conditions décrites ici, nous vous recommandons de ne pas utiliser l\'outil.",
@@ -1677,6 +1773,7 @@ const translations = {
         aboutSubtitle: "Strumento gratuito e open-source per esplorare istantaneamente le strutture dei repository GitHub",
         aboutMission: "Cos'è GitTree?",
         aboutMissionText: "GitTree è uno strumento web gratuito che trasforma qualsiasi repository GitHub pubblico in una visualizzazione interattiva. Esplora le strutture di directory, analizza le metriche del codice e comprendi l'organizzazione del progetto — il tutto senza clonare.",
+        aboutMissionText2: "Che tu stia valutando una nuova dipendenza, familiarizzando con una base di codice sconosciuta, eseguendo una revisione del codice o documentando la struttura di un progetto, GitTree ti offre una vista strutturata e immediata che altrimenti richiederebbe una configurazione locale e un'ispezione manuale.",
         aboutFeature1Title: "Esplorazione Visiva",
         aboutFeature1Desc: "Naviga nell'albero completo del repository in formato interattivo e intuitivo",
         aboutFeature2Title: "Metriche Dettagliate",
@@ -1699,6 +1796,8 @@ const translations = {
         aboutTechnologyText: "GitTree è costruito con tecnologie moderne e affidabili:",
         aboutOpenSource: "🌐 Open Source:",
         aboutOpenSourceText: "GitTree è open-source e disponibile su GitHub. I contributi sono benvenuti!",
+        aboutChipTeam: "Team",
+        aboutChipOpenSource: "Open Source",
         aboutContributeText: "GitTree è completamente open-source. Puoi fare il fork, segnalare problemi e inviare pull request su GitHub.",
         aboutViewGitHub: "Visualizza su GitHub",
         aboutContactSupport: "Contatto e Supporto",
@@ -1717,15 +1816,29 @@ const translations = {
         
         // Contact Page
         contactTitle: "Contatto",
+        contactChipEmail: "Email",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "Ambito",
         contactFooter: "© GitTree · Connettere sviluppatori · 🌳",
 
         // Guide Page
         guideTitle: "Guida Utente GitTree",
+        guideChipGettingStarted: "Per Iniziare",
+        guideChipFeatures: "Funzionalità",
+        guideChipButtons: "Pulsanti",
+        guideChipAdvanced: "Suggerimenti Avanzati",
+        guideChipFaq: "FAQ",
         guideSubtitle: "Impara a usare tutte le funzionalità dello strumento di visualizzazione dei repository GitHub",
         guideFooter: "© GitTree · Strumento gratuito per sviluppatori · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "Informativa sulla Privacy",
+        privacyChipLegal: "Base Legale",
+        privacyChipData: "Dati Raccolti",
+        privacyChipCookies: "Cookies",
+        privacyChipSharing: "Condivisione Dati",
+        privacyChipRights: "Diritti Utente",
+        privacyChipUpdates: "Aggiornamenti",
         privacySubtitle: "Ultimo aggiornamento: 18 gennaio 2026",
         privacyFooter: "© GitTree · Privacy per impostazione predefinita · Trasparenza per design",
         privacyIntroText: "GitTree valorizza la privacy e la protezione dei dati personali. Questa Informativa sulla Privacy descrive in modo trasparente come le informazioni vengono raccolte, utilizzate e protette durante l\'utilizzo del nostro sito.",
@@ -1759,6 +1872,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "Termini di Utilizzo",
+        termsChipService: "Servizio",
+        termsChipUsage: "Utilizzo",
+        termsChipIP: "PI",
+        termsChipLiability: "Responsabilità",
+        termsChipAvailability: "Disponibilità",
+        termsChipPrivacy: "Privacy",
+        termsChipChanges: "Modifiche",
         termsSubtitle: "Ultimo aggiornamento: 18 gennaio 2026",
         termsFooter: "© GitTree · Uso responsabile · Trasparenza",
         termsIntroText: "Accedendo o utilizzando <strong>GitTree</strong>, accetti i presenti Termini di Utilizzo. Se non sei d\'accordo con una qualsiasi condizione qui descritta, ti consigliamo di non utilizzare lo strumento.",
@@ -2045,6 +2165,7 @@ const translations = {
         aboutSubtitle: "GitHubリポジトリの構造を即時に探索できる無料のオープンソースツール",
         aboutMission: "GitTree とは？",
         aboutMissionText: "GitTreeは、任意のパブリックGitHubリポジトリをインタラクティブな可視化に変換する無料のWebツールです。クローンすることなく、ディレクトリ構造を探索し、コードメトリクスを分析し、プロジェクトの組織を理解できます。",
+        aboutMissionText2: "新しい依存関係の評価、未知のコードベースへのオンボーディング、コードレビューの実施、またはプロジェクト構造の文書化など、どのような用途であっても、GitTreeはローカルセットアップや手動検査を必要とせず、即座に構造化されたビューを提供します。",
         aboutFeature1Title: "視覚的な探索",
         aboutFeature1Desc: "直感的でインタラクティブな形式でリポジトリの完全なツリーをナビゲート",
         aboutFeature2Title: "詳細なメトリクス",
@@ -2067,6 +2188,8 @@ const translations = {
         aboutTechnologyText: "GitTreeは最新の信頼性の高い技術で構築されています：",
         aboutOpenSource: "🌐 オープンソース：",
         aboutOpenSourceText: "GitTreeはオープンソースでGitHubで利用可能です。コントリビューションを歓迎します！",
+        aboutChipTeam: "チーム",
+        aboutChipOpenSource: "オープンソース",
         aboutContributeText: "GitTreeは完全にオープンソースです。フォーク、Issue報告、プルリクエストをGitHubで行えます。",
         aboutViewGitHub: "GitHubで表示",
         aboutContactSupport: "お問い合わせとサポート",
@@ -2085,15 +2208,29 @@ const translations = {
         
         // Contact Page
         contactTitle: "お問い合わせ",
+        contactChipEmail: "メール",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "範囲",
         contactFooter: "© GitTree · 開発者をつなぐ · 🌳",
 
         // Guide Page
         guideTitle: "GitTree ユーザーガイド",
+        guideChipGettingStarted: "はじめに",
+        guideChipFeatures: "機能",
+        guideChipButtons: "ボタン",
+        guideChipAdvanced: "応用ヒント",
+        guideChipFaq: "よくある質問",
         guideSubtitle: "GitHubリポジトリ可視化ツールのすべての機能の使い方を学ぶ",
         guideFooter: "© GitTree · 開発者向け無料ツール · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "プライバシーポリシー",
+        privacyChipLegal: "法的根拠",
+        privacyChipData: "収集データ",
+        privacyChipCookies: "Cookie",
+        privacyChipSharing: "データ共有",
+        privacyChipRights: "ユーザー権利",
+        privacyChipUpdates: "更新",
         privacySubtitle: "最終更新: 2026年1月18日",
         privacyFooter: "© GitTree · デフォルトでプライバシー · デザインで透明性",
         privacyIntroText: "GitTreeはプライバシーと個人データの保護を重視しています。このプライバシーポリシーは、当ウェブサイトの利用時に情報がどのように収集、使用、保護されるかを透明性をもって説明します。",
@@ -2127,6 +2264,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "利用規約",
+        termsChipService: "サービス",
+        termsChipUsage: "利用方法",
+        termsChipIP: "知的財産",
+        termsChipLiability: "免責事項",
+        termsChipAvailability: "可用性",
+        termsChipPrivacy: "プライバシー",
+        termsChipChanges: "変更",
         termsSubtitle: "最終更新: 2026年1月18日",
         termsFooter: "© GitTree · 責任ある使用 · 透明性",
         termsIntroText: "<strong>GitTree</strong>にアクセスまたは使用することにより、本利用規約に同意したものとみなされます。ここに記載されている条件に同意しない場合は、本ツールを使用しないことをお勧めします。",
@@ -2413,6 +2557,7 @@ const translations = {
         aboutSubtitle: "GitHub 저장소 구조를 즉시 탐색하는 무료 오픈소스 도구",
         aboutMission: "GitTree란 무엇인가요?",
         aboutMissionText: "GitTree는 공개 GitHub 저장소를 대화형 시각화로 변환하는 무료 웹 도구입니다. 클론 없이 디렉토리 구조를 탐색하고, 코드 메트릭스를 분석하고, 프로젝트 구성을 이해할 수 있습니다.",
+        aboutMissionText2: "새로운 의존성을 평가하거나, 낯선 코드베이스에 합류하거나, 코드 리뷰를 수행하거나, 프로젝트 구조를 문서화하는 경우에도 GitTree는 로컬 설정이나 수동 검사 없이 즉각적이고 구조화된 뷰를 제공합니다.",
         aboutFeature1Title: "시각적 탐색",
         aboutFeature1Desc: "직관적이고 대화형 형식으로 전체 저장소 트리 탐색",
         aboutFeature2Title: "상세 메트릭스",
@@ -2435,6 +2580,8 @@ const translations = {
         aboutTechnologyText: "GitTree는 최신의 신뢰할 수 있는 기술로 구축되었습니다:",
         aboutOpenSource: "🌐 오픈소스:",
         aboutOpenSourceText: "GitTree는 오픈소스이며 GitHub에서 사용 가능합니다. 기여를 환영합니다!",
+        aboutChipTeam: "팀",
+        aboutChipOpenSource: "오픈 소스",
         aboutContributeText: "GitTree는 완전한 오픈소스입니다. GitHub에서 포크하거나 이슈를 보고하고 풀 리퀘스트를 제출할 수 있습니다.",
         aboutViewGitHub: "GitHub에서 보기",
         aboutContactSupport: "연락처 및 지원",
@@ -2453,15 +2600,29 @@ const translations = {
         
         // Contact Page
         contactTitle: "연락처",
+        contactChipEmail: "이메일",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "범위",
         contactFooter: "© GitTree · 개발자 연결 · 🌳",
 
         // Guide Page
         guideTitle: "GitTree 사용자 가이드",
+        guideChipGettingStarted: "시작하기",
+        guideChipFeatures: "기능",
+        guideChipButtons: "버튼",
+        guideChipAdvanced: "고급 팁",
+        guideChipFaq: "자주 묻는 질문",
         guideSubtitle: "GitHub 저장소 시각화 도구의 모든 기능 사용법을 알아보세요",
         guideFooter: "© GitTree · 개발자를 위한 무료 도구 · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "개인정보 보호정책",
+        privacyChipLegal: "법적 근거",
+        privacyChipData: "수집 데이터",
+        privacyChipCookies: "쿠키",
+        privacyChipSharing: "데이터 공유",
+        privacyChipRights: "사용자 권리",
+        privacyChipUpdates: "업데이트",
         privacySubtitle: "최종 업데이트: 2026년 1월 18일",
         privacyFooter: "© GitTree · 기본적으로 프라이버시 · 설계에 의한 투명성",
         privacyIntroText: "GitTree는 개인 정보 보호와 개인 데이터 보호를 중요시합니다. 이 개인정보 보호정책은 당사 웹사이트 이용 시 정보가 수집, 사용 및 보호되는 방법을 투명하게 설명합니다.",
@@ -2495,6 +2656,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "이용약관",
+        termsChipService: "서비스",
+        termsChipUsage: "사용",
+        termsChipIP: "지식재산",
+        termsChipLiability: "책임",
+        termsChipAvailability: "가용성",
+        termsChipPrivacy: "개인정보",
+        termsChipChanges: "변경사항",
         termsSubtitle: "최종 업데이트: 2026년 1월 18일",
         termsFooter: "© GitTree · 책임 있는 사용 · 투명성",
         termsIntroText: "<strong>GitTree</strong>에 접근하거나 사용함으로써, 귀하는 본 이용약관에 동의하는 것입니다. 여기에 기술된 조건에 동의하지 않는 경우, 해당 도구를 사용하지 않는 것을 권장합니다.",
@@ -2781,6 +2949,7 @@ const translations = {
         aboutSubtitle: "免费开源工具，即时探索 GitHub 仓库结构",
         aboutMission: "GitTree 是什么？",
         aboutMissionText: "GitTree 是一款免费的网络工具，可将任何公开的 GitHub 仓库转换为交互式可视化。无需克隆，即可探索目录结构、分析代码指标，了解项目组织。",
+        aboutMissionText2: "无论您是在评估新依赖、熟悉陌生代码库、进行代码审查，还是记录项目结构，GitTree 都能为您提供即时、结构化的视图，而无需本地配置或手动检查。",
         aboutFeature1Title: "视觉探索",
         aboutFeature1Desc: "以直观、交互式的格式浏览完整的仓库树",
         aboutFeature2Title: "详细指标",
@@ -2803,6 +2972,8 @@ const translations = {
         aboutTechnologyText: "GitTree 使用现代可靠的技术构建：",
         aboutOpenSource: "🌐 开源：",
         aboutOpenSourceText: "GitTree 是开源项目，可在 GitHub 上获取。欢迎贡献！",
+        aboutChipTeam: "团队",
+        aboutChipOpenSource: "开源",
         aboutContributeText: "GitTree 完全开源。您可以在 GitHub 上 Fork、报告问题或提交 Pull Request。",
         aboutViewGitHub: "在 GitHub 上查看",
         aboutContactSupport: "联系与支持",
@@ -2821,15 +2992,29 @@ const translations = {
         
         // Contact Page
         contactTitle: "联系",
+        contactChipEmail: "电子邮件",
+        contactChipGitHub: "GitHub",
+        contactChipScope: "范围",
         contactFooter: "© GitTree · 连接开发者 · 🌳",
 
         // Guide Page
         guideTitle: "GitTree 用户指南",
+        guideChipGettingStarted: "快速入门",
+        guideChipFeatures: "功能",
+        guideChipButtons: "按钮",
+        guideChipAdvanced: "高级技巧",
+        guideChipFaq: "常见问题",
         guideSubtitle: "学习如何使用 GitHub 仓库可视化工具的所有功能",
         guideFooter: "© GitTree · 为开发者提供的免费工具 · 🌳",
 
         // Privacy Policy Page
         privacyTitle: "隐私政策",
+        privacyChipLegal: "法律依据",
+        privacyChipData: "收集数据",
+        privacyChipCookies: "Cookie",
+        privacyChipSharing: "数据共享",
+        privacyChipRights: "用户权利",
+        privacyChipUpdates: "更新",
         privacySubtitle: "最后更新：2026年1月18日",
         privacyFooter: "© GitTree · 默认隐私 · 透明设计",
         privacyIntroText: "GitTree重视隐私和个人数据保护。本隐私政策透明地描述了在使用我们网站时如何收集、使用和保护信息。",
@@ -2863,6 +3048,13 @@ const translations = {
 
         // Terms of Use Page
         termsTitle: "使用条款",
+        termsChipService: "服务",
+        termsChipUsage: "使用",
+        termsChipIP: "知识产权",
+        termsChipLiability: "责任",
+        termsChipAvailability: "可用性",
+        termsChipPrivacy: "隐私",
+        termsChipChanges: "变更",
         termsSubtitle: "最后更新：2026年1月18日",
         termsFooter: "© GitTree · 负责任使用 · 透明度",
         termsIntroText: "通过访问或使用<strong>GitTree</strong>，您同意本使用条款。如果您不同意此处描述的任何条件，我们建议您不要使用该工具。",
@@ -3071,6 +3263,9 @@ function setLanguage(langCode) {
     
     // Update language selector if it exists
     updateLanguageSelector();
+
+    // Refresh any JS-driven content that uses translated strings
+    if (typeof updateCacheStatus === 'function') updateCacheStatus();
     
     console.log(`✅ Language changed to: ${languageNames[langCode]}`);
 }
