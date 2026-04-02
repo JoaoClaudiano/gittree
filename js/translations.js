@@ -122,7 +122,7 @@ const translations = {
         footerAbout: "About",
         footerGuide: "Guide",
         footerContact: "Contact",
-        footerCopyright: "© 2026 GitTree. All rights reserved.",
+        footerCopyright: "© {year} GitTree. All rights reserved.",
         
         // Cookie Banner
         cookieMessage: "We use cookies to improve your experience. By continuing, you agree to our",
@@ -552,7 +552,7 @@ const translations = {
         footerAbout: "Sobre",
         footerGuide: "Guia",
         footerContact: "Contato",
-        footerCopyright: "© 2026 GitTree. Todos os direitos reservados.",
+        footerCopyright: "© {year} GitTree. Todos os direitos reservados.",
         footerRights: "Todos os direitos reservados",
         
         // Cookie Banner
@@ -973,7 +973,7 @@ const translations = {
         footerAbout: "Acerca de",
         footerGuide: "Guía",
         footerContact: "Contacto",
-        footerCopyright: "© 2026 GitTree. Todos los derechos reservados.",
+        footerCopyright: "© {year} GitTree. Todos los derechos reservados.",
         footerRights: "Todos los derechos reservados",
         
         // Cookie Banner
@@ -1372,7 +1372,7 @@ const translations = {
         footerAbout: "À propos",
         footerGuide: "Guide",
         footerContact: "Contact",
-        footerCopyright: "© 2026 GitTree. Tous droits réservés.",
+        footerCopyright: "© {year} GitTree. Tous droits réservés.",
         footerRights: "Tous droits réservés",
         
         // Cookie Banner
@@ -1769,7 +1769,7 @@ const translations = {
         footerAbout: "Chi Siamo",
         footerGuide: "Guida",
         footerContact: "Contatto",
-        footerCopyright: "© 2026 GitTree. Tutti i diritti riservati.",
+        footerCopyright: "© {year} GitTree. Tutti i diritti riservati.",
         footerRights: "Tutti i diritti riservati",
         
         // Cookie Banner
@@ -2166,7 +2166,7 @@ const translations = {
         footerAbout: "概要",
         footerGuide: "ガイド",
         footerContact: "お問い合わせ",
-        footerCopyright: "© 2026 GitTree. 全著作権所有。",
+        footerCopyright: "© {year} GitTree. 全著作権所有。",
         footerRights: "すべての権利を留保",
         
         // Cookie Banner
@@ -2563,7 +2563,7 @@ const translations = {
         footerAbout: "소개",
         footerGuide: "가이드",
         footerContact: "연락처",
-        footerCopyright: "© 2026 GitTree. 모든 권리 보유.",
+        footerCopyright: "© {year} GitTree. 모든 권리 보유.",
         footerRights: "모든 권리 보유",
         
         // Cookie Banner
@@ -2960,7 +2960,7 @@ const translations = {
         footerAbout: "关于",
         footerGuide: "指南",
         footerContact: "联系",
-        footerCopyright: "© 2026 GitTree. 保留所有权利。",
+        footerCopyright: "© {year} GitTree. 保留所有权利。",
         footerRights: "保留所有权利",
         
         // Cookie Banner
@@ -3314,15 +3314,20 @@ function setLanguage(langCode) {
  */
 function applyTranslations() {
     const tr = translations[currentLanguage];
+    const currentYear = String(new Date().getFullYear());
+
+    function interpolate(str) {
+        return str.replace('{year}', currentYear);
+    }
 
     // data-i18n: plain text (or placeholder for inputs)
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (tr[key]) {
             if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                element.setAttribute('placeholder', tr[key]);
+                element.setAttribute('placeholder', interpolate(tr[key]));
             } else {
-                element.textContent = tr[key];
+                element.textContent = interpolate(tr[key]);
             }
         }
     });
