@@ -35,8 +35,8 @@ function initSidebarToggle() {
 
 function initKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
-        const tag = document.activeElement && document.activeElement.tagName;
-        const isTyping = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+        const activeElementTag = document.activeElement && document.activeElement.tagName;
+        const isTyping = activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA' || activeElementTag === 'SELECT';
 
         if (e.ctrlKey && e.shiftKey && !isTyping) {
             switch (e.key.toUpperCase()) {
@@ -138,6 +138,16 @@ function initControls() {
     }
 
     addPopularRepoSuggestions();
+
+    const chips = document.querySelector('.welcome-chips');
+    if (chips) {
+        chips.addEventListener('click', (e) => {
+            const chip = e.target.closest('.welcome-chip');
+            if (chip && chip.dataset.repo) {
+                testRepo(chip.dataset.repo);
+            }
+        });
+    }
 
     // Inline suggestion for common typo
     const input = document.getElementById('repoInput');

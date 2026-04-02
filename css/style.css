@@ -263,7 +263,7 @@ body.light-theme {
 }
 
 #app.no-repo .view-section {
-    display: none !important;
+    display: none;
 }
 
 .light-theme .content-header {
