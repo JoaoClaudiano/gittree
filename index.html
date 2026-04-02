@@ -95,6 +95,13 @@
                 <a href="CHANGELOG.md" class="version-tag" data-i18n-title="versionTooltip" title="What does this version do? See the complete changelog" target="_blank">v1.0</a>
             </div>
             
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="/" class="nav-link active" data-i18n="navVisualizer"><i class="fas fa-tree"></i> Visualizer</a>
+                <a href="guia.html" class="nav-link" data-i18n="navGuide"><i class="fas fa-book"></i> Guide</a>
+                <a href="sobre.html" class="nav-link" data-i18n="navAbout"><i class="fas fa-info-circle"></i> About</a>
+                <a href="contato.html" class="nav-link" data-i18n="navContact"><i class="fas fa-envelope"></i> Contact</a>
+            </nav>
+
             <div class="header-controls">
                 <div class="lang-wrapper">
                     <i class="fas fa-globe lang-icon"></i>
@@ -116,7 +123,7 @@
         </div>
     </header>
 
-    <div id="app" class="app-main">
+    <div id="app" class="app-main no-repo">
         <aside class="app-sidebar">
             <div class="ui-layer">
                 <div class="section-header">
@@ -135,7 +142,7 @@
                         <button id="pasteBtn" class="btn-secondary" title="Paste link from clipboard">
                             <i class="fas fa-paste"></i> <span data-i18n="btnPaste">Paste</span>
                         </button>
-                        <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure">
+                        <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure (Enter)">
                             <i class="fas fa-eye"></i>
                             <span data-i18n="btnVisualize">Visualize</span>
                         </button>
@@ -215,6 +222,32 @@
         </aside>
 
         <main class="app-content">
+
+            <div id="welcomeState" class="welcome-state">
+                <div class="welcome-icon">
+                    <i class="fas fa-tree"></i>
+                </div>
+                <h2 class="welcome-title" data-i18n="welcomeTitle">Visualize any GitHub repository</h2>
+                <p class="welcome-subtitle" data-i18n="welcomeSubtitle">Enter a repository name or URL in the sidebar to explore its structure</p>
+                <div class="welcome-examples">
+                    <p class="welcome-examples-label" data-i18n="welcomeExamples">Try a popular repository:</p>
+                    <div class="welcome-chips">
+                        <button class="welcome-chip" onclick="testRepo('torvalds/linux')">
+                            <i class="fas fa-terminal"></i> torvalds/linux
+                        </button>
+                        <button class="welcome-chip" onclick="testRepo('microsoft/vscode')">
+                            <i class="fas fa-code"></i> microsoft/vscode
+                        </button>
+                        <button class="welcome-chip" onclick="testRepo('facebook/react')">
+                            <i class="fab fa-react"></i> facebook/react
+                        </button>
+                        <button class="welcome-chip" onclick="testRepo('vuejs/vue')">
+                            <i class="fas fa-leaf"></i> vuejs/vue
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="content-header">
                 <div class="content-title">
                     <h1 id="repoTitle" data-i18n="noRepoTitle">No repository selected</h1>
@@ -252,13 +285,13 @@
                             <i class="fas fa-search"></i>
                         </div>
                         <div class="toolbar-actions">
-                            <button id="copyTreeBtn" class="btn-toolbar" title="Copy structure as text">
+                            <button id="copyTreeBtn" class="btn-toolbar" title="Copy structure as text (Ctrl+Shift+C)">
                                 <i class="fas fa-copy"></i> <span data-i18n="btnCopyTree">Copy</span>
                             </button>
-                            <button id="expandAllBtn" class="btn-toolbar" title="Expand all directories in the tree">
+                            <button id="expandAllBtn" class="btn-toolbar" title="Expand all directories in the tree (Ctrl+Shift+E)">
                                 <i class="fas fa-expand"></i> <span data-i18n="btnExpandAll">Expand All</span>
                             </button>
-                            <button id="collapseAllBtn" class="btn-toolbar" title="Collapse all directories in the tree">
+                            <button id="collapseAllBtn" class="btn-toolbar" title="Collapse all directories in the tree (Ctrl+Shift+L)">
                                 <i class="fas fa-compress"></i> <span data-i18n="btnCollapseAll">Collapse All</span>
                             </button>
                         </div>
@@ -298,16 +331,22 @@
                     <i class="fas fa-search"></i>
                     <span data-i18n="seoIntroTitle">Explore GitHub Repositories Like Never Before</span>
                 </h2>
-                <p data-i18n-html="seoIntroText">
-                    <strong>GitTree</strong> is a free tool that allows you to visualize the complete structure of any public GitHub repository. Analyze directory trees, view file metrics, and understand code organization visually and interactively.
-                </p>
-                <ul>
-                    <li data-i18n-html="seoIntroItem1"><strong>Visualize</strong> the hierarchical structure of folders and files</li>
-                    <li data-i18n-html="seoIntroItem2"><strong>Analyze</strong> metrics and code statistics in real time</li>
-                    <li data-i18n-html="seoIntroItem3"><strong>Explore</strong> repositories without needing to clone or download</li>
-                    <li data-i18n-html="seoIntroItem4"><strong>Export</strong> data in multiple formats (JSON, CSV)</li>
-                    <li data-i18n-html="seoIntroItem5"><strong>Understand</strong> complex projects intuitively</li>
-                </ul>
+                <div class="seo-intro-body">
+                    <div class="seo-intro-text">
+                        <p data-i18n-html="seoIntroText">
+                            <strong>GitTree</strong> is a free tool that allows you to visualize the complete structure of any public GitHub repository. Analyze directory trees, view file metrics, and understand code organization visually and interactively.
+                        </p>
+                    </div>
+                    <div class="seo-intro-list">
+                        <ul>
+                            <li data-i18n-html="seoIntroItem1"><strong>Visualize</strong> the hierarchical structure of folders and files</li>
+                            <li data-i18n-html="seoIntroItem2"><strong>Analyze</strong> metrics and code statistics in real time</li>
+                            <li data-i18n-html="seoIntroItem3"><strong>Explore</strong> repositories without needing to clone or download</li>
+                            <li data-i18n-html="seoIntroItem4"><strong>Export</strong> data in multiple formats (JSON, CSV)</li>
+                            <li data-i18n-html="seoIntroItem5"><strong>Understand</strong> complex projects intuitively</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

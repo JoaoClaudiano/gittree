@@ -164,6 +164,7 @@ async function analyzeRepository() {
         }
 
         updateRepoInfo(repoData);
+        showAppContent();
         showStatus(t('statusLoading'), 'info');
 
         const treeData = await fetchCompleteTree(repoInfo.owner, repoInfo.repo, repoData.default_branch);

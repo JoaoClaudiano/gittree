@@ -11,6 +11,7 @@ function initApp() {
     initControls();
     initCache();
     initSidebarToggle();
+    initKeyboardShortcuts();
     loadDefaultRepo();
 
     console.log('✅ GitTree v1.0 inicializado');
@@ -28,6 +29,30 @@ function initSidebarToggle() {
         const label = toggleBtn.querySelector('span');
         if (label) {
             label.textContent = !expanded ? 'Hide Controls' : 'Show Controls';
+        }
+    });
+}
+
+function initKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        const tag = document.activeElement && document.activeElement.tagName;
+        const isTyping = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+
+        if (e.ctrlKey && e.shiftKey && !isTyping) {
+            switch (e.key.toUpperCase()) {
+                case 'C':
+                    e.preventDefault();
+                    copyTreeAsText();
+                    break;
+                case 'E':
+                    e.preventDefault();
+                    expandAllTreeNodes(true);
+                    break;
+                case 'L':
+                    e.preventDefault();
+                    expandAllTreeNodes(false);
+                    break;
+            }
         }
     });
 }

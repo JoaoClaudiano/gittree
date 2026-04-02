@@ -184,6 +184,11 @@ function updateCacheStatus() {
     cacheStatus.appendChild(document.createTextNode(' ' + t('cacheLabel').replace('{size}', sizeLabel)));
 }
 
+function showAppContent() {
+    const app = document.getElementById('app');
+    if (app) app.classList.remove('no-repo');
+}
+
 function loadDefaultRepo() {
     const lastRepo = localStorage.getItem('last-repo');
     if (lastRepo) {
