@@ -1,5 +1,12 @@
 // Tree building and rendering functions
 
+// Stores pending children for lazy rendering (populated in renderTreeNode, consumed on expand)
+const _lazyChildren = new WeakMap();
+
+// Track total items in the current tree to guard expensive operations on large repos
+let _totalTreeItems = 0;
+const LARGE_REPO_THRESHOLD = 5000;
+
 function buildFileTree(files) {
     const root = { name: '/', type: 'folder', children: [], path: '' };
     const nodeMap = new Map();
@@ -48,14 +55,57 @@ function renderTree(treeData) {
     const treeContainer = document.getElementById('treeContainer');
     if (!treeContainer || !treeData.tree) return;
 
+    _totalTreeItems = treeData.tree.length;
+
     const root = buildFileTree(treeData.tree);
     treeContainer.innerHTML = '';
+
+    // Use event delegation: one listener handles all folder clicks, including lazily rendered ones
+    treeContainer.removeEventListener('click', _handleTreeNodeClick);
+    treeContainer.addEventListener('click', _handleTreeNodeClick);
+
     renderTreeNode(treeContainer, root);
 
     setTimeout(() => {
-        attachTreeEvents();
         expandFirstLevel();
-    }, 100);
+    }, 0);
+}
+
+function _renderLazyChildren(childrenContainer) {
+    if (childrenContainer.dataset.lazy !== 'true') return;
+    const lazyData = _lazyChildren.get(childrenContainer);
+    if (lazyData) {
+        lazyData.children.forEach(child => renderTreeNode(childrenContainer, child, lazyData.depth + 1));
+        _lazyChildren.delete(childrenContainer);
+    }
+    delete childrenContainer.dataset.lazy;
+}
+
+function _handleTreeNodeClick(e) {
+    const header = e.target.closest('.tree-node-header.folder');
+    if (!header) return;
+    e.stopPropagation();
+
+    const node = header.closest('.tree-node');
+    const children = node.querySelector(':scope > .tree-node-children');
+    const icon = header.querySelector('.tree-icon');
+
+    if (!children) return;
+
+    const isExpanded = children.dataset.expanded === 'true';
+    if (!isExpanded) {
+        // Render children lazily on first expand
+        _renderLazyChildren(children);
+        children.dataset.expanded = 'true';
+        children.classList.add('expanded');
+        icon.classList.remove('collapsed');
+        icon.classList.add('expanded');
+    } else {
+        children.dataset.expanded = 'false';
+        children.classList.remove('expanded');
+        icon.classList.remove('expanded');
+        icon.classList.add('collapsed');
+    }
 }
 
 function renderTreeNode(container, node, depth = 0) {
@@ -109,9 +159,9 @@ function renderTreeNode(container, node, depth = 0) {
         childrenContainer.className = 'tree-node-children';
         childrenContainer.dataset.expanded = 'false';
 
-        node.children.forEach(child => {
-            renderTreeNode(childrenContainer, child, depth + 1);
-        });
+        // Store children for lazy rendering — DOM nodes are only created when the folder is opened
+        childrenContainer.dataset.lazy = 'true';
+        _lazyChildren.set(childrenContainer, { children: node.children, depth });
 
         nodeElement.appendChild(childrenContainer);
     }
@@ -119,37 +169,20 @@ function renderTreeNode(container, node, depth = 0) {
     container.appendChild(nodeElement);
 }
 
-function attachTreeEvents() {
-    document.querySelectorAll('.tree-node-header.folder').forEach(header => {
-        header.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const node = header.closest('.tree-node');
-            const children = node.querySelector('.tree-node-children');
-            const icon = header.querySelector('.tree-icon');
-
-            if (children) {
-                const isExpanded = children.dataset.expanded === 'true';
-                if (isExpanded) {
-                    children.dataset.expanded = 'false';
-                    children.classList.remove('expanded');
-                    icon.classList.remove('expanded');
-                    icon.classList.add('collapsed');
-                } else {
-                    children.dataset.expanded = 'true';
-                    children.classList.add('expanded');
-                    icon.classList.remove('collapsed');
-                    icon.classList.add('expanded');
-                }
-            }
-        });
-    });
-}
+// attachTreeEvents is a no-op: click handling is done via event delegation set up in renderTree
+function attachTreeEvents() {}
 
 function expandFirstLevel() {
-    document.querySelectorAll('.tree-node > .tree-node-children').forEach(container => {
+    const treeContainer = document.getElementById('treeContainer');
+    if (!treeContainer) return;
+
+    // Only expand direct children of the root node (one level deep)
+    treeContainer.querySelectorAll(':scope > .tree-node > .tree-node-children').forEach(container => {
+        _renderLazyChildren(container);
+
         const header = container.parentElement.querySelector('.tree-node-header');
         const icon = header?.querySelector('.tree-icon');
-        if (container && header && icon) {
+        if (header && icon) {
             container.dataset.expanded = 'true';
             container.classList.add('expanded');
             icon.classList.remove('collapsed');
@@ -159,6 +192,20 @@ function expandFirstLevel() {
 }
 
 function expandAllTreeNodes(expand = true) {
+    if (expand && _totalTreeItems > LARGE_REPO_THRESHOLD) {
+        showStatus(t('statusLargeRepoExpandAll') || 'Repository too large to expand fully. Click folders to navigate or use search.', 'warning');
+        return;
+    }
+
+    if (expand) {
+        // Iteratively render all lazy containers so every node becomes visible
+        let lazyContainers = document.querySelectorAll('.tree-node-children[data-lazy="true"]');
+        while (lazyContainers.length > 0) {
+            lazyContainers.forEach(container => _renderLazyChildren(container));
+            lazyContainers = document.querySelectorAll('.tree-node-children[data-lazy="true"]');
+        }
+    }
+
     document.querySelectorAll('.tree-node-children').forEach(container => {
         container.dataset.expanded = expand.toString();
         container.classList.toggle('expanded', expand);

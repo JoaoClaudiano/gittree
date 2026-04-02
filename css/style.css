@@ -1959,60 +1959,6 @@ body:not(.light-theme) .language-selector option {
     color: var(--light-subtext);
 }
 
-.welcome-examples {
-    margin-top: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-
-.welcome-examples-label {
-    font-size: 0.85rem;
-    color: var(--dark-subtext);
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.light-theme .welcome-examples-label {
-    color: var(--light-subtext);
-}
-
-.welcome-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.welcome-chip {
-    padding: 10px 18px;
-    border-radius: 24px;
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    color: var(--primary);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.25s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Inter', sans-serif;
-}
-
-.welcome-chip:hover {
-    background: rgba(16, 185, 129, 0.18);
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
-}
-
-.welcome-chip i {
-    font-size: 13px;
-}
-
 /* ============ SEO INTRO 2-COLUMN BODY ============ */
 .seo-intro-body {
     display: grid;
