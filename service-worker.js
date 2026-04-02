@@ -4,7 +4,7 @@
  */
 
 // Cache Versioning - Atualizar quando houver mudanças
-const CACHE_VERSION = '2.1.0';
+const CACHE_VERSION = '2.2.0';
 const CACHE_NAME = `gittree-v${CACHE_VERSION}`;
 const RUNTIME_CACHE = `gittree-runtime-v${CACHE_VERSION}`;
 
@@ -13,11 +13,18 @@ const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
-  './style.css',
-  './institutional.css',
-  './main.js',
-  './enhanced-tree.js',
-  './skeleton-loader.js',
+  './css/style.css',
+  './css/institutional.css',
+  './js/translations.js',
+  './js/skeleton-loader.js',
+  './js/utils.js',
+  './js/ui.js',
+  './js/tree.js',
+  './js/metrics.js',
+  './js/export.js',
+  './js/api.js',
+  './js/enhanced-tree.js',
+  './js/main.js',
   './icons/android-chrome-192x192.png',
   './icons/android-chrome-512x512.png',
   './404.html'
