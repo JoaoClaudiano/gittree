@@ -25,6 +25,9 @@ const translations = {
         statusDefault: "Enter a GitHub repository",
         noRepoTitle: "No repository selected",
         noRepoDescription: "Enter a repository above to visualize the structure",
+        welcomeTitle: "Visualize any GitHub repository",
+        welcomeSubtitle: "Enter a repository name or URL in the sidebar to explore its structure",
+        welcomeExamples: "Try a popular repository:",
 
         
         // Controls
@@ -446,6 +449,9 @@ const translations = {
         statusDefault: "Digite um repositório GitHub",
         noRepoTitle: "Nenhum repositório selecionado",
         noRepoDescription: "Digite um repositório acima para visualizar a estrutura",
+        welcomeTitle: "Visualize qualquer repositório GitHub",
+        welcomeSubtitle: "Digite o nome de um repositório ou URL na barra lateral para explorar sua estrutura",
+        welcomeExamples: "Experimente um repositório popular:",
 
         
         // Controls
@@ -872,6 +878,9 @@ const translations = {
         statusDefault: "Ingrese un repositorio GitHub",
         noRepoTitle: "Ningún repositorio seleccionado",
         noRepoDescription: "Ingrese un repositorio arriba para visualizar la estructura",
+        welcomeTitle: "Visualiza cualquier repositorio de GitHub",
+        welcomeSubtitle: "Ingresa el nombre de un repositorio o URL en la barra lateral para explorar su estructura",
+        welcomeExamples: "Prueba un repositorio popular:",
 
         
         // Controls
@@ -1261,6 +1270,9 @@ const translations = {
         statusDefault: "Entrez un dépôt GitHub",
         noRepoTitle: "Aucun dépôt sélectionné",
         noRepoDescription: "Entrez un dépôt ci-dessus pour visualiser la structure",
+        welcomeTitle: "Visualisez n'importe quel dépôt GitHub",
+        welcomeSubtitle: "Entrez un nom de dépôt ou une URL dans la barre latérale pour explorer sa structure",
+        welcomeExamples: "Essayez un dépôt populaire :",
 
         
         // Controls
@@ -1653,6 +1665,9 @@ const translations = {
         statusDefault: "Inserisci un repository GitHub",
         noRepoTitle: "Nessun repository selezionato",
         noRepoDescription: "Inserisci un repository sopra per visualizzare la struttura",
+        welcomeTitle: "Visualizza qualsiasi repository GitHub",
+        welcomeSubtitle: "Inserisci il nome di un repository o URL nella barra laterale per esplorarne la struttura",
+        welcomeExamples: "Prova un repository popolare:",
 
         
         // Controls
@@ -2045,6 +2060,9 @@ const translations = {
         statusDefault: "GitHubリポジトリを入力してください",
         noRepoTitle: "リポジトリが選択されていません",
         noRepoDescription: "上のリポジトリを入力して構造を表示してください",
+        welcomeTitle: "任意のGitHubリポジトリを可視化",
+        welcomeSubtitle: "サイドバーにリポジトリ名またはURLを入力して構造を探索してください",
+        welcomeExamples: "人気のリポジトリを試してみてください：",
 
         
         // Controls
@@ -2437,6 +2455,9 @@ const translations = {
         statusDefault: "GitHub 저장소를 입력하세요",
         noRepoTitle: "선택된 저장소 없음",
         noRepoDescription: "위에 저장소를 입력하여 구조를 시각화하세요",
+        welcomeTitle: "모든 GitHub 저장소를 시각화하세요",
+        welcomeSubtitle: "사이드바에 저장소 이름이나 URL을 입력하여 구조를 탐색하세요",
+        welcomeExamples: "인기 저장소를 시도해보세요:",
 
         
         // Controls
@@ -2829,6 +2850,9 @@ const translations = {
         statusDefault: "输入GitHub仓库",
         noRepoTitle: "未选择任何仓库",
         noRepoDescription: "在上方输入仓库以可视化其结构",
+        welcomeTitle: "可视化任意 GitHub 仓库",
+        welcomeSubtitle: "在侧边栏输入仓库名称或 URL 以探索其结构",
+        welcomeExamples: "试试热门仓库：",
 
         
         // Controls
