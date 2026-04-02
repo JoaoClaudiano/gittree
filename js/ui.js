@@ -76,8 +76,12 @@ function showStatus(message, type = 'info') {
 
     if (!box || !text) return;
 
+    // Whitelist type to ensure only safe class names are injected into the DOM
+    const validTypes = ['info', 'success', 'error', 'warning'];
+    const safeType = validTypes.includes(type) ? type : 'info';
+
     box.className = 'status-box';
-    box.classList.add(type);
+    box.classList.add(safeType);
 
     const icons = {
         info: 'fa-info-circle',
@@ -86,7 +90,7 @@ function showStatus(message, type = 'info') {
         warning: 'fa-exclamation-triangle'
     };
 
-    text.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${escapeHtml(message)}`;
+    text.innerHTML = `<i class="fas ${icons[safeType]}"></i> ${escapeHtml(message)}`;
 }
 
 function showSkeletonInTree(show) {

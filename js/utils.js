@@ -105,6 +105,7 @@ function convertToCSV(treeData) {
 }
 
 function escapeHtml(str) {
+    // Replace & first to avoid double-escaping (e.g. < → &lt; → &amp;lt;)
     return String(str)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
