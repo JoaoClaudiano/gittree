@@ -10,9 +10,26 @@ function initApp() {
     initViews();
     initControls();
     initCache();
+    initSidebarToggle();
     loadDefaultRepo();
 
     console.log('✅ GitTree v1.0 inicializado');
+}
+
+function initSidebarToggle() {
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    const collapsible = document.getElementById('sidebarCollapsible');
+    if (!toggleBtn || !collapsible) return;
+
+    toggleBtn.addEventListener('click', () => {
+        const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', String(!expanded));
+        collapsible.classList.toggle('expanded', !expanded);
+        const label = toggleBtn.querySelector('span');
+        if (label) {
+            label.textContent = !expanded ? 'Hide Controls' : 'Show Controls';
+        }
+    });
 }
 
 function initControls() {
