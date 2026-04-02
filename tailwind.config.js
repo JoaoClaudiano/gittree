@@ -2,7 +2,6 @@
 module.exports = {
   content: [
     './index.html',
-    './bento-panel.js',
     './*.js',
     './*.html',
   ],

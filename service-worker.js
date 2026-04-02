@@ -16,12 +16,8 @@ const PRECACHE_URLS = [
   './style.css',
   './institutional.css',
   './main.js',
-  './utils.js',
-  './components.js',
-  './github-api.js',
   './enhanced-tree.js',
   './skeleton-loader.js',
-  './bento-panel.js',
   './icons/android-chrome-192x192.png',
   './icons/android-chrome-512x512.png',
   './404.html'
