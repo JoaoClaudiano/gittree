@@ -181,25 +181,19 @@ function renderBentoPanelVanilla() {
     panel.appendChild(body);
     overlay.appendChild(panel);
     container.appendChild(overlay);
-    
-    // Add event listeners
-    const closeBtn = document.getElementById('closeBentoPanel');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
+
+    // Add event listeners using the already-created DOM references
+    closeBtn.addEventListener('click', () => {
+        window.GitTree2026.bentoMetadataPanelOpen = false;
+        renderBentoPanel();
+    });
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
             window.GitTree2026.bentoMetadataPanelOpen = false;
             renderBentoPanel();
-        });
-    }
-    
-    const overlay = container.querySelector('.bento-panel-overlay');
-    if (overlay) {
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                window.GitTree2026.bentoMetadataPanelOpen = false;
-                renderBentoPanel();
-            }
-        });
-    }
+        }
+    });
 }
 
 // Show skeleton loader during loading

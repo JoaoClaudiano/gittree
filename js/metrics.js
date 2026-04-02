@@ -1,9 +1,11 @@
 // Metrics and chart functions
 
+const CHART_HEIGHT_PX = '300px';
+
 function setChartPlaceholder(container, message) {
     container.innerHTML = '';
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);';
+    wrapper.style.cssText = `display: flex; flex-direction: column; align-items: center; justify-content: center; height: ${CHART_HEIGHT_PX}; color: var(--dark-subtext);`;
     const icon = document.createElement('i');
     icon.className = 'fas fa-chart-pie';
     icon.style.cssText = 'font-size: 48px; opacity: 0.5; margin-bottom: 15px;';
@@ -105,7 +107,7 @@ function generateFileTypesChart(files) {
 
     fileTypesChartEl.innerHTML = '';
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'position: relative; height: 300px; width: 100%;';
+    wrapper.style.cssText = `position: relative; height: ${CHART_HEIGHT_PX}; width: 100%;`;
     const canvas = document.createElement('canvas');
     canvas.id = 'fileDistributionChart';
     wrapper.appendChild(canvas);
