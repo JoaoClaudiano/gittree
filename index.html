@@ -96,16 +96,19 @@
             </div>
             
             <div class="header-controls">
-                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
-                    <option value="en">English</option>
-                    <option value="pt">Português</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="it">Italiano</option>
-                    <option value="ja">日本語</option>
-                    <option value="ko">한국어</option>
-                    <option value="zh">中文</option>
-                </select>
+                <div class="lang-wrapper">
+                    <i class="fas fa-globe lang-icon"></i>
+                    <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                        <option value="en">English</option>
+                        <option value="pt">Português</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="it">Italiano</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
                 <button class="theme-toggle" id="themeToggle" title="Switch theme">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -128,74 +131,83 @@
                            data-i18n="inputPlaceholder"
                            class="repo-input"
                            value="facebook/react">
-                    <button id="pasteBtn" class="btn-secondary" title="Paste link from clipboard">
-                        <i class="fas fa-paste"></i> <span data-i18n="btnPaste">Paste</span>
-                    </button>
-                    <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure">
-                        <i class="fas fa-eye"></i>
-                        <span data-i18n="btnVisualize">Visualize</span>
-                    </button>
-                </div>
-                
-                <div class="status-container">
-                    <div class="status-box" id="statusBox">
-                        <i class="fas fa-info-circle"></i>
-                        <span id="statusText" data-i18n="statusDefault">Enter a GitHub repository</span>
-                    </div>
-                </div>
-                
-                <div class="controls-section">
-                    <h4><i class="fas fa-eye"></i> <span data-i18n="controlsVisualization">Visualization</span></h4>
-                    <div class="view-toggle">
-                        <button class="view-btn active" data-view="tree" title="View hierarchical tree structure">
-                            <i class="fas fa-folder-tree"></i>
-                            <span data-i18n="btnTree">Tree</span>
+                    <div class="input-btn-row">
+                        <button id="pasteBtn" class="btn-secondary" title="Paste link from clipboard">
+                            <i class="fas fa-paste"></i> <span data-i18n="btnPaste">Paste</span>
                         </button>
-                        <button class="view-btn" data-view="metrics" title="View repository metrics and statistics">
-                            <i class="fas fa-chart-bar"></i>
-                            <span data-i18n="btnMetrics">Metrics</span>
+                        <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure">
+                            <i class="fas fa-eye"></i>
+                            <span data-i18n="btnVisualize">Visualize</span>
                         </button>
                     </div>
                 </div>
-                
-                <div class="controls-section">
-                    <h4><i class="fas fa-tools"></i> <span data-i18n="controlsActions">Actions</span></h4>
-                    <div class="tool-buttons">
-                        <button id="clearCacheBtn" class="btn-secondary" title="Clear local cache of analyzed repositories">
-                            <i class="fas fa-trash"></i>
-                            <span data-i18n="btnClearCache">Clear Cache</span>
-                        </button>
-                        <button id="refreshBtn" class="btn-secondary" title="Reload analysis of current repository">
-                            <i class="fas fa-redo"></i>
-                            <span data-i18n="btnRefresh">Refresh</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="controls-section">
-                    <h4><i class="fas fa-download"></i> <span data-i18n="controlsExport">Export</span></h4>
-                    <div class="export-buttons">
-                        <button id="exportJSONBtn" class="btn-export" title="Export complete structure in JSON format">
-                            <i class="fas fa-file-code"></i>
-                            <span data-i18n="btnExportJSON">JSON</span>
-                        </button>
-                        <button id="exportCSVBtn" class="btn-export" title="Export file list in CSV format">
-                            <i class="fas fa-file-csv"></i>
-                            <span data-i18n="btnExportCSV">CSV</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="metrics-preview" id="metricsPreview">
-                    <h4><i class="fas fa-chart-line"></i> <span data-i18n="previewTitle">Preview</span></h4>
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-value">--</div>
-                            <div class="metric-label" data-i18n="metricFiles">Files</div>
+
+                <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-expanded="false" aria-controls="sidebarCollapsible">
+                    <i class="fas fa-chevron-down"></i>
+                    <span data-i18n="btnShowControls">Show Controls</span>
+                </button>
+
+                <div class="sidebar-collapsible" id="sidebarCollapsible">
+                    <div class="status-container">
+                        <div class="status-box" id="statusBox">
+                            <i class="fas fa-info-circle"></i>
+                            <span id="statusText" data-i18n="statusDefault">Enter a GitHub repository</span>
                         </div>
-                        <div class="metric-card">
-                            <div class="metric-value">--</div>
-                            <div class="metric-label" data-i18n="metricSize">Size</div>
+                    </div>
+                    
+                    <div class="controls-section">
+                        <h4><i class="fas fa-eye"></i> <span data-i18n="controlsVisualization">Visualization</span></h4>
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="tree" title="View hierarchical tree structure">
+                                <i class="fas fa-folder-tree"></i>
+                                <span data-i18n="btnTree">Tree</span>
+                            </button>
+                            <button class="view-btn" data-view="metrics" title="View repository metrics and statistics">
+                                <i class="fas fa-chart-bar"></i>
+                                <span data-i18n="btnMetrics">Metrics</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="controls-section">
+                        <h4><i class="fas fa-tools"></i> <span data-i18n="controlsActions">Actions</span></h4>
+                        <div class="tool-buttons">
+                            <button id="clearCacheBtn" class="btn-secondary" title="Clear local cache of analyzed repositories">
+                                <i class="fas fa-trash"></i>
+                                <span data-i18n="btnClearCache">Clear Cache</span>
+                            </button>
+                            <button id="refreshBtn" class="btn-secondary" title="Reload analysis of current repository">
+                                <i class="fas fa-redo"></i>
+                                <span data-i18n="btnRefresh">Refresh</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="controls-section">
+                        <h4><i class="fas fa-download"></i> <span data-i18n="controlsExport">Export</span></h4>
+                        <div class="export-buttons">
+                            <button id="exportJSONBtn" class="btn-export" title="Export complete structure in JSON format">
+                                <i class="fas fa-file-code"></i>
+                                <span data-i18n="btnExportJSON">JSON</span>
+                            </button>
+                            <button id="exportCSVBtn" class="btn-export" title="Export file list in CSV format">
+                                <i class="fas fa-file-csv"></i>
+                                <span data-i18n="btnExportCSV">CSV</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-preview" id="metricsPreview">
+                        <h4><i class="fas fa-chart-line"></i> <span data-i18n="previewTitle">Preview</span></h4>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">--</div>
+                                <div class="metric-label" data-i18n="metricFiles">Files</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">--</div>
+                                <div class="metric-label" data-i18n="metricSize">Size</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,23 +227,6 @@
                         <span class="stat-item"><i class="fas fa-eye"></i> --</span>
                     </div>
                 </div>
-            </div>
-            <!-- Seção de Introdução para SEO -->
-            <div class="seo-intro" style="margin: 20px 0; padding: 20px; background: var(--dark-card); border-radius: 8px; border: 1px solid var(--dark-border);">
-                <h2 style="margin-bottom: 15px; color: var(--dark-text); font-size: 1.3rem;">
-                    <i class="fas fa-search" style="margin-right: 10px; color: var(--primary);"></i>
-                    <span data-i18n="seoIntroTitle">Explore GitHub Repositories Like Never Before</span>
-                </h2>
-                <p data-i18n-html="seoIntroText" style="margin-bottom: 15px; color: var(--dark-subtext); line-height: 1.6;">
-                    <strong style="color: var(--primary);">GitTree</strong> is a free tool that allows you to visualize the complete structure of any public GitHub repository. Analyze directory trees, view file metrics, and understand code organization visually and interactively.
-                </p>
-                <ul style="color: var(--dark-subtext); padding-left: 20px; margin-bottom: 0;">
-                    <li data-i18n-html="seoIntroItem1" style="margin-bottom: 8px;"><strong>Visualize</strong> the hierarchical structure of folders and files</li>
-                    <li data-i18n-html="seoIntroItem2" style="margin-bottom: 8px;"><strong>Analyze</strong> metrics and code statistics in real time</li>
-                    <li data-i18n-html="seoIntroItem3" style="margin-bottom: 8px;"><strong>Explore</strong> repositories without needing to clone or download</li>
-                    <li data-i18n-html="seoIntroItem4" style="margin-bottom: 8px;"><strong>Export</strong> data in multiple formats (JSON, CSV)</li>
-                    <li data-i18n-html="seoIntroItem5"><strong>Understand</strong> complex projects intuitively</li>
-                </ul>
             </div>
             
             
@@ -296,6 +291,24 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Seção de Introdução para SEO -->
+            <div class="seo-intro">
+                <h2>
+                    <i class="fas fa-search"></i>
+                    <span data-i18n="seoIntroTitle">Explore GitHub Repositories Like Never Before</span>
+                </h2>
+                <p data-i18n-html="seoIntroText">
+                    <strong>GitTree</strong> is a free tool that allows you to visualize the complete structure of any public GitHub repository. Analyze directory trees, view file metrics, and understand code organization visually and interactively.
+                </p>
+                <ul>
+                    <li data-i18n-html="seoIntroItem1"><strong>Visualize</strong> the hierarchical structure of folders and files</li>
+                    <li data-i18n-html="seoIntroItem2"><strong>Analyze</strong> metrics and code statistics in real time</li>
+                    <li data-i18n-html="seoIntroItem3"><strong>Explore</strong> repositories without needing to clone or download</li>
+                    <li data-i18n-html="seoIntroItem4"><strong>Export</strong> data in multiple formats (JSON, CSV)</li>
+                    <li data-i18n-html="seoIntroItem5"><strong>Understand</strong> complex projects intuitively</li>
+                </ul>
+            </div>
         </main>
     </div>
 
@@ -339,19 +352,19 @@
         </div>
     </footer>
     <!-- Cookie Consent Banner (LGPD/GDPR) -->
-    <div id="cookie-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid #334155; padding: 15px; z-index: 1000; font-family: 'Inter', sans-serif;">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-            <div style="flex: 1; min-width: 300px;">
-                <p style="margin: 0; color: #f8fafc; font-size: 14px;">
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-banner-inner">
+            <div class="cookie-text">
+                <p>
                     🍪 <span data-i18n="cookieMessage">We use cookies to improve your experience. By continuing, you agree to our</span>
-                    <a href="politica-de-privacidade.html" style="color: #10b981; text-decoration: none;" data-i18n="footerPrivacy">Privacy Policy</a>.
+                    <a href="politica-de-privacidade.html" class="cookie-link" data-i18n="footerPrivacy">Privacy Policy</a>.
                 </p>
             </div>
-            <div style="display: flex; gap: 8px;">
-                <button id="cookieAcceptBtn" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;" data-i18n="cookieAccept">
+            <div class="cookie-actions">
+                <button id="cookieAcceptBtn" class="cookie-btn cookie-btn-accept" data-i18n="cookieAccept">
                     Accept
                 </button>
-                <button id="cookieRejectBtn" style="background: transparent; color: #94a3b8; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;" data-i18n="cookieReject">
+                <button id="cookieRejectBtn" class="cookie-btn cookie-btn-reject" data-i18n="cookieReject">
                     Reject
                 </button>
             </div>
@@ -369,93 +382,6 @@
     <script src="js/enhanced-tree.js"></script>
     <script src="js/main.js"></script>
 
-    <style>
-    /* Estilos para a seção SEO */
-    .seo-intro ul {
-        list-style-type: none;
-    }
-    
-    .seo-intro li {
-        position: relative;
-        padding-left: 20px;
-    }
-    
-    .seo-intro li:before {
-        content: "▸";
-        position: absolute;
-        left: 0;
-        color: #10b981;
-    }
-    
-    .high-contrast .seo-intro li:before {
-        color: #00ffff;
-    }
-    
-    /* Language Selector Styles */
-    .language-selector {
-        background: var(--dark-card);
-        border: 1px solid var(--dark-border);
-        color: var(--dark-text);
-        padding: 6px 10px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-family: 'Inter', sans-serif;
-        cursor: pointer;
-        margin-right: 10px;
-        transition: all 0.3s ease;
-    }
-    
-    .language-selector:hover {
-        border-color: var(--primary);
-        background: var(--dark-bg);
-    }
-    
-    .language-selector:focus {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-    }
-    
-    .language-selector option {
-        background: var(--dark-card);
-        color: var(--dark-text);
-        padding: 8px;
-    }
-    
-    /* Dark theme adjustments */
-    .dark-theme .language-selector {
-        background: #1e293b;
-        border-color: #334155;
-        color: #f8fafc;
-    }
-    
-    .dark-theme .language-selector option {
-        background: #1e293b;
-        color: #f8fafc;
-    }
-    
-    /* Light theme adjustments */
-    .light-theme .language-selector {
-        background: #ffffff;
-        border-color: #e2e8f0;
-        color: #1e293b;
-    }
-    
-    .light-theme .language-selector option {
-        background: #ffffff;
-        color: #1e293b;
-    }
-    
-    @media (max-width: 768px) {
-        .seo-intro {
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .seo-intro h2 {
-            font-size: 1.1rem;
-        }
-    }
-    </style>
     <script src="js/init.js"></script>
 </body>
 </html>

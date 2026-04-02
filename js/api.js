@@ -181,6 +181,10 @@ async function analyzeRepository() {
         updateMetrics(treeData);
         updateCacheStatus();
 
+        if (window.innerWidth <= 992) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         if (window.GitTree2026) {
             window.GitTree2026.treeData = window.currentTreeData;
         }
