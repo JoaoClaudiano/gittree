@@ -64,9 +64,14 @@ function showLoading(show) {
     if (loading) loading.classList.toggle('hidden', !show);
     if (btn) {
         btn.disabled = show;
-        btn.innerHTML = show
-            ? `<i class="fas fa-spinner fa-spin"></i> <span>${t('btnLoading')}</span>`
-            : `<i class="fas fa-eye"></i> <span>${t('btnVisualize')}</span>`;
+        btn.innerHTML = '';
+        const icon = document.createElement('i');
+        icon.className = show ? 'fas fa-spinner fa-spin' : 'fas fa-eye';
+        const span = document.createElement('span');
+        span.textContent = show ? t('btnLoading') : t('btnVisualize');
+        btn.appendChild(icon);
+        btn.appendChild(document.createTextNode(' '));
+        btn.appendChild(span);
     }
 }
 
@@ -90,7 +95,11 @@ function showStatus(message, type = 'info') {
         warning: 'fa-exclamation-triangle'
     };
 
-    text.innerHTML = `<i class="fas ${icons[safeType]}"></i> ${escapeHtml(message)}`;
+    text.innerHTML = '';
+    const statusIcon = document.createElement('i');
+    statusIcon.className = 'fas ' + icons[safeType];
+    text.appendChild(statusIcon);
+    text.appendChild(document.createTextNode(' ' + message));
 }
 
 function showSkeletonInTree(show) {
@@ -168,7 +177,11 @@ function updateCacheStatus() {
     } else {
         sizeLabel = (totalBytes / 1024).toFixed(1) + ' KB';
     }
-    cacheStatus.innerHTML = `<i class="fas fa-database"></i> ${t('cacheLabel').replace('{size}', sizeLabel)}`;
+    cacheStatus.innerHTML = '';
+    const dbIcon = document.createElement('i');
+    dbIcon.className = 'fas fa-database';
+    cacheStatus.appendChild(dbIcon);
+    cacheStatus.appendChild(document.createTextNode(' ' + t('cacheLabel').replace('{size}', sizeLabel)));
 }
 
 function loadDefaultRepo() {

@@ -58,11 +58,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5LRXMXH9');</script>
+    <script src="js/gtm.js"></script>
     <!-- End Google Tag Manager -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
@@ -352,10 +348,10 @@
                 </p>
             </div>
             <div style="display: flex; gap: 8px;">
-                <button onclick="acceptAllCookies()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;" data-i18n="cookieAccept">
+                <button id="cookieAcceptBtn" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;" data-i18n="cookieAccept">
                     Accept
                 </button>
-                <button onclick="rejectAllCookies()" style="background: transparent; color: #94a3b8; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;" data-i18n="cookieReject">
+                <button id="cookieRejectBtn" style="background: transparent; color: #94a3b8; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;" data-i18n="cookieReject">
                     Reject
                 </button>
             </div>
@@ -460,97 +456,6 @@
         }
     }
     </style>
-    <script>
-    // Initialize i18n system
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize internationalization
-        if (typeof initI18n === 'function') {
-            initI18n();
-            
-            // Set up language selector
-            const languageSelector = document.getElementById('languageSelector');
-            if (languageSelector) {
-                languageSelector.addEventListener('change', function(e) {
-                    setLanguage(e.target.value);
-                });
-            }
-        }
-    });  
-    // Accessibility Controls
-    // Cookie Management
-    document.addEventListener('DOMContentLoaded', function() {
-        function checkCookieConsent() {
-            if (!localStorage.getItem('cookie_consent')) {
-                document.getElementById('cookie-banner').style.display = 'block';
-            }
-        }
-
-        function acceptAllCookies() {
-            localStorage.setItem('cookie_consent', 'accepted');
-            localStorage.setItem('cookie_analytics', 'true');
-            localStorage.setItem('cookie_marketing', 'true');
-            document.getElementById('cookie-banner').style.display = 'none';
-            console.log('Cookies aceitos - Analytics ativado');
-        }
-
-        function rejectAllCookies() {
-            localStorage.setItem('cookie_consent', 'rejected');
-            localStorage.setItem('cookie_analytics', 'false');
-            localStorage.setItem('cookie_marketing', 'false');
-            document.getElementById('cookie-banner').style.display = 'none';
-            console.log('Cookies rejeitados');
-        }
-        // Expor funções globalmente para o banner
-        window.acceptAllCookies = acceptAllCookies;
-        window.rejectAllCookies = rejectAllCookies;
-        // Verificar cookies ao carregar a página
-        checkCookieConsent(); 
-        // Track SEO Events
-        const buttons = ['analyzeBtn', 'exportJSONBtn', 'exportCSVBtn', 'copyTreeBtn'];
-        buttons.forEach(btnId => {
-            const btn = document.getElementById(btnId);
-            if (btn) {
-                btn.addEventListener('click', function() {
-                    if (window.dataLayer) {
-                        window.dataLayer.push({
-                            'event': 'tool_usage',
-                            'tool_name': btnId.replace('Btn', ''),
-                            'tool_action': 'click'
-                        });
-                    }
-                });
-            }
-        });
-        // Track repo analysis
-        const repoInput = document.getElementById('repoInput');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        
-        if (repoInput && analyzeBtn) {
-            analyzeBtn.addEventListener('click', function() {
-                const repo = repoInput.value.trim();
-                if (repo && window.dataLayer) {
-                    window.dataLayer.push({
-                        'event': 'repo_analysis',
-                        'repo_url': repo,
-                        'analysis_type': 'github_repo'
-                    });
-                }
-            });
-        }
-    });
-    </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(registration => {
-          console.log('[SW] Service Worker registrado!', registration.scope);
-        })
-        .catch(err => {
-          console.log('[SW] Falha no registro:', err);
-        });
-    });
-  }
-</script>  
+    <script src="js/init.js"></script>
 </body>
 </html>
