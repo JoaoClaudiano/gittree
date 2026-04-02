@@ -617,3 +617,208 @@ a.link-card:hover {
     height: 1rem;
     vertical-align: -0.15em;
 }
+
+/* ============ SCROLL PROGRESS BAR ============ */
+#read-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    z-index: 9999;
+    transition: width 0.08s linear;
+    pointer-events: none;
+}
+
+/* ============ CHIP NAVIGATION ============ */
+.chip-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--dark-border);
+    background: var(--dark-card);
+    color: var(--dark-subtext);
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.chip:hover,
+.chip.active {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: var(--primary);
+    color: var(--primary-light);
+}
+
+.light-theme .chip {
+    background: var(--light-card);
+    border-color: var(--light-border);
+    color: var(--light-subtext);
+}
+
+.light-theme .chip:hover,
+.light-theme .chip.active {
+    background: rgba(5, 150, 105, 0.08);
+    border-color: var(--primary-dark);
+    color: var(--primary-dark);
+}
+
+/* ============ SKIP TO TOP BUTTON ============ */
+#skip-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 1.5rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-subtext);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s, transform 0.3s, background 0.2s, color 0.2s, border-color 0.2s;
+    z-index: 200;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+#skip-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+#skip-to-top:hover {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.light-theme #skip-to-top {
+    background: var(--light-card);
+    border-color: var(--light-border);
+    color: var(--light-subtext);
+}
+
+.light-theme #skip-to-top:hover {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: var(--primary-dark);
+    color: var(--primary-dark);
+}
+
+/* ============ THEME TOGGLE BUTTON ============ */
+.theme-toggle-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--dark-border);
+    background: var(--dark-card);
+    color: var(--dark-subtext);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.light-theme .theme-toggle-btn {
+    background: var(--light-card);
+    border-color: var(--light-border);
+    color: var(--light-subtext);
+}
+
+.light-theme .theme-toggle-btn:hover {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: var(--primary-dark);
+    color: var(--primary-dark);
+}
+
+/* ============ DARK/LIGHT THEME TEXT FIX ============ */
+/* Ensure all text inside cards and containers follows the theme */
+.light-theme .feature-card h3,
+.light-theme .feature-card h4,
+.light-theme .team-card h3 {
+    color: var(--light-text);
+}
+
+.light-theme .step-box {
+    background: rgba(5, 150, 105, 0.07);
+    color: var(--light-text);
+}
+
+.light-theme .step-box strong {
+    color: var(--light-text);
+}
+
+.light-theme .notice-box {
+    color: var(--light-text);
+}
+
+.light-theme h3[style*="color: var(--dark-text)"],
+.light-theme h3[style] {
+    color: var(--light-text) !important;
+}
+
+/* Feature card and team card text in light mode */
+.light-theme .team-card p,
+.light-theme .feature-card p {
+    color: var(--light-subtext);
+}
+
+.light-theme .team-card {
+    color: var(--light-text);
+}
+
+/* Section title color in both themes */
+.section-title {
+    color: var(--dark-text);
+}
+
+.light-theme .section-title {
+    color: var(--light-text);
+}
+
+/* ============ RESPONSIVIDADE — CHIPS ============ */
+@media (max-width: 480px) {
+    .chip-nav {
+        gap: 0.4rem;
+    }
+
+    .chip {
+        font-size: 0.78rem;
+        padding: 0.3rem 0.75rem;
+    }
+
+    #skip-to-top {
+        bottom: 1.25rem;
+        right: 1rem;
+        width: 34px;
+        height: 34px;
+    }
+}
