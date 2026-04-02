@@ -23,13 +23,25 @@ function extractRepoInfo(input) {
 
     if (repo.endsWith('/')) repo = repo.slice(0, -1);
 
-    if (repo.includes('github.com/')) {
-        const match = repo.match(/github\.com\/([^\/]+\/[^\/\?#]+)/);
-        if (match && match[1]) {
-            repo = match[1].replace(/\.git$/, '');
-        } else {
+    // Check for a GitHub URL using URL constructor for reliable hostname validation
+    let maybeUrl = repo;
+    if (!maybeUrl.startsWith('http://') && !maybeUrl.startsWith('https://')) {
+        maybeUrl = 'https://' + maybeUrl;
+    }
+    try {
+        const parsed = new URL(maybeUrl);
+        if (parsed.hostname === 'github.com') {
+            const path = parsed.pathname.replace(/^\//, '').replace(/\.git$/, '');
+            if (!path.includes('/')) throw new Error('URL do GitHub inválida');
+            repo = path;
+        } else if (repo.includes('/') && !repo.includes('.')) {
+            // Treat as owner/repo shorthand (no dots → not a URL)
+        } else if (parsed.hostname !== '' && parsed.hostname !== 'github.com') {
             throw new Error('URL do GitHub inválida');
         }
+    } catch (e) {
+        if (e.message === 'URL do GitHub inválida') throw e;
+        // Not a valid URL – treat as plain owner/repo shorthand
     }
 
     if (!repo.includes('/')) {
@@ -90,4 +102,13 @@ function convertToCSV(treeData) {
     ]);
 
     return [headers.join(',')].concat(rows.map(row => row.join(','))).join('\n');
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }

@@ -86,7 +86,7 @@ function showStatus(message, type = 'info') {
         warning: 'fa-exclamation-triangle'
     };
 
-    text.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
+    text.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${escapeHtml(message)}`;
 }
 
 function showSkeletonInTree(show) {
