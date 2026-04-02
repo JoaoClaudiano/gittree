@@ -102,6 +102,7 @@ const translations = {
         statusNotFound: "Repository not found",
         statusRateLimit: "Request limit exceeded",
         statusTruncated: "Repository too large. Structure may be incomplete.",
+        statusLargeRepoExpandAll: "Repository too large to expand fully. Click folders to navigate or use search.",
         statusNoData: "No data to export",
         statusExporting: "Exporting as {format}...",
         cacheLabel: "Cache: {size}",
@@ -121,7 +122,7 @@ const translations = {
         footerAbout: "About",
         footerGuide: "Guide",
         footerContact: "Contact",
-        footerRights: "All rights reserved",
+        footerCopyright: "© 2026 GitTree. All rights reserved.",
         
         // Cookie Banner
         cookieMessage: "We use cookies to improve your experience. By continuing, you agree to our",
@@ -529,6 +530,7 @@ const translations = {
         statusNotFound: "Repositório não encontrado",
         statusRateLimit: "Limite de requisições excedido",
         statusTruncated: "Repositório muito grande. Estrutura pode estar incompleta.",
+        statusLargeRepoExpandAll: "Repositório muito grande para expandir por completo. Clique nas pastas para navegar ou use a busca.",
         statusNoData: "Nenhum dado para exportar",
         statusExporting: "Exportando como {format}...",
         cacheLabel: "Caché: {size}",
@@ -550,6 +552,7 @@ const translations = {
         footerAbout: "Sobre",
         footerGuide: "Guia",
         footerContact: "Contato",
+        footerCopyright: "© 2026 GitTree. Todos os direitos reservados.",
         footerRights: "Todos os direitos reservados",
         
         // Cookie Banner
@@ -952,6 +955,7 @@ const translations = {
         statusNotFound: "Repositorio no encontrado",
         statusRateLimit: "Límite de solicitudes excedido",
         statusTruncated: "Repositorio demasiado grande. La estructura puede estar incompleta.",
+        statusLargeRepoExpandAll: "Repositorio demasiado grande para expandir completamente. Haga clic en las carpetas para navegar o use la búsqueda.",
         statusNoData: "No hay datos para exportar",
         statusExporting: "Exportando como {format}...",
         btnLoading: "Cargando...",
@@ -969,6 +973,7 @@ const translations = {
         footerAbout: "Acerca de",
         footerGuide: "Guía",
         footerContact: "Contacto",
+        footerCopyright: "© 2026 GitTree. Todos los derechos reservados.",
         footerRights: "Todos los derechos reservados",
         
         // Cookie Banner
@@ -1347,6 +1352,7 @@ const translations = {
         statusNotFound: "Dépôt introuvable",
         statusRateLimit: "Limite de requêtes dépassée",
         statusTruncated: "Dépôt trop grand. La structure peut être incomplète.",
+        statusLargeRepoExpandAll: "Dépôt trop grand pour être entièrement développé. Cliquez sur les dossiers pour naviguer ou utilisez la recherche.",
         statusNoData: "Aucune donnée à exporter",
         statusExporting: "Exportation en {format}...",
         cacheLabel: "Cache: {size}",
@@ -1366,6 +1372,7 @@ const translations = {
         footerAbout: "À propos",
         footerGuide: "Guide",
         footerContact: "Contact",
+        footerCopyright: "© 2026 GitTree. Tous droits réservés.",
         footerRights: "Tous droits réservés",
         
         // Cookie Banner
@@ -1742,6 +1749,7 @@ const translations = {
         statusNotFound: "Repository non trovato",
         statusRateLimit: "Limite di richieste superato",
         statusTruncated: "Repository troppo grande. La struttura potrebbe essere incompleta.",
+        statusLargeRepoExpandAll: "Repository troppo grande per espandere completamente. Clicca sulle cartelle per navigare o usa la ricerca.",
         statusNoData: "Nessun dato da esportare",
         statusExporting: "Esportazione come {format}...",
         cacheLabel: "Cache: {size}",
@@ -1761,6 +1769,7 @@ const translations = {
         footerAbout: "Chi Siamo",
         footerGuide: "Guida",
         footerContact: "Contatto",
+        footerCopyright: "© 2026 GitTree. Tutti i diritti riservati.",
         footerRights: "Tutti i diritti riservati",
         
         // Cookie Banner
@@ -2137,6 +2146,7 @@ const translations = {
         statusNotFound: "リポジトリが見つかりません",
         statusRateLimit: "リクエスト制限を超えました",
         statusTruncated: "リポジトリが大きすぎます。構造が不完全な可能性があります。",
+        statusLargeRepoExpandAll: "リポジトリが大きすぎて完全に展開できません。フォルダをクリックして移動するか、検索を使用してください。",
         statusNoData: "エクスポートするデータがありません",
         statusExporting: "{format}としてエクスポート中...",
         cacheLabel: "キャッシュ: {size}",
@@ -2156,6 +2166,7 @@ const translations = {
         footerAbout: "概要",
         footerGuide: "ガイド",
         footerContact: "お問い合わせ",
+        footerCopyright: "© 2026 GitTree. 全著作権所有。",
         footerRights: "すべての権利を留保",
         
         // Cookie Banner
@@ -2532,6 +2543,7 @@ const translations = {
         statusNotFound: "저장소를 찾을 수 없습니다",
         statusRateLimit: "요청 한도 초과",
         statusTruncated: "저장소가 너무 큽니다. 구조가 불완전할 수 있습니다.",
+        statusLargeRepoExpandAll: "저장소가 너무 커서 완전히 펼칠 수 없습니다. 폴더를 클릭하여 탐색하거나 검색을 사용하세요.",
         statusNoData: "내보낼 데이터가 없습니다",
         statusExporting: "{format}으로 내보내는 중...",
         cacheLabel: "캐시: {size}",
@@ -2551,6 +2563,7 @@ const translations = {
         footerAbout: "소개",
         footerGuide: "가이드",
         footerContact: "연락처",
+        footerCopyright: "© 2026 GitTree. 모든 권리 보유.",
         footerRights: "모든 권리 보유",
         
         // Cookie Banner
@@ -2927,6 +2940,7 @@ const translations = {
         statusNotFound: "未找到存储库",
         statusRateLimit: "超出请求限制",
         statusTruncated: "存储库太大。结构可能不完整。",
+        statusLargeRepoExpandAll: "存储库太大，无法完全展开。请点击文件夹浏览或使用搜索功能。",
         statusNoData: "没有可导出的数据",
         statusExporting: "正在导出为 {format}...",
         cacheLabel: "缓存：{size}",
@@ -2946,6 +2960,7 @@ const translations = {
         footerAbout: "关于",
         footerGuide: "指南",
         footerContact: "联系",
+        footerCopyright: "© 2026 GitTree. 保留所有权利。",
         footerRights: "保留所有权利",
         
         // Cookie Banner

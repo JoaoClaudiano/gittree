@@ -139,16 +139,6 @@ function initControls() {
 
     addPopularRepoSuggestions();
 
-    const chips = document.querySelector('.welcome-chips');
-    if (chips) {
-        chips.addEventListener('click', (e) => {
-            const chip = e.target.closest('.welcome-chip');
-            if (chip && chip.dataset.repo) {
-                testRepo(chip.dataset.repo);
-            }
-        });
-    }
-
     // Inline suggestion for common typo
     const input = document.getElementById('repoInput');
     if (input) {
