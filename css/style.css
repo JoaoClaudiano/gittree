@@ -1991,3 +1991,115 @@ body:not(.light-theme) .language-selector option {
         padding-right: 60px;
     }
 }
+
+/* ============ LIGHT THEME — MISSING OVERRIDES ============ */
+
+/* Sidebar section divider */
+.light-theme .section-header {
+    border-bottom-color: var(--light-border);
+}
+
+/* View sections (tree / metrics panels) */
+.light-theme .view-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: var(--light-border);
+}
+
+.light-theme .view-toolbar {
+    background: #f1f5f9;
+    border-bottom-color: var(--light-border);
+    color: var(--light-text);
+}
+
+/* View toggle (Tree / Metrics buttons) */
+.light-theme .view-toggle {
+    background: #e2e8f0;
+}
+
+.light-theme .view-btn {
+    color: var(--light-subtext);
+}
+
+.light-theme .view-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Secondary and toolbar buttons */
+.light-theme .btn-secondary {
+    background: var(--light-card);
+    color: var(--light-subtext);
+}
+
+.light-theme .btn-toolbar {
+    background: var(--light-card);
+    color: var(--light-subtext);
+}
+
+/* Status box */
+.light-theme .status-box {
+    background: var(--light-card);
+}
+
+/* Metrics preview panel */
+.light-theme .metrics-preview {
+    background: var(--light-card);
+    border-color: var(--light-border);
+}
+
+.light-theme .metric-card {
+    background: #f1f5f9;
+    border-color: var(--light-border);
+}
+
+.light-theme .metric-label {
+    color: var(--light-subtext);
+}
+
+/* Chart boxes (also already partially handled above) */
+.light-theme .chart-box h4 {
+    color: var(--light-subtext);
+}
+
+/* Tree indentation lines and inline badges */
+.light-theme .tree-node-children {
+    border-left-color: rgba(0, 0, 0, 0.12);
+}
+
+.light-theme .tree-count,
+.light-theme .tree-size {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--light-subtext);
+}
+
+/* Search input */
+.light-theme .search-input {
+    background: var(--light-card);
+}
+
+.light-theme .search-input::placeholder {
+    color: var(--light-subtext);
+}
+
+/* Loading overlay */
+.light-theme .loading-state {
+    background: rgba(248, 250, 252, 0.92);
+}
+
+.light-theme .loading-state p {
+    color: var(--light-subtext);
+}
+
+/* Cookie banner */
+.light-theme .cookie-banner {
+    background: var(--light-card);
+    border-top-color: var(--light-border);
+}
+
+.light-theme .cookie-text p {
+    color: var(--light-text);
+}
+
+.light-theme .cookie-btn-reject {
+    color: var(--light-subtext);
+    border-color: var(--light-border);
+}
