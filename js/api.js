@@ -70,11 +70,21 @@ function updateRepoInfo(repoData) {
     if (description) description.textContent = repoData.description;
 
     if (stats) {
-        stats.innerHTML = `
-            <span class="stat-item"><i class="fas fa-star"></i> ${formatNumber(repoData.stars)}</span>
-            <span class="stat-item"><i class="fas fa-code-branch"></i> ${formatNumber(repoData.forks)}</span>
-            <span class="stat-item"><i class="fas fa-eye"></i> ${formatNumber(repoData.watchers)}</span>
-        `;
+        stats.innerHTML = '';
+        const statDefs = [
+            { icon: 'fa-star',        value: formatNumber(repoData.stars) },
+            { icon: 'fa-code-branch', value: formatNumber(repoData.forks) },
+            { icon: 'fa-eye',         value: formatNumber(repoData.watchers) }
+        ];
+        statDefs.forEach(function (def) {
+            const span = document.createElement('span');
+            span.className = 'stat-item';
+            const icon = document.createElement('i');
+            icon.className = 'fas ' + def.icon;
+            span.appendChild(icon);
+            span.appendChild(document.createTextNode(' ' + def.value));
+            stats.appendChild(span);
+        });
     }
 }
 

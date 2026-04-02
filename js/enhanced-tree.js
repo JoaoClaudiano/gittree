@@ -50,19 +50,19 @@ function renderBentoPanel() {
 function renderBentoPanelVanilla() {
     const container = document.getElementById('bentoMetadataContainer');
     if (!container) return;
-    
+
     if (!window.GitTree2026.bentoMetadataPanelOpen || !window.GitTree2026.selectedFile) {
         container.innerHTML = '';
         return;
     }
-    
+
     const file = window.GitTree2026.selectedFile;
     const formatFileSize = (sizeKB) => {
         if (sizeKB < 1) return `${Math.round(sizeKB * 1024)} B`;
         if (sizeKB < 1024) return `${sizeKB.toFixed(2)} KB`;
         return `${(sizeKB / 1024).toFixed(2)} MB`;
     };
-    
+
     const getFileIcon = (extension) => {
         const iconMap = {
             'js': '📜', 'jsx': '⚛️', 'ts': '💠', 'tsx': '⚛️',
@@ -73,56 +73,114 @@ function renderBentoPanelVanilla() {
         };
         return iconMap[extension] || '📄';
     };
-    
-    container.innerHTML = `
-        <div class="bento-panel-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 40; display: flex; align-items: center; justify-content: center; padding: 1rem;">
-            <div class="bento-panel" style="width: 100%; max-width: 48rem; background: rgba(26, 29, 41, 0.95); backdrop-filter: blur(40px); border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 212, 255, 0.2); overflow: hidden; animation: slideUpFade 0.4s ease-out; max-height: 90vh; overflow-y: auto;">
-                <div class="bento-header" style="padding: 1.5rem; border-bottom: 1px solid rgba(55, 65, 81, 0.5); background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 163, 204, 0.03) 100%);">
-                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                        <div style="display: flex; align-items: start; gap: 1rem;">
-                            <div style="font-size: 2.25rem;">${getFileIcon(file.extension)}</div>
-                            <div>
-                                <h2 style="font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 0.25rem; word-break: break-all;">${file.name}</h2>
-                                <p style="font-size: 0.875rem; color: rgb(156, 163, 175); font-family: monospace; word-break: break-all;">${file.path}</p>
-                            </div>
-                        </div>
-                        <button id="closeBentoPanel" style="color: rgb(156, 163, 175); background: none; border: none; padding: 0.5rem; cursor: pointer; border-radius: 0.5rem; font-size: 1.25rem;">✕</button>
-                    </div>
-                </div>
-                
-                <div style="padding: 1.5rem;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(17, 24, 39, 0.5) 0%, rgba(31, 41, 55, 0.3) 100%); border-radius: 0.75rem; border: 1px solid rgba(55, 65, 81, 0.5);">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(156, 163, 175); margin-bottom: 0.5rem;">${t('bentoFileSize')}</div>
-                            <div style="font-size: 1.875rem; font-weight: bold; color: white;">${formatFileSize(file.sizeKB || 0)}</div>
-                        </div>
-                        
-                        <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(29, 78, 216, 0.2) 100%); border-radius: 0.75rem; border: 1px solid rgba(59, 130, 246, 0.3);">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(147, 197, 253); margin-bottom: 0.5rem;">${t('bentoExtension')}</div>
-                            <div style="font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace;">.${file.extension || 'unknown'}</div>
-                        </div>
-                        
-                        <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%); border-radius: 0.75rem; border: 1px solid rgba(168, 85, 247, 0.3);">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(216, 180, 254); margin-bottom: 0.5rem;">${t('bentoLanguage')}</div>
-                            <div style="font-size: 1.5rem; font-weight: bold; color: white;">${file.language || t('unknownLanguage')}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <style>
-            @keyframes slideUpFade {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        </style>
-    `;
+
+    container.innerHTML = '';
+
+    // Overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'bento-panel-overlay';
+    overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 40; display: flex; align-items: center; justify-content: center; padding: 1rem;';
+
+    // Panel
+    const panel = document.createElement('div');
+    panel.className = 'bento-panel';
+    panel.style.cssText = 'width: 100%; max-width: 48rem; background: rgba(26, 29, 41, 0.95); backdrop-filter: blur(40px); border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 212, 255, 0.2); overflow: hidden; animation: slideUpFade 0.4s ease-out; max-height: 90vh; overflow-y: auto;';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'bento-header';
+    header.style.cssText = 'padding: 1.5rem; border-bottom: 1px solid rgba(55, 65, 81, 0.5); background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 163, 204, 0.03) 100%);';
+
+    const headerRow = document.createElement('div');
+    headerRow.style.cssText = 'display: flex; justify-content: space-between; align-items: start;';
+
+    const fileInfo = document.createElement('div');
+    fileInfo.style.cssText = 'display: flex; align-items: start; gap: 1rem;';
+
+    const iconEl = document.createElement('div');
+    iconEl.style.cssText = 'font-size: 2.25rem;';
+    iconEl.textContent = getFileIcon(file.extension);
+
+    const nameMeta = document.createElement('div');
+
+    const nameEl = document.createElement('h2');
+    nameEl.style.cssText = 'font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 0.25rem; word-break: break-all;';
+    nameEl.textContent = file.name;
+
+    const pathEl = document.createElement('p');
+    pathEl.style.cssText = 'font-size: 0.875rem; color: rgb(156, 163, 175); font-family: monospace; word-break: break-all;';
+    pathEl.textContent = file.path;
+
+    nameMeta.appendChild(nameEl);
+    nameMeta.appendChild(pathEl);
+    fileInfo.appendChild(iconEl);
+    fileInfo.appendChild(nameMeta);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.id = 'closeBentoPanel';
+    closeBtn.style.cssText = 'color: rgb(156, 163, 175); background: none; border: none; padding: 0.5rem; cursor: pointer; border-radius: 0.5rem; font-size: 1.25rem;';
+    closeBtn.textContent = '✕';
+
+    headerRow.appendChild(fileInfo);
+    headerRow.appendChild(closeBtn);
+    header.appendChild(headerRow);
+
+    // Body
+    const body = document.createElement('div');
+    body.style.cssText = 'padding: 1.5rem;';
+
+    const cardsGrid = document.createElement('div');
+    cardsGrid.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;';
+
+    const cardDefs = [
+        {
+            bg: 'linear-gradient(135deg, rgba(17, 24, 39, 0.5) 0%, rgba(31, 41, 55, 0.3) 100%)',
+            border: 'rgba(55, 65, 81, 0.5)',
+            labelColor: 'rgb(156, 163, 175)',
+            label: t('bentoFileSize'),
+            value: formatFileSize(file.sizeKB || 0),
+            valueStyle: 'font-size: 1.875rem; font-weight: bold; color: white;'
+        },
+        {
+            bg: 'linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(29, 78, 216, 0.2) 100%)',
+            border: 'rgba(59, 130, 246, 0.3)',
+            labelColor: 'rgb(147, 197, 253)',
+            label: t('bentoExtension'),
+            value: '.' + (file.extension || 'unknown'),
+            valueStyle: 'font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace;'
+        },
+        {
+            bg: 'linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%)',
+            border: 'rgba(168, 85, 247, 0.3)',
+            labelColor: 'rgb(216, 180, 254)',
+            label: t('bentoLanguage'),
+            value: file.language || t('unknownLanguage'),
+            valueStyle: 'font-size: 1.5rem; font-weight: bold; color: white;'
+        }
+    ];
+
+    cardDefs.forEach(function (def) {
+        const card = document.createElement('div');
+        card.style.cssText = `padding: 1.5rem; background: ${def.bg}; border-radius: 0.75rem; border: 1px solid ${def.border};`;
+
+        const lbl = document.createElement('div');
+        lbl.style.cssText = `font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: ${def.labelColor}; margin-bottom: 0.5rem;`;
+        lbl.textContent = def.label;
+
+        const val = document.createElement('div');
+        val.style.cssText = def.valueStyle;
+        val.textContent = def.value;
+
+        card.appendChild(lbl);
+        card.appendChild(val);
+        cardsGrid.appendChild(card);
+    });
+
+    body.appendChild(cardsGrid);
+    panel.appendChild(header);
+    panel.appendChild(body);
+    overlay.appendChild(panel);
+    container.appendChild(overlay);
     
     // Add event listeners
     const closeBtn = document.getElementById('closeBentoPanel');
@@ -161,7 +219,10 @@ function showSkeletonLoader() {
         skeletonContainer.appendChild(skeleton);
     } else {
         // Simple fallback
-        skeletonContainer.innerHTML = `<div style="padding: 20px; text-align: center; color: #94a3b8;">${t('statusLoading')}</div>`;
+        const fallback = document.createElement('div');
+        fallback.style.cssText = 'padding: 20px; text-align: center; color: #94a3b8;';
+        fallback.textContent = t('statusLoading');
+        skeletonContainer.appendChild(fallback);
     }
     
     treeView.appendChild(skeletonContainer);

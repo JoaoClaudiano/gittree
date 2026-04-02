@@ -1,5 +1,19 @@
 // Metrics and chart functions
 
+function setChartPlaceholder(container, message) {
+    container.innerHTML = '';
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);';
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-chart-pie';
+    icon.style.cssText = 'font-size: 48px; opacity: 0.5; margin-bottom: 15px;';
+    const p = document.createElement('p');
+    p.textContent = message;
+    wrapper.appendChild(icon);
+    wrapper.appendChild(p);
+    container.appendChild(wrapper);
+}
+
 function getFileTypes(files) {
     const types = new Set();
     files.forEach(file => {
@@ -17,24 +31,26 @@ function updateMetrics(treeData) {
     const metricsPreview = document.getElementById('metricsPreview');
     if (metricsPreview) {
         const grid = metricsPreview.querySelector('.metrics-grid');
-        grid.innerHTML = `
-            <div class="metric-card">
-                <div class="metric-value">${files.length}</div>
-                <div class="metric-label">${t('metricFiles')}</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-value">${folders.length}</div>
-                <div class="metric-label">${t('metricFolders')}</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-value">${formatBytes(totalSize)}</div>
-                <div class="metric-label">${t('metricSize')}</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-value">${getFileTypes(files).length}</div>
-                <div class="metric-label">${t('metricTypes')}</div>
-            </div>
-        `;
+        grid.innerHTML = '';
+        const cards = [
+            { value: files.length,             label: t('metricFiles') },
+            { value: folders.length,           label: t('metricFolders') },
+            { value: formatBytes(totalSize),   label: t('metricSize') },
+            { value: getFileTypes(files).length, label: t('metricTypes') }
+        ];
+        cards.forEach(function (card) {
+            const div = document.createElement('div');
+            div.className = 'metric-card';
+            const valDiv = document.createElement('div');
+            valDiv.className = 'metric-value';
+            valDiv.textContent = card.value;
+            const lblDiv = document.createElement('div');
+            lblDiv.className = 'metric-label';
+            lblDiv.textContent = card.label;
+            div.appendChild(valDiv);
+            div.appendChild(lblDiv);
+            grid.appendChild(div);
+        });
     }
 
     window.currentTreeData = treeData;
@@ -49,12 +65,7 @@ function generateFileTypesChart(files) {
     if (!fileTypesChartEl) return;
 
     if (typeof Chart === 'undefined') {
-        fileTypesChartEl.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
-                <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
-                <p>${t('chartUnavailable')}</p>
-            </div>
-        `;
+        setChartPlaceholder(fileTypesChartEl, t('chartUnavailable'));
         return;
     }
 
@@ -63,12 +74,7 @@ function generateFileTypesChart(files) {
     }
 
     if (files.length === 0) {
-        fileTypesChartEl.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
-                <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
-                <p>${t('chartNoFiles')}</p>
-            </div>
-        `;
+        setChartPlaceholder(fileTypesChartEl, t('chartNoFiles'));
         return;
     }
 
@@ -97,11 +103,13 @@ function generateFileTypesChart(files) {
         'rgba(132, 204, 22, 0.8)'
     ];
 
-    fileTypesChartEl.innerHTML = `
-        <div style="position: relative; height: 300px; width: 100%;">
-            <canvas id="fileDistributionChart"></canvas>
-        </div>
-    `;
+    fileTypesChartEl.innerHTML = '';
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position: relative; height: 300px; width: 100%;';
+    const canvas = document.createElement('canvas');
+    canvas.id = 'fileDistributionChart';
+    wrapper.appendChild(canvas);
+    fileTypesChartEl.appendChild(wrapper);
 
     setTimeout(() => {
         const ctx = document.getElementById('fileDistributionChart').getContext('2d');
@@ -167,12 +175,7 @@ function updateMetricsDisplay() {
     if (!window.currentTreeData) {
         const fileTypesChart = document.getElementById('fileTypesChart');
         if (fileTypesChart) {
-            fileTypesChart.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--dark-subtext);">
-                    <i class="fas fa-chart-pie" style="font-size: 48px; opacity: 0.5; margin-bottom: 15px;"></i>
-                    <p>${t('chartAnalyzePrompt')}</p>
-                </div>
-            `;
+            setChartPlaceholder(fileTypesChart, t('chartAnalyzePrompt'));
         }
         return;
     }
@@ -186,39 +189,52 @@ function updateMetricsDisplay() {
 
     const statsDisplay = document.getElementById('statsDisplay');
     if (statsDisplay) {
-        statsDisplay.innerHTML = `
-            <div class="stats-grid">
-                <div class="metric-card">
-                    <div class="metric-value">${files.length}</div>
-                    <div class="metric-label">${t('metricTotalFiles')}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">${folders.length}</div>
-                    <div class="metric-label">${t('metricTotalFolders')}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">${formatBytes(totalSize)}</div>
-                    <div class="metric-label">${t('metricTotalSize')}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">${fileTypes.length}</div>
-                    <div class="metric-label">${t('fileTypesTitle')}</div>
-                </div>
-            </div>
-            ${fileTypes.length > 0 ? `
-                <div style="margin-top: 20px; text-align: left; width: 100%;">
-                    <h5 style="color: var(--dark-subtext); margin-bottom: 10px;">${t('fileTypesTitle')}:</h5>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        ${fileTypes.map(type => `
-                            <span style="background: rgba(16, 185, 129, 0.1); color: var(--primary);
-                                  padding: 4px 12px; border-radius: 20px; font-size: 12px;">
-                                ${type}
-                            </span>
-                        `).join('')}
-                    </div>
-                </div>
-            ` : ''}
-        `;
+        statsDisplay.innerHTML = '';
+
+        const statsGrid = document.createElement('div');
+        statsGrid.className = 'stats-grid';
+
+        const cards = [
+            { value: files.length,           label: t('metricTotalFiles') },
+            { value: folders.length,         label: t('metricTotalFolders') },
+            { value: formatBytes(totalSize), label: t('metricTotalSize') },
+            { value: fileTypes.length,       label: t('fileTypesTitle') }
+        ];
+        cards.forEach(function (card) {
+            const div = document.createElement('div');
+            div.className = 'metric-card';
+            const valDiv = document.createElement('div');
+            valDiv.className = 'metric-value';
+            valDiv.textContent = card.value;
+            const lblDiv = document.createElement('div');
+            lblDiv.className = 'metric-label';
+            lblDiv.textContent = card.label;
+            div.appendChild(valDiv);
+            div.appendChild(lblDiv);
+            statsGrid.appendChild(div);
+        });
+        statsDisplay.appendChild(statsGrid);
+
+        if (fileTypes.length > 0) {
+            const section = document.createElement('div');
+            section.style.cssText = 'margin-top: 20px; text-align: left; width: 100%;';
+
+            const heading = document.createElement('h5');
+            heading.style.cssText = 'color: var(--dark-subtext); margin-bottom: 10px;';
+            heading.textContent = t('fileTypesTitle') + ':';
+            section.appendChild(heading);
+
+            const badgesRow = document.createElement('div');
+            badgesRow.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px;';
+            fileTypes.forEach(function (type) {
+                const badge = document.createElement('span');
+                badge.style.cssText = 'background: rgba(16, 185, 129, 0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 12px;';
+                badge.textContent = type;
+                badgesRow.appendChild(badge);
+            });
+            section.appendChild(badgesRow);
+            statsDisplay.appendChild(section);
+        }
     }
 
     generateFileTypesChart(files);
