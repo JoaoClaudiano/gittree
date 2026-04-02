@@ -389,6 +389,16 @@ body.light-theme {
     transform: translateY(-2px);
 }
 
+.light-theme .action-link-secondary {
+    background: rgba(37, 99, 235, 0.08);
+    border-color: rgba(37, 99, 235, 0.3);
+    color: #1d4ed8;
+}
+
+.light-theme .action-link-secondary:hover {
+    background: rgba(37, 99, 235, 0.15);
+}
+
 /* ============ LINK CARDS ============ */
 a.link-card {
     display: block;
@@ -802,6 +812,40 @@ a.link-card:hover {
 
 .light-theme .section-title {
     color: var(--light-text);
+}
+
+/* ============ THEME-AWARE LINK HELPERS ============ */
+/* Replaces inline color:#7aa2ff for proper contrast in both themes */
+.theme-link {
+    color: #7aa2ff;
+    text-decoration: none;
+}
+
+.theme-link:hover {
+    text-decoration: underline;
+}
+
+.light-theme .theme-link {
+    color: #1d4ed8;
+}
+
+/* Team card social links */
+.team-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.75rem;
+    color: #7aa2ff;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.team-link:hover {
+    text-decoration: underline;
+}
+
+.light-theme .team-link {
+    color: #1d4ed8;
 }
 
 /* ============ RESPONSIVIDADE — CHIPS ============ */
