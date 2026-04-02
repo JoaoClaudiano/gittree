@@ -1703,7 +1703,7 @@ body:not(.light-theme) .language-selector option {
     }
 
     .sidebar-collapsible.expanded {
-        max-height: 1000px;
+        max-height: 2000px;
     }
 }
 
