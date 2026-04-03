@@ -15,6 +15,18 @@ const BASE_URL = 'https://gittree.pages.dev';
 const OUTPUT_FILE = 'sitemap.xml';
 const ROOT_DIR = '.';
 
+// Locales suportados (prefixo de diretório → código hreflang)
+const LOCALES = {
+    '': 'en',       // raiz = inglês / default
+    'pt': 'pt',
+    'es': 'es',
+    'fr': 'fr',
+    'it': 'it',
+    'ja': 'ja',
+    'ko': 'ko',
+    'zh': 'zh'
+};
+
 // Arquivos e diretórios a serem ignorados
 const IGNORE_PATTERNS = [
     'node_modules',
@@ -79,8 +91,28 @@ function generateUrl(filePath) {
     if (url === 'index.html') {
         return BASE_URL + '/';
     }
+
+    // Se for index.html em subdiretório de locale, usa URL com trailing slash
+    if (/^[a-z]{2}\/index\.html$/.test(url)) {
+        return BASE_URL + '/' + url.replace('index.html', '');
+    }
     
     return BASE_URL + '/' + url;
+}
+
+/**
+ * Retorna todas as variantes hreflang para uma página (ex: "index.html")
+ */
+function buildHreflangLinks(filename) {
+    return Object.entries(LOCALES).map(([prefix, lang]) => {
+        let href;
+        if (filename === 'index.html') {
+            href = prefix === '' ? `${BASE_URL}/` : `${BASE_URL}/${prefix}/`;
+        } else {
+            href = prefix === '' ? `${BASE_URL}/${filename}` : `${BASE_URL}/${prefix}/${filename}`;
+        }
+        return { lang, href };
+    });
 }
 
 /**
@@ -103,10 +135,12 @@ function generateSitemap(htmlFiles) {
     xml += '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"\n';
     xml += '        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n';
 
-    // Ordena os arquivos para que index.html venha primeiro
+    // Ordena os arquivos para que index.html da raiz venha primeiro
     htmlFiles.sort((a, b) => {
-        if (a.includes('index.html')) return -1;
-        if (b.includes('index.html')) return 1;
+        const aIsRoot = (a === './index.html' || a === 'index.html');
+        const bIsRoot = (b === './index.html' || b === 'index.html');
+        if (aIsRoot) return -1;
+        if (bIsRoot) return 1;
         return a.localeCompare(b);
     });
 
@@ -114,12 +148,18 @@ function generateSitemap(htmlFiles) {
         const filename = path.basename(filePath);
         const url = generateUrl(filePath);
         const pageInfo = getPageInfo(filename);
+        const hreflangLinks = buildHreflangLinks(filename);
 
         xml += '    <url>\n';
         xml += `        <loc>${url}</loc>\n`;
         xml += `        <lastmod>${now}</lastmod>\n`;
         xml += `        <changefreq>${pageInfo.changefreq}</changefreq>\n`;
         xml += `        <priority>${pageInfo.priority}</priority>\n`;
+        // x-default points to the root (English) version
+        xml += `        <xhtml:link rel="alternate" hreflang="x-default" href="${hreflangLinks.find(l => l.lang === 'en').href}"/>\n`;
+        hreflangLinks.forEach(({ lang, href }) => {
+            xml += `        <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>\n`;
+        });
         xml += '    </url>\n';
     });
 

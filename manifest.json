@@ -1,7 +1,7 @@
 {
-  "name": "GitTree - Visualizador de Estrutura GitHub",
+  "name": "GitTree - GitHub Repository Structure Visualizer",
   "short_name": "GitTree",
-  "description": "Visualizador interativo de estrutura de repositórios do GitHub. Explore árvores de diretórios, métricas de código e estatísticas em tempo real.",
+  "description": "Free tool to visualize and analyze the structure of any GitHub repository. Explore directory trees, code metrics, and real-time statistics.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -9,7 +9,7 @@
   "background_color": "#ffffff",
   "theme_color": "#24292e",
   "categories": ["developer-tools", "productivity", "utilities"],
-  "lang": "pt-BR",
+  "lang": "en",
   "dir": "ltr",
   "icons": [
     {
@@ -49,9 +49,9 @@
   ],
   "shortcuts": [
     {
-      "name": "Visualizar Repositório",
-      "short_name": "Visualizar",
-      "description": "Abrir visualizador de repositório",
+      "name": "Visualize Repository",
+      "short_name": "Visualize",
+      "description": "Open repository visualizer",
       "url": "/#visualizar",
       "icons": [
         {
@@ -61,9 +61,9 @@
       ]
     },
     {
-      "name": "Guia de Uso",
-      "short_name": "Guia",
-      "description": "Abrir guia de utilização",
+      "name": "User Guide",
+      "short_name": "Guide",
+      "description": "Open usage guide",
       "url": "/guia.html",
       "icons": [
         {

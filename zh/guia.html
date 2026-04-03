@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GitTree - 可视化和分析任何GitHub仓库的结构。探索目录树、代码指标和实时统计。为开发者提供的免费工具。">
+    <meta name="keywords" content="github, 仓库, 树形图, 可视化, 代码结构, github浏览器, 开发者工具, 开源, 代码分析, 仓库指标">
+    <title data-i18n="guideTitle">GitTree 用户指南</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/institutional.css">
+    <link rel="canonical" href="https://gittree.pages.dev/zh/guia.html">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://gittree.pages.dev/zh/guia.html">
+    <meta property="og:title" content="GitTree - GitHub仓库结构可视化工具 | 探索仓库">
+    <meta property="og:description" content="GitTree - 可视化和分析任何GitHub仓库的结构。探索目录树、代码指标和实时统计。为开发者提供的免费工具。">
+    <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="og:image:alt" content="GitTree User Guide">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta property="og:locale:alternate" content="ko_KR">
+    <meta property="og:site_name" content="GitTree">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://gittree.pages.dev/zh/guia.html">
+    <meta property="twitter:title" content="GitTree - GitHub仓库结构可视化工具 | 探索仓库">
+    <meta property="twitter:description" content="GitTree - 可视化和分析任何GitHub仓库的结构。探索目录树、代码指标和实时统计。为开发者提供的免费工具。">
+    <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="twitter:site" content="@joaoclaudiano">
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "GitTree", "item": "https://gittree.pages.dev/"},
+        {"@type": "ListItem", "position": 2, "name": "User Guide", "item": "https://gittree.pages.dev/guia.html"}
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does GitTree work with private repositories?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. GitTree uses the public GitHub REST API and does not support authentication tokens. Only public repositories are accessible."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data stored anywhere?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No server-side storage occurs. GitTree caches analysis results in your browser's localStorage only — data never leaves your device."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I analyze any public repository?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, any public GitHub repository. Very large repositories may have their tree truncated due to GitHub API rate limits and pagination constraints."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is GitTree free to use?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free, open-source, and ad-supported. No subscription or registration is required."}
+        }
+      ]
+    }
+    </script>
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
+    <link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html">
+    <link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html">
+    <link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html">
+    <link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html">
+    <link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html">
+    <link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html">
+    <link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html">
+    <link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html">
+    <link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html">
+
+</head>
+<body>
+    <script>(function(){try{localStorage.setItem('gittree-language','zh');}catch(e){}})()</script>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
+    <div id="read-progress" aria-hidden="true"></div>
+    <header class="institutional-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="/zh/" class="logo">
+                    <svg width="1em" height="1em" class="svg-icon logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    <span>GitTree</span>
+                </a>
+            </div>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">English</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+                <button id="themeToggle" class="theme-toggle-btn" title="Switch to Light Mode" aria-label="Switch to Light Mode"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+                <a href="/zh/" class="back-button">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    <span data-i18n="backToTool">返回工具</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="institutional-main">
+        <h1 class="institutional-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> <span data-i18n="guideTitle">GitTree 用户指南</span></h1>
+        <p class="institutional-subtitle" data-i18n="guideSubtitle">学习如何使用 GitHub 仓库可视化工具的所有功能</p>
+
+        <!-- Chip Navigation -->
+        <nav class="chip-nav" aria-label="Page sections">
+            <a class="chip" href="#getting-started">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span data-i18n="guideChipGettingStarted">快速入门</span>
+            </a>
+            <a class="chip" href="#features">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                <span data-i18n="guideChipFeatures">功能</span>
+            </a>
+            <a class="chip" href="#buttons">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                <span data-i18n="guideChipButtons">按钮</span>
+            </a>
+            <a class="chip" href="#advanced">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                <span data-i18n="guideChipAdvanced">高级技巧</span>
+            </a>
+            <a class="chip" href="#faq">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span data-i18n="guideChipFaq">常见问题</span>
+            </a>
+        </nav>
+
+        <section id="getting-started" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg> <span data-i18n="guideWhatIsTitle">什么是 GitTree？</span></h2>
+            <p class="institutional-text" data-i18n="guideWhatIsText">GitTree 是一个免费的网络工具，可将 GitHub 仓库转换为交互式可视化图，让您直观地探索文件结构、分析指标并了解代码组织。</p>
+            <p class="institutional-text">
+                Because GitTree operates entirely client-side, your browser communicates directly with the GitHub API. No code is sent to or stored on any intermediate server. Analysis results are cached locally in your browser's storage to enable near-instant reloads of recently visited repositories.
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
+                    <h3 style="margin-bottom: 10px;" data-i18n="guideFeature1Title">可视化分析</h3>
+                    <p class="institutional-text" data-i18n="guideFeature1Desc">以树形格式查看完整的仓库结构</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+                    <h3 style="margin-bottom: 10px;" data-i18n="guideFeature2Title">详细指标</h3>
+                    <p class="institutional-text" data-i18n="guideFeature2Desc">关于文件和文件夹的统计和图表</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                    <h3 style="margin-bottom: 10px;" data-i18n="guideFeature3Title">易于使用</h3>
+                    <p class="institutional-text" data-i18n="guideFeature3Desc">只需粘贴 GitHub URL，即可开始探索</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span data-i18n="guideGettingStartedTitle">3步开始</span></h2>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">1</span>
+                    <strong data-i18n="guideStep1Title">粘贴 GitHub URL</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;" data-i18n="guideStep1Text">在主页的主字段中，粘贴任意公共 GitHub 仓库 URL。</p>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    <strong data-i18n="guideStep1FormatsLabel">接受的格式：</strong><br>
+                    • <code>https://github.com/usuario/repositorio</code><br>
+                    • <code>usuario/repositorio</code><br>
+                    • <code>https://github.com/usuario/repositorio.git</code>
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">2</span>
+                    <strong data-i18n="guideStep2Title">点击 &quot;可视化&quot;</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;" data-i18n="guideStep2Text">该工具将获取完整的仓库结构并处理所有信息。根据仓库大小，该过程可能需要几秒钟。</p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">3</span>
+                    <strong data-i18n="guideStep3Title">探索结果</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;" data-i18n="guideStep3Text">在 &quot;树形&quot; 和 &quot;指标&quot; 选项卡之间切换，探索仓库数据的不同视图。</p>
+            </div>
+        </section>
+
+        <section id="features" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span data-i18n="guideFeaturesTitle">主要功能</span></h2>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg> <span data-i18n="guideTreeViewTitle">树形视图</span></h3>
+            <p class="institutional-text" data-i18n="guideTreeViewText">探索文件夹和文件的层次结构：</p>
+            <ul class="institutional-list">
+                <li class="list-item" data-i18n="guideTreeItem1">点击文件夹展开/折叠</li>
+                <li class="list-item" data-i18n="guideTreeItem2">使用搜索查找特定文件</li>
+                <li class="list-item" data-i18n="guideTreeItem3">展开/折叠按钮控制整个树</li>
+                <li class="list-item" data-i18n="guideTreeItem4">将结构复制为文本或 Markdown</li>
+            </ul>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="21" x2="15" y2="21"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> <span data-i18n="guideTreeTipLabel">提示：</span></strong> <span data-i18n="guideTreeTipText">使用工具栏中的 &quot;复制文本&quot; 按钮以 ASCII 格式复制结构并粘贴到文档中。</span>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg> <span data-i18n="guideMetricsTabTitle">指标选项卡</span></h3>
+            <p class="institutional-text" data-i18n="guideMetricsTabText">获取关于仓库的洞察：</p>
+            <ul class="institutional-list">
+                <li class="list-item" data-i18n="guideMetricsItem1">文件和文件夹数量</li>
+                <li class="list-item" data-i18n="guideMetricsItem2">仓库总大小</li>
+                <li class="list-item" data-i18n="guideMetricsItem3">按文件类型分布图表</li>
+                <li class="list-item" data-i18n="guideMetricsItem4">GitHub 统计数据（星标、Fork、Watch）</li>
+            </ul>
+        </section>
+
+        <section id="buttons" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg> <span data-i18n="guideButtonsTitle">每个按钮的作用？</span></h2>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span data-i18n="guideInputFieldTitle">输入字段</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn1Title">粘贴</h4>
+                    <p class="institutional-text" data-i18n="guideBtn1Desc">自动从剪贴板粘贴仓库链接。在您刚刚复制 GitHub URL 时很有用。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn2Title">可视化</h4>
+                    <p class="institutional-text" data-i18n="guideBtn2Desc">开始分析仓库。获取完整结构并处理所有文件和文件夹信息。</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> <span data-i18n="guideVisualizationTitle">可视化</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn3Title">树形</h4>
+                    <p class="institutional-text" data-i18n="guideBtn3Desc">以层次树形格式显示仓库结构。允许展开并浏览所有目录和文件。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn4Title">指标</h4>
+                    <p class="institutional-text" data-i18n="guideBtn4Desc">显示关于仓库的统计数据和图表，包括文件数量、总大小、类型分布和 GitHub 数据。</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg> <span data-i18n="guideToolsTitle">工具</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn5Title">清除缓存</h4>
+                    <p class="institutional-text" data-i18n="guideBtn5Desc">删除本地缓存中保存的所有仓库。当您想释放空间或强制进行新分析时使用。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn6Title">重新加载</h4>
+                    <p class="institutional-text" data-i18n="guideBtn6Desc">强制重新分析当前仓库，忽略缓存。用于查看仓库的最新更新。</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span data-i18n="guideExportTitle">导出</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <h4 style="margin-bottom: 10px;">JSON</h4>
+                    <p class="institutional-text" data-i18n="guideBtn7Desc">以 JSON 格式导出完整结构。非常适合编程分析或与其他工具集成。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
+                    <h4 style="margin-bottom: 10px;">CSV</h4>
+                    <p class="institutional-text" data-i18n="guideBtn8Desc">以 CSV 格式（电子表格）导出文件列表。非常适合在 Excel、Google Sheets 或其他数据工具中进行分析。</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> <span data-i18n="guideTreeToolbarTitle">树形工具栏</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn9Title">复制文本</h4>
+                    <p class="institutional-text" data-i18n="guideBtn9Desc">以 ASCII 文本格式复制树形结构。适合包含在文档、README 中或共享结构。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn10Title">展开</h4>
+                    <p class="institutional-text" data-i18n="guideBtn10Desc">一次展开树形中的所有目录。显示完整的仓库结构。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn11Title">折叠</h4>
+                    <p class="institutional-text" data-i18n="guideBtn11Desc">折叠所有目录，只显示根级别。用于获得简化的概览。</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> <span data-i18n="guideOtherControlsTitle">其他控件</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn12Title">切换主题</h4>
+                    <p class="institutional-text" data-i18n="guideBtn12Desc">右上角的按钮可在浅色和深色主题之间切换。您的偏好将自动保存。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn13Title">搜索文件</h4>
+                    <p class="institutional-text" data-i18n="guideBtn13Desc">树形上方的搜索字段可实时过滤文件。输入文件名或路径的任意部分。</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="21" x2="15" y2="21"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> <span data-i18n="guideButtonsTipLabel">快速提示：</span></strong> <span data-i18n="guideButtonsTipText">将鼠标悬停在任何按钮上，即可查看该按钮功能的快速说明（工具提示）！</span>
+            </div>
+        </section>
+
+
+        <section id="advanced" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span data-i18n="guideAdvancedTitle">高级提示</span></h2>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> <span data-i18n="guideAdvTip1Label">快速粘贴：</span></strong> <span data-i18n="guideAdvTip1Text">使用输入字段旁边的 &quot;粘贴&quot; 按钮自动粘贴从剪贴板复制的链接。</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg> <span data-i18n="guideAdvTip2Label">智能缓存：</span></strong> <span data-i18n="guideAdvTip2Text">GitTree 在本地存储分析结果。最近分析的仓库可以即时加载。</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span data-i18n="guideAdvTip3Label">导出数据：</span></strong> <span data-i18n="guideAdvTip3Text">使用 &quot;JSON&quot; 或 &quot;CSV&quot; 按钮导出完整分析以供外部使用。</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg> <span data-i18n="guideAdvTip4Label">浅色/深色主题：</span></strong> <span data-i18n="guideAdvTip4Text">点击右上角的月亮/太阳图标在主题之间切换。</span>
+            </div>
+        </section>
+
+        <section id="faq" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> <span data-i18n="guideFaqTitle">常见问题</span></h2>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq1Q">问：GitTree 是否适用于私有仓库？</strong><br>
+                <span data-i18n="guideFaq1A">答：不，仅适用于公共 GitHub 仓库。</span>
+            </p>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq2Q">问：我的数据会被存储吗？</strong><br>
+                <span data-i18n="guideFaq2A">答：不，分析的代码不会被存储。只有元数据会在您的浏览器中本地保留以供缓存。</span>
+            </p>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq3Q">问：我可以分析任何仓库吗？</strong><br>
+                <span data-i18n="guideFaq3A">答：是的，任何公共 GitHub 仓库。一些非常大的仓库可能会因 GitHub API 而截断其结构。</span>
+            </p>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq4Q">问：该工具免费吗？</strong><br>
+                <span data-i18n="guideFaq4A">答：是的，完全免费且开源。</span>
+            </p>
+
+            <p class="institutional-text">
+                <strong>Q: Why is the tree loading slowly?</strong><br>
+                A: Response time depends on the GitHub API and the repository size. Large monorepos with thousands of files may take several seconds. Subsequent loads of the same repository are nearly instant thanks to the local cache.
+            </p>
+
+            <p class="institutional-text">
+                <strong>Q: How do I report a bug or suggest a feature?</strong><br>
+                A: Open an issue on the <a href="https://github.com/JoaoClaudiano/gittree/issues" target="_blank" rel="noopener noreferrer" class="theme-link">GitHub repository</a>. All feedback is reviewed and valued.
+            </p>
+        </section>
+    </main>
+
+    <footer class="institutional-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <span class="footer-text">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    GitTree
+                    <a href="../CHANGELOG.md" data-i18n-title="此版本的功能？查看完整的更改日志" title="O que esta versão faz? Veja o changelog completo" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
+                </span>
+                <span class="footer-separator">•</span>
+                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. 保留所有权利。</span>
+            </div>
+            <div class="footer-links">
+                <a href="sobre.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="footerAbout">关于</span>
+                </a>
+                <a href="guia.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    <span data-i18n="footerGuide">指南</span>
+                </a>
+                <a href="contato.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span data-i18n="footerContact">联系</span>
+                </a>
+                <a href="politica-de-privacidade.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span data-i18n="footerPrivacy">隐私政策</span>
+                </a>
+                <a href="termos.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span data-i18n="footerTerms">使用条款</span>
+                </a>
+                <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a id="skip-to-top" href="#" aria-label="Back to top">
+        <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+    </a>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/institutional.js"></script>
+</body>
+</html>

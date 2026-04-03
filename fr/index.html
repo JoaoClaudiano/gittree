@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <!-- Default language is English for SEO. The lang attribute is dynamically updated by translations.js based on user preference. -->
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitTree - GitHub Repository Structure Visualizer | Explore Repositories</title>
+    <title>GitTree - Visualiseur de Structure GitHub | Explorer les Dépôts</title>
     <meta name="google-adsense-account" content="ca-pub-2518079690291956">
     <!-- Meta Description - CRITICAL FOR SEO -->
-    <meta name="description" content="GitTree - Visualize and analyze the structure of any GitHub repository. Explore directory trees, code metrics, and real-time statistics. Free tool for developers.">
-    <meta name="keywords" content="github, repository, tree, visualizer, code structure, github explorer, developer tools, open source, code analysis, repository metrics">
+    <meta name="description" content="GitTree - Visualisez et analysez la structure de n'importe quel dépôt GitHub. Explorez les arborescences de répertoires, les métriques de code et les statistiques en temps réel. Outil gratuit pour les développeurs.">
+    <meta name="keywords" content="github, dépôt, arbre, visualiseur, structure code, explorateur github, outils développeur, open source, analyse code, métriques dépôt">
     <!-- Canonical URL - Evita conteúdo duplicado -->
-    <link rel="canonical" href="https://gittree.pages.dev/">
+    <link rel="canonical" href="https://gittree.pages.dev/fr/">
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="bsR4HOJBAwZBX_yK4xeLC5NZDXduDkPsyvDmOncTiRU" />
     <!-- Schema.org JSON-LD - Structured data for rich snippets -->
@@ -66,17 +66,17 @@
     </script>
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gittree.pages.dev/">
-    <meta property="og:title" content="GitTree - GitHub Repository Structure Visualizer">
-    <meta property="og:description" content="GitTree - Visualize and analyze the structure of any GitHub repository. Explore directory trees, code metrics, and real-time statistics. Free tool for developers.">
+    <meta property="og:url" content="https://gittree.pages.dev/fr/">
+    <meta property="og:title" content="GitTree - Visualiseur de Structure GitHub | Explorer les Dépôts">
+    <meta property="og:description" content="GitTree - Visualisez et analysez la structure de n'importe quel dépôt GitHub. Explorez les arborescences de répertoires, les métriques de code et les statistiques en temps réel. Outil gratuit pour les développeurs.">
     <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
     <meta property="og:image:alt" content="GitTree logo - GitHub Repository Structure Visualizer">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
     <meta property="og:locale:alternate" content="pt_BR">
     <meta property="og:locale:alternate" content="es_ES">
-    <meta property="og:locale:alternate" content="fr_FR">
     <meta property="og:locale:alternate" content="it_IT">
     <meta property="og:locale:alternate" content="ja_JP">
     <meta property="og:locale:alternate" content="ko_KR">
@@ -84,22 +84,22 @@
     <meta property="og:site_name" content="GitTree">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://gittree.pages.dev/">
-    <meta property="twitter:title" content="GitTree - GitHub Repository Structure Visualizer">
-    <meta property="twitter:description" content="GitTree - Visualize and analyze the structure of any GitHub repository. Free tool for developers.">
+    <meta property="twitter:url" content="https://gittree.pages.dev/fr/">
+    <meta property="twitter:title" content="GitTree - Visualiseur de Structure GitHub | Explorer les Dépôts">
+    <meta property="twitter:description" content="GitTree - Visualisez et analysez la structure de n'importe quel dépôt GitHub. Explorez les arborescences de répertoires, les métriques de code et les statistiques en temps réel. Outil gratuit pour les développeurs.">
     <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
     <meta property="twitter:image:alt" content="GitTree logo - GitHub Repository Structure Visualizer">
     <meta property="twitter:creator" content="@joaoclaudiano">
     <meta property="twitter:site" content="@joaoclaudiano">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Tag Manager -->
-    <script src="js/gtm.js"></script>
+    <script src="../js/gtm.js"></script>
     <!-- End Google Tag Manager -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="tailwind-output.css">
+    <link rel="stylesheet" href="../tailwind-output.css">
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
@@ -107,11 +107,13 @@
     <meta name="theme-color" content="#24292e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="../manifest.json">
     
     <!-- Ícones para Apple e web -->
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-    <!-- hreflang – tells Google this page exists in all supported languages -->
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
     <link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/">
     <link rel="alternate" hreflang="en" href="https://gittree.pages.dev/">
     <link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/">
@@ -121,12 +123,11 @@
     <link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/">
     <link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/">
     <link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/">
-    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
-    <style>body{visibility:hidden}</style>
-    <noscript><style>body{visibility:visible!important}</style></noscript>
+
 </head>
     
 <body>
+    <script>(function(){try{localStorage.setItem('gittree-language','fr');}catch(e){}})()</script>
     <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
     <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
     <!-- Google Tag Manager (noscript) -->
@@ -137,11 +138,11 @@
     <header class="main-header">
         <div class="header-container">
             <div class="logo-container">
-                <a href="/" class="logo">
+                <a href="/fr/" class="logo">
                     <i class="fas fa-tree logo-icon"></i>
                     <span class="logo-text">GitTree</span>
                 </a>
-                <a href="CHANGELOG.md" class="version-tag" data-i18n-title="versionTooltip" title="What does this version do? See the complete changelog" target="_blank">v1.0</a>
+                <a href="../CHANGELOG.md" class="version-tag" data-i18n-title="Que fait cette version? Voir le journal des modifications complet" title="What does this version do? See the complete changelog" target="_blank">v1.0</a>
             </div>
             
             <div class="header-controls">
@@ -170,7 +171,7 @@
             <div class="ui-layer">
                 <div class="section-header">
                     <i class="fas fa-tree"></i>
-                    <h3 data-i18n="sectionTitle">GitHub Visualizer</h3>
+                    <h3 data-i18n="sectionTitle">Visualiseur GitHub</h3>
                 </div>
                 
                 <div class="input-group">
@@ -182,11 +183,11 @@
                            value="facebook/react">
                     <div class="input-btn-row">
                         <button id="pasteBtn" class="btn-secondary" title="Paste link from clipboard">
-                            <i class="fas fa-paste"></i> <span data-i18n="btnPaste">Paste</span>
+                            <i class="fas fa-paste"></i> <span data-i18n="btnPaste">Coller</span>
                         </button>
                         <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure (Enter)">
                             <i class="fas fa-eye"></i>
-                            <span data-i18n="btnVisualize">Visualize</span>
+                            <span data-i18n="btnVisualize">Visualiser</span>
                         </button>
                     </div>
                 </div>
@@ -200,20 +201,20 @@
                     <div class="status-container">
                         <div class="status-box" id="statusBox">
                             <i class="fas fa-info-circle"></i>
-                            <span id="statusText" data-i18n="statusDefault">Enter a GitHub repository</span>
+                            <span id="statusText" data-i18n="statusDefault">Entrez un dépôt GitHub</span>
                         </div>
                     </div>
                     
                     <div class="controls-section">
-                        <h4><i class="fas fa-eye"></i> <span data-i18n="controlsVisualization">Visualization</span></h4>
+                        <h4><i class="fas fa-eye"></i> <span data-i18n="controlsVisualization">Visualisation</span></h4>
                         <div class="view-toggle">
                             <button class="view-btn active" data-view="tree" title="View hierarchical tree structure">
                                 <i class="fas fa-folder-tree"></i>
-                                <span data-i18n="btnTree">Tree</span>
+                                <span data-i18n="btnTree">Arbre</span>
                             </button>
                             <button class="view-btn" data-view="metrics" title="View repository metrics and statistics">
                                 <i class="fas fa-chart-bar"></i>
-                                <span data-i18n="btnMetrics">Metrics</span>
+                                <span data-i18n="btnMetrics">Métriques</span>
                             </button>
                         </div>
                     </div>
@@ -223,17 +224,17 @@
                         <div class="tool-buttons">
                             <button id="clearCacheBtn" class="btn-secondary" title="Clear local cache of analyzed repositories">
                                 <i class="fas fa-trash"></i>
-                                <span data-i18n="btnClearCache">Clear Cache</span>
+                                <span data-i18n="btnClearCache">Vider le Cache</span>
                             </button>
                             <button id="refreshBtn" class="btn-secondary" title="Reload analysis of current repository">
                                 <i class="fas fa-redo"></i>
-                                <span data-i18n="btnRefresh">Refresh</span>
+                                <span data-i18n="btnRefresh">Actualiser</span>
                             </button>
                         </div>
                     </div>
                     
                     <div class="controls-section">
-                        <h4><i class="fas fa-download"></i> <span data-i18n="controlsExport">Export</span></h4>
+                        <h4><i class="fas fa-download"></i> <span data-i18n="controlsExport">Exporter</span></h4>
                         <div class="export-buttons">
                             <button id="exportJSONBtn" class="btn-export" title="Export complete structure in JSON format">
                                 <i class="fas fa-file-code"></i>
@@ -247,15 +248,15 @@
                     </div>
                     
                     <div class="metrics-preview" id="metricsPreview">
-                        <h4><i class="fas fa-chart-line"></i> <span data-i18n="previewTitle">Preview</span></h4>
+                        <h4><i class="fas fa-chart-line"></i> <span data-i18n="previewTitle">Aperçu</span></h4>
                         <div class="metrics-grid">
                             <div class="metric-card">
                                 <div class="metric-value">--</div>
-                                <div class="metric-label" data-i18n="metricFiles">Files</div>
+                                <div class="metric-label" data-i18n="metricFiles">Fichiers</div>
                             </div>
                             <div class="metric-card">
                                 <div class="metric-value">--</div>
-                                <div class="metric-label" data-i18n="metricSize">Size</div>
+                                <div class="metric-label" data-i18n="metricSize">Taille</div>
                             </div>
                         </div>
                     </div>
@@ -269,14 +270,14 @@
                 <div class="welcome-icon">
                     <i class="fas fa-tree"></i>
                 </div>
-                <h2 class="welcome-title" data-i18n="welcomeTitle">Visualize any GitHub repository</h2>
-                <p class="welcome-subtitle" data-i18n="welcomeSubtitle">Enter a repository name or URL in the sidebar to explore its structure</p>
+                <h2 class="welcome-title" data-i18n="welcomeTitle">Visualisez n'importe quel dépôt GitHub</h2>
+                <p class="welcome-subtitle" data-i18n="welcomeSubtitle">Entrez un nom de dépôt ou une URL dans la barre latérale pour explorer sa structure</p>
             </div>
 
             <div class="content-header">
                 <div class="content-title">
-                    <h1 id="repoTitle" data-i18n="noRepoTitle">No repository selected</h1>
-                    <p id="repoDescription" data-i18n="noRepoDescription">Enter a repository above to visualize the structure</p>
+                    <h1 id="repoTitle" data-i18n="noRepoTitle">Aucun dépôt sélectionné</h1>
+                    <p id="repoDescription" data-i18n="noRepoDescription">Entrez un dépôt ci-dessus pour visualiser la structure</p>
                 </div>
                 <div class="content-actions">
                     <div class="repo-stats" id="repoStats">
@@ -292,13 +293,13 @@
                 <div class="spinner">
                     <i class="fas fa-spinner fa-spin"></i>
                 </div>
-                <p data-i18n="statusLoading">Loading structure...</p>
+                <p data-i18n="statusLoading">Chargement de la structure...</p>
             </div>
             
             <div class="view-section active" id="treeView">
                 <div class="view-toolbar">
                     <div class="toolbar-left">
-                        <h3><i class="fas fa-folder-tree"></i> <span data-i18n="treeTitle">Repository Structure</span></h3>
+                        <h3><i class="fas fa-folder-tree"></i> <span data-i18n="treeTitle">Structure du Dépôt</span></h3>
                     </div>
                     <div class="toolbar-right">
                         <div class="search-box">
@@ -311,13 +312,13 @@
                         </div>
                         <div class="toolbar-actions">
                             <button id="copyTreeBtn" class="btn-toolbar" title="Copy structure as text (Ctrl+Shift+C)">
-                                <i class="fas fa-copy"></i> <span data-i18n="btnCopyTree">Copy</span>
+                                <i class="fas fa-copy"></i> <span data-i18n="btnCopyTree">Copier</span>
                             </button>
                             <button id="expandAllBtn" class="btn-toolbar" title="Expand all directories in the tree (Ctrl+Shift+E)">
-                                <i class="fas fa-expand"></i> <span data-i18n="btnExpandAll">Expand All</span>
+                                <i class="fas fa-expand"></i> <span data-i18n="btnExpandAll">Tout Développer</span>
                             </button>
                             <button id="collapseAllBtn" class="btn-toolbar" title="Collapse all directories in the tree (Ctrl+Shift+L)">
-                                <i class="fas fa-compress"></i> <span data-i18n="btnCollapseAll">Collapse All</span>
+                                <i class="fas fa-compress"></i> <span data-i18n="btnCollapseAll">Tout Réduire</span>
                             </button>
                         </div>
                     </div>
@@ -329,19 +330,19 @@
             
             <div class="view-section" id="metricsView">
                 <div class="view-toolbar">
-                    <h3><i class="fas fa-chart-bar"></i> <span data-i18n="metricsTitle">Repository Metrics</span></h3>
+                    <h3><i class="fas fa-chart-bar"></i> <span data-i18n="metricsTitle">Métriques du Dépôt</span></h3>
                 </div>
                 <div class="metrics-container">
                     <div class="charts-row">
                         <div class="chart-box">
-                            <h4 data-i18n="distributionTitle">File Distribution</h4>
+                            <h4 data-i18n="distributionTitle">Distribution des Fichiers par Type</h4>
                             <div class="chart-placeholder" id="fileTypesChart">
                                 <i class="fas fa-chart-pie"></i>
-                                <p data-i18n="chartPlaceholder">Chart will be generated here</p>
+                                <p data-i18n="chartPlaceholder">Le graphique sera généré ici</p>
                             </div>
                         </div>
                         <div class="chart-box">
-                            <h4 data-i18n="statsTitle">Statistics</h4>
+                            <h4 data-i18n="statsTitle">Statistiques</h4>
                             <div class="stats-display" id="statsDisplay">
                                 <div class="stats-grid"></div>
                             </div>
@@ -354,21 +355,19 @@
             <div class="seo-intro">
                 <h2>
                     <i class="fas fa-search"></i>
-                    <span data-i18n="seoIntroTitle">Explore GitHub Repositories Like Never Before</span>
+                    <span data-i18n="seoIntroTitle">Explorez les Dépôts GitHub Comme Jamais Auparavant</span>
                 </h2>
                 <div class="seo-intro-body">
                     <div class="seo-intro-text">
-                        <p data-i18n-html="seoIntroText">
-                            <strong>GitTree</strong> is a free tool that allows you to visualize the complete structure of any public GitHub repository. Analyze directory trees, view file metrics, and understand code organization visually and interactively.
-                        </p>
+                        <p data-i18n-html="seoIntroText"><strong style="color: var(--primary);">GitTree</strong> est un outil gratuit qui vous permet de visualiser la structure complète de n'importe quel dépôt public GitHub. Analysez les arborescences de répertoires, consultez les métriques de fichiers et comprenez l'organisation du code de manière visuelle et interactive.</p>
                     </div>
                     <div class="seo-intro-list">
                         <ul>
-                            <li data-i18n-html="seoIntroItem1"><strong>Visualize</strong> the hierarchical structure of folders and files</li>
-                            <li data-i18n-html="seoIntroItem2"><strong>Analyze</strong> metrics and code statistics in real time</li>
-                            <li data-i18n-html="seoIntroItem3"><strong>Explore</strong> repositories without needing to clone or download</li>
-                            <li data-i18n-html="seoIntroItem4"><strong>Export</strong> data in multiple formats (JSON, CSV)</li>
-                            <li data-i18n-html="seoIntroItem5"><strong>Understand</strong> complex projects intuitively</li>
+                            <li data-i18n-html="seoIntroItem1"><strong>Visualisez</strong> la structure hiérarchique des dossiers et fichiers</li>
+                            <li data-i18n-html="seoIntroItem2"><strong>Analysez</strong> les métriques et statistiques du code en temps réel</li>
+                            <li data-i18n-html="seoIntroItem3"><strong>Explorez</strong> les dépôts sans avoir besoin de les cloner ou télécharger</li>
+                            <li data-i18n-html="seoIntroItem4"><strong>Exportez</strong> les données en plusieurs formats (JSON, CSV)</li>
+                            <li data-i18n-html="seoIntroItem5"><strong>Comprenez</strong> des projets complexes de manière intuitive</li>
                         </ul>
                     </div>
                 </div>
@@ -382,21 +381,21 @@
                 <div class="footer-info">
                     <span class="footer-text">
                         <i class="fas fa-tree"></i> GitTree 
-                        <a href="CHANGELOG.md" data-i18n-title="versionTooltip" title="What does this version do?" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
+                        <a href="../CHANGELOG.md" data-i18n-title="Que fait cette version? Voir le journal des modifications complet" title="What does this version do?" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
                     </span>
                     <span class="footer-separator">•</span>
                     <span class="footer-text" id="cacheStatus">
                         <i class="fas fa-database"></i> Cache: 0KB
                     </span>
                     <span class="footer-separator">•</span>
-                    <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. All rights reserved.</span>
+                    <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. Tous droits réservés.</span>
                 </div>
             </div>
             
             <div class="footer-section">
                 <div class="footer-links">
                     <a href="sobre.html" class="footer-link">
-                        <i class="fas fa-info-circle"></i> <span data-i18n="footerAbout">About</span>
+                        <i class="fas fa-info-circle"></i> <span data-i18n="footerAbout">À propos</span>
                     </a>
                     <a href="guia.html" class="footer-link">
                         <i class="fas fa-book"></i> <span data-i18n="footerGuide">Guide</span>
@@ -405,10 +404,10 @@
                         <i class="fas fa-envelope"></i> <span data-i18n="footerContact">Contact</span>
                     </a>
                     <a href="politica-de-privacidade.html" class="footer-link">
-                        <i class="fas fa-user-shield"></i> <span data-i18n="footerPrivacy">Privacy Policy</span>
+                        <i class="fas fa-user-shield"></i> <span data-i18n="footerPrivacy">Politique de Confidentialité</span>
                     </a>
                     <a href="termos.html" class="footer-link">
-                        <i class="fas fa-file-contract"></i> <span data-i18n="footerTerms">Terms of Use</span>
+                        <i class="fas fa-file-contract"></i> <span data-i18n="footerTerms">Conditions d'Utilisation</span>
                     </a>
                     <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
                         <i class="fab fa-github"></i> GitHub
@@ -422,32 +421,28 @@
         <div class="cookie-banner-inner">
             <div class="cookie-text">
                 <p>
-                    🍪 <span data-i18n="cookieMessage">We use cookies to improve your experience. By continuing, you agree to our</span>
-                    <a href="politica-de-privacidade.html" class="cookie-link" data-i18n="footerPrivacy">Privacy Policy</a>.
+                    🍪 <span data-i18n="cookieMessage">Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre</span>
+                    <a href="politica-de-privacidade.html" class="cookie-link" data-i18n="footerPrivacy">Politique de Confidentialité</a>.
                 </p>
             </div>
             <div class="cookie-actions">
-                <button id="cookieAcceptBtn" class="cookie-btn cookie-btn-accept" data-i18n="cookieAccept">
-                    Accept
-                </button>
-                <button id="cookieRejectBtn" class="cookie-btn cookie-btn-reject" data-i18n="cookieReject">
-                    Reject
-                </button>
+                <button id="cookieAcceptBtn" class="cookie-btn cookie-btn-accept" data-i18n="cookieAccept">Accepter</button>
+                <button id="cookieRejectBtn" class="cookie-btn cookie-btn-reject" data-i18n="cookieReject">Refuser</button>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-    <script src="js/translations.js"></script>
-    <script src="js/skeleton-loader.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/tree.js"></script>
-    <script src="js/metrics.js"></script>
-    <script src="js/export.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/enhanced-tree.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/translations.js"></script>
+    <script src="../js/skeleton-loader.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/tree.js"></script>
+    <script src="../js/metrics.js"></script>
+    <script src="../js/export.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/enhanced-tree.js"></script>
+    <script src="../js/main.js"></script>
 
-    <script src="js/init.js"></script>
+    <script src="../js/init.js"></script>
 </body>
 </html>

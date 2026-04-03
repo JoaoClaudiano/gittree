@@ -9,35 +9,719 @@
         <lastmod>2026-04-03</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
     </url>
     <url>
         <loc>https://gittree.pages.dev/contato.html</loc>
         <lastmod>2026-04-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/es/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/es/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/es/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/es/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/es/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/es/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/fr/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/fr/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/fr/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/fr/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/fr/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/fr/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
     </url>
     <url>
         <loc>https://gittree.pages.dev/guia.html</loc>
         <lastmod>2026-04-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/it/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/it/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/it/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/it/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/it/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/it/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ja/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ja/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ja/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ja/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ja/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ja/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ko/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ko/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ko/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ko/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ko/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/ko/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
     </url>
     <url>
         <loc>https://gittree.pages.dev/politica-de-privacidade.html</loc>
         <lastmod>2026-04-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/pt/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/pt/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/pt/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/pt/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/pt/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/pt/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
     </url>
     <url>
         <loc>https://gittree.pages.dev/sobre.html</loc>
         <lastmod>2026-04-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
     </url>
     <url>
         <loc>https://gittree.pages.dev/termos.html</loc>
         <lastmod>2026-04-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/zh/contato.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/zh/guia.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/zh/</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/zh/politica-de-privacidade.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/politica-de-privacidade.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/politica-de-privacidade.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/zh/sobre.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html"/>
+    </url>
+    <url>
+        <loc>https://gittree.pages.dev/zh/termos.html</loc>
+        <lastmod>2026-04-03</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://gittree.pages.dev/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/termos.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/termos.html"/>
     </url>
 </urlset>
