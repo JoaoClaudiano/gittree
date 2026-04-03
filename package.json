@@ -6,9 +6,10 @@
   "scripts": {
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "generate-robots": "node scripts/generate-robots.js",
+    "generate-locales": "node scripts/generate-locales.js",
     "generate-seo": "npm run generate-sitemap && npm run generate-robots",
     "build:css": "tailwindcss -i tailwind-input.css -o tailwind-output.css --minify",
-    "build": "npm run generate-seo && npm run build:css",
+    "build": "npm run generate-locales && npm run generate-seo && npm run build:css",
     "test": "echo \"No tests configured yet\" && exit 0"
   },
   "repository": {
