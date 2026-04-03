@@ -226,6 +226,99 @@
                 </div>
                 <h2 class="welcome-title" data-i18n="welcomeTitle">Visualize any GitHub repository</h2>
                 <p class="welcome-subtitle" data-i18n="welcomeSubtitle">Enter a repository name or URL in the sidebar to explore its structure</p>
+
+                <!-- Demo accordion: static preview of a repository structure -->
+                <div class="welcome-demo">
+                    <div class="welcome-demo-header">
+                        <i class="fas fa-folder-tree"></i>
+                        <span data-i18n="treeTitle">Repository Structure</span>
+                        <span class="welcome-demo-badge" data-i18n="demoLabel">Example</span>
+                    </div>
+                    <div class="demo-tree-container" id="demoTreeContainer">
+                        <!-- Root folder (pre-expanded) -->
+                        <div class="tree-node">
+                            <div class="tree-node-header folder">
+                                <i class="tree-icon fas fa-folder expanded"></i>
+                                <span class="tree-name">my-project</span>
+                                <span class="tree-count">(5)</span>
+                            </div>
+                            <div class="tree-node-children expanded" data-expanded="true">
+                                <!-- src/ folder -->
+                                <div class="tree-node">
+                                    <div class="tree-node-header folder">
+                                        <i class="tree-icon fas fa-folder collapsed"></i>
+                                        <span class="tree-name">src</span>
+                                        <span class="tree-count">(2)</span>
+                                    </div>
+                                    <div class="tree-node-children" data-expanded="false">
+                                        <div class="tree-node">
+                                            <div class="tree-node-header folder">
+                                                <i class="tree-icon fas fa-folder collapsed"></i>
+                                                <span class="tree-name">components</span>
+                                                <span class="tree-count">(2)</span>
+                                            </div>
+                                            <div class="tree-node-children" data-expanded="false">
+                                                <div class="tree-node">
+                                                    <div class="tree-node-header file">
+                                                        <i class="tree-icon fas fa-file"></i>
+                                                        <span class="tree-name">App.jsx</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tree-node">
+                                                    <div class="tree-node-header file">
+                                                        <i class="tree-icon fas fa-file"></i>
+                                                        <span class="tree-name">Header.jsx</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tree-node">
+                                            <div class="tree-node-header file">
+                                                <i class="tree-icon fas fa-file"></i>
+                                                <span class="tree-name">index.js</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- public/ folder -->
+                                <div class="tree-node">
+                                    <div class="tree-node-header folder">
+                                        <i class="tree-icon fas fa-folder collapsed"></i>
+                                        <span class="tree-name">public</span>
+                                        <span class="tree-count">(1)</span>
+                                    </div>
+                                    <div class="tree-node-children" data-expanded="false">
+                                        <div class="tree-node">
+                                            <div class="tree-node-header file">
+                                                <i class="tree-icon fas fa-file"></i>
+                                                <span class="tree-name">index.html</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- top-level files -->
+                                <div class="tree-node">
+                                    <div class="tree-node-header file">
+                                        <i class="tree-icon fas fa-file"></i>
+                                        <span class="tree-name">package.json</span>
+                                    </div>
+                                </div>
+                                <div class="tree-node">
+                                    <div class="tree-node-header file">
+                                        <i class="tree-icon fas fa-file"></i>
+                                        <span class="tree-name">README.md</span>
+                                    </div>
+                                </div>
+                                <div class="tree-node">
+                                    <div class="tree-node-header file">
+                                        <i class="tree-icon fas fa-file"></i>
+                                        <span class="tree-name">.gitignore</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="content-header">
