@@ -113,8 +113,14 @@
         initChipNav();
         initLanguageSelector();
 
-        if (typeof initI18n === 'function') initI18n();
-        // Reveal body now that translations have been applied (prevents flash of untranslated content)
-        document.body.style.visibility = 'visible';
+        if (typeof initI18n === 'function') {
+            // initI18n() is async; reveal body once translations are applied.
+            initI18n().then(
+                function () { document.body.style.visibility = 'visible'; },
+                function () { document.body.style.visibility = 'visible'; }
+            );
+        } else {
+            document.body.style.visibility = 'visible';
+        }
     });
 }());

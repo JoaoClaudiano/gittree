@@ -172,7 +172,7 @@ async function analyzeRepository() {
             throw new Error('Não foi possível obter a estrutura');
         }
 
-        showStatus(t('statusProcessingItems').replace('{n}', treeData.tree.length), 'info');
+        showStatus(t('statusProcessingItems', { n: treeData.tree.length }), 'info');
 
         if (typeof window.hideSkeletonLoader === 'function') {
             window.hideSkeletonLoader();

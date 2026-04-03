@@ -182,7 +182,7 @@ function updateCacheStatus() {
     const dbIcon = document.createElement('i');
     dbIcon.className = 'fas fa-database';
     cacheStatus.appendChild(dbIcon);
-    cacheStatus.appendChild(document.createTextNode(' ' + t('cacheLabel').replace('{size}', sizeLabel)));
+    cacheStatus.appendChild(document.createTextNode(' ' + t('cacheLabel', { size: sizeLabel })));
 }
 
 function showAppContent() {

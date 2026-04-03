@@ -15,15 +15,30 @@
 const fs   = require('fs');
 const path = require('path');
 
-// translations.js exports cleanly from Node.js via module.exports guard
-const { translations, languageNames } = require('../js/translations');
-
 // ---------------------------------------------------------------------------
 // Configuration
 // ---------------------------------------------------------------------------
 
 const BASE_URL = 'https://gittree.pages.dev';
 const ROOT_DIR = path.join(__dirname, '..');
+
+// Load each locale from its dedicated JSON file.
+// This keeps the build script independent of the browser runtime in translations.js.
+const LOCALES_DIR = path.join(ROOT_DIR, 'js', 'locales');
+
+/** @type {Record<string, Record<string, string>>} */
+const translations = {};
+const ALL_LOCALE_CODES = ['en', 'pt', 'es', 'fr', 'it', 'ja', 'ko', 'zh'];
+for (const locale of ALL_LOCALE_CODES) {
+    translations[locale] = JSON.parse(
+        fs.readFileSync(path.join(LOCALES_DIR, locale + '.json'), 'utf8')
+    );
+}
+
+const languageNames = {
+    en: 'English', pt: 'Português', es: 'Español', fr: 'Français',
+    it: 'Italiano', ja: '日本語', ko: '한국어', zh: '中文',
+};
 
 /** Non-English locales to generate. */
 const LOCALES = ['pt', 'es', 'fr', 'it', 'ja', 'ko', 'zh'];
