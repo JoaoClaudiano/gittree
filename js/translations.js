@@ -3275,8 +3275,8 @@ function initI18n() {
         }
     }
     
-    // Apply the detected/saved language
-    setLanguage(currentLanguage);
+    // Apply the detected/saved language (silent=true to avoid duplicate log)
+    setLanguage(currentLanguage, true);
     
     console.log(`🌍 i18n initialized: ${languageNames[currentLanguage]} (${currentLanguage})`);
 }
@@ -3284,8 +3284,9 @@ function initI18n() {
 /**
  * Set and apply a language
  * @param {string} langCode - Language code (e.g., 'en', 'pt', 'ja')
+ * @param {boolean} [silent] - When true, suppresses the console log (used by initI18n)
  */
-function setLanguage(langCode) {
+function setLanguage(langCode, silent) {
     if (!translations[langCode]) {
         console.error(`Language '${langCode}' not found. Falling back to English.`);
         langCode = 'en';
@@ -3306,7 +3307,9 @@ function setLanguage(langCode) {
     // Refresh any JS-driven content that uses translated strings
     if (typeof updateCacheStatus === 'function') updateCacheStatus();
     
-    console.log(`✅ Language changed to: ${languageNames[langCode]}`);
+    if (!silent) {
+        console.log(`✅ Language changed to: ${languageNames[langCode]}`);
+    }
 }
 
 /**

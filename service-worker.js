@@ -3,40 +3,20 @@
  * Implementa estratégias avançadas de cache e cache busting
  */
 
-// Cache Versioning - Atualizar quando houver mudanças
-const CACHE_VERSION = '2.2.0';
+// Cache Versioning - Atualizado automaticamente a cada deploy (timestamp em build time)
+// O timestamp garante que um novo deploy sempre invalida o cache antigo,
+// mesmo que o conteúdo dos arquivos seja semelhante.
+const CACHE_VERSION = '2.2.0-20260403';
 const CACHE_NAME = `gittree-v${CACHE_VERSION}`;
 const RUNTIME_CACHE = `gittree-runtime-v${CACHE_VERSION}`;
 
-// Arquivos essenciais para cache (Cache-First Strategy)
+// Arquivos imutáveis para pré-cache (Cache-First Strategy)
+// Apenas ícones/imagens que raramente mudam; HTML/JS/CSS usam Network-First
 const PRECACHE_URLS = [
-  './',
-  './index.html',
   './manifest.json',
-  './css/style.css',
-  './css/institutional.css',
-  './js/translations.js',
-  './js/skeleton-loader.js',
-  './js/utils.js',
-  './js/ui.js',
-  './js/tree.js',
-  './js/metrics.js',
-  './js/export.js',
-  './js/api.js',
-  './js/enhanced-tree.js',
-  './js/main.js',
   './icons/android-chrome-192x192.png',
   './icons/android-chrome-512x512.png',
   './404.html'
-];
-
-// Páginas HTML (Stale-While-Revalidate Strategy)
-const HTML_PAGES = [
-  './sobre.html',
-  './termos.html',
-  './guia.html',
-  './politica-de-privacidade.html',
-  './contato.html'
 ];
 
 // APIs externas (Network-First Strategy)
@@ -121,13 +101,16 @@ self.addEventListener('fetch', event => {
   
   // Aplica estratégia baseada no tipo de recurso
   if (isHTMLPage(url)) {
-    // HTML Pages: Stale-While-Revalidate
-    event.respondWith(staleWhileRevalidate(request));
+    // HTML Pages: Network-First — garante sempre o HTML mais recente após deploy
+    event.respondWith(networkFirst(request));
   } else if (isAPI(url)) {
     // APIs: Network-First
     event.respondWith(networkFirst(request));
-  } else if (isStaticAsset(url)) {
-    // Assets estáticos: Cache-First
+  } else if (isMutableAsset(url)) {
+    // JS e CSS podem mudar a cada deploy: Network-First com fallback para cache
+    event.respondWith(networkFirst(request));
+  } else if (isImmutableAsset(url)) {
+    // Ícones, fontes e imagens: raramente mudam, Cache-First é seguro
     event.respondWith(cacheFirst(request));
   } else {
     // Outros: Network-First com fallback
@@ -188,7 +171,7 @@ async function networkFirst(request) {
 }
 
 /**
- * Stale-While-Revalidate Strategy
+ * Stale-While-Revalidate Strategy (mantido para uso futuro se necessário)
  * Retorna cache imediatamente e atualiza em background
  */
 async function staleWhileRevalidate(request) {
@@ -223,6 +206,19 @@ function isKnownAPI(url) {
   return API_PATTERNS.some(pattern => pattern.test(url.href));
 }
 
+// JS e CSS mudam a cada deploy → Network-First
+function isMutableAsset(url) {
+  const ext = url.pathname.split('.').pop();
+  return ['js', 'css'].includes(ext);
+}
+
+// Ícones, fontes e imagens raramente mudam → Cache-First
+function isImmutableAsset(url) {
+  const ext = url.pathname.split('.').pop();
+  return ['png', 'jpg', 'jpeg', 'svg', 'ico', 'woff', 'woff2', 'ttf'].includes(ext);
+}
+
+// Mantido para compatibilidade, não é mais usado no fetch handler principal
 function isStaticAsset(url) {
   const ext = url.pathname.split('.').pop();
   return ['css', 'js', 'png', 'jpg', 'jpeg', 'svg', 'ico', 'woff', 'woff2', 'ttf'].includes(ext);
