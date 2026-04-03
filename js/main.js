@@ -96,7 +96,15 @@ function initControls() {
     if (clearCacheBtn) {
         clearCacheBtn.addEventListener('click', () => {
             if (confirm(t('confirmClearCache'))) {
-                localStorage.clear();
+                // Preserve user preferences; only remove repository cache entries
+                const preserve = new Set(['gittree-theme', 'gittree-language', 'cookie_consent', 'cookie_analytics', 'cookie_marketing']);
+                const toRemove = [];
+                const len = localStorage.length;
+                for (let i = 0; i < len; i++) {
+                    const key = localStorage.key(i);
+                    if (!preserve.has(key)) toRemove.push(key);
+                }
+                toRemove.forEach(key => localStorage.removeItem(key));
                 updateCacheStatus();
                 showStatus(t('statusCacheCleared'), 'success');
             }

@@ -9,8 +9,13 @@
     <link rel="stylesheet" href="css/institutional.css">
     <link rel="canonical" href="https://gittree.pages.dev/contato.html">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
 </head>
 <body>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
     <div id="read-progress" aria-hidden="true"></div>
     <header class="institutional-header">
         <div class="header-container">

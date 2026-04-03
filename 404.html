@@ -54,7 +54,9 @@
         }
     </style>
 </head>
-<body class="dark-theme">
+<body>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
     <header class="institutional-header">
         <div class="header-container">
             <div class="logo-container">
