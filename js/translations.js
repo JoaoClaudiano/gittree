@@ -305,12 +305,14 @@ function updateSEO() {
 }
 
 /**
- * Sync the language selector dropdown to the active locale.
+ * Sync the language selector dropdown and the sigla badge to the active locale.
  */
 function updateLanguageSelector() {
     if (typeof document === 'undefined') return;
     var sel = document.getElementById('languageSelector');
     if (sel) sel.value = currentLanguage;
+    var icon = document.getElementById('langIcon');
+    if (icon) icon.textContent = currentLanguage.toUpperCase();
 }
 
 // ---------------------------------------------------------------------------

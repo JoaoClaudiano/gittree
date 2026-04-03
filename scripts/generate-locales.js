@@ -397,6 +397,12 @@ function processPage(sourceHtml, locale, page) {
     // 11. Inject early language init script (prevents FOUC)
     html = injectLangInitScript(html, locale);
 
+    // 12. Update the langIcon sigla span to match the locale
+    html = html.replace(
+        /(<span\b[^>]*\bid="langIcon"[^>]*>)[^<]*(<\/span>)/,
+        `$1${locale.toUpperCase()}$2`
+    );
+
     return html;
 }
 
