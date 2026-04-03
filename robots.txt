@@ -1,6 +1,6 @@
 # robots.txt para GitTree
 # Gerado automaticamente
-# 2026-04-02T00:26:00.604Z
+# 2026-04-03T00:00:00.000Z
 
 # Configuração padrão
 User-agent: *
@@ -14,10 +14,10 @@ Disallow: /node_modules/
 Disallow: /scripts/
 
 # Arquivos técnicos (wildcards)
-Disallow: *.json
-Disallow: *.js.map
-Disallow: *.css.map
-Disallow: *_config.yml
+Disallow: /*.json
+Disallow: /*.js.map
+Disallow: /*.css.map
+Disallow: /_config.yml
 
 # Arquivos específicos
 Disallow: /google*.html
