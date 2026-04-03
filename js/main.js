@@ -99,7 +99,8 @@ function initControls() {
                 // Preserve user preferences; only remove repository cache entries
                 const preserve = new Set(['gittree-theme', 'gittree-language', 'cookie_consent', 'cookie_analytics', 'cookie_marketing']);
                 const toRemove = [];
-                for (let i = 0; i < localStorage.length; i++) {
+                const len = localStorage.length;
+                for (let i = 0; i < len; i++) {
                     const key = localStorage.key(i);
                     if (!preserve.has(key)) toRemove.push(key);
                 }
