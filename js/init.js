@@ -92,9 +92,36 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js')
             .then(function (registration) {
                 console.log('[SW] Service Worker registrado!', registration.scope);
+
+                // Detecta quando um novo SW foi instalado e está aguardando ativação.
+                // Isso acontece quando um deploy novo é publicado: o SW antigo ainda
+                // controla a página, mas o novo já foi baixado e está em "waiting".
+                registration.addEventListener('updatefound', function () {
+                    const newWorker = registration.installing;
+                    if (!newWorker) return;
+
+                    newWorker.addEventListener('statechange', function () {
+                        // Novo SW instalado e pronto, mas ainda não ativo
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('[SW] Nova versão disponível. Recarregando...');
+                            // Pede ao novo SW para pular a espera e assumir o controle imediatamente
+                            newWorker.postMessage({ type: 'SKIP_WAITING' });
+                        }
+                    });
+                });
             })
             .catch(function (err) {
                 console.log('[SW] Falha no registro:', err);
             });
+
+        // Recarrega a página automaticamente quando o SW assume o controle,
+        // garantindo que o usuário veja sempre a versão mais recente após um deploy.
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
+        });
     });
 }
