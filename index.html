@@ -76,10 +76,14 @@
     
     <!-- Ícones para Apple e web -->
     <link rel="icons/apple-touch-icon" href="/icons/icon-192x192.png">
-        
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
 </head>
     
 <body>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LRXMXH9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

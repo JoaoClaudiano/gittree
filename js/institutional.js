@@ -114,5 +114,7 @@
         initLanguageSelector();
 
         if (typeof initI18n === 'function') initI18n();
+        // Reveal body now that translations have been applied (prevents flash of untranslated content)
+        document.body.style.visibility = 'visible';
     });
 }());

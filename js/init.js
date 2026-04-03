@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+    // Reveal body now that translations have been applied (prevents flash of untranslated content)
+    document.body.style.visibility = 'visible';
 });
 
 // ===== Cookie Consent =====
