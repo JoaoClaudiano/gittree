@@ -12,7 +12,6 @@ function initApp() {
     initCache();
     initSidebarToggle();
     initKeyboardShortcuts();
-    initDemoTree();
     loadDefaultRepo();
 
     console.log('✅ GitTree v1.0 inicializado');
@@ -158,35 +157,6 @@ function initControls() {
             }
         });
     }
-}
-
-function initDemoTree() {
-    const demoTree = document.getElementById('demoTreeContainer');
-    if (!demoTree) return;
-
-    demoTree.addEventListener('click', function(e) {
-        const header = e.target.closest('.tree-node-header.folder');
-        if (!header) return;
-        e.stopPropagation();
-
-        const node = header.closest('.tree-node');
-        const children = node.querySelector(':scope > .tree-node-children');
-        const icon = header.querySelector('.tree-icon');
-        if (!children || !icon) return;
-
-        const isExpanded = children.dataset.expanded === 'true';
-        if (!isExpanded) {
-            children.dataset.expanded = 'true';
-            children.classList.add('expanded');
-            icon.classList.remove('collapsed');
-            icon.classList.add('expanded');
-        } else {
-            children.dataset.expanded = 'false';
-            children.classList.remove('expanded');
-            icon.classList.remove('expanded');
-            icon.classList.add('collapsed');
-        }
-    });
 }
 
 function testRepo(repo) {
