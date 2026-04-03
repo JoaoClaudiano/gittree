@@ -494,6 +494,10 @@ a.link-card:hover {
     color: var(--dark-border);
 }
 
+.light-theme .footer-separator {
+    color: var(--light-border);
+}
+
 .footer-links {
     display: flex;
     align-items: center;
