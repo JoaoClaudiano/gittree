@@ -131,8 +131,8 @@ Esta é a primeira versão estável do GitTree, um visualizador interativo de es
 
 ### 🚀 Deploy
 
-- Hospedagem via GitHub Pages
-- URL: https://joaoclaudiano.github.io/gittree/
+- Hospedagem via Cloudflare Pages
+- URL: https://gittree.pages.dev/
 - Configuração de SEO completa (robots.txt, sitemap.xml)
 - Meta tags otimizadas
 - Suporte a PWA
