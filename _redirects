@@ -1,3 +1,14 @@
 # Cloudflare Pages redirects
 # Redirect /index.html to root to avoid duplicate content
 /index.html / 301
+
+# Language-based redirects (requires Cloudflare Workers for header-based detection)
+# The hreflang tags in each page handle language negotiation for search engines.
+# Static locale pages are available at /pt/, /es/, /fr/, /it/, /ja/, /ko/, /zh/
+/pt /pt/ 301
+/es /es/ 301
+/fr /fr/ 301
+/it /it/ 301
+/ja /ja/ 301
+/ko /ko/ 301
+/zh /zh/ 301
