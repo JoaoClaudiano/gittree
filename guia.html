@@ -3,11 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GitTree User Guide — learn how to visualize GitHub repositories, explore directory trees, analyze code metrics, and export data. Step-by-step instructions for all features.">
     <title data-i18n="guideTitle">GitTree User Guide</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/institutional.css">
     <link rel="canonical" href="https://gittree.pages.dev/guia.html">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://gittree.pages.dev/guia.html">
+    <meta property="og:title" content="GitTree User Guide — How to Visualize GitHub Repositories">
+    <meta property="og:description" content="Complete reference for all features, tools, and options available in GitTree. Step-by-step guide to explore GitHub repositories.">
+    <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="og:image:alt" content="GitTree User Guide">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="GitTree">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://gittree.pages.dev/guia.html">
+    <meta property="twitter:title" content="GitTree User Guide — How to Visualize GitHub Repositories">
+    <meta property="twitter:description" content="Complete reference for all features, tools, and options available in GitTree.">
+    <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="twitter:site" content="@joaoclaudiano">
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "GitTree", "item": "https://gittree.pages.dev/"},
+        {"@type": "ListItem", "position": 2, "name": "User Guide", "item": "https://gittree.pages.dev/guia.html"}
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does GitTree work with private repositories?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. GitTree uses the public GitHub REST API and does not support authentication tokens. Only public repositories are accessible."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data stored anywhere?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No server-side storage occurs. GitTree caches analysis results in your browser's localStorage only — data never leaves your device."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I analyze any public repository?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, any public GitHub repository. Very large repositories may have their tree truncated due to GitHub API rate limits and pagination constraints."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is GitTree free to use?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free, open-source, and ad-supported. No subscription or registration is required."}
+        }
+      ]
+    }
+    </script>
     <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
     <style>body{visibility:hidden}</style>
     <noscript><style>body{visibility:visible!important}</style></noscript>
