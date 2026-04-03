@@ -218,8 +218,16 @@ function expandAllTreeNodes(expand = true) {
 }
 
 function searchTree(query) {
-    const nodes = document.querySelectorAll('.tree-node');
     const searchTerm = query.toLowerCase().trim();
+
+    // Render all lazy children first so search covers the entire tree
+    let lazyContainers = document.querySelectorAll('.tree-node-children[data-lazy="true"]');
+    while (lazyContainers.length > 0) {
+        lazyContainers.forEach(container => _renderLazyChildren(container));
+        lazyContainers = document.querySelectorAll('.tree-node-children[data-lazy="true"]');
+    }
+
+    const nodes = document.querySelectorAll('.tree-node');
 
     if (!searchTerm) {
         nodes.forEach(node => node.style.display = '');
@@ -241,16 +249,19 @@ function searchTree(query) {
 }
 
 function expandParents(node) {
-    let parent = node.parentElement;
-    while (parent && parent.classList.contains('tree-node')) {
-        const children = parent.querySelector('.tree-node-children');
-        const icon = parent.querySelector('.tree-icon');
-        if (children && icon) {
-            children.dataset.expanded = 'true';
-            children.classList.add('expanded');
-            icon.classList.remove('collapsed');
-            icon.classList.add('expanded');
+    let el = node.parentElement;
+    while (el) {
+        if (el.classList.contains('tree-node-children')) {
+            const parentNode = el.parentElement;
+            const icon = parentNode?.querySelector(':scope > .tree-node-header .tree-icon');
+            el.dataset.expanded = 'true';
+            el.classList.add('expanded');
+            if (icon) {
+                icon.classList.remove('collapsed');
+                icon.classList.add('expanded');
+            }
         }
-        parent = parent.parentElement;
+        if (el.id === 'treeContainer') break;
+        el = el.parentElement;
     }
 }
