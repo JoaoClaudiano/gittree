@@ -714,10 +714,13 @@ body.light-theme {
     border-left: 1px dashed rgba(255, 255, 255, 0.15);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.25s ease-in-out;
 }
 
 .tree-node-children.expanded {
+    /* JS drives the inline max-height for smooth per-node animation.
+       This fallback ensures nodes expanded without JS animation (e.g.
+       expandFirstLevel, expandParents during search) are fully visible. */
     max-height: 5000px;
 }
 
