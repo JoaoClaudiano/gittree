@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GitTree - Visualiza y analiza la estructura de cualquier repositorio GitHub. Explora árboles de directorios, métricas de código y estadísticas en tiempo real. Herramienta gratuita para desarrolladores.">
+    <meta name="keywords" content="github, repositorio, árbol, visualizador, estructura código, explorador github, herramientas desarrollador, código abierto, análisis código, métricas repositorio">
+    <title data-i18n="guideTitle">Guía del Usuario GitTree</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/institutional.css">
+    <link rel="canonical" href="https://gittree.pages.dev/es/guia.html">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://gittree.pages.dev/es/guia.html">
+    <meta property="og:title" content="GitTree - Visualizador de Estructura GitHub | Explorar Repositorios">
+    <meta property="og:description" content="GitTree - Visualiza y analiza la estructura de cualquier repositorio GitHub. Explora árboles de directorios, métricas de código y estadísticas en tiempo real. Herramienta gratuita para desarrolladores.">
+    <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="og:image:alt" content="GitTree User Guide">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta property="og:locale:alternate" content="ko_KR">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:site_name" content="GitTree">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://gittree.pages.dev/es/guia.html">
+    <meta property="twitter:title" content="GitTree - Visualizador de Estructura GitHub | Explorar Repositorios">
+    <meta property="twitter:description" content="GitTree - Visualiza y analiza la estructura de cualquier repositorio GitHub. Explora árboles de directorios, métricas de código y estadísticas en tiempo real. Herramienta gratuita para desarrolladores.">
+    <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="twitter:site" content="@joaoclaudiano">
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "GitTree", "item": "https://gittree.pages.dev/"},
+        {"@type": "ListItem", "position": 2, "name": "User Guide", "item": "https://gittree.pages.dev/guia.html"}
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does GitTree work with private repositories?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. GitTree uses the public GitHub REST API and does not support authentication tokens. Only public repositories are accessible."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data stored anywhere?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No server-side storage occurs. GitTree caches analysis results in your browser's localStorage only — data never leaves your device."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I analyze any public repository?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, any public GitHub repository. Very large repositories may have their tree truncated due to GitHub API rate limits and pagination constraints."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is GitTree free to use?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free, open-source, and ad-supported. No subscription or registration is required."}
+        }
+      ]
+    }
+    </script>
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
+    <link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/guia.html">
+    <link rel="alternate" hreflang="en" href="https://gittree.pages.dev/guia.html">
+    <link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/guia.html">
+    <link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/guia.html">
+    <link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/guia.html">
+    <link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/guia.html">
+    <link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/guia.html">
+    <link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/guia.html">
+    <link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/guia.html">
+
+</head>
+<body>
+    <script>(function(){try{localStorage.setItem('gittree-language','es');}catch(e){}})()</script>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
+    <div id="read-progress" aria-hidden="true"></div>
+    <header class="institutional-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="/es/" class="logo">
+                    <svg width="1em" height="1em" class="svg-icon logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    <span>GitTree</span>
+                </a>
+            </div>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">English</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+                <button id="themeToggle" class="theme-toggle-btn" title="Switch to Light Mode" aria-label="Switch to Light Mode"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+                <a href="/es/" class="back-button">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    <span data-i18n="backToTool">Volver a la Herramienta</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="institutional-main">
+        <h1 class="institutional-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> <span data-i18n="guideTitle">Guía del Usuario GitTree</span></h1>
+        <p class="institutional-subtitle" data-i18n="guideSubtitle">Aprende a usar todas las funcionalidades de la herramienta de visualización de repositorios GitHub</p>
+
+        <!-- Chip Navigation -->
+        <nav class="chip-nav" aria-label="Page sections">
+            <a class="chip" href="#getting-started">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span data-i18n="guideChipGettingStarted">Primeros Pasos</span>
+            </a>
+            <a class="chip" href="#features">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                <span data-i18n="guideChipFeatures">Funcionalidades</span>
+            </a>
+            <a class="chip" href="#buttons">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                <span data-i18n="guideChipButtons">Botones</span>
+            </a>
+            <a class="chip" href="#advanced">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                <span data-i18n="guideChipAdvanced">Consejos Avanzados</span>
+            </a>
+            <a class="chip" href="#faq">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span data-i18n="guideChipFaq">FAQ</span>
+            </a>
+        </nav>
+
+        <section id="getting-started" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg> <span data-i18n="guideWhatIsTitle">¿Qué es GitTree?</span></h2>
+            <p class="institutional-text" data-i18n="guideWhatIsText">GitTree es una herramienta web gratuita que transforma repositorios de GitHub en visualizaciones interactivas, permitiéndote explorar estructuras de archivos, analizar métricas y entender la organización del código de forma intuitiva.</p>
+            <p class="institutional-text">
+                Because GitTree operates entirely client-side, your browser communicates directly with the GitHub API. No code is sent to or stored on any intermediate server. Analysis results are cached locally in your browser's storage to enable near-instant reloads of recently visited repositories.
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
+                    <h3 style="margin-bottom: 10px;" data-i18n="guideFeature1Title">Análisis Visual</h3>
+                    <p class="institutional-text" data-i18n="guideFeature1Desc">Ve la estructura completa del repositorio en formato de árbol</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+                    <h3 style="margin-bottom: 10px;" data-i18n="guideFeature2Title">Métricas Detalladas</h3>
+                    <p class="institutional-text" data-i18n="guideFeature2Desc">Estadísticas y gráficos sobre archivos y carpetas</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                    <h3 style="margin-bottom: 10px;" data-i18n="guideFeature3Title">Fácil de Usar</h3>
+                    <p class="institutional-text" data-i18n="guideFeature3Desc">Solo pega la URL de GitHub y empieza a explorar</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span data-i18n="guideGettingStartedTitle">Empezando en 3 Pasos</span></h2>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">1</span>
+                    <strong data-i18n="guideStep1Title">Pega la URL de GitHub</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;" data-i18n="guideStep1Text">En el campo principal de la página de inicio, pega cualquier URL de repositorio público de GitHub.</p>
+                <p class="institutional-text" style="margin-top: 10px;">
+                    <strong data-i18n="guideStep1FormatsLabel">Formatos aceptados:</strong><br>
+                    • <code>https://github.com/usuario/repositorio</code><br>
+                    • <code>usuario/repositorio</code><br>
+                    • <code>https://github.com/usuario/repositorio.git</code>
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">2</span>
+                    <strong data-i18n="guideStep2Title">Haz clic en &quot;Visualizar&quot;</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;" data-i18n="guideStep2Text">La herramienta buscará la estructura completa del repositorio y procesará toda la información. El proceso puede tardar unos segundos según el tamaño del repositorio.</p>
+            </div>
+            
+            <div class="step-box">
+                <div>
+                    <span class="step-number">3</span>
+                    <strong data-i18n="guideStep3Title">Explora los Resultados</strong>
+                </div>
+                <p class="institutional-text" style="margin-top: 10px;" data-i18n="guideStep3Text">Navega entre las pestañas &quot;Árbol&quot; y &quot;Métricas&quot; para explorar diferentes visualizaciones de los datos del repositorio.</p>
+            </div>
+        </section>
+
+        <section id="features" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span data-i18n="guideFeaturesTitle">Funcionalidades Principales</span></h2>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg> <span data-i18n="guideTreeViewTitle">Visualización en Árbol</span></h3>
+            <p class="institutional-text" data-i18n="guideTreeViewText">Explora la estructura jerárquica de carpetas y archivos:</p>
+            <ul class="institutional-list">
+                <li class="list-item" data-i18n="guideTreeItem1">Haz clic en carpetas para expandir/contraer</li>
+                <li class="list-item" data-i18n="guideTreeItem2">Usa la búsqueda para encontrar archivos específicos</li>
+                <li class="list-item" data-i18n="guideTreeItem3">Botones Expandir/Contraer para controlar todo el árbol</li>
+                <li class="list-item" data-i18n="guideTreeItem4">Copiar estructura como texto o Markdown</li>
+            </ul>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="21" x2="15" y2="21"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> <span data-i18n="guideTreeTipLabel">Consejo:</span></strong> <span data-i18n="guideTreeTipText">Usa el botón &quot;Copiar Texto&quot; en la barra de herramientas para copiar la estructura en formato ASCII y pegarla en documentaciones.</span>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg> <span data-i18n="guideMetricsTabTitle">Pestaña de Métricas</span></h3>
+            <p class="institutional-text" data-i18n="guideMetricsTabText">Obtén información sobre el repositorio:</p>
+            <ul class="institutional-list">
+                <li class="list-item" data-i18n="guideMetricsItem1">Conteo de archivos y carpetas</li>
+                <li class="list-item" data-i18n="guideMetricsItem2">Tamaño total del repositorio</li>
+                <li class="list-item" data-i18n="guideMetricsItem3">Gráfico de distribución por tipo de archivo</li>
+                <li class="list-item" data-i18n="guideMetricsItem4">Estadísticas de GitHub (stars, forks, watchers)</li>
+            </ul>
+        </section>
+
+        <section id="buttons" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg> <span data-i18n="guideButtonsTitle">¿Qué hace cada botón?</span></h2>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span data-i18n="guideInputFieldTitle">Campo de Entrada</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn1Title">Pegar</h4>
+                    <p class="institutional-text" data-i18n="guideBtn1Desc">Pega automáticamente el enlace del repositorio desde el portapapeles. Útil cuando acabas de copiar una URL de GitHub.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn2Title">Visualizar</h4>
+                    <p class="institutional-text" data-i18n="guideBtn2Desc">Inicia el análisis del repositorio. Obtiene la estructura completa y procesa toda la información de archivos y carpetas.</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> <span data-i18n="guideVisualizationTitle">Visualización</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn3Title">Árbol</h4>
+                    <p class="institutional-text" data-i18n="guideBtn3Desc">Muestra la estructura del repositorio en formato jerárquico de árbol. Permite expandir y navegar por todos los directorios y archivos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn4Title">Métricas</h4>
+                    <p class="institutional-text" data-i18n="guideBtn4Desc">Muestra estadísticas y gráficos sobre el repositorio, incluyendo conteo de archivos, tamaño total, distribución por tipo y datos de GitHub.</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg> <span data-i18n="guideToolsTitle">Herramientas</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn5Title">Limpiar Caché</h4>
+                    <p class="institutional-text" data-i18n="guideBtn5Desc">Elimina todos los repositorios guardados en la caché local. Úsalo cuando quieras liberar espacio o forzar un nuevo análisis.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn6Title">Recargar</h4>
+                    <p class="institutional-text" data-i18n="guideBtn6Desc">Fuerza un nuevo análisis del repositorio actual, ignorando la caché. Útil para ver actualizaciones recientes en el repositorio.</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span data-i18n="guideExportTitle">Exportar</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <h4 style="margin-bottom: 10px;">JSON</h4>
+                    <p class="institutional-text" data-i18n="guideBtn7Desc">Exporta la estructura completa en formato JSON. Ideal para análisis programático o integración con otras herramientas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
+                    <h4 style="margin-bottom: 10px;">CSV</h4>
+                    <p class="institutional-text" data-i18n="guideBtn8Desc">Exporta la lista de archivos en formato CSV (hoja de cálculo). Perfecto para análisis en Excel, Google Sheets u otras herramientas de datos.</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> <span data-i18n="guideTreeToolbarTitle">Barra de Herramientas del Árbol</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn9Title">Copiar Texto</h4>
+                    <p class="institutional-text" data-i18n="guideBtn9Desc">Copia la estructura del árbol en formato de texto ASCII. Útil para incluir en documentaciones, READMEs o compartir la estructura.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn10Title">Expandir</h4>
+                    <p class="institutional-text" data-i18n="guideBtn10Desc">Expande todos los directorios del árbol de una vez. Muestra la estructura completa del repositorio.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn11Title">Contraer</h4>
+                    <p class="institutional-text" data-i18n="guideBtn11Desc">Contrae todos los directorios, mostrando solo el nivel raíz. Útil para tener una visión general simplificada.</p>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--dark-text); margin: 1.5rem 0 1rem 0;"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> <span data-i18n="guideOtherControlsTitle">Otros Controles</span></h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn12Title">Alternar Tema</h4>
+                    <p class="institutional-text" data-i18n="guideBtn12Desc">Botón en la esquina superior derecha que alterna entre tema claro y oscuro. Tu preferencia se guarda automáticamente.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                    <h4 style="margin-bottom: 10px;" data-i18n="guideBtn13Title">Buscar Archivos</h4>
+                    <p class="institutional-text" data-i18n="guideBtn13Desc">Campo de búsqueda encima del árbol para filtrar archivos en tiempo real. Escribe cualquier parte del nombre o ruta del archivo.</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="21" x2="15" y2="21"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg> <span data-i18n="guideButtonsTipLabel">Consejo Rápido:</span></strong> <span data-i18n="guideButtonsTipText">¡Pasa el ratón sobre cualquier botón para ver una descripción rápida (tooltip) de lo que hace!</span>
+            </div>
+        </section>
+
+
+        <section id="advanced" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span data-i18n="guideAdvancedTitle">Consejos Avanzados</span></h2>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> <span data-i18n="guideAdvTip1Label">Pegar Rápido:</span></strong> <span data-i18n="guideAdvTip1Text">Usa el botón &quot;Pegar&quot; al lado del campo de entrada para pegar automáticamente enlaces copiados del portapapeles.</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg> <span data-i18n="guideAdvTip2Label">Caché Inteligente:</span></strong> <span data-i18n="guideAdvTip2Text">GitTree almacena análisis localmente. Los repositorios analizados recientemente se cargan al instante.</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <span data-i18n="guideAdvTip3Label">Exportar Datos:</span></strong> <span data-i18n="guideAdvTip3Text">Usa los botones &quot;JSON&quot; o &quot;CSV&quot; para exportar el análisis completo para uso externo.</span>
+            </div>
+            
+            <div class="tip-box">
+                <strong><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg> <span data-i18n="guideAdvTip4Label">Tema Claro/Oscuro:</span></strong> <span data-i18n="guideAdvTip4Text">Haz clic en el icono de luna/sol en la esquina superior derecha para alternar entre temas.</span>
+            </div>
+        </section>
+
+        <section id="faq" class="institutional-section">
+            <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> <span data-i18n="guideFaqTitle">Preguntas Frecuentes</span></h2>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq1Q">P: ¿GitTree funciona con repositorios privados?</strong><br>
+                <span data-i18n="guideFaq1A">R: No, solo con repositorios públicos de GitHub.</span>
+            </p>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq2Q">P: ¿Mis datos son almacenados?</strong><br>
+                <span data-i18n="guideFaq2A">R: No, el código analizado no se almacena. Solo los metadatos se mantienen localmente en tu navegador para el caché.</span>
+            </p>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq3Q">P: ¿Puedo analizar cualquier repositorio?</strong><br>
+                <span data-i18n="guideFaq3A">R: Sí, cualquier repositorio público de GitHub. Algunos repositorios muy grandes pueden tener la estructura truncada por la API de GitHub.</span>
+            </p>
+            
+            <p class="institutional-text">
+                <strong data-i18n="guideFaq4Q">P: ¿La herramienta es gratuita?</strong><br>
+                <span data-i18n="guideFaq4A">R: Sí, completamente gratuita y de código abierto.</span>
+            </p>
+
+            <p class="institutional-text">
+                <strong>Q: Why is the tree loading slowly?</strong><br>
+                A: Response time depends on the GitHub API and the repository size. Large monorepos with thousands of files may take several seconds. Subsequent loads of the same repository are nearly instant thanks to the local cache.
+            </p>
+
+            <p class="institutional-text">
+                <strong>Q: How do I report a bug or suggest a feature?</strong><br>
+                A: Open an issue on the <a href="https://github.com/JoaoClaudiano/gittree/issues" target="_blank" rel="noopener noreferrer" class="theme-link">GitHub repository</a>. All feedback is reviewed and valued.
+            </p>
+        </section>
+    </main>
+
+    <footer class="institutional-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <span class="footer-text">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    GitTree
+                    <a href="../CHANGELOG.md" data-i18n-title="¿Qué hace esta versión? Ver el registro de cambios completo" title="O que esta versão faz? Veja o changelog completo" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
+                </span>
+                <span class="footer-separator">•</span>
+                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. Todos los derechos reservados.</span>
+            </div>
+            <div class="footer-links">
+                <a href="sobre.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="footerAbout">Acerca de</span>
+                </a>
+                <a href="guia.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    <span data-i18n="footerGuide">Guía</span>
+                </a>
+                <a href="contato.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span data-i18n="footerContact">Contacto</span>
+                </a>
+                <a href="politica-de-privacidade.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span data-i18n="footerPrivacy">Política de Privacidad</span>
+                </a>
+                <a href="termos.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span data-i18n="footerTerms">Términos de Uso</span>
+                </a>
+                <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a id="skip-to-top" href="#" aria-label="Back to top">
+        <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+    </a>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/institutional.js"></script>
+</body>
+</html>

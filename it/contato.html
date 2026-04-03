@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact GitTree — reach the team for questions, bug reports, feature suggestions, or privacy inquiries.">
-    <title data-i18n="contactTitle">Contact – GitTree</title>
+    <meta name="description" content="GitTree - Visualizza e analizza la struttura di qualsiasi repository GitHub. Esplora alberi di directory, metriche del codice e statistiche in tempo reale. Strumento gratuito per sviluppatori.">
+    <meta name="keywords" content="github, repository, albero, visualizzatore, struttura codice, esploratore github, strumenti sviluppatore, open source, analisi codice, metriche repository">
+    <title data-i18n="contactTitle">Contatto</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/institutional.css">
-    <link rel="canonical" href="https://gittree.pages.dev/contato.html">
+    <link rel="stylesheet" href="../css/institutional.css">
+    <link rel="canonical" href="https://gittree.pages.dev/it/contato.html">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
     <!-- Open Graph -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://gittree.pages.dev/contato.html">
-    <meta property="og:title" content="Contact GitTree — Get in Touch">
-    <meta property="og:description" content="Contact GitTree — reach the team for questions, bug reports, feature suggestions, or privacy inquiries.">
+    <meta property="og:url" content="https://gittree.pages.dev/it/contato.html">
+    <meta property="og:title" content="GitTree - Visualizzatore di Struttura GitHub | Esplora Repository">
+    <meta property="og:description" content="GitTree - Visualizza e analizza la struttura di qualsiasi repository GitHub. Esplora alberi di directory, metriche del codice e statistiche in tempo reale. Strumento gratuito per sviluppatori.">
     <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
     <meta property="og:image:alt" content="Contact GitTree">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta property="og:locale:alternate" content="ko_KR">
+    <meta property="og:locale:alternate" content="zh_CN">
     <meta property="og:site_name" content="GitTree">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:url" content="https://gittree.pages.dev/contato.html">
-    <meta property="twitter:title" content="Contact GitTree — Get in Touch">
-    <meta property="twitter:description" content="Reach the GitTree team for questions, bug reports, or feature suggestions.">
+    <meta property="twitter:url" content="https://gittree.pages.dev/it/contato.html">
+    <meta property="twitter:title" content="GitTree - Visualizzatore di Struttura GitHub | Esplora Repository">
+    <meta property="twitter:description" content="GitTree - Visualizza e analizza la struttura di qualsiasi repository GitHub. Esplora alberi di directory, metriche del codice e statistiche in tempo reale. Strumento gratuito per sviluppatori.">
     <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
     <meta property="twitter:site" content="@joaoclaudiano">
     <!-- Schema.org JSON-LD -->
@@ -36,7 +44,9 @@
       ]
     }
     </script>
-    <!-- hreflang – tells Google this page exists in all supported languages -->
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
     <link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/contato.html">
     <link rel="alternate" hreflang="en" href="https://gittree.pages.dev/contato.html">
     <link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/contato.html">
@@ -46,13 +56,17 @@
     <link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/contato.html">
     <link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/contato.html">
     <link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/contato.html">
-    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
-    <style>body{visibility:hidden}</style>
-    <noscript><style>body{visibility:visible!important}</style></noscript>
+
 </head>
+<body>
+    <script>(function(){try{localStorage.setItem('gittree-language','it');}catch(e){}})()</script>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
+    <div id="read-progress" aria-hidden="true"></div>
+    <header class="institutional-header">
         <div class="header-container">
             <div class="logo-container">
-                <a href="/" class="logo">
+                <a href="/it/" class="logo">
                     <svg width="1em" height="1em" class="svg-icon logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
                     <span>GitTree</span>
                 </a>
@@ -69,19 +83,16 @@
                     <option value="zh">中文</option>
                 </select>
                 <button id="themeToggle" class="theme-toggle-btn" title="Switch to Light Mode" aria-label="Switch to Light Mode"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
-                <a href="/" class="back-button">
+                <a href="/it/" class="back-button">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    <span data-i18n="backToTool">Back to Tool</span>
+                    <span data-i18n="backToTool">Torna allo Strumento</span>
                 </a>
             </div>
         </div>
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title" data-i18n="contactTitle">
-            <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Contact
-        </h1>
+        <h1 class="institutional-title" data-i18n="contactTitle">Contatto</h1>
         <p class="institutional-subtitle">Reach the GitTree team — we value every message.</p>
 
         <!-- Chip Navigation -->
@@ -96,7 +107,7 @@
             </a>
             <a class="chip" href="#scope">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <span data-i18n="contactChipScope">Scope</span>
+                <span data-i18n="contactChipScope">Ambito</span>
             </a>
         </nav>
 
@@ -201,31 +212,31 @@
                 <span class="footer-text">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
                     GitTree
-                    <a href="CHANGELOG.md" data-i18n-title="versionTooltip" title="O que esta versão faz? Veja o changelog completo" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
+                    <a href="../CHANGELOG.md" data-i18n-title="Cosa fa questa versione? Vedi il registro delle modifiche completo" title="O que esta versão faz? Veja o changelog completo" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
                 </span>
                 <span class="footer-separator">•</span>
-                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. All rights reserved.</span>
+                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. Tutti i diritti riservati.</span>
             </div>
             <div class="footer-links">
                 <a href="sobre.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <span data-i18n="footerAbout">About</span>
+                    <span data-i18n="footerAbout">Chi Siamo</span>
                 </a>
                 <a href="guia.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-                    <span data-i18n="footerGuide">Guide</span>
+                    <span data-i18n="footerGuide">Guida</span>
                 </a>
                 <a href="contato.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <span data-i18n="footerContact">Contact</span>
+                    <span data-i18n="footerContact">Contatto</span>
                 </a>
                 <a href="politica-de-privacidade.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span data-i18n="footerPrivacy">Privacy Policy</span>
+                    <span data-i18n="footerPrivacy">Informativa sulla Privacy</span>
                 </a>
                 <a href="termos.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span data-i18n="footerTerms">Terms of Use</span>
+                    <span data-i18n="footerTerms">Termini di Utilizzo</span>
                 </a>
                 <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
@@ -239,7 +250,7 @@
         <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
     </a>
 
-    <script src="js/translations.js"></script>
-    <script src="js/institutional.js"></script>
+    <script src="../js/translations.js"></script>
+    <script src="../js/institutional.js"></script>
 </body>
 </html>

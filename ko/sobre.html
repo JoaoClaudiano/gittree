@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About GitTree — free, open-source tool to instantly visualize any GitHub repository structure. Learn about the project, team, and technology.">
-    <title data-i18n="aboutTitle">About GitTree</title>
+    <meta name="description" content="GitTree - 모든 GitHub 저장소의 구조를 시각화하고 분석합니다. 디렉토리 트리, 코드 메트릭스, 실시간 통계를 탐색하세요. 개발자를 위한 무료 도구입니다.">
+    <meta name="keywords" content="github, 저장소, 트리, 시각화, 코드 구조, github 탐색기, 개발자 도구, 오픈소스, 코드 분석, 저장소 메트릭스">
+    <title data-i18n="aboutTitle">소개</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/institutional.css">
-    <link rel="canonical" href="https://gittree.pages.dev/sobre.html">
+    <link rel="stylesheet" href="../css/institutional.css">
+    <link rel="canonical" href="https://gittree.pages.dev/ko/sobre.html">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
     <!-- Open Graph -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://gittree.pages.dev/sobre.html">
-    <meta property="og:title" content="About GitTree — Free GitHub Repository Visualizer">
-    <meta property="og:description" content="About GitTree — free, open-source tool to instantly visualize any GitHub repository structure. Learn about the project, team, and technology.">
+    <meta property="og:url" content="https://gittree.pages.dev/ko/sobre.html">
+    <meta property="og:title" content="GitTree - GitHub 저장소 구조 시각화 도구 | 저장소 탐색">
+    <meta property="og:description" content="GitTree - 모든 GitHub 저장소의 구조를 시각화하고 분석합니다. 디렉토리 트리, 코드 메트릭스, 실시간 통계를 탐색하세요. 개발자를 위한 무료 도구입니다.">
     <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
     <meta property="og:image:alt" content="About GitTree">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="it_IT">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta property="og:locale:alternate" content="zh_CN">
     <meta property="og:site_name" content="GitTree">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:url" content="https://gittree.pages.dev/sobre.html">
-    <meta property="twitter:title" content="About GitTree — Free GitHub Repository Visualizer">
-    <meta property="twitter:description" content="Free, open-source tool to instantly explore GitHub repository structures.">
+    <meta property="twitter:url" content="https://gittree.pages.dev/ko/sobre.html">
+    <meta property="twitter:title" content="GitTree - GitHub 저장소 구조 시각화 도구 | 저장소 탐색">
+    <meta property="twitter:description" content="GitTree - 모든 GitHub 저장소의 구조를 시각화하고 분석합니다. 디렉토리 트리, 코드 메트릭스, 실시간 통계를 탐색하세요. 개발자를 위한 무료 도구입니다.">
     <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
     <meta property="twitter:site" content="@joaoclaudiano">
     <!-- Schema.org JSON-LD -->
@@ -36,7 +44,9 @@
       ]
     }
     </script>
-    <!-- hreflang – tells Google this page exists in all supported languages -->
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
     <link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/sobre.html">
     <link rel="alternate" hreflang="en" href="https://gittree.pages.dev/sobre.html">
     <link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/sobre.html">
@@ -46,18 +56,17 @@
     <link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/sobre.html">
     <link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/sobre.html">
     <link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/sobre.html">
-    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
-    <style>body{visibility:hidden}</style>
-    <noscript><style>body{visibility:visible!important}</style></noscript>
+
 </head>
 <body>
+    <script>(function(){try{localStorage.setItem('gittree-language','ko');}catch(e){}})()</script>
     <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
     <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
     <div id="read-progress" aria-hidden="true"></div>
     <header class="institutional-header">
         <div class="header-container">
             <div class="logo-container">
-                <a href="/" class="logo">
+                <a href="/ko/" class="logo">
                     <svg width="1em" height="1em" class="svg-icon logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
                     <span>GitTree</span>
                 </a>
@@ -74,89 +83,81 @@
                     <option value="zh">中文</option>
                 </select>
                 <button id="themeToggle" class="theme-toggle-btn" title="Switch to Light Mode" aria-label="Switch to Light Mode"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
-                <a href="/" class="back-button">
+                <a href="/ko/" class="back-button">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    <span data-i18n="backToTool">Back to Tool</span>
+                    <span data-i18n="backToTool">도구로 돌아가기</span>
                 </a>
             </div>
         </div>
     </header>
 
     <main class="institutional-main">
-        <h1 class="institutional-title" data-i18n="aboutTitle">About GitTree</h1>
-        <p class="institutional-subtitle" data-i18n="aboutSubtitle">Free, open-source tool to instantly explore GitHub repository structures</p>
+        <h1 class="institutional-title" data-i18n="aboutTitle">소개</h1>
+        <p class="institutional-subtitle" data-i18n="aboutSubtitle">GitHub 저장소 구조를 즉시 탐색하는 무료 오픈소스 도구</p>
 
         <!-- Chip Navigation -->
         <nav class="chip-nav" aria-label="Page sections">
             <a class="chip" href="#what-is">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <span data-i18n="footerAbout">About</span>
+                <span data-i18n="footerAbout">소개</span>
             </a>
             <a class="chip" href="#history">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span data-i18n="aboutHistory">History</span>
+                <span data-i18n="aboutHistory">역사</span>
             </a>
             <a class="chip" href="#team">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                <span data-i18n="aboutChipTeam">Team</span>
+                <span data-i18n="aboutChipTeam">팀</span>
             </a>
             <a class="chip" href="#technology">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                <span data-i18n="aboutTechnology">Technology</span>
+                <span data-i18n="aboutTechnology">기술</span>
             </a>
             <a class="chip" href="#opensource">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-                <span data-i18n="aboutChipOpenSource">Open Source</span>
+                <span data-i18n="aboutChipOpenSource">오픈 소스</span>
             </a>
             <a class="chip" href="#contact">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <span data-i18n="footerContact">Contact</span>
+                <span data-i18n="footerContact">연락처</span>
             </a>
         </nav>
 
         <!-- What is GitTree? -->
         <section id="what-is" class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutMission">What is GitTree?</h2>
-            <p class="institutional-text" data-i18n="aboutMissionText">
-                GitTree is a free, open-source web application that transforms any public GitHub repository into a rich, interactive visualization. In seconds, you can explore the complete directory tree, navigate folders, inspect file distributions, and access key repository metrics — all directly from your browser, without installing anything or cloning a single line of code.
-            </p>
-            <p class="institutional-text" data-i18n="aboutMissionText2">
-                Whether you are evaluating a new dependency, onboarding to an unfamiliar codebase, conducting a code review, or documenting a project's structure, GitTree gives you an instant, structured view that would otherwise require local setup and manual inspection.
-            </p>
+            <h2 class="section-title" data-i18n="aboutMission">GitTree란 무엇인가요?</h2>
+            <p class="institutional-text" data-i18n="aboutMissionText">GitTree는 공개 GitHub 저장소를 대화형 시각화로 변환하는 무료 웹 도구입니다. 클론 없이 디렉토리 구조를 탐색하고, 코드 메트릭스를 분석하고, 프로젝트 구성을 이해할 수 있습니다.</p>
+            <p class="institutional-text" data-i18n="aboutMissionText2">새로운 의존성을 평가하거나, 낯선 코드베이스에 합류하거나, 코드 리뷰를 수행하거나, 프로젝트 구조를 문서화하는 경우에도 GitTree는 로컬 설정이나 수동 검사 없이 즉각적이고 구조화된 뷰를 제공합니다.</p>
 
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg></div>
-                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature1Title">Interactive Tree Visualization</h3>
-                    <p class="institutional-text" data-i18n="aboutFeature1Desc">Navigate the full repository directory tree with expandable nodes, real-time search filtering, and one-click clipboard copy in ASCII or Markdown format.</p>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature1Title">시각적 탐색</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature1Desc">직관적이고 대화형 형식으로 전체 저장소 트리 탐색</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="3" width="3" height="18"/><rect x="10.5" y="8" width="3" height="13"/><rect x="3" y="13" width="3" height="8"/></svg></div>
-                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature2Title">Repository Metrics &amp; Analytics</h3>
-                    <p class="institutional-text" data-i18n="aboutFeature2Desc">Access file count, total repository size, language distribution charts, star and fork counts, and contributor statistics — all sourced live from the GitHub REST API v3.</p>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature2Title">상세 메트릭스</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature2Desc">통계, 파일 분포 차트, GitHub 데이터를 한 곳에</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature3Title">Zero Setup — Instant Analysis</h3>
-                    <p class="institutional-text" data-i18n="aboutFeature3Desc">Paste any public GitHub URL or shorthand (e.g., <code>user/repo</code>) and get results in seconds. No account, no installation, no API key required.</p>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature3Title">설정 불필요</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature3Desc">GitHub URL만 붙여넣기 — 가입 불필요, 설치 불필요</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature4Title">Flexible Export Options</h3>
-                    <p class="institutional-text" data-i18n="aboutFeature4Desc">Export the full repository structure as JSON for programmatic use, CSV for spreadsheet analysis, or plain text/Markdown for README documentation and reports.</p>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutFeature4Title">내보내기 및 공유</h3>
+                    <p class="institutional-text" data-i18n="aboutFeature4Desc">구조를 JSON, CSV로 내보내거나 문서용 텍스트로 복사</p>
                 </div>
             </div>
         </section>
 
         <!-- History -->
         <section id="history" class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutHistory">History</h2>
-            <p class="institutional-text" data-i18n="aboutHistoryText1">
-                GitTree was born out of a recurring developer frustration: understanding the structure of an unfamiliar GitHub repository typically meant cloning it locally, navigating the file system, and mentally mapping folders — a slow, context-switching process that interrupted workflow and wasted time.
-            </p>
-            <p class="institutional-text" data-i18n="aboutHistoryText2">
-                The initial prototype, built in early 2025 by João Claudiano, focused on a single goal: render any public repository tree in a browser in under three seconds. Over subsequent iterations, the tool evolved to include metrics dashboards, multi-format export, a smart local cache, dark and light themes, multi-language support, and an accessible, mobile-friendly interface.
-            </p>
+            <h2 class="section-title" data-i18n="aboutHistory">역사</h2>
+            <p class="institutional-text" data-i18n="aboutHistoryText1">GitTree는 간단한 아이디어에서 탄생했습니다: 개발자가 클론 없이도 GitHub 리포지토리의 파일 구조를 즉시 시각화할 수 있도록 하는 것입니다. 낯선 코드베이스를 탐색하는 것은 시간이 걸릴 수 있습니다 — GitTree는 그것을 빠르고 쉽게 만들어 줍니다.</p>
+            <p class="institutional-text" data-i18n="aboutHistoryText2">2025년 João Claudiano에 의해 만들어진 GitTree는 개인 프로젝트로 시작하여 전 세계 개발자들이 사용하는 무료 오픈소스 도구로 성장했습니다. 우리의 목표는 리포지토리 탐색을 최대한 간단하고 접근하기 쉽게 만드는 것입니다.</p>
             <p class="institutional-text">
                 What started as a personal productivity tool has grown into a free, open-source project used by developers, technical writers, code reviewers, and learners worldwide. GitTree is hosted on Cloudflare Pages, operates entirely client-side, and makes no use of external databases or server-side processing.
             </p>
@@ -164,7 +165,7 @@
 
         <!-- Our Team -->
         <section id="team" class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutTeam">Our Team</h2>
+            <h2 class="section-title" data-i18n="aboutTeam">우리 팀</h2>
             <div class="team-section">
                 <div class="team-card">
                     <div class="avatar">
@@ -174,12 +175,8 @@
                              onerror="this.style.display='none';this.parentElement.innerHTML='<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; style=&quot;width:2rem;height:2rem&quot; aria-hidden=&quot;true&quot;><path d=&quot;M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2&quot;/><circle cx=&quot;12&quot; cy=&quot;7&quot; r=&quot;4&quot;/></svg>'">
                     </div>
                     <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamFounder">João Claudiano</h3>
-                    <p class="institutional-text" style="font-size: 0.875rem; font-weight: 500; color: var(--primary-light);" data-i18n="aboutTeamFounderRole">
-                        Project Creator &amp; Maintainer
-                    </p>
-                    <p class="institutional-text" style="font-size: 0.875rem; margin-top: 0.4rem;" data-i18n="aboutTeamFounderDesc">
-                        Fullstack Developer • Full-cycle <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                    </p>
+                    <p class="institutional-text" style="font-size: 0.875rem; font-weight: 500; color: var(--primary-light);" data-i18n="aboutTeamFounderRole">프로젝트 제작자 및 관리자</p>
+                    <p class="institutional-text" style="font-size: 0.875rem; margin-top: 0.4rem;" data-i18n="aboutTeamFounderDesc">풀스택 개발자 · ADHD 🧠💡</p>
                     <a href="https://github.com/JoaoClaudiano"
                        target="_blank"
                        rel="noopener noreferrer"
@@ -192,18 +189,14 @@
                     <div class="avatar">
                         <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
                     </div>
-                    <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamCommunity">Community</h3>
-                    <p class="institutional-text" style="font-size: 0.875rem; font-weight: 500; color: var(--primary-light);" data-i18n="aboutTeamCommunityDesc">
-                        Contributors &amp; Users
-                    </p>
-                    <p class="institutional-text" style="font-size: 0.875rem; margin-top: 0.4rem;" data-i18n="aboutTeamCommunityText">
-                        You're part of this journey! Every feedback, suggestion and use of the tool helps us improve.
-                    </p>
+                    <h3 style="margin-bottom: 5px;" data-i18n="aboutTeamCommunity">커뮤니티</h3>
+                    <p class="institutional-text" style="font-size: 0.875rem; font-weight: 500; color: var(--primary-light);" data-i18n="aboutTeamCommunityDesc">기여자 &amp; 사용자</p>
+                    <p class="institutional-text" style="font-size: 0.875rem; margin-top: 0.4rem;" data-i18n="aboutTeamCommunityText">당신은 이 여정의 일부입니다! 모든 피드백, 제안, 도구 사용이 우리의 개선에 도움이 됩니다.</p>
                     <a href="https://github.com/JoaoClaudiano/gittree/issues"
                        target="_blank"
                        rel="noopener noreferrer"
                        class="team-link">
-                        <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> <span data-i18n="aboutContactIssuesText">Report problems or suggest features</span>
+                        <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> <span data-i18n="aboutContactIssuesText">문제를 보고하거나 기능을 제안하세요</span>
                     </a>
                 </div>
             </div>
@@ -211,10 +204,8 @@
 
         <!-- Technology -->
         <section id="technology" class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutTechnology">Technology</h2>
-            <p class="institutional-text" data-i18n="aboutTechnologyText">
-                GitTree is engineered as a fully client-side application — there is no backend server, no database, and no server-side code execution. All processing happens in the user's browser, ensuring privacy, fast load times, and zero infrastructure overhead. The core stack:
-            </p>
+            <h2 class="section-title" data-i18n="aboutTechnology">기술</h2>
+            <p class="institutional-text" data-i18n="aboutTechnologyText">GitTree는 최신의 신뢰할 수 있는 기술로 구축되었습니다:</p>
 
             <div class="tech-stack">
                 <span class="tech-badge"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> HTML5</span>
@@ -226,17 +217,15 @@
             </div>
 
             <div class="tip-box" style="background: rgba(59, 130, 246, 0.1); border-left-color: #3b82f6; margin-top: 1.25rem;">
-                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> <strong data-i18n="aboutOpenSource">Open Source:</strong>
-                <span data-i18n="aboutOpenSourceText"> GitTree is open-source and available on GitHub. Contributions are welcome!</span>
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> <strong data-i18n="aboutOpenSource">🌐 오픈소스:</strong>
+                <span data-i18n="aboutOpenSourceText">GitTree는 오픈소스이며 GitHub에서 사용 가능합니다. 기여를 환영합니다!</span>
             </div>
         </section>
 
         <!-- Open Source / Contribute -->
         <section id="opensource" class="institutional-section">
             <h2 class="section-title"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Open Source</h2>
-            <p class="institutional-text" data-i18n="aboutContributeText">
-                GitTree is fully open-source under a permissive license. The complete source code is available on GitHub for anyone to inspect, fork, and contribute to. We actively welcome pull requests, bug reports, feature suggestions, and documentation improvements from the community.
-            </p>
+            <p class="institutional-text" data-i18n="aboutContributeText">GitTree는 완전한 오픈소스입니다. GitHub에서 포크하거나 이슈를 보고하고 풀 리퀘스트를 제출할 수 있습니다.</p>
             <p class="institutional-text">
                 Open-source transparency is a core principle of GitTree: you can audit exactly how your repository URLs are processed, verify that no data is stored server-side, and extend the tool to suit your workflow.
             </p>
@@ -246,32 +235,30 @@
                    rel="noopener noreferrer"
                    class="action-link action-link-primary">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                    <span data-i18n="aboutViewGitHub">View on GitHub</span>
+                    <span data-i18n="aboutViewGitHub">GitHub에서 보기</span>
                 </a>
                 <a href="https://github.com/JoaoClaudiano/gittree/issues"
                    target="_blank"
                    rel="noopener noreferrer"
                    class="action-link action-link-secondary">
-                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> <span data-i18n="aboutContactIssues">Issues</span>
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> <span data-i18n="aboutContactIssues">📄 Issues:</span>
                 </a>
             </div>
         </section>
 
         <!-- Contact & Support -->
         <section id="contact" class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutContactSupport">Contact &amp; Support</h2>
-            <p class="institutional-text" data-i18n="aboutContactText">
-                GitTree is maintained by a small independent team. We welcome all feedback — whether it's a bug report, a feature idea, a question about the project, or a contribution. Here is how to reach us:
-            </p>
+            <h2 class="section-title" data-i18n="aboutContactSupport">연락처 및 지원</h2>
+            <p class="institutional-text" data-i18n="aboutContactText">도움이 필요하거나 제안이 있으신가요? 연락해 주세요:</p>
             <ul class="institutional-list">
                 <li class="list-item">
-                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <strong data-i18n="aboutContactEmail">Email:</strong>
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <strong data-i18n="aboutContactEmail">📧 이메일:</strong>
                     <a href="mailto:gittree@proton.me" class="theme-link">
                         gittree@proton.me
                     </a>
                 </li>
                 <li class="list-item">
-                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> <strong data-i18n="aboutContactGitHub">GitHub:</strong>
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> <strong data-i18n="aboutContactGitHub">🐙 GitHub:</strong>
                     <a href="https://github.com/JoaoClaudiano"
                        target="_blank"
                        rel="noopener noreferrer"
@@ -280,36 +267,34 @@
                     </a>
                 </li>
                 <li class="list-item">
-                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> <strong data-i18n="aboutContactIssues">Issues:</strong>
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> <strong data-i18n="aboutContactIssues">📄 Issues:</strong>
                     <a href="https://github.com/JoaoClaudiano/gittree/issues"
                        target="_blank"
                        rel="noopener noreferrer"
                        class="theme-link"
-                       data-i18n="aboutContactIssuesText">
-                        Report problems or suggest features
-                    </a>
+                       data-i18n="aboutContactIssuesText">문제를 보고하거나 기능을 제안하세요</a>
                 </li>
             </ul>
         </section>
 
         <!-- Explore More -->
         <section class="institutional-section">
-            <h2 class="section-title" data-i18n="aboutExploreMore">Explore More</h2>
+            <h2 class="section-title" data-i18n="aboutExploreMore">더 탐색하기</h2>
             <div class="feature-grid">
                 <a href="guia.html" class="feature-card link-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
-                    <h3 style="margin-bottom: 8px;" data-i18n="aboutLinkGuide">User Guide</h3>
-                    <p class="institutional-text" data-i18n="aboutLinkGuideDesc">Learn how to use all features of GitTree</p>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutLinkGuide">사용자 가이드</h3>
+                    <p class="institutional-text" data-i18n="aboutLinkGuideDesc">GitTree의 모든 기능 사용법 알아보기</p>
                 </a>
                 <a href="contato.html" class="feature-card link-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/></svg></div>
-                    <h3 style="margin-bottom: 8px;" data-i18n="aboutLinkContact">Contact</h3>
-                    <p class="institutional-text" data-i18n="aboutLinkContactDesc">Get in touch with the team</p>
+                    <h3 style="margin-bottom: 8px;" data-i18n="aboutLinkContact">연락처</h3>
+                    <p class="institutional-text" data-i18n="aboutLinkContactDesc">팀에 연락하기</p>
                 </a>
-                <a href="/" class="feature-card link-card">
+                <a href="/ko/" class="feature-card link-card">
                     <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg></div>
                     <h3 style="margin-bottom: 8px;">GitTree</h3>
-                    <p class="institutional-text" data-i18n="aboutLinkToolDesc">Use the tool now — it's free</p>
+                    <p class="institutional-text" data-i18n="aboutLinkToolDesc">지금 바로 도구 사용 — 무료입니다</p>
                 </a>
             </div>
         </section>
@@ -321,31 +306,31 @@
                 <span class="footer-text">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
                     GitTree
-                    <a href="CHANGELOG.md" data-i18n-title="versionTooltip" title="O que esta versão faz? Veja o changelog completo" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
+                    <a href="../CHANGELOG.md" data-i18n-title="이 버전의 기능은? 전체 변경 로그 보기" title="O que esta versão faz? Veja o changelog completo" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
                 </span>
                 <span class="footer-separator">•</span>
-                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. All rights reserved.</span>
+                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. 모든 권리 보유.</span>
             </div>
             <div class="footer-links">
                 <a href="sobre.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <span data-i18n="footerAbout">About</span>
+                    <span data-i18n="footerAbout">소개</span>
                 </a>
                 <a href="guia.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-                    <span data-i18n="footerGuide">Guide</span>
+                    <span data-i18n="footerGuide">가이드</span>
                 </a>
                 <a href="contato.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <span data-i18n="footerContact">Contact</span>
+                    <span data-i18n="footerContact">연락처</span>
                 </a>
                 <a href="politica-de-privacidade.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span data-i18n="footerPrivacy">Privacy Policy</span>
+                    <span data-i18n="footerPrivacy">개인정보 보호정책</span>
                 </a>
                 <a href="termos.html" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span data-i18n="footerTerms">Terms of Use</span>
+                    <span data-i18n="footerTerms">이용약관</span>
                 </a>
                 <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
                     <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
@@ -359,7 +344,7 @@
         <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
     </a>
 
-    <script src="js/translations.js"></script>
-    <script src="js/institutional.js"></script>
+    <script src="../js/translations.js"></script>
+    <script src="../js/institutional.js"></script>
 </body>
 </html>
