@@ -262,7 +262,7 @@ body.light-theme {
     display: none;
 }
 
-#app.no-repo .view-section {
+#app.no-repo .view-section:not(#treeView) {
     display: none;
 }
 
