@@ -98,11 +98,32 @@ function _handleTreeNodeClick(e) {
         _renderLazyChildren(children);
         children.dataset.expanded = 'true';
         children.classList.add('expanded');
+        // Pin at 0 so the transition always starts from the correct value,
+        // then animate to the actual content height for a smooth expansion.
+        children.style.maxHeight = '0';
+        const targetHeight = children.scrollHeight;
+        children.style.maxHeight = targetHeight + 'px';
+        children.addEventListener('transitionend', function onExpanded() {
+            children.removeEventListener('transitionend', onExpanded);
+            // Remove the inline constraint so nested expansions can grow freely.
+            if (children.dataset.expanded === 'true') {
+                children.style.maxHeight = '';
+            }
+        });
         icon.classList.remove('collapsed');
         icon.classList.add('expanded');
     } else {
+        // Lock at the real rendered height before animating to 0 so the
+        // collapse always starts from the correct value (not from 5000px).
+        children.style.maxHeight = children.scrollHeight + 'px';
         children.dataset.expanded = 'false';
         children.classList.remove('expanded');
+        // Double rAF ensures the locked height is committed before we set 0.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                children.style.maxHeight = '0';
+            });
+        });
         icon.classList.remove('expanded');
         icon.classList.add('collapsed');
     }
@@ -206,7 +227,14 @@ function expandAllTreeNodes(expand = true) {
         }
     }
 
+    // Disable CSS transitions for the bulk operation so there is no
+    // artificial delay or abruptness from the max-height animation.
+    const noTransition = document.createElement('style');
+    noTransition.textContent = '.tree-node-children { transition: none !important; }';
+    document.head.appendChild(noTransition);
+
     document.querySelectorAll('.tree-node-children').forEach(container => {
+        container.style.maxHeight = ''; // Clear any JS-driven inline styles
         container.dataset.expanded = expand.toString();
         container.classList.toggle('expanded', expand);
     });
@@ -214,6 +242,11 @@ function expandAllTreeNodes(expand = true) {
     document.querySelectorAll('.tree-node-header.folder .tree-icon').forEach(icon => {
         icon.classList.toggle('collapsed', !expand);
         icon.classList.toggle('expanded', expand);
+    });
+
+    // Re-enable transitions after the browser has painted the new state.
+    requestAnimationFrame(() => {
+        document.head.removeChild(noTransition);
     });
 }
 
@@ -256,10 +289,16 @@ function expandParents(node) {
             const icon = parentNode?.querySelector(':scope > .tree-node-header .tree-icon');
             el.dataset.expanded = 'true';
             el.classList.add('expanded');
+            // Clear any inline max-height so the .expanded CSS rule takes effect immediately.
+            el.style.maxHeight = '';
             if (icon) {
                 icon.classList.remove('collapsed');
                 icon.classList.add('expanded');
             }
+        }
+        // Ancestor tree-node elements were hidden by searchTree; make them visible.
+        if (el.classList.contains('tree-node')) {
+            el.style.display = '';
         }
         if (el.id === 'treeContainer') break;
         el = el.parentElement;
