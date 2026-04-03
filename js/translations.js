@@ -28,7 +28,6 @@ const translations = {
         welcomeTitle: "Visualize any GitHub repository",
         welcomeSubtitle: "Enter a repository name or URL in the sidebar to explore its structure",
         welcomeExamples: "Try a popular repository:",
-        demoLabel: "Example",
 
         
         // Controls
@@ -454,7 +453,6 @@ const translations = {
         welcomeTitle: "Visualize qualquer repositório GitHub",
         welcomeSubtitle: "Digite o nome de um repositório ou URL na barra lateral para explorar sua estrutura",
         welcomeExamples: "Experimente um repositório popular:",
-        demoLabel: "Exemplo",
 
         
         // Controls
@@ -886,7 +884,6 @@ const translations = {
         welcomeTitle: "Visualiza cualquier repositorio de GitHub",
         welcomeSubtitle: "Ingresa el nombre de un repositorio o URL en la barra lateral para explorar su estructura",
         welcomeExamples: "Prueba un repositorio popular:",
-        demoLabel: "Ejemplo",
 
         
         // Controls
@@ -1281,7 +1278,6 @@ const translations = {
         welcomeTitle: "Visualisez n'importe quel dépôt GitHub",
         welcomeSubtitle: "Entrez un nom de dépôt ou une URL dans la barre latérale pour explorer sa structure",
         welcomeExamples: "Essayez un dépôt populaire :",
-        demoLabel: "Exemple",
 
         
         // Controls
@@ -1679,7 +1675,6 @@ const translations = {
         welcomeTitle: "Visualizza qualsiasi repository GitHub",
         welcomeSubtitle: "Inserisci il nome di un repository o URL nella barra laterale per esplorarne la struttura",
         welcomeExamples: "Prova un repository popolare:",
-        demoLabel: "Esempio",
 
         
         // Controls
@@ -2077,7 +2072,6 @@ const translations = {
         welcomeTitle: "任意のGitHubリポジトリを可視化",
         welcomeSubtitle: "サイドバーにリポジトリ名またはURLを入力して構造を探索してください",
         welcomeExamples: "人気のリポジトリを試してみてください：",
-        demoLabel: "例",
 
         
         // Controls
@@ -2475,7 +2469,6 @@ const translations = {
         welcomeTitle: "모든 GitHub 저장소를 시각화하세요",
         welcomeSubtitle: "사이드바에 저장소 이름이나 URL을 입력하여 구조를 탐색하세요",
         welcomeExamples: "인기 저장소를 시도해보세요:",
-        demoLabel: "예시",
 
         
         // Controls
@@ -2873,7 +2866,6 @@ const translations = {
         welcomeTitle: "可视化任意 GitHub 仓库",
         welcomeSubtitle: "在侧边栏输入仓库名称或 URL 以探索其结构",
         welcomeExamples: "试试热门仓库：",
-        demoLabel: "示例",
 
         
         // Controls
