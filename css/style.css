@@ -1137,7 +1137,7 @@ body.light-theme {
         display: none;
     }
 
-    /* Compact language selector: icon-only overlay */
+    /* Compact language selector: sigla-only overlay */
     .lang-wrapper {
         position: relative;
         width: 38px;
@@ -1152,9 +1152,14 @@ body.light-theme {
     }
 
     .lang-icon {
+        align-items: center;
+        justify-content: center;
         pointer-events: none;
         color: var(--dark-subtext);
-        font-size: 15px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        line-height: 1;
     }
 
     .lang-wrapper .language-selector {
@@ -1628,6 +1633,12 @@ select,
     display: none;
 }
 
+@media (max-width: 480px) {
+    .lang-icon {
+        display: flex;
+    }
+}
+
 .language-selector {
     background: var(--dark-card);
     border: 1px solid var(--dark-border);
@@ -1683,6 +1694,10 @@ body:not(.light-theme) .language-selector option {
 .light-theme .lang-wrapper {
     background: var(--light-card);
     border-color: var(--light-border);
+}
+
+.light-theme .lang-icon {
+    color: var(--light-subtext);
 }
 
 /* ============ SIDEBAR TOGGLE (mobile) ============ */
