@@ -3,8 +3,13 @@
 
 // ===== i18n =====
 document.addEventListener('DOMContentLoaded', function () {
+    function revealBody() {
+        document.body.style.visibility = 'visible';
+    }
+
     if (typeof initI18n === 'function') {
-        initI18n();
+        // initI18n() is async (fetches locale JSON); reveal body after translations load.
+        initI18n().then(revealBody, revealBody);
 
         const languageSelector = document.getElementById('languageSelector');
         if (languageSelector) {
@@ -12,9 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 setLanguage(e.target.value);
             });
         }
+    } else {
+        // Fallback: reveal immediately if i18n system is unavailable.
+        revealBody();
     }
-    // Reveal body now that translations have been applied (prevents flash of untranslated content)
-    document.body.style.visibility = 'visible';
 });
 
 // ===== Cookie Consent =====

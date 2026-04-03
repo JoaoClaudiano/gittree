@@ -6,7 +6,7 @@ function exportData(format) {
         return;
     }
 
-    showStatus(t('statusExporting').replace('{format}', format.toUpperCase()), 'info');
+    showStatus(t('statusExporting', { format: format.toUpperCase() }), 'info');
 
     setTimeout(() => {
         showStatus(t('statusExported'), 'success');
