@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GitTree roadmap — implemented versions, planned features, and ideas under analysis.">
+    <title data-i18n="novTitle">What's New – GitTree</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/institutional.css">
+    <link rel="canonical" href="https://gittree.pages.dev/ja/novidades.html">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M12 2L8 8H4l8 14 8-14h-4L12 2z%22/><path d=%22M12 16v6%22/></svg>">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://gittree.pages.dev/ja/novidades.html">
+    <meta property="og:title" content="GitTree — What's New &amp; Roadmap">
+    <meta property="og:description" content="GitTree roadmap — implemented versions, planned features, and ideas under analysis.">
+    <meta property="og:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="og:image:alt" content="GitTree Roadmap">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="GitTree">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://gittree.pages.dev/ja/novidades.html">
+    <meta property="twitter:title" content="GitTree — What's New &amp; Roadmap">
+    <meta property="twitter:description" content="GitTree roadmap — implemented versions, planned features, and ideas under analysis.">
+    <meta property="twitter:image" content="https://gittree.pages.dev/icons/android-chrome-512x512.png">
+    <meta property="twitter:site" content="@joaoclaudiano">
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "GitTree", "item": "https://gittree.pages.dev/"},
+        {"@type": "ListItem", "position": 2, "name": "What's New", "item": "https://gittree.pages.dev/ja/novidades.html"}
+      ]
+    }
+    </script>
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="x-default" href="https://gittree.pages.dev/novidades.html">
+    <link rel="alternate" hreflang="en" href="https://gittree.pages.dev/novidades.html">
+    <link rel="alternate" hreflang="pt" href="https://gittree.pages.dev/pt/novidades.html">
+    <link rel="alternate" hreflang="es" href="https://gittree.pages.dev/es/novidades.html">
+    <link rel="alternate" hreflang="fr" href="https://gittree.pages.dev/fr/novidades.html">
+    <link rel="alternate" hreflang="it" href="https://gittree.pages.dev/it/novidades.html">
+    <link rel="alternate" hreflang="ja" href="https://gittree.pages.dev/ja/novidades.html">
+    <link rel="alternate" hreflang="ko" href="https://gittree.pages.dev/ko/novidades.html">
+    <link rel="alternate" hreflang="zh" href="https://gittree.pages.dev/zh/novidades.html">
+    <!-- Hide body until i18n initialises to prevent flash of untranslated content -->
+    <style>body{visibility:hidden}</style>
+    <noscript><style>body{visibility:visible!important}</style></noscript>
+</head>
+<body>
+    <!-- Apply saved theme before first paint to prevent flash of wrong theme -->
+    <script>(function(){try{var t=localStorage.getItem('gittree-theme');if(t==='light')document.body.classList.add('light-theme');}catch(e){}})()</script>
+    <div id="read-progress" aria-hidden="true"></div>
+    <header class="institutional-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="/" class="logo">
+                    <svg width="1em" height="1em" class="svg-icon logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    <span>GitTree</span>
+                </a>
+            </div>
+            <div class="header-controls">
+                <select id="languageSelector" class="language-selector" title="Select Language" aria-label="Select interface language">
+                    <option value="en">EN</option>
+                    <option value="pt">PT</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="it">IT</option>
+                    <option value="ja">JA</option>
+                    <option value="ko">KO</option>
+                    <option value="zh">ZH</option>
+                </select>
+                <button id="themeToggle" class="theme-toggle-btn" title="Switch to Light Mode" aria-label="Switch to Light Mode"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+                <a href="/" class="back-button">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    <span data-i18n="backToTool">Back to Tool</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="institutional-main">
+        <h1 class="institutional-title" data-i18n="novTitle">What's New</h1>
+        <p class="institutional-subtitle" data-i18n="novSubtitle">Roadmap, implemented versions, and ideas under analysis</p>
+
+        <!-- Chip Navigation -->
+        <nav class="chip-nav" aria-label="Page sections">
+            <a class="chip" href="#versions">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                <span data-i18n="novChipVersions">Versions</span>
+            </a>
+            <a class="chip" href="#roadmap">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span data-i18n="novChipRoadmap">Roadmap</span>
+            </a>
+            <a class="chip" href="#ideas">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="21" x2="15" y2="21"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg>
+                <span data-i18n="novChipIdeas">Ideas</span>
+            </a>
+        </nav>
+
+        <!-- Implemented Versions -->
+        <section id="versions" class="institutional-section">
+            <h2 class="section-title">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                <span data-i18n="novVersionsTitle">Implemented Versions</span>
+            </h2>
+
+            <!-- v1.0 -->
+            <div class="notice-box" style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:0.5rem;">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top:0.2rem;flex-shrink:0;color:var(--primary);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div>
+                    <strong style="font-size: 1.05rem;" data-i18n="novV1Title">v1.0 — Initial Release</strong>
+                    <span style="margin-left:0.75rem;font-size:0.8rem;color:var(--dark-subtext);" data-i18n="novV1Date">January 2025</span>
+                    <p class="institutional-text" style="margin-top:0.5rem;" data-i18n="novV1Desc">First public version of GitTree, launching the core functionality for exploring GitHub repositories.</p>
+                </div>
+            </div>
+
+            <ul class="institutional-list" style="margin-top:0.75rem;">
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature1">Interactive tree visualization of any public GitHub repository</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature2">Repository metrics and analytics (stars, forks, languages, size)</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature3">Export as JSON, CSV, and plain text / Markdown</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature4">Dark and light themes with automatic preference detection</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature5">Multi-language support: English, Portuguese, Spanish, French, Italian, Japanese, Korean, Chinese</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature6">Smart local cache for instant re-loading</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature7">Fully responsive and accessible interface (mobile-friendly)</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature8">Zero setup — no account, no installation, no API key required</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="novV1Feature9">Open source under the MIT License</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap" class="institutional-section">
+            <h2 class="section-title">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span data-i18n="novRoadmapTitle">Roadmap — Planned Features</span>
+            </h2>
+            <p class="institutional-text" data-i18n="novRoadmapDesc">
+                These are improvements and features currently under evaluation. Priorities may change based on community feedback and technical feasibility.
+            </p>
+
+            <div class="feature-grid" style="margin-top: 1.25rem;">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="novRoadmapItem1Title">File Content Preview</h3>
+                    <p class="institutional-text" data-i18n="novRoadmapItem1Desc">View file contents directly in the browser without leaving GitTree</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="novRoadmapItem2Title">Private Repository Support</h3>
+                    <p class="institutional-text" data-i18n="novRoadmapItem2Desc">Analyze private repositories with secure GitHub token authentication</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5.5" y2="16.5"/><line x1="12" y1="8" x2="18.5" y2="16.5"/></svg></div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="novRoadmapItem3Title">Dependency Graph</h3>
+                    <p class="institutional-text" data-i18n="novRoadmapItem3Desc">Visual map of dependencies between modules and packages</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="9" height="18" rx="1"/><rect x="13" y="3" width="9" height="18" rx="1"/></svg></div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="novRoadmapItem4Title">Repository Comparison</h3>
+                    <p class="institutional-text" data-i18n="novRoadmapItem4Desc">Side-by-side structure comparison between two repositories</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="novRoadmapItem5Title">VS Code Extension</h3>
+                    <p class="institutional-text" data-i18n="novRoadmapItem5Desc">Integrate GitTree directly into your development environment</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                    <h3 style="margin-bottom: 8px;" data-i18n="novRoadmapItem6Title">Star History Charts</h3>
+                    <p class="institutional-text" data-i18n="novRoadmapItem6Desc">Visualize repository growth and popularity over time</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ideas Under Analysis -->
+        <section id="ideas" class="institutional-section">
+            <h2 class="section-title">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="21" x2="15" y2="21"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17H8v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/></svg>
+                <span data-i18n="novIdeasTitle">Ideas Under Analysis</span>
+            </h2>
+            <p class="institutional-text" data-i18n="novIdeasDesc">
+                These concepts are in early exploration. Not yet committed to the roadmap.
+            </p>
+            <ul class="institutional-list" style="margin-top: 1rem;">
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novIdeasItem1">GitHub Actions / CI workflow visualization</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novIdeasItem2">Code complexity and quality metrics</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novIdeasItem3">Shareable links with custom tree snapshots</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novIdeasItem4">GitLab and Bitbucket support</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novIdeasItem5">API endpoint for programmatic access</span>
+                </li>
+                <li class="list-item">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novIdeasItem6">Contributor graph and activity timeline</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Feedback -->
+        <section class="institutional-section">
+            <h2 class="section-title">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <span data-i18n="novFeedbackTitle">Share Your Feedback</span>
+            </h2>
+            <p class="institutional-text" data-i18n="novFeedbackDesc">
+                Have an idea or suggestion? We read every message. Open an issue on GitHub or send us an email.
+            </p>
+            <div style="display:flex;gap:1rem;margin-top:1.25rem;flex-wrap:wrap;">
+                <a href="https://github.com/JoaoClaudiano/gittree/issues"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="action-link action-link-primary">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="novFeedbackGitHub">Open an Issue</span>
+                </a>
+                <a href="contato.html"
+                   class="action-link action-link-secondary">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span data-i18n="novFeedbackContact">Send a Message</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="institutional-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <span class="footer-text">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    GitTree
+                    <a href="../CHANGELOG.md" data-i18n-title="versionTooltip" title="What does this version do? See the full changelog" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
+                </span>
+                <span class="footer-separator">•</span>
+                <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. All rights reserved.</span>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/JoaoClaudiano/gittree/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link" style="font-size:0.78rem;padding:2px 8px;border:1px solid var(--dark-border);border-radius:12px;">
+                    <svg width="0.85em" height="0.85em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span data-i18n="footerLicense">MIT License</span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="sobre.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span data-i18n="footerAbout">About</span>
+                </a>
+                <a href="novidades.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span data-i18n="footerNews">What's New</span>
+                </a>
+                <a href="guia.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    <span data-i18n="footerGuide">Guide</span>
+                </a>
+                <a href="contato.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <span data-i18n="footerContact">Contact</span>
+                </a>
+                <a href="politica-de-privacidade.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span data-i18n="footerPrivacy">Privacy Policy</span>
+                </a>
+                <a href="termos.html" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span data-i18n="footerTerms">Terms of Use</span>
+                </a>
+                <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a id="skip-to-top" href="#" aria-label="Back to top">
+        <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+    </a>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/institutional.js"></script>
+</body>
+</html>
