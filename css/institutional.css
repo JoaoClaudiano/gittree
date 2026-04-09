@@ -187,22 +187,6 @@ body.light-theme {
     margin: 1rem 0;
 }
 
-/* ============ FOOTER ============ */
-.institutional-footer {
-    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
-    border-top: 1px solid var(--dark-border);
-    padding: 2rem 0;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--dark-subtext);
-}
-
-.light-theme .institutional-footer {
-    background: linear-gradient(135deg, var(--light-card) 0%, #f1f5f9 100%);
-    border-top: 1px solid var(--light-border);
-    color: var(--light-subtext);
-}
-
 /* ============ LANGUAGE SELECTOR & HEADER CONTROLS ============ */
 .language-selector {
     background: var(--dark-card);
@@ -420,30 +404,6 @@ a.link-card:hover {
     transform: translateY(-4px);
 }
 
-/* ============ FOOTER NAVIGATION ============ */
-.footer-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.footer-nav a {
-    color: var(--dark-subtext);
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.25s;
-}
-
-.footer-nav a:hover {
-    color: var(--primary);
-}
-
-.light-theme .footer-nav a {
-    color: var(--light-subtext);
-}
-
 /* ============ FOOTER — SHARED WITH MAIN PAGE ============ */
 .institutional-footer {
     background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
@@ -522,6 +482,17 @@ a.link-card:hover {
 .footer-link:hover {
     color: var(--primary);
     transform: translateY(-1px);
+}
+
+.footer-license-badge {
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+}
+
+.light-theme .footer-license-badge {
+    border-color: var(--light-border);
 }
 
 /* ============ CONTACT FORM ============ */

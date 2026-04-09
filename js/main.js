@@ -1,7 +1,6 @@
 // Main entry point – app initialization and control wiring
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🌳 GitTree v1.0 inicializando...');
     initApp();
 });
 
@@ -13,8 +12,6 @@ function initApp() {
     initSidebarToggle();
     initKeyboardShortcuts();
     loadDefaultRepo();
-
-    console.log('✅ GitTree v1.0 inicializado');
 }
 
 function initSidebarToggle() {
@@ -168,6 +165,3 @@ window.GitTree = {
     test: testRepo,
     analyze: analyzeRepository
 };
-
-console.log('🌳 GitTree v1.0 carregado!');
-console.log('Teste com: GitTree.test("facebook/react")');

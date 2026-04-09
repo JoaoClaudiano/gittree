@@ -98,4 +98,3 @@ function createSkeletonTree(depth = 3, itemsPerLevel = [3, 4, 5]) {
 
 // Export for use in main application
 window.createSkeletonTree = createSkeletonTree;
-window.RecursiveSkeletonTree = createSkeletonTree; // Backward compatibility

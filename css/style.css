@@ -849,7 +849,7 @@ body.light-theme {
 .main-footer {
     background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
     border-top: 1px solid var(--dark-border);
-    height: var(--footer-height);
+    min-height: var(--footer-height);
     transition: all 0.3s;
     flex-shrink: 0;
     margin-top: auto;
@@ -861,10 +861,12 @@ body.light-theme {
     max-width: var(--container-max-width);
     width: 100%;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 10px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .light-theme .main-footer {
@@ -875,7 +877,8 @@ body.light-theme {
 .footer-info {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .footer-text {
@@ -893,7 +896,8 @@ body.light-theme {
 .footer-links {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .footer-link {
@@ -913,6 +917,17 @@ body.light-theme {
 .footer-link:hover {
     color: var(--primary);
     transform: translateY(-1px);
+}
+
+.footer-license-badge {
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+}
+
+.light-theme .footer-license-badge {
+    border-color: var(--light-border);
 }
 
 /* ============ SCROLLBAR ============ */
