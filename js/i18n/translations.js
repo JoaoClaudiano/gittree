@@ -1,5 +1,5 @@
 // GitTree i18n – Internationalization System
-// Translation data lives in js/locales/{lang}.json (one file per language).
+// Translation data lives in js/i18n/locales/{lang}.json (one file per language).
 // Supports: English, Portuguese, Spanish, French, Italian, Japanese, Korean, Chinese
 
 // ---------------------------------------------------------------------------
@@ -11,7 +11,7 @@ const _localesBase = (function () {
     if (typeof document !== 'undefined' && document.currentScript) {
         return document.currentScript.src.replace(/\/[^/]+$/, '/locales/');
     }
-    return '/js/locales/';
+    return '/js/i18n/locales/';
 }());
 
 // ---------------------------------------------------------------------------
