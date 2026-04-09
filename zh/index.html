@@ -376,55 +376,62 @@
         </main>
     </div>
 
-    <footer class="main-footer">
+        <footer class="main-footer">
         <div class="footer-container">
-            <div class="footer-section">
-                <div class="footer-info">
-                    <span class="footer-text">
-                        <i class="fas fa-tree"></i> GitTree 
-                        <a href="../CHANGELOG.md" data-i18n-title="此版本的功能？查看完整的更改日志" title="What does this version do?" target="_blank" style="color: inherit; text-decoration: none;">v1.0</a>
-                    </span>
-                    <span class="footer-separator">•</span>
-                    <span class="footer-text" id="cacheStatus">
-                        <i class="fas fa-database"></i> Cache: 0KB
-                    </span>
-                    <span class="footer-separator">•</span>
-                    <span class="footer-text" data-i18n="footerCopyright">© 2026 GitTree. 保留所有权利。</span>
-                <span class="footer-separator">•</span>
-                <a href="https://github.com/JoaoClaudiano/gittree/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link footer-license-badge">
-                    <svg width="0.85em" height="0.85em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span data-i18n="footerLicense">MIT License</span>
-                </a>
+            <!-- Brand column -->
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="1.1em" height="1.1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L8 8H4l8 14 8-14h-4L12 2z"/><path d="M12 16v6"/></svg>
+                    <span class="footer-logo-name">GitTree</span>
+                    <a href="../CHANGELOG.md" class="footer-version" data-i18n-title="versionTooltip" title="What does this version do?" target="_blank">v1.0</a>
                 </div>
+                <p class="footer-tagline" data-i18n="footerTagline">Free GitHub repository structure visualizer</p>
+                <span class="footer-cache" id="cacheStatus">
+                    <svg width="0.8em" height="0.8em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    Cache: 0KB
+                </span>
             </div>
-            
-            <div class="footer-section">
-                <div class="footer-links">
+            <!-- Navigation column -->
+            <div class="footer-col">
+                <h4 class="footer-col-title" data-i18n="footerNavTitle">Navigate</h4>
+                <nav class="footer-nav" aria-label="Footer navigation">
                     <a href="sobre.html" class="footer-link">
-                        <i class="fas fa-info-circle"></i> <span data-i18n="footerAbout">关于</span>
+                        <i class="fas fa-info-circle"></i> <span data-i18n="footerAbout">About</span>
                     </a>
-
                     <a href="novidades.html" class="footer-link">
                         <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                         <span data-i18n="footerNews">What's New</span>
                     </a>
                     <a href="guia.html" class="footer-link">
-                        <i class="fas fa-book"></i> <span data-i18n="footerGuide">指南</span>
+                        <i class="fas fa-book"></i> <span data-i18n="footerGuide">Guide</span>
                     </a>
                     <a href="contato.html" class="footer-link">
-                        <i class="fas fa-envelope"></i> <span data-i18n="footerContact">联系</span>
+                        <i class="fas fa-envelope"></i> <span data-i18n="footerContact">Contact</span>
                     </a>
+                </nav>
+            </div>
+            <!-- Legal column -->
+            <div class="footer-col">
+                <h4 class="footer-col-title" data-i18n="footerLegalTitle">Legal &amp; Source</h4>
+                <nav class="footer-nav" aria-label="Legal links">
                     <a href="politica-de-privacidade.html" class="footer-link">
-                        <i class="fas fa-user-shield"></i> <span data-i18n="footerPrivacy">隐私政策</span>
+                        <i class="fas fa-user-shield"></i> <span data-i18n="footerPrivacy">Privacy Policy</span>
                     </a>
                     <a href="termos.html" class="footer-link">
-                        <i class="fas fa-file-contract"></i> <span data-i18n="footerTerms">使用条款</span>
+                        <i class="fas fa-file-contract"></i> <span data-i18n="footerTerms">Terms of Use</span>
                     </a>
-                    <a href="https://github.com/JoaoClaudiano" target="_blank" class="footer-link">
+                    <a href="https://github.com/JoaoClaudiano/gittree/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link">
+                        <svg width="0.85em" height="0.85em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span data-i18n="footerLicense">MIT License</span>
+                    </a>
+                    <a href="https://github.com/JoaoClaudiano" target="_blank" rel="noopener noreferrer" class="footer-link">
                         <i class="fab fa-github"></i> GitHub
                     </a>
-                </div>
+                </nav>
             </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-i18n="footerCopyright">© 2026 GitTree. All rights reserved.</span>
         </div>
     </footer>
     <!-- Cookie Consent Banner (LGPD/GDPR) -->
@@ -443,15 +450,15 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-    <script src="../js/translations.js"></script>
-    <script src="../js/skeleton-loader.js"></script>
-    <script src="../js/utils.js"></script>
-    <script src="../js/ui.js"></script>
-    <script src="../js/tree.js"></script>
-    <script src="../js/metrics.js"></script>
-    <script src="../js/export.js"></script>
-    <script src="../js/api.js"></script>
-    <script src="../js/enhanced-tree.js"></script>
+    <script src="../js/i18n/translations.js"></script>
+    <script src="../js/components/skeleton-loader.js"></script>
+    <script src="../js/modules/utils.js"></script>
+    <script src="../js/components/ui.js"></script>
+    <script src="../js/components/tree.js"></script>
+    <script src="../js/modules/metrics.js"></script>
+    <script src="../js/modules/export.js"></script>
+    <script src="../js/api/api.js"></script>
+    <script src="../js/components/enhanced-tree.js"></script>
     <script src="../js/main.js"></script>
 
     <script src="../js/init.js"></script>

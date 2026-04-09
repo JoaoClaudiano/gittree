@@ -405,14 +405,12 @@ a.link-card:hover {
 }
 
 /* ============ FOOTER — SHARED WITH MAIN PAGE ============ */
+/* ============ FOOTER ============ */
 .institutional-footer {
     background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
     border-top: 1px solid var(--dark-border);
-    padding: 0 0;
-    display: flex;
-    align-items: center;
-    min-height: 56px;
     flex-shrink: 0;
+    transition: background 0.3s, border-color 0.3s;
 }
 
 .light-theme .institutional-footer {
@@ -424,66 +422,122 @@ a.link-card:hover {
     max-width: 1400px;
     width: 100%;
     margin: 0 auto;
+    padding: 28px 30px 20px;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 12px 30px;
+    border-top: 1px solid var(--dark-border);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.footer-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.footer-text {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    justify-content: center;
+    font-size: 12px;
     color: var(--dark-subtext);
-    font-size: 13px;
 }
 
-.light-theme .footer-text {
+.light-theme .footer-bottom {
+    border-top-color: var(--light-border);
     color: var(--light-subtext);
 }
 
-.footer-separator {
-    color: var(--dark-border);
+/* Brand column */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.light-theme .footer-separator {
-    color: var(--light-border);
-}
-
-.footer-links {
+.footer-logo {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.footer-logo-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark-text);
+    letter-spacing: -0.3px;
+}
+
+.footer-version {
+    font-size: 11px;
+    color: var(--primary);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 10px;
+    padding: 1px 7px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.footer-version:hover {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.footer-tagline {
+    font-size: 13px;
+    color: var(--dark-subtext);
+    line-height: 1.4;
+    max-width: 220px;
+}
+
+/* Navigation / Legal columns */
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-col-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dark-subtext);
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .footer-link {
     color: var(--dark-subtext);
     text-decoration: none;
     font-size: 13px;
-    transition: all 0.3s;
+    transition: color 0.2s, transform 0.2s;
     display: flex;
     align-items: center;
-    gap: 6px;
-}
-
-.light-theme .footer-link {
-    color: var(--light-subtext);
+    gap: 7px;
 }
 
 .footer-link:hover {
     color: var(--primary);
-    transform: translateY(-1px);
+    transform: translateX(3px);
 }
 
+.light-theme .footer-logo-name {
+    color: var(--light-text);
+}
+
+.light-theme .footer-tagline,
+.light-theme .footer-col-title,
+.light-theme .footer-link {
+    color: var(--light-subtext);
+}
+
+/* Keep backward compat */
 .footer-license-badge {
     font-size: 0.78rem;
     padding: 2px 8px;
@@ -654,18 +708,11 @@ a.link-card:hover {
     }
 
     .footer-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 14px 16px;
-        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding: 20px 16px 16px;
     }
 
-    .footer-links {
-        justify-content: center;
-        gap: 14px;
-    }
-}
 
 @media (max-width: 480px) {
     .institutional-title {
@@ -718,6 +765,12 @@ a.link-card:hover {
 
     .footer-link {
         font-size: 12px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px 12px 12px;
     }
 }
 
