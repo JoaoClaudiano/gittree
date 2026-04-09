@@ -169,6 +169,7 @@
   "contactFormName": "Nome *",
   "contactFormNamePlaceholder": "Seu nome",
   "contactFormEmail": "Email *",
+  "contactFormEmailPlaceholder": "seu@email.com",
   "contactFormSubject": "Assunto",
   "contactFormSubjectPlaceholder": "Sobre o que se trata?",
   "contactFormMessage": "Mensagem *",

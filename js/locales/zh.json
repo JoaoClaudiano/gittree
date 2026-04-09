@@ -161,6 +161,7 @@
   "contactFormName": "姓名 *",
   "contactFormNamePlaceholder": "您的姓名",
   "contactFormEmail": "电子邮件 *",
+  "contactFormEmailPlaceholder": "your@email.com",
   "contactFormSubject": "主题",
   "contactFormSubjectPlaceholder": "关于什么？",
   "contactFormMessage": "消息 *",

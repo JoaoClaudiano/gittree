@@ -161,6 +161,7 @@
   "contactFormName": "이름 *",
   "contactFormNamePlaceholder": "이름을 입력하세요",
   "contactFormEmail": "이메일 *",
+  "contactFormEmailPlaceholder": "your@email.com",
   "contactFormSubject": "제목",
   "contactFormSubjectPlaceholder": "어떤 내용인가요?",
   "contactFormMessage": "메시지 *",

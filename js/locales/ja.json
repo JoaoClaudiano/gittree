@@ -161,6 +161,7 @@
   "contactFormName": "お名前 *",
   "contactFormNamePlaceholder": "お名前",
   "contactFormEmail": "メールアドレス *",
+  "contactFormEmailPlaceholder": "your@email.com",
   "contactFormSubject": "件名",
   "contactFormSubjectPlaceholder": "件名を入力してください",
   "contactFormMessage": "メッセージ *",
