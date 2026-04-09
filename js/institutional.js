@@ -101,6 +101,112 @@
         });
     }
 
+    // ===== CONTACT FORM =====
+    function initContactForm() {
+        var form = document.getElementById('contactForm');
+        if (!form) return;
+
+        var statusEl  = document.getElementById('contactFormStatus');
+        var submitBtn = document.getElementById('contactSubmitBtn');
+        var ENDPOINT  = 'https://formsubmit.co/ajax/fa441fa540f3b0e3989f3268b6371e3b';
+
+        var BTN_DEFAULT = submitBtn.innerHTML;
+        var BTN_LOADING = '<svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>Sending\u2026</span>';
+
+        function sanitize(str) {
+            // Trim and remove control characters; display is always via textContent, never innerHTML
+            return String(str).trim().replace(/[\u0000-\u001F\u007F]/g, '');
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+        }
+
+        function showStatus(type, message) {
+            statusEl.className = 'form-status ' + type;
+            statusEl.textContent = message; // textContent prevents XSS
+            statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function clearStatus() {
+            statusEl.className = 'form-status';
+            statusEl.textContent = '';
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            clearStatus();
+
+            var name    = sanitize(document.getElementById('contactName').value);
+            var email   = sanitize(document.getElementById('contactEmail').value);
+            var subject = sanitize(document.getElementById('contactSubject').value);
+            var message = sanitize(document.getElementById('contactMessage').value);
+
+            if (!name) {
+                showStatus('error', 'Please enter your name.');
+                document.getElementById('contactName').focus();
+                return;
+            }
+            if (name.length > 100) {
+                showStatus('error', 'Name must be 100 characters or fewer.');
+                document.getElementById('contactName').focus();
+                return;
+            }
+            if (!email || !isValidEmail(email)) {
+                showStatus('error', 'Please enter a valid email address.');
+                document.getElementById('contactEmail').focus();
+                return;
+            }
+            if (!message || message.length < 10) {
+                showStatus('error', 'Please enter a message of at least 10 characters.');
+                document.getElementById('contactMessage').focus();
+                return;
+            }
+            if (message.length > 2000) {
+                showStatus('error', 'Message must be 2,000 characters or fewer.');
+                document.getElementById('contactMessage').focus();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = BTN_LOADING;
+
+            fetch(ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    subject: subject || 'Contact form message',
+                    message: message
+                })
+            })
+            .then(function (res) {
+                return res.json().then(function (data) {
+                    return { ok: res.ok, data: data };
+                });
+            })
+            .then(function (result) {
+                if (result.ok && (result.data.success === 'true' || result.data.success === true)) {
+                    showStatus('success', '\u2713 Your message was sent successfully! We\u2019ll get back to you within 24\u201348 business hours.');
+                    form.reset();
+                } else {
+                    showStatus('error', 'Something went wrong. Please try again or email us directly at gittree@proton.me.');
+                }
+            })
+            .catch(function () {
+                showStatus('error', 'Network error. Please check your connection and try again, or email us at gittree@proton.me.');
+            })
+            .finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = BTN_DEFAULT;
+            });
+        });
+    }
+
     // ===== INIT =====
     document.addEventListener('DOMContentLoaded', function () {
         applyTheme();
@@ -112,6 +218,7 @@
         initSkipToTop();
         initChipNav();
         initLanguageSelector();
+        initContactForm();
 
         if (typeof initI18n === 'function') {
             // initI18n() is async; reveal body once translations are applied.
