@@ -15,12 +15,9 @@ window.GitTree2026 = {
 function initGitTree2026Features() {
     // Prevent double initialization
     if (window.GitTree2026.initialized) {
-        console.log('⚠️ GitTree 2026 Features already initialized');
         return;
     }
-    
-    console.log('🚀 Initializing GitTree 2026 Features...');
-    
+
     // Add keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         // Escape to close modals
@@ -29,9 +26,8 @@ function initGitTree2026Features() {
             renderBentoPanel();
         }
     });
-    
+
     window.GitTree2026.initialized = true;
-    console.log('✅ GitTree 2026 Features initialized');
 }
 
 // Render Bento Metadata Panel
@@ -230,85 +226,11 @@ function hideSkeletonLoader() {
     }
 }
 
-// Add impact highlighting to modified files
-function setImpactHighlight(modifiedFiles) {
-    // modifiedFiles should be an array of file paths
-    window.GitTree2026.impactHighlightFiles = new Set(modifiedFiles);
-    updateTreeWithImpactHighlight();
-}
-
-// Update tree with impact highlighting
-function updateTreeWithImpactHighlight() {
-    const treeItems = document.querySelectorAll('.tree-item, .tree-folder');
-    
-    treeItems.forEach(item => {
-        const path = item.getAttribute('data-path');
-        if (path && window.GitTree2026.impactHighlightFiles.has(path)) {
-            // Determine impact level (could be based on changes, lines modified, etc.)
-            const impactLevel = 'high'; // Default to high for now
-            
-            item.classList.remove('file-impact-low', 'file-impact-medium', 'file-impact-high');
-            item.classList.add(`file-impact-${impactLevel}`);
-            
-            // Add glow effect
-            item.style.setProperty('--glow-color', 'rgba(0, 212, 255, 0.4)');
-        } else {
-            item.classList.remove('file-impact-low', 'file-impact-medium', 'file-impact-high');
-        }
-    });
-}
-
-// Expand and scroll to a path in the tree
-function expandAndScrollToPath(path) {
-    // Split path into components
-    const parts = path.split('/');
-    let currentPath = '';
-    
-    // Expand each folder in the path
-    for (let i = 0; i < parts.length - 1; i++) {
-        currentPath += (i > 0 ? '/' : '') + parts[i];
-        const folder = document.querySelector(`[data-path="${currentPath}"]`);
-        if (folder) {
-            folder.setAttribute('aria-expanded', 'true');
-            // Trigger expansion if it's a folder toggle
-            const toggle = folder.querySelector('.folder-toggle');
-            if (toggle) {
-                toggle.click();
-            }
-        }
-    }
-    
-    // Scroll to the target
-    setTimeout(() => {
-        const target = document.querySelector(`[data-path="${path}"]`);
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            target.focus();
-            
-            // Highlight briefly
-            target.style.transition = 'background 0.3s ease';
-            target.style.background = 'rgba(0, 212, 255, 0.3)';
-            setTimeout(() => {
-                target.style.background = '';
-            }, 2000);
-        }
-    }, 300);
-}
-
-// Enhanced file click handler with Bento panel
-function handleFileClickWithBento(file) {
-    window.GitTree2026.selectedFile = file;
-    window.GitTree2026.bentoMetadataPanelOpen = true;
-    renderBentoPanel();
-}
-
 // Export enhanced functions
 window.initGitTree2026Features = initGitTree2026Features;
 window.showSkeletonLoader = showSkeletonLoader;
 window.hideSkeletonLoader = hideSkeletonLoader;
-window.setImpactHighlight = setImpactHighlight;
 window.renderBentoPanel = renderBentoPanel;
-window.handleFileClickWithBento = handleFileClickWithBento;
 
 // Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {
