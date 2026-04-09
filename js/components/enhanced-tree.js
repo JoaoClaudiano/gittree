@@ -134,7 +134,7 @@ function renderBentoPanelVanilla() {
             border: 'rgba(55, 65, 81, 0.5)',
             labelColor: 'rgb(156, 163, 175)',
             label: t('bentoFileSize'),
-            value: formatFileSize(file.sizeKB || 0),
+            value: file.sizeDisplay || formatFileSize(file.sizeKB || 0),
             valueStyle: 'font-size: 1.875rem; font-weight: bold; color: white;'
         },
         {
@@ -142,13 +142,17 @@ function renderBentoPanelVanilla() {
             border: 'rgba(59, 130, 246, 0.3)',
             labelColor: 'rgb(147, 197, 253)',
             label: t('bentoExtension'),
-            value: '.' + (file.extension || 'unknown'),
+            value: file.extension ? '.' + file.extension : t('noExtension') || '—',
             valueStyle: 'font-size: 1.5rem; font-weight: bold; color: white; font-family: monospace;'
         },
         {
-            bg: 'linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%)',
-            border: 'rgba(168, 85, 247, 0.3)',
-            labelColor: 'rgb(216, 180, 254)',
+            bg: file.langColor
+                ? ('linear-gradient(135deg, ' + file.langColor + '22 0%, ' + file.langColor + '11 100%)')
+                : 'linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%)',
+            border: file.langColor
+                ? (file.langColor + '55')
+                : 'rgba(168, 85, 247, 0.3)',
+            labelColor: file.langColor || 'rgb(216, 180, 254)',
             label: t('bentoLanguage'),
             value: file.language || t('unknownLanguage'),
             valueStyle: 'font-size: 1.5rem; font-weight: bold; color: white;'
@@ -173,6 +177,20 @@ function renderBentoPanelVanilla() {
     });
 
     body.appendChild(cardsGrid);
+
+    // GitHub link
+    if (file.githubUrl && file.githubUrl !== '#') {
+        const ghLink = document.createElement('a');
+        ghLink.href = file.githubUrl;
+        ghLink.target = '_blank';
+        ghLink.rel = 'noopener noreferrer';
+        ghLink.style.cssText = 'display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; padding: 8px 14px; background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.25); border-radius: 8px; color: rgb(0, 212, 255); font-size: 13px; text-decoration: none; transition: background 0.2s;';
+        ghLink.innerHTML = '<i class="fab fa-github" aria-hidden="true"></i> View on GitHub';
+        ghLink.addEventListener('mouseover', function () { ghLink.style.background = 'rgba(0, 212, 255, 0.15)'; });
+        ghLink.addEventListener('mouseout', function () { ghLink.style.background = 'rgba(0, 212, 255, 0.08)'; });
+        body.appendChild(ghLink);
+    }
+
     panel.appendChild(header);
     panel.appendChild(body);
     overlay.appendChild(panel);

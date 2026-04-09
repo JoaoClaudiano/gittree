@@ -169,85 +169,90 @@
         <aside class="app-sidebar">
             <div class="ui-layer">
                 <div class="section-header">
-                    <i class="fas fa-tree"></i>
+                    <i class="fas fa-tree" aria-hidden="true"></i>
                     <h3 data-i18n="sectionTitle">GitHub Visualizer</h3>
                 </div>
                 
                 <div class="input-group">
-                    <input type="text" 
-                           id="repoInput" 
-                           placeholder="username/repository or full GitHub URL"
-                           data-i18n="inputPlaceholder"
-                           class="repo-input"
-                           value="facebook/react">
+                    <div class="repo-input-wrapper">
+                        <input type="text" 
+                               id="repoInput" 
+                               placeholder="username/repository or full GitHub URL"
+                               data-i18n="inputPlaceholder"
+                               class="repo-input"
+                               value="facebook/react"
+                               autocomplete="off"
+                               aria-label="GitHub repository URL or owner/repo">
+                    </div>
                     <div class="input-btn-row">
-                        <button id="pasteBtn" class="btn-secondary" title="Paste link from clipboard">
-                            <i class="fas fa-paste"></i> <span data-i18n="btnPaste">Paste</span>
+                        <button id="pasteBtn" class="btn-secondary" title="Paste link from clipboard" aria-label="Paste repository URL from clipboard">
+                            <i class="fas fa-paste" aria-hidden="true"></i> <span data-i18n="btnPaste">Paste</span>
                         </button>
-                        <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure (Enter)">
-                            <i class="fas fa-eye"></i>
+                        <button id="analyzeBtn" class="btn-primary" title="Analyze and visualize repository structure (Enter)" aria-label="Visualize repository structure">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
                             <span data-i18n="btnVisualize">Visualize</span>
                         </button>
                     </div>
                 </div>
 
                 <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-expanded="false" aria-controls="sidebarCollapsible">
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
                     <span data-i18n="btnShowControls">Show Controls</span>
                 </button>
 
                 <div class="sidebar-collapsible" id="sidebarCollapsible">
                     <div class="status-container">
                         <div class="status-box" id="statusBox">
-                            <i class="fas fa-info-circle"></i>
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
                             <span id="statusText" data-i18n="statusDefault">Enter a GitHub repository</span>
                         </div>
+                        <div class="rate-limit-display" id="rateLimitDisplay" aria-label="GitHub API rate limit"></div>
                     </div>
                     
                     <div class="controls-section">
-                        <h4><i class="fas fa-eye"></i> <span data-i18n="controlsVisualization">Visualization</span></h4>
-                        <div class="view-toggle">
-                            <button class="view-btn active" data-view="tree" title="View hierarchical tree structure">
-                                <i class="fas fa-folder-tree"></i>
+                        <h4><i class="fas fa-eye" aria-hidden="true"></i> <span data-i18n="controlsVisualization">Visualization</span></h4>
+                        <div class="view-toggle" role="group" aria-label="View mode">
+                            <button class="view-btn active" data-view="tree" title="View hierarchical tree structure" aria-pressed="true">
+                                <i class="fas fa-folder-tree" aria-hidden="true"></i>
                                 <span data-i18n="btnTree">Tree</span>
                             </button>
-                            <button class="view-btn" data-view="metrics" title="View repository metrics and statistics">
-                                <i class="fas fa-chart-bar"></i>
+                            <button class="view-btn" data-view="metrics" title="View repository metrics and statistics" aria-pressed="false">
+                                <i class="fas fa-chart-bar" aria-hidden="true"></i>
                                 <span data-i18n="btnMetrics">Metrics</span>
                             </button>
                         </div>
                     </div>
                     
                     <div class="controls-section">
-                        <h4><i class="fas fa-tools"></i> <span data-i18n="controlsActions">Actions</span></h4>
+                        <h4><i class="fas fa-tools" aria-hidden="true"></i> <span data-i18n="controlsActions">Actions</span></h4>
                         <div class="tool-buttons">
-                            <button id="clearCacheBtn" class="btn-secondary" title="Clear local cache of analyzed repositories">
-                                <i class="fas fa-trash"></i>
+                            <button id="clearCacheBtn" class="btn-secondary" title="Clear local cache of analyzed repositories" aria-label="Clear repository cache">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
                                 <span data-i18n="btnClearCache">Clear Cache</span>
                             </button>
-                            <button id="refreshBtn" class="btn-secondary" title="Reload analysis of current repository">
-                                <i class="fas fa-redo"></i>
+                            <button id="refreshBtn" class="btn-secondary" title="Reload analysis of current repository" aria-label="Reload current repository">
+                                <i class="fas fa-redo" aria-hidden="true"></i>
                                 <span data-i18n="btnRefresh">Refresh</span>
                             </button>
                         </div>
                     </div>
                     
                     <div class="controls-section">
-                        <h4><i class="fas fa-download"></i> <span data-i18n="controlsExport">Export</span></h4>
+                        <h4><i class="fas fa-download" aria-hidden="true"></i> <span data-i18n="controlsExport">Export</span></h4>
                         <div class="export-buttons">
-                            <button id="exportJSONBtn" class="btn-export" title="Export complete structure in JSON format">
-                                <i class="fas fa-file-code"></i>
+                            <button id="exportJSONBtn" class="btn-export" title="Export complete structure in JSON format" aria-label="Export as JSON">
+                                <i class="fas fa-file-code" aria-hidden="true"></i>
                                 <span data-i18n="btnExportJSON">JSON</span>
                             </button>
-                            <button id="exportCSVBtn" class="btn-export" title="Export file list in CSV format">
-                                <i class="fas fa-file-csv"></i>
+                            <button id="exportCSVBtn" class="btn-export" title="Export file list in CSV format" aria-label="Export as CSV">
+                                <i class="fas fa-file-csv" aria-hidden="true"></i>
                                 <span data-i18n="btnExportCSV">CSV</span>
                             </button>
                         </div>
                     </div>
                     
                     <div class="metrics-preview" id="metricsPreview">
-                        <h4><i class="fas fa-chart-line"></i> <span data-i18n="previewTitle">Preview</span></h4>
+                        <h4><i class="fas fa-chart-line" aria-hidden="true"></i> <span data-i18n="previewTitle">Preview</span></h4>
                         <div class="metrics-grid">
                             <div class="metric-card">
                                 <div class="metric-value">--</div>
@@ -298,7 +303,7 @@
             <div class="view-section active" id="treeView">
                 <div class="view-toolbar">
                     <div class="toolbar-left">
-                        <h3><i class="fas fa-folder-tree"></i> <span data-i18n="treeTitle">Repository Structure</span></h3>
+                        <h3><i class="fas fa-folder-tree" aria-hidden="true"></i> <span data-i18n="treeTitle">Repository Structure</span></h3>
                     </div>
                     <div class="toolbar-right">
                         <div class="search-box">
@@ -306,24 +311,32 @@
                                    id="treeSearch" 
                                    placeholder="Search files and folders..."
                                    data-i18n="searchPlaceholder"
-                                   class="search-input">
-                            <i class="fas fa-search"></i>
+                                   class="search-input"
+                                   aria-label="Search files and folders">
+                            <i class="fas fa-search" aria-hidden="true"></i>
                         </div>
                         <div class="toolbar-actions">
-                            <button id="copyTreeBtn" class="btn-toolbar" title="Copy structure as text (Ctrl+Shift+C)">
-                                <i class="fas fa-copy"></i> <span data-i18n="btnCopyTree">Copy</span>
+                            <button id="shareBtn" class="btn-share" title="Copy shareable link to this repository" aria-label="Copy shareable link">
+                                <i class="fas fa-share-alt" aria-hidden="true"></i> <span data-i18n="btnShareUrl">Copy Link</span>
                             </button>
-                            <button id="expandAllBtn" class="btn-toolbar" title="Expand all directories in the tree (Ctrl+Shift+E)">
-                                <i class="fas fa-expand"></i> <span data-i18n="btnExpandAll">Expand All</span>
+                            <button id="copyTreeBtn" class="btn-toolbar" title="Copy structure as text (Ctrl+Shift+C)" aria-label="Copy tree as text">
+                                <i class="fas fa-copy" aria-hidden="true"></i> <span data-i18n="btnCopyTree">Copy</span>
                             </button>
-                            <button id="collapseAllBtn" class="btn-toolbar" title="Collapse all directories in the tree (Ctrl+Shift+L)">
-                                <i class="fas fa-compress"></i> <span data-i18n="btnCollapseAll">Collapse All</span>
+                            <button id="expandAllBtn" class="btn-toolbar" title="Expand all directories in the tree (Ctrl+Shift+E)" aria-label="Expand all folders">
+                                <i class="fas fa-expand" aria-hidden="true"></i> <span data-i18n="btnExpandAll">Expand All</span>
+                            </button>
+                            <button id="collapseAllBtn" class="btn-toolbar" title="Collapse all directories in the tree (Ctrl+Shift+L)" aria-label="Collapse all folders">
+                                <i class="fas fa-compress" aria-hidden="true"></i> <span data-i18n="btnCollapseAll">Collapse All</span>
+                            </button>
+                            <button id="shortcutsBtn" class="btn-toolbar" title="Show keyboard shortcuts (?)" aria-label="Show keyboard shortcuts">
+                                <i class="fas fa-keyboard" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
                 </div>
+                <nav class="tree-breadcrumb" id="treeBreadcrumb" aria-label="Folder path"></nav>
                 <div class="tree-container-wrapper">
-                    <div class="tree-container" id="treeContainer"></div>
+                    <div class="tree-container" id="treeContainer" role="tree" aria-label="Repository file tree"></div>
                 </div>
             </div>
             
@@ -453,8 +466,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Mobile Bottom Sheet Drawer (≤768px) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" aria-hidden="true"></div>
+    <div class="mobile-sidebar-drawer" id="mobileSidebarDrawer" aria-hidden="true" aria-label="Controls panel">
+        <div class="mobile-drawer-handle" aria-hidden="true"></div>
+        <div class="mobile-drawer-content">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <span style="font-weight:600;font-size:15px;" data-i18n="sectionTitle">GitHub Visualizer</span>
+                <button id="mobileDrawerClose" style="background:none;border:none;cursor:pointer;color:var(--dark-subtext);font-size:18px;min-height:unset;" aria-label="Close controls panel">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="input-group" style="flex-direction:column;">
+                <input type="text" id="mobileRepoInput" placeholder="username/repository" class="repo-input" style="width:100%;min-width:unset;" aria-label="Repository URL">
+                <button onclick="document.getElementById('repoInput').value=document.getElementById('mobileRepoInput').value;document.getElementById('mobileDrawerClose').click();analyzeRepository();" class="btn-primary" style="width:100%;">
+                    <i class="fas fa-eye" aria-hidden="true"></i> <span data-i18n="btnVisualize">Visualize</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <button class="mobile-sidebar-fab" id="mobileSidebarFab" aria-label="Open controls" aria-expanded="false">
+        <i class="fas fa-sliders-h" aria-hidden="true"></i>
+    </button>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <script src="js/i18n/translations.js"></script>
+    <script src="js/modules/toast.js"></script>
     <script src="js/components/skeleton-loader.js"></script>
     <script src="js/modules/utils.js"></script>
     <script src="js/components/ui.js"></script>

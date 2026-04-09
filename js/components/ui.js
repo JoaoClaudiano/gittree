@@ -1,5 +1,137 @@
 // UI functions – theme, loading states, status messages, cache display
 
+// ---- Recent Repos History ----
+const RECENT_REPOS_KEY = 'gittree-recent-repos';
+const RECENT_REPOS_MAX = 10;
+
+function getRecentRepos() {
+    try {
+        return JSON.parse(localStorage.getItem(RECENT_REPOS_KEY) || '[]');
+    } catch (_) {
+        return [];
+    }
+}
+
+function saveRecentRepo(repoValue) {
+    if (!repoValue || !repoValue.trim()) return;
+    try {
+        const list = getRecentRepos().filter(r => r !== repoValue.trim());
+        list.unshift(repoValue.trim());
+        localStorage.setItem(RECENT_REPOS_KEY, JSON.stringify(list.slice(0, RECENT_REPOS_MAX)));
+    } catch (_) {}
+}
+
+function clearRecentRepos() {
+    try {
+        localStorage.removeItem(RECENT_REPOS_KEY);
+    } catch (_) {}
+}
+
+let _recentDropdownOpen = false;
+let _recentFocusIdx = -1;
+
+function showRecentReposDropdown(input, wrapper) {
+    closeRecentReposDropdown();
+    const list = getRecentRepos();
+    if (list.length === 0) return;
+
+    _recentDropdownOpen = true;
+    _recentFocusIdx = -1;
+
+    const dropdown = document.createElement('div');
+    dropdown.className = 'recent-repos-dropdown';
+    dropdown.id = 'recentReposDropdown';
+    dropdown.setAttribute('role', 'listbox');
+    dropdown.setAttribute('aria-label', t('recentRepos'));
+
+    const hdr = document.createElement('div');
+    hdr.className = 'recent-repos-header';
+    const hdrLabel = document.createElement('span');
+    hdrLabel.textContent = t('recentRepos');
+    const clearBtn = document.createElement('button');
+    clearBtn.textContent = t('recentReposClear');
+    clearBtn.setAttribute('aria-label', t('recentReposClear'));
+    clearBtn.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        clearRecentRepos();
+        closeRecentReposDropdown();
+    });
+    hdr.appendChild(hdrLabel);
+    hdr.appendChild(clearBtn);
+    dropdown.appendChild(hdr);
+
+    list.forEach(function (repo, idx) {
+        const item = document.createElement('div');
+        item.className = 'recent-repo-item';
+        item.setAttribute('role', 'option');
+        item.setAttribute('aria-selected', 'false');
+        item.dataset.idx = idx;
+
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-history';
+        icon.setAttribute('aria-hidden', 'true');
+
+        const text = document.createElement('span');
+        text.textContent = repo;
+
+        item.appendChild(icon);
+        item.appendChild(text);
+
+        item.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            input.value = repo;
+            closeRecentReposDropdown();
+            input.focus();
+        });
+
+        dropdown.appendChild(item);
+    });
+
+    wrapper.appendChild(dropdown);
+
+    // Close on outside click
+    setTimeout(function () {
+        document.addEventListener('click', _onDocClickCloseDropdown);
+    }, 0);
+}
+
+function _onDocClickCloseDropdown(e) {
+    const dropdown = document.getElementById('recentReposDropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+        closeRecentReposDropdown();
+    }
+}
+
+function closeRecentReposDropdown() {
+    const dropdown = document.getElementById('recentReposDropdown');
+    if (dropdown) dropdown.remove();
+    document.removeEventListener('click', _onDocClickCloseDropdown);
+    _recentDropdownOpen = false;
+    _recentFocusIdx = -1;
+}
+
+function navigateRecentDropdown(dir) {
+    const dropdown = document.getElementById('recentReposDropdown');
+    if (!dropdown) return false;
+    const items = dropdown.querySelectorAll('.recent-repo-item');
+    if (items.length === 0) return false;
+
+    items.forEach(i => i.classList.remove('focused'));
+    _recentFocusIdx = Math.max(0, Math.min(_recentFocusIdx + dir, items.length - 1));
+    items[_recentFocusIdx].classList.add('focused');
+    return true;
+}
+
+function selectFocusedRecentRepo(input) {
+    const dropdown = document.getElementById('recentReposDropdown');
+    if (!dropdown) return false;
+    const focused = dropdown.querySelector('.recent-repo-item.focused');
+    if (!focused) return false;
+    input.value = focused.querySelector('span').textContent;
+    closeRecentReposDropdown();
+    return true;
+}
+
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
@@ -191,14 +323,65 @@ function showAppContent() {
 }
 
 function loadDefaultRepo() {
-    const lastRepo = localStorage.getItem('last-repo');
+    // Prefer the most recent repo in history; fall back to last-repo key
+    const recent = getRecentRepos();
+    const lastRepo = recent[0] || localStorage.getItem('last-repo');
     if (lastRepo) {
-        document.getElementById('repoInput').value = lastRepo;
+        const input = document.getElementById('repoInput');
+        if (input) input.value = lastRepo;
     }
 }
 
 function initCache() {
     updateCacheStatus();
+}
+
+// ---- Rate Limit Display ----
+async function updateRateLimitDisplay() {
+    const el = document.getElementById('rateLimitDisplay');
+    if (!el) return;
+
+    try {
+        const resp = await fetch('https://api.github.com/rate_limit', {
+            headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const core = data.rate || data.resources && data.resources.core;
+        if (!core) return;
+
+        const remaining = core.remaining;
+        const limit = core.limit;
+        const pct = limit > 0 ? Math.round((remaining / limit) * 100) : 0;
+
+        el.innerHTML = '';
+
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-tachometer-alt';
+        icon.setAttribute('aria-hidden', 'true');
+
+        const label = document.createElement('span');
+        label.className = 'rate-limit-label';
+        label.textContent = t('rateLimitRemaining', { remaining, limit });
+
+        const barWrap = document.createElement('div');
+        barWrap.className = 'rate-limit-bar-wrap';
+        const bar = document.createElement('div');
+        bar.className = 'rate-limit-bar ' + (pct > 40 ? 'good' : pct > 15 ? 'medium' : 'low');
+        bar.style.width = pct + '%';
+        barWrap.appendChild(bar);
+
+        el.appendChild(icon);
+        el.appendChild(barWrap);
+        el.appendChild(label);
+        el.title = t('rateLimitRemaining', { remaining, limit });
+
+        if (remaining < 10) {
+            showStatus(t('rateLimitLow'), 'warning');
+        }
+    } catch (_) {
+        // Silently ignore — rate limit display is non-critical
+    }
 }
 
 function addPopularRepoSuggestions() {
@@ -230,6 +413,43 @@ function addPopularRepoSuggestions() {
 
     input.setAttribute('list', 'repoSuggestions');
     document.body.appendChild(datalist);
+
+    // Wrap input in a relative-positioned container for the dropdown
+    const wrapper = input.parentElement;
+    if (wrapper && !wrapper.classList.contains('repo-input-wrapper')) {
+        wrapper.classList.add('repo-input-wrapper');
+    }
+
+    input.addEventListener('focus', function () {
+        const w = input.closest('.repo-input-wrapper') || input.parentElement;
+        showRecentReposDropdown(input, w);
+    });
+
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (!_recentDropdownOpen) {
+                const w = input.closest('.repo-input-wrapper') || input.parentElement;
+                showRecentReposDropdown(input, w);
+            }
+            navigateRecentDropdown(1);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            navigateRecentDropdown(-1);
+        } else if (e.key === 'Enter') {
+            if (selectFocusedRecentRepo(input)) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        } else if (e.key === 'Escape') {
+            closeRecentReposDropdown();
+        }
+    });
+
+    // Close dropdown when typing (browser's native datalist will take over)
+    input.addEventListener('input', function () {
+        closeRecentReposDropdown();
+    });
 }
 
 function copyTreeAsText() {
@@ -278,7 +498,10 @@ function copyTreeAsText() {
 
     const textToCopy = allLines.join('\n');
     navigator.clipboard.writeText(textToCopy)
-        .then(() => showStatus(t('statusCopied'), 'success'))
+        .then(() => {
+            if (typeof showToast === 'function') showToast(t('statusCopied'), 'success');
+            else showStatus(t('statusCopied'), 'success');
+        })
         .catch(err => {
             console.error('Erro ao copiar:', err);
             showStatus(t('statusCopyError'), 'error');
