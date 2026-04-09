@@ -108,7 +108,7 @@
 
         var statusEl  = document.getElementById('contactFormStatus');
         var submitBtn = document.getElementById('contactSubmitBtn');
-        var ENDPOINT  = 'https://formsubmit.co/ajax/f1366ae1ca5821da4ff6002cf0ec5e1b';
+        var ENDPOINT  = 'https://formsubmit.co/ajax/fa441fa540f3b0e3989f3268b6371e3b';
 
         var BTN_DEFAULT = submitBtn.innerHTML;
         var BTN_LOADING = '<svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>Sending\u2026</span>';
