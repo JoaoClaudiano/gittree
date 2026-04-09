@@ -248,6 +248,12 @@ function applyTranslations() {
         var val = resolve(el.getAttribute('data-i18n-title'));
         if (val !== null) el.setAttribute('title', val);
     });
+
+    // data-i18n-placeholder → placeholder attribute
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+        var val = resolve(el.getAttribute('data-i18n-placeholder'));
+        if (val !== null) el.setAttribute('placeholder', val);
+    });
 }
 
 /**
