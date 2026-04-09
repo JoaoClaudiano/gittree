@@ -92,6 +92,10 @@
 
         <!-- Chip Navigation -->
         <nav class="chip-nav" aria-label="Page sections">
+            <a class="chip" href="#contact-form">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span data-i18n="contactChipForm">Send Message</span>
+            </a>
             <a class="chip" href="#email-contact">
                 <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 <span data-i18n="contactChipEmail">Email</span>
@@ -105,6 +109,48 @@
                 <span data-i18n="contactChipScope">Ambito</span>
             </a>
         </nav>
+
+        <!-- Contact Form Section -->
+        <section id="contact-form" class="institutional-section">
+            <h2 class="section-title" data-i18n="contactFormTitle">
+                <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send a Message
+            </h2>
+            <p class="institutional-text" data-i18n="contactFormIntro">
+                Fill in the form below and we'll get back to you as soon as possible. Fields marked with <span class="form-required" aria-hidden="true">*</span> are required.
+            </p>
+
+            <form id="contactForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="contactName" data-i18n="contactFormName">Name <span class="form-required" aria-hidden="true">*</span></label>
+                    <input type="text" id="contactName" name="name" class="form-input" required maxlength="100" autocomplete="name" placeholder="Your name" data-i18n-placeholder="contactFormNamePlaceholder">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contactEmail" data-i18n="contactFormEmail">Email <span class="form-required" aria-hidden="true">*</span></label>
+                    <input type="email" id="contactEmail" name="email" class="form-input" required maxlength="254" autocomplete="email" placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contactSubject" data-i18n="contactFormSubject">Subject</label>
+                    <input type="text" id="contactSubject" name="subject" class="form-input" maxlength="150" placeholder="What is this about?" data-i18n-placeholder="contactFormSubjectPlaceholder">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contactMessage" data-i18n="contactFormMessage">Message <span class="form-required" aria-hidden="true">*</span></label>
+                    <textarea id="contactMessage" name="message" class="form-textarea" required maxlength="2000" rows="5" placeholder="Your message…" data-i18n-placeholder="contactFormMessagePlaceholder"></textarea>
+                </div>
+
+                <div id="contactFormStatus" class="form-status" role="status" aria-live="polite" aria-atomic="true"></div>
+
+                <button type="submit" id="contactSubmitBtn" class="form-submit-btn">
+                    <svg width="1em" height="1em" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span data-i18n="contactFormSubmit">Send Message</span>
+                </button>
+            </form>
+        </section>
+
+
 
         <section id="email-contact" class="institutional-section">
             <h2 class="section-title" data-i18n="contactEmailTitle">
