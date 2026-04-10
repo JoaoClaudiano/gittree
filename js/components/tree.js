@@ -468,13 +468,6 @@ function updateBreadcrumb(pathParts) {
     });
 }
 
-// Stores pending children for lazy rendering (populated in renderTreeNode, consumed on expand)
-const _lazyChildren = new WeakMap();
-
-// Track total items in the current tree to guard expensive operations on large repos
-let _totalTreeItems = 0;
-const LARGE_REPO_THRESHOLD = 5000;
-
 function buildFileTree(files) {
     const root = { name: '/', type: 'folder', children: [], path: '' };
     const nodeMap = new Map();

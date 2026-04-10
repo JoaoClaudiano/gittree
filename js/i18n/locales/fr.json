@@ -418,5 +418,26 @@
   "aboutViewRoadmap": "Voir la Feuille de Route Complète",
   "footerTagline": "Visualiseur gratuit de structure de dépôts GitHub",
   "footerNavTitle": "Navigation",
-  "footerLegalTitle": "Légal & Source"
+  "footerLegalTitle": "Légal & Source",
+
+  "btnShareUrl": "Copier le Lien",
+  "shareCopied": "Lien copié dans le presse-papiers !",
+  "shareNoRepo": "Chargez d'abord un dépôt pour copier son lien.",
+  "recentRepos": "Dépôts Récents",
+  "recentReposClear": "Effacer",
+  "rateLimitLabel": "Requêtes API",
+  "rateLimitRemaining": "{remaining} / {limit} restants",
+  "rateLimitLow": "Limite de requêtes presque atteinte — attendez ou utilisez un jeton.",
+  "shortcutsTitle": "Raccourcis Clavier",
+  "shortcutFocusInput": "Focaliser la barre de recherche",
+  "shortcutSearch": "Focaliser la recherche dans l'arbre",
+  "shortcutExpand": "Tout développer",
+  "shortcutCollapse": "Tout réduire",
+  "shortcutCopy": "Copier l'arbre",
+  "shortcutTheme": "Changer le thème",
+  "shortcutClose": "Fermer le modal",
+  "shortcutHelp": "Voir les raccourcis",
+  "breadcrumbRoot": "racine",
+  "mobileOpenSidebar": "Ouvrir les contrôles",
+  "mobileCloseSidebar": "Fermer"
 }

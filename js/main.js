@@ -234,6 +234,17 @@ function initMobileDrawer() {
     if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
     if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
 
+    const mobileVisualizeBtn = document.getElementById('mobileVisualizeBtn');
+    if (mobileVisualizeBtn) {
+        mobileVisualizeBtn.addEventListener('click', function () {
+            const mobileInput = document.getElementById('mobileRepoInput');
+            const desktopInput = document.getElementById('repoInput');
+            if (mobileInput && desktopInput) desktopInput.value = mobileInput.value;
+            closeDrawer();
+            analyzeRepository();
+        });
+    }
+
     // Swipe-to-close: track touch movement on the drawer handle
     let touchStartY = 0;
     drawer.addEventListener('touchstart', function (e) {
