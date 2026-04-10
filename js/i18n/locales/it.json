@@ -418,5 +418,26 @@
   "aboutViewRoadmap": "Vedi la Roadmap Completa",
   "footerTagline": "Visualizzatore gratuito della struttura di repository GitHub",
   "footerNavTitle": "Naviga",
-  "footerLegalTitle": "Legale & Sorgente"
+  "footerLegalTitle": "Legale & Sorgente",
+
+  "btnShareUrl": "Copia Link",
+  "shareCopied": "Link copiato negli appunti!",
+  "shareNoRepo": "Carica prima un repository per copiare il link.",
+  "recentRepos": "Repository Recenti",
+  "recentReposClear": "Cancella",
+  "rateLimitLabel": "Richieste API",
+  "rateLimitRemaining": "{remaining} / {limit} rimanenti",
+  "rateLimitLow": "Limite di richieste quasi raggiunto — attendi o usa un token.",
+  "shortcutsTitle": "Scorciatoie da Tastiera",
+  "shortcutFocusInput": "Metti il cursore nella barra di ricerca",
+  "shortcutSearch": "Metti il cursore nella ricerca albero",
+  "shortcutExpand": "Espandi tutto",
+  "shortcutCollapse": "Comprimi tutto",
+  "shortcutCopy": "Copia albero",
+  "shortcutTheme": "Cambia tema",
+  "shortcutClose": "Chiudi modale",
+  "shortcutHelp": "Mostra scorciatoie",
+  "breadcrumbRoot": "radice",
+  "mobileOpenSidebar": "Apri controlli",
+  "mobileCloseSidebar": "Chiudi"
 }

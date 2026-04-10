@@ -418,5 +418,26 @@
   "aboutViewRoadmap": "전체 로드맵 보기",
   "footerTagline": "무료 GitHub 저장소 구조 시각화 도구",
   "footerNavTitle": "탐색",
-  "footerLegalTitle": "법적 정보 & 소스"
+  "footerLegalTitle": "법적 정보 & 소스",
+
+  "btnShareUrl": "링크 복사",
+  "shareCopied": "링크가 클립보드에 복사되었습니다!",
+  "shareNoRepo": "링크를 복사하려면 먼저 저장소를 불러오세요.",
+  "recentRepos": "최근 저장소",
+  "recentReposClear": "지우기",
+  "rateLimitLabel": "API 요청",
+  "rateLimitRemaining": "{remaining} / {limit} 남음",
+  "rateLimitLow": "속도 제한에 가까워졌습니다 — 잠시 기다리거나 토큰을 사용하세요.",
+  "shortcutsTitle": "키보드 단축키",
+  "shortcutFocusInput": "검색 바 포커스",
+  "shortcutSearch": "트리 검색 포커스",
+  "shortcutExpand": "모두 펼치기",
+  "shortcutCollapse": "모두 접기",
+  "shortcutCopy": "트리 복사",
+  "shortcutTheme": "테마 전환",
+  "shortcutClose": "모달 닫기",
+  "shortcutHelp": "단축키 보기",
+  "breadcrumbRoot": "루트",
+  "mobileOpenSidebar": "컨트롤 열기",
+  "mobileCloseSidebar": "닫기"
 }

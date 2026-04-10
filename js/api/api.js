@@ -145,6 +145,7 @@ async function analyzeRepository() {
         }
 
         localStorage.setItem('last-repo', inputValue);
+        if (typeof saveRecentRepo === 'function') saveRecentRepo(inputValue);
 
         if (repoInfo.repo === 'geocsvps' && repoInfo.owner === 'JoaoClaudiano') {
             const corrected = await tryCorrectRepoName(repoInfo.owner, repoInfo.repo);
@@ -181,6 +182,7 @@ async function analyzeRepository() {
         renderTree(treeData);
         updateMetrics(treeData);
         updateCacheStatus();
+        if (typeof updateRateLimitDisplay === 'function') updateRateLimitDisplay();
 
         if (window.innerWidth <= 992) {
             window.scrollTo({ top: 0, behavior: 'smooth' });

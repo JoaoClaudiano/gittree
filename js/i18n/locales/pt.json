@@ -447,5 +447,27 @@
   "aboutChipRoadmap": "Roadmap",
   "aboutRoadmapTitle": "O Que Vem Por Aí",
   "aboutRoadmapDesc": "O GitTree continua evoluindo. Veja o roadmap completo com versões implementadas, funcionalidades planejadas e ideias em estudo.",
-  "aboutViewRoadmap": "Ver Roadmap Completo"
+  "aboutViewRoadmap": "Ver Roadmap Completo",
+
+  "btnShareUrl": "Copiar Link",
+  "shareCopied": "Link copiado para a área de transferência!",
+  "shareNoRepo": "Carregue um repositório primeiro para copiar o link.",
+  "recentRepos": "Repositórios Recentes",
+  "recentReposClear": "Limpar",
+  "rateLimitLabel": "Requisições API",
+  "rateLimitRemaining": "{remaining} / {limit} restantes",
+  "rateLimitLow": "Limite de requisições quase atingido — aguarde ou use um token.",
+  "unknownLanguage": "Desconhecido",
+  "shortcutsTitle": "Atalhos de Teclado",
+  "shortcutFocusInput": "Focar barra de busca",
+  "shortcutSearch": "Focar busca na árvore",
+  "shortcutExpand": "Expandir tudo",
+  "shortcutCollapse": "Recolher tudo",
+  "shortcutCopy": "Copiar árvore",
+  "shortcutTheme": "Alternar tema",
+  "shortcutClose": "Fechar modal",
+  "shortcutHelp": "Ver atalhos",
+  "breadcrumbRoot": "raiz",
+  "mobileOpenSidebar": "Abrir controles",
+  "mobileCloseSidebar": "Fechar"
 }

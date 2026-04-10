@@ -418,5 +418,26 @@
   "aboutViewRoadmap": "ロードマップ全体を見る",
   "footerTagline": "無料のGitHubリポジトリ構造ビジュアライザー",
   "footerNavTitle": "ナビゲート",
-  "footerLegalTitle": "法的情報 & ソース"
+  "footerLegalTitle": "法的情報 & ソース",
+
+  "btnShareUrl": "リンクをコピー",
+  "shareCopied": "クリップボードにリンクをコピーしました！",
+  "shareNoRepo": "リンクをコピーするには、まずリポジトリを読み込んでください。",
+  "recentRepos": "最近のリポジトリ",
+  "recentReposClear": "クリア",
+  "rateLimitLabel": "APIリクエスト",
+  "rateLimitRemaining": "残り {remaining} / {limit}",
+  "rateLimitLow": "レート制限に近づいています — しばらく待つかトークンを使用してください。",
+  "shortcutsTitle": "キーボードショートカット",
+  "shortcutFocusInput": "検索バーにフォーカス",
+  "shortcutSearch": "ツリー検索にフォーカス",
+  "shortcutExpand": "すべて展開",
+  "shortcutCollapse": "すべて折りたたむ",
+  "shortcutCopy": "ツリーをコピー",
+  "shortcutTheme": "テーマを切り替え",
+  "shortcutClose": "モーダルを閉じる",
+  "shortcutHelp": "ショートカットを表示",
+  "breadcrumbRoot": "ルート",
+  "mobileOpenSidebar": "コントロールを開く",
+  "mobileCloseSidebar": "閉じる"
 }

@@ -9,7 +9,8 @@ function exportData(format) {
     showStatus(t('statusExporting', { format: format.toUpperCase() }), 'info');
 
     setTimeout(() => {
-        showStatus(t('statusExported'), 'success');
+        if (typeof showToast === 'function') showToast(t('statusExported'), 'success');
+        else showStatus(t('statusExported'), 'success');
 
         const dataStr = format === 'json'
             ? JSON.stringify(window.currentTreeData, null, 2)
