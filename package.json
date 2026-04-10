@@ -8,7 +8,7 @@
     "generate-robots": "node scripts/generate-robots.js",
     "generate-locales": "node scripts/generate-locales.js",
     "generate-seo": "npm run generate-sitemap && npm run generate-robots",
-    "build:css": "tailwindcss -i css/tailwind-input.css -o css/tailwind-output.css --minify",
+    "build:css": "tailwindcss -i css/tailwind-input.css -o tailwind-output.css --minify",
     "build": "npm run generate-locales && npm run generate-seo && npm run build:css",
     "test": "echo \"No tests configured yet\" && exit 0"
   },

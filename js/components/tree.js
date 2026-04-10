@@ -249,7 +249,7 @@ function renderTreeNode(container, node, depth = 0) {
     header.className = `tree-node-header ${node.type}`;
     header.title = node.path || node.name;
     header.setAttribute('tabindex', '0');
-    header.setAttribute('role', isFolder ? 'button' : 'button');
+    header.setAttribute('role', 'button');
     header.setAttribute('aria-label', isFolder
         ? (node.name + ' — folder, ' + (node.children ? node.children.length : 0) + ' items')
         : (node.name + ' — file' + (node.size > 0 ? ', ' + formatBytes(node.size) : '')));

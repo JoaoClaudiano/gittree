@@ -14,7 +14,6 @@ Disallow: /node_modules/
 Disallow: /scripts/
 
 # Arquivos técnicos (wildcards)
-Disallow: *.json
 Disallow: *.js.map
 Disallow: *.css.map
 Disallow: *_config.yml
@@ -28,6 +27,9 @@ Allow: /icons/
 Allow: /*.css$
 Allow: /*.js$
 Allow: /manifest.json
+
+# Bloquear JSON (exceto manifest)
+Disallow: /*.json
 
 # Googlebot
 User-agent: Googlebot

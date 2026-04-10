@@ -5,7 +5,7 @@ node_modules/
 dist/
 build/
 *.log
-css/tailwind-output.css
+tailwind-output.css
 
 # IDE
 .vscode/
