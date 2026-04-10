@@ -5,6 +5,25 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-04-10
+
+### ✨ UI/UX Improvements
+
+#### Novos Recursos
+- **Painel de Repositórios Recentes**: Acesso rápido ao histórico de análises com dropdown navegável por teclado
+- **Indicador de Limite da API**: Exibe requisições restantes da API do GitHub em tempo real com barra de status colorida
+- **Atalhos de Teclado**: Painel completo de atalhos acessível com `?`, incluindo `/` para busca, `Ctrl+K` para análise rápida
+- **Compartilhar URL**: Botão para copiar link direto ao repositório analisado
+- **Drawer Mobile**: Painel lateral deslizante para navegação em dispositivos móveis com swipe-to-close
+- **Breadcrumbs**: Navegação hierárquica mostrando o caminho do arquivo selecionado
+
+#### Melhorias Técnicas
+- Sistema de toast notifications reutilizável (`js/modules/toast.js`)
+- Suporte completo a i18n nas novas funcionalidades (todos os 8 idiomas)
+- Melhorias de acessibilidade: ARIA labels e navegação por teclado nos novos componentes
+
+---
+
 ## [1.0.0] - 2026-02-10
 
 ### 🎉 Lançamento Inicial

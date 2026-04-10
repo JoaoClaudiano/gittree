@@ -212,6 +212,7 @@ body.light-theme {
     padding: 0 30px;
     gap: 30px;
     position: relative;
+    min-height: calc(100vh - var(--header-height));
 }
 
 .app-sidebar {
@@ -222,8 +223,9 @@ body.light-theme {
     padding: 25px 0;
     position: sticky;
     top: calc(var(--header-height) + 25px);
-    height: calc(100vh - var(--header-height) - var(--footer-height) - 50px);
-    overflow-y: auto;
+    height: auto;
+    align-self: flex-start;
+    overflow-y: visible;
 }
 
 .ui-layer {
@@ -1056,6 +1058,7 @@ body.light-theme {
     
     .app-main {
         flex-direction: column;
+        min-height: unset;
     }
     
     .app-sidebar {
