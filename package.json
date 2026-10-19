@@ -30,6 +30,6 @@
   },
   "homepage": "https://github.com/JoaoClaudiano/gittree#readme",
   "devDependencies": {
-    "tailwindcss": "^3.4.19"
+    "tailwindcss": "^4.3.3"
   }
 }
